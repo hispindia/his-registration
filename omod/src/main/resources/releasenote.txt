@@ -1,0 +1,6 @@
+2.0.1
+- Added validations for patient category Government Employee
+- Added feature to allow saving patient less than one year old.
+
+2.0.0.0
+- Cloned from Laboratory

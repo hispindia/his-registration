@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE module PUBLIC "-//OpenMRS//DTD OpenMRS Config 1.2//EN" "http://resources.openmrs.org/doctype/config-1.2.dtd">
+
+<module configVersion="1.2">
+	
+	<!-- Base Module Properties -->
+	<id>@MODULE_ID@</id>
+	<name>@MODULE_NAME@</name>
+	<version>@MODULE_VERSION@</version>
+	<package>@MODULE_PACKAGE@</package>
+	<author>Truong Ha</author>
+	<description>
+			Registration
+	</description>
+
+	<activator>@MODULE_PACKAGE@.RegistrationActivator</activator>
+	
+	<require_modules>
+                  <require_module>org.openmrs.module.hospitalcore</require_module>
+    </require_modules>
+	
+	<require_version>1.6.1</require_version>		
+	
+	<globalProperty>
+		<property>@MODULE_ID@.identifier_prefix</property>
+		<defaultValue>SHDDU</defaultValue>
+		<description>
+			Patient identifier prefix
+		</description>
+	</globalProperty>
+	
+	<globalProperty>
+		<property>@MODULE_ID@.location</property>
+		<defaultValue>1</defaultValue>
+		<description>
+			Location id
+		</description>
+	</globalProperty>
+	
+	<globalProperty>
+		<property>@MODULE_ID@.patientIdentifierType</property>
+		<defaultValue>1</defaultValue>
+		<description>
+			Patient Identifier Type id
+		</description>
+	</globalProperty>
+	
+	<globalProperty>
+		<property>@MODULE_ID@.encounterType.init</property>
+		<defaultValue>REGINITIAL</defaultValue>
+		<description>
+			Encounter type for the first visit
+		</description>
+	</globalProperty>
+	
+	<globalProperty>
+		<property>@MODULE_ID@.encounterType.revisit</property>
+		<defaultValue>REGREVISIT</defaultValue>
+		<description>
+			Encounter type for returned visits
+		</description>
+	</globalProperty>
+	
+	<globalProperty>
+		<property>@MODULE_ID@.newPatientConcept</property>
+		<defaultValue>New Patient</defaultValue>
+		<description>
+			Concept name of "New Patient" referral for patient queue
+		</description>
+	</globalProperty>
+	
+	<globalProperty>
+		<property>@MODULE_ID@.numberOfDateValidation</property>
+		<defaultValue>0</defaultValue>
+		<description>
+			Number of date validation
+		</description>
+	</globalProperty>
+	
+	<globalProperty>
+		<property>@MODULE_ID@.registrationFee</property>
+		<defaultValue>0</defaultValue>
+		<description>
+			Registration Fee
+		</description>
+	</globalProperty>
+	
+	<globalProperty>
+		<property>@MODULE_ID@.patientPerRSBY</property>
+		<defaultValue>5</defaultValue>
+		<description>
+			Maximum number of patients can register with a RSBY number
+		</description>
+	</globalProperty>
+	
+	<globalProperty>
+		<property>@MODULE_ID@.patientPerBPL</property>
+		<defaultValue>10</defaultValue>
+		<description>
+			Maximum number of patients can register with a BPL number
+		</description>
+	</globalProperty>
+	
+	<messages>
+		<lang>en</lang>
+		<file>messages.properties</file>
+	</messages>
+	<messages>
+		<lang>fr</lang>
+		<file>messages_fr.properties</file>
+	</messages>
+	<messages>
+		<lang>es</lang>
+		<file>messages_es.properties</file>
+	</messages>
+	<!-- /Internationalization -->
+	
+	<mappingFiles>
+		RegistrationFee.hbm.xml
+    </mappingFiles>
+</module>
+
