@@ -1,6 +1,7 @@
 <%@ include file="/WEB-INF/template/include.jsp" %>
 <%@ include file="/WEB-INF/template/header.jsp" %>
 <%@ include file="../includes/js_css.jsp" %>
+<openmrs:globalProperty key="hospitalcore.hospitalName" defaultValue="ddu" var="hospitalName"/>
 <br/>
 
 <script type="text/javascript">
@@ -40,6 +41,6 @@
 	};
 </script>
 
-<jsp:include page="../includes/ddu/dduEditPatientForm.jsp"/>
+<jsp:include page="../includes/${hospitalName}/editPatientForm.jsp"/>
 
 <%@ include file="/WEB-INF/template/footer.jsp" %>  
