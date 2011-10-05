@@ -1,4 +1,4 @@
-package org.openmrs.module.registration.includable.validator.attribute.common;
+package org.openmrs.module.registration.includable.validator.attribute.solan;
 
 import java.util.List;
 import java.util.Map;
@@ -15,7 +15,7 @@ import org.openmrs.module.registration.RegistrationService;
 import org.openmrs.module.registration.includable.validator.attribute.PatientAttributeValidator;
 import org.openmrs.module.registration.util.RegistrationConstants;
 
-public class CommonPatientAttributeValidatorImpl implements
+public class PatientAttributeValidatorImpl implements
 		PatientAttributeValidator {
 
 	private Log logger = LogFactory.getLog(getClass());
@@ -23,14 +23,18 @@ public class CommonPatientAttributeValidatorImpl implements
 	/**
 	 * Check RSBY number & BPL number. Two global properties will be read are
 	 * `registration.patientPerRSBY` and `registration.patientPerBPL`
-	 * @param attributes
-	 * 
 	 * @return
 	 */
-	public String validate(Patient patient, Map<String, String> attributes) {
+	@SuppressWarnings("unchecked")
+	public String validate(Map<String, Object> parameters) {	
+		
+		// Get values from parameters
+		Map<String, String> attributes = (Map<String, String>) parameters.get("attributes");
 		String RSBYNumber = attributes.get("person.attribute.11");
-		String BPLNumber = attributes.get("person.attribute.10");
+		String BPLNumber = attributes.get("person.attribute.10");		
+		Patient patient = (Patient) parameters.get("patient");
 
+		// Validate
 		if (!StringUtils.isBlank(RSBYNumber)) {
 			if (!checkRSBYNumber(patient, RSBYNumber)) {
 				return "Invalid RSBY Number";

@@ -14,6 +14,7 @@ import org.jaxen.JaxenException;
 import org.openmrs.Patient;
 import org.openmrs.PersonAttribute;
 import org.openmrs.api.context.Context;
+import org.openmrs.module.hospitalcore.util.HospitalCoreUtils;
 import org.openmrs.module.registration.includable.validator.attribute.PatientAttributeValidatorService;
 import org.openmrs.module.registration.util.RegistrationConstants;
 import org.openmrs.module.registration.util.RegistrationUtils;
@@ -123,19 +124,20 @@ public class EditPatientController {
 		return patient;
 	}
 	
-	private Patient setAttributes(Patient patient, Map<String, String> parameters) throws Exception{
+	private Patient setAttributes(Patient patient, Map<String, String> attributes) throws Exception{
 		PatientAttributeValidatorService validator = new PatientAttributeValidatorService();
-		String validateResult = validator.validate(patient, parameters);
+		Map<String, Object> parameters = HospitalCoreUtils.buildParameters("patient", patient, "attributes", attributes);
+		String validateResult = validator.validate(parameters);
 		logger.info("Attirubte validation: " + validateResult);
 		if (StringUtils.isBlank(validateResult)) {
-			for (String name : parameters.keySet()) {			
+			for (String name : attributes.keySet()) {			
 				if ((name.contains(".attribute."))
-						&& (!StringUtils.isBlank(parameters.get(name)))) {
+						&& (!StringUtils.isBlank(attributes.get(name)))) {
 					String[] parts = name.split("\\.");
 					String idText = parts[parts.length - 1];
 					Integer id = Integer.parseInt(idText);				
 					PersonAttribute attribute = RegistrationUtils
-							.getPersonAttribute(id, parameters.get(name));
+							.getPersonAttribute(id, attributes.get(name));
 					patient.addAttribute(attribute);
 				}
 			}	

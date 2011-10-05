@@ -18,6 +18,7 @@ import org.openmrs.PatientIdentifier;
 import org.openmrs.PersonAttribute;
 import org.openmrs.PersonName;
 import org.openmrs.api.context.Context;
+import org.openmrs.module.hospitalcore.util.HospitalCoreUtils;
 import org.openmrs.module.registration.includable.validator.attribute.PatientAttributeValidatorService;
 import org.openmrs.module.registration.util.RegistrationConstants;
 import org.openmrs.module.registration.util.RegistrationUtils;
@@ -151,7 +152,8 @@ public class FindCreatePatientController {
 
 		// get custom person attribute
 		PatientAttributeValidatorService validator = new PatientAttributeValidatorService();
-		String validateResult = validator.validate(patient, parameters);
+		Map<String, Object> validationParameters = HospitalCoreUtils.buildParameters("patient", patient, "attributes", parameters);
+		String validateResult = validator.validate(validationParameters);		
 		logger.info("Attirubte validation: " + validateResult);
 		if (StringUtils.isBlank(validateResult)) {
 			for (String name : parameters.keySet()) {
