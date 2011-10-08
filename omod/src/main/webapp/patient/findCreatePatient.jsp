@@ -7,6 +7,9 @@
 
 <script type="text/javascript">
 
+	// Hospital name
+	hospitalName = "${hospitalName}";
+
 	// Districts
 	var _districts = new Array();
 	<c:forEach var="district" items="${districts}" varStatus="status">
