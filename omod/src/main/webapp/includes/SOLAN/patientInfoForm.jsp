@@ -6,6 +6,7 @@
 		jQuery("#age").html(MODEL.patientAge);
 		jQuery("#name").html(MODEL.patientName);
 		jQuery("#category").html(MODEL.patientAttributes[14]);
+		jQuery("#phoneNumber").html(MODEL.patientAttributes[16]);
 		jQuery("#gender").html(MODEL.patientGender);
 		jQuery("#datetime").html(MODEL.currentDateTime);
 		MODEL.OPDs = " ,Please select an OPD room to visit|" + MODEL.OPDs;
@@ -187,6 +188,12 @@
 					<td><b>Date/Time:</b></td>
 					<td>
 						<span id="datetime"/>
+					</td>
+				</tr>
+				<tr>
+					<td valign="top"><b>Phone number:</b></td>
+					<td colspan="5">
+						<span id="phoneNumber"/>			
 					</td>
 				</tr>
 				<tr>

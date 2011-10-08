@@ -176,8 +176,7 @@
 						if(optionLabel.length>0){
 							jQuery(divId).append("<option value='" + optionValue + "'>" + optionLabel + "</option>");
 						}
-					}
-					
+					}					
 				});
 			}
 		},
@@ -266,6 +265,14 @@
 			if(!VALIDATORS.validatePatientCategory()){
 				return false;
 			}
+			
+			if(!StringUtils.isBlank(jQuery("#phoneNumber").val())){
+				if(!StringUtils.isDigit(jQuery("#phoneNumber").val())){
+					alert("Please enter phone number in correct format");
+					return false;
+				}
+			}
+			
 			return true;			
 		}
 	};
@@ -521,6 +528,12 @@
 						</td>
 					</tr>
 				</table>
+			</td>
+		</tr>
+		<tr>
+			<td class="cell"><b>Phone number</b></td>
+			<td class="cell">
+				<input id="phoneNumber" name="person.attribute.16" style="width:200px;"/>
 			</td>
 		</tr>
 		<tr>
