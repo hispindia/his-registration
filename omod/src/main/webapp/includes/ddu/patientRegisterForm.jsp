@@ -35,8 +35,8 @@
 		});	
 		
 		jQuery("#searchbox").showPatientSearchBox({		
-			searchBoxView: "registration",
-			resultView: "/module/registration/patientsearch/registration",
+			searchBoxView: hospitalName + "/registration",
+			resultView: "/module/registration/patientsearch/" + hospitalName + "/findCreate",
 			success: function(data){
 				PAGE.searchPatientSuccess(data);
 			},
