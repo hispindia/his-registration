@@ -36,7 +36,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openmrs.Patient;
 import org.openmrs.api.context.Context;
-import org.openmrs.module.hospitalcore.util.DateUtils;
 import org.openmrs.module.hospitalcore.util.GlobalPropertyUtil;
 import org.openmrs.module.registration.RegistrationService;
 import org.openmrs.module.registration.model.RegistrationFee;
@@ -84,29 +83,24 @@ public class RegistrationAjaxController {
 			// the user entered the correct birthdate
 			json.put("estimated", false);
 			json.put("birthdate", birthdate);
-			json.put("age", estimateAge(birthdate));
+			json.put("age", RegistrationUtils.estimateAge(birthdate));
 			logger.info("User entered the correct birthdate.");
 
 		} else {
 
-			// the user entered an age
-			// Integer age = Integer.parseInt(birthdate);
-			// json.put("estimated", true);
-			// 
-			// json.put("birthdate", estimatedBirthdate);
-			// json.put("age", estimateAge(estimatedBirthdate));
-			// logger.info("User entered an estimated age.");
-
-			// check the last letter of birthdate. if no letter found, the
-			// default 'y' will be added.
 			String lastLetter = birthdate.substring(birthdate.length() - 1);
 			if (!StringUtils.isAlpha(lastLetter)) {
-				birthdate += "y";
+				json.put("error", "Age in wrong format");
+			} else {
+				try {
+					json.put("estimated", true);
+					String estimatedBirthdate = getEstimatedBirthdate(birthdate);
+					json.put("birthdate", estimatedBirthdate);
+					json.put("age", RegistrationUtils.estimateAge(estimatedBirthdate));
+				} catch (Exception e) {
+					json.put("error", e.getMessage());
+				}				
 			}
-			json.put("estimated", true);
-			String estimatedBirthdate = getEstimatedBirthdate(birthdate);
-			json.put("birthdate", estimatedBirthdate);
-			json.put("age", estimateAge(estimatedBirthdate));
 		}
 		model.addAttribute("json", json);
 		return "/module/registration/ajax/processPatientBirthDate";
@@ -119,41 +113,26 @@ public class RegistrationAjaxController {
 	 * 
 	 * @return
 	 */
-	private String getEstimatedBirthdate(String text) {
+	private String getEstimatedBirthdate(String text) throws Exception {
 		text = text.toLowerCase();
-		String age = text.substring(0, text.length() - 1);
+		String ageStr = text.substring(0, text.length() - 1);
 		String type = text.substring(text.length() - 1);
+		int age = Integer.parseInt(ageStr);
+		if(age<0){
+			throw new Exception("Age must not be negative number!");
+		}
 		Calendar date = Calendar.getInstance();
 		if (type.equalsIgnoreCase("y")) {
-			date.add(Calendar.YEAR, -Integer.parseInt(age));
+			date.add(Calendar.YEAR, -age);
 			return "01/01/" + date.get(Calendar.YEAR);
-		} else if(type.equalsIgnoreCase("m")){
-			date.add(Calendar.MONTH, -Integer.parseInt(age));
-		} else if(type.equalsIgnoreCase("w")){
-			date.add(Calendar.WEEK_OF_YEAR, -Integer.parseInt(age));
-		} else if(type.equalsIgnoreCase("d")){
-			date.add(Calendar.DATE, -Integer.parseInt(age));
+		} else if (type.equalsIgnoreCase("m")) {
+			date.add(Calendar.MONTH, -age);
+		} else if (type.equalsIgnoreCase("w")) {
+			date.add(Calendar.WEEK_OF_YEAR, -age);
+		} else if (type.equalsIgnoreCase("d")) {
+			date.add(Calendar.DATE, -age);
 		}
 		return RegistrationUtils.formatDate(date.getTime());
-	}
-
-	/*
-	 * Estimate the year by birthdate
-	 * 
-	 * @param birthdate
-	 * 
-	 * @return
-	 * 
-	 * @throws ParseException
-	 */
-	private String estimateAge(String birthdate) throws ParseException {
-		Date date = RegistrationUtils.parseDate(birthdate);
-		int years = DateUtils.getAgeFromBirthday(date);
-		if (years > 1) {
-			return String.format("~ %s years old", years);
-		} else {
-			return "~ 1 year old";
-		}
 	}
 
 	@RequestMapping(value = "/module/registration/ajax/buySlip.htm", method = RequestMethod.GET)

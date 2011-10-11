@@ -126,15 +126,18 @@
 				}),
 				dataType: "json",
 				success : function(json) {
-					
-					if(json.estimated == "true"){
-						jQuery("#birthdateEstimated").val("true")
-					} else {						
-						jQuery("#birthdateEstimated").val("false");
+					if(json.error==undefined){
+						if(json.estimated == "true"){
+							jQuery("#birthdateEstimated").val("true")
+						} else {						
+							jQuery("#birthdateEstimated").val("false");
+						}
+						
+						jQuery("#estimatedAge").html(json.age);
+						jQuery("#birthdate").val(json.birthdate);
+					} else {
+						alert(json.error);
 					}
-					
-					jQuery("#estimatedAge").html(json.age);
-					jQuery("#birthdate").val(json.birthdate);
 				},
 				error : function(xhr, ajaxOptions, thrownError) {
 					alert(thrownError);
@@ -266,14 +269,15 @@
 				return false;
 			}
 			
-			if(!StringUtils.isBlank(jQuery("#phoneNumber").val())){
-				if(!StringUtils.isDigit(jQuery("#phoneNumber").val())){
+			if(!StringUtils.isBlank(jQuery("#patientPhoneNumber").val())){				
+				if(!StringUtils.isDigit(jQuery("#patientPhoneNumber").val())){
 					alert("Please enter phone number in correct format");
 					return false;
 				}
 			}
 			
-			return true;			
+			// return true;			
+			return false;
 		}
 	};
 	
@@ -533,7 +537,7 @@
 		<tr>
 			<td class="cell"><b>Phone number</b></td>
 			<td class="cell">
-				<input id="phoneNumber" name="person.attribute.16" style="width:200px;"/>
+				<input id="patientPhoneNumber" name="person.attribute.16" style="width:200px;"/>
 			</td>
 		</tr>
 		<tr>

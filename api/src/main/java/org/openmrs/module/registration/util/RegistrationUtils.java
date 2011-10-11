@@ -37,6 +37,7 @@ import org.openmrs.PersonAttribute;
 import org.openmrs.PersonAttributeType;
 import org.openmrs.PersonName;
 import org.openmrs.api.context.Context;
+import org.openmrs.module.hospitalcore.util.DateUtils;
 import org.openmrs.module.hospitalcore.util.GlobalPropertyUtil;
 
 public class RegistrationUtils {
@@ -217,5 +218,50 @@ public class RegistrationUtils {
 				"Saving new person attribute [name=%s, value=%s]",
 				type.getName(), value));
 		return attribute;
+	}
+	
+	/**
+	 * Estimate age using birthdate
+	 * @param birthdate
+	 * @return
+	 * @throws ParseException
+	 */
+	public static String estimateAge(Date date) throws ParseException {
+		int years = DateUtils.getAgeFromBirthday(date);
+		if (years > 1) {
+			return String.format("~ %s years old", years);
+		} else {
+			long diff = Math.abs(date.getTime() - (new Date()).getTime())
+					/ (24 * 60 * 60 * 1000);
+			long month = diff / 30;
+			long day = diff % 30;
+			String age = "";
+			if (month > 0) {
+				if (month == 1) {
+					age += month + " month ";
+				} else {
+					age += month + " months ";
+				}
+			}
+			if (day > 0) {
+				if (day == 1) {
+					age += day + " day";
+				} else {
+					age += day + " days";
+				}
+			}
+			return age;
+		}
+	}
+	
+	/**
+	 * Estimate age using birthdate
+	 * @param birthdate
+	 * @return
+	 * @throws ParseException
+	 */
+	public static String estimateAge(String birthdate) throws ParseException {
+		Date date = RegistrationUtils.parseDate(birthdate);
+		return estimateAge(date);
 	}
 }

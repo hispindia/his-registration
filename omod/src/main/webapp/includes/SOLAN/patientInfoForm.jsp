@@ -22,6 +22,9 @@
 			jQuery("#opdWard").attr("disabled", "disabled");
 		}
 		
+		jQuery("#buySlip").hide();
+		
+		/*
 		if(MODEL.dueDate.length>0){
 			jQuery("#buySlip").hide();
 			
@@ -36,6 +39,7 @@
 		} else {
 			jQuery("#printSlip").hide();
 		}	
+		*/
 		
 	});
 	

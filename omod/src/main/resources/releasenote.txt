@@ -1,3 +1,8 @@
+2.0.3
+- Added validation for age.
+- Display age in detail.
+- Fixed bug note validating phone number.
+
 2.0.2
 - Added phone number for Solan.
 - Added patient search for Solan.

@@ -20,6 +20,7 @@
 
 package org.openmrs.module.registration.web.controller.util;
 
+import java.text.ParseException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -40,15 +41,14 @@ public class PatientModel {
 	private String birthdate;
 	private Map<Integer, String> attributes = new HashMap<Integer, String>();
 
-	public PatientModel(Patient patient) {
+	public PatientModel(Patient patient) throws ParseException {
 		setPatientId(patient.getPatientId().toString());
 		setIdentifier(patient.getPatientIdentifier().getIdentifier());
-		setFullname(PatientUtil.getFullName(patient));		
-		if (patient.getAge() > 1) {
-			setAge(String.format("%s years old, %s", patient.getAge(), PatientUtil.getAgeCategory(patient)));
-		} else {
-			setAge(String.format("~ 1 year old, %s", PatientUtil.getAgeCategory(patient)));
-		}
+		setFullname(PatientUtil.getFullName(patient));
+
+		setAge(String.format("%s, %s",
+				RegistrationUtils.estimateAge(patient.getBirthdate()),
+				PatientUtil.getAgeCategory(patient)));
 
 		if (patient.getGender().equalsIgnoreCase("M")) {
 			setGender("Male");
@@ -58,7 +58,7 @@ public class PatientModel {
 
 		setAddress(patient.getPersonAddress().getCityVillage() + ", "
 				+ patient.getPersonAddress().getCountyDistrict());
-		
+
 		setBirthdate(RegistrationUtils.formatDate(patient.getBirthdate()));
 
 		Map<String, PersonAttribute> attributes = patient.getAttributeMap();

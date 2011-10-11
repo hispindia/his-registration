@@ -55,7 +55,7 @@ public class EditPatientController {
 
 	@RequestMapping(method = RequestMethod.GET)
 	public String showForm(@RequestParam("patientId") Integer patientId, Model model)
-			throws JaxenException, DocumentException, IOException {		
+			throws JaxenException, DocumentException, IOException, ParseException {		
 		Patient patient = Context.getPatientService().getPatient(patientId);
 		PatientModel patientModel = new PatientModel(patient);
 		model.addAttribute("patient", patientModel);
