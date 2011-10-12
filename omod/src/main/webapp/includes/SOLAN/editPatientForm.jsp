@@ -30,6 +30,7 @@
 		jQuery("#patientRegistrationForm").fillForm(formValues);
 		PAGE.checkBirthDate();
 		VALIDATORS.genderCheck();
+		jQuery("#patientRegistrationForm").fillForm("person.attribute.15==" + MODEL.patientAttributes[15] + "||");
 		
 		// Set value for address
 		addressParts = MODEL.patientAddress.split(',');		

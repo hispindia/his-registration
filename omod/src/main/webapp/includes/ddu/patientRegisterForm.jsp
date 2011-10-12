@@ -77,8 +77,9 @@
 		jQuery("#birthdate").click(function(){
 			jQuery("#birthdate").select();
 		});
-		
-		
+		jQuery("#patientGender").change(function(){
+			VALIDATORS.genderCheck();
+		});
 	});
 	
 	/**
@@ -402,7 +403,20 @@
 				if (jQuery("#patCatPoor").is(":checked")) jQuery("#patCatPoor").removeAttr("checked");
 				if (jQuery("#patCatStaff").is(":checked")) jQuery("#patCatStaff").removeAttr("checked");
 	        }
-	    }
+	    },
+		
+		/*
+		 * Check patient gender
+		 */
+		 genderCheck: function() {
+			
+			jQuery("#patientRelativeNameSection").empty();			
+			if(jQuery("#patientGender").val()=="M"){
+				jQuery("#patientRelativeNameSection").html('<input type="radio" name="person.attribute.15" value="Son of" checked="checked"/> Son of');
+			} else {
+				jQuery("#patientRelativeNameSection").html('<input type="radio" name="person.attribute.15" value="Daughter of"/> Daughter of <input type="radio" name="person.attribute.15" value="Wife of"/> Wife of');
+			}			
+		}
 	};
 </script>
 
@@ -477,10 +491,9 @@
 		<tr>
 			<td class="cell"><b>Relative Name *</b></td>
 			<td class="cell">
-				<input type="radio" name="person.attribute.15" value="Son of"/> Son of
-				<input type="radio" name="person.attribute.15" value="Daughter of"/> Daughter of
-				<input type="radio" name="person.attribute.15" value="Wife of"/> Wife of
-				<br/>
+				<div id="patientRelativeNameSection">
+					
+				</div>
 				<input id="patientRelativeName" name="person.attribute.8" style="width:200px;"/>
 			</td>
 		</tr>

@@ -478,8 +478,7 @@
 				jQuery("#patientRelativeNameSection").html('<input type="radio" name="person.attribute.15" value="Son of" checked="checked"/> Son of');
 			} else {
 				jQuery("#patientRelativeNameSection").html('<input type="radio" name="person.attribute.15" value="Daughter of"/> Daughter of <input type="radio" name="person.attribute.15" value="Wife of"/> Wife of');
-			}
-			
+			}			
 		}
 	};
 </script>
