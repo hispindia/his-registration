@@ -22,14 +22,14 @@
 		formValues += "patient.gender==" + MODEL.patientGender + "||";
 		formValues += "patient.identifier==" + MODEL.patientIdentifier + "||";
 		formValues += "patient.gender==" + MODEL.patientGender[0] + "||";
-		formValues += "person.attribute.8==" + MODEL.patientAttributes[8] + "||";							
-		formValues += "person.attribute.15==" + MODEL.patientAttributes[15] + "||";	
+		formValues += "person.attribute.8==" + MODEL.patientAttributes[8] + "||";
 		if(!StringUtils.isBlank(MODEL.patientAttributes[16])){
 			formValues += "person.attribute.16==" + MODEL.patientAttributes[16] + "||";	
 		}
 		
 		jQuery("#patientRegistrationForm").fillForm(formValues);
 		PAGE.checkBirthDate();
+		VALIDATORS.genderCheck();
 		
 		// Set value for address
 		addressParts = MODEL.patientAddress.split(',');		
@@ -89,6 +89,12 @@
 		});		
 		jQuery("#birthdate").click(function(){
 			jQuery("#birthdate").select();
+		});
+		jQuery("#patCatSeniorCitizen").click(function(){
+			VALIDATORS.seniorCitizenCheck();
+		});
+		jQuery("#patientGender").change(function(){
+			VALIDATORS.genderCheck();
 		});
 		
 	});
@@ -391,7 +397,60 @@
 				if (jQuery("#patCatPoor").is(":checked")) jQuery("#patCatPoor").removeAttr("checked");
 				if (jQuery("#patCatStaff").is(":checked")) jQuery("#patCatStaff").removeAttr("checked");
 	        }
-	    }
+	    },
+		
+		/** CHECK WHEN SENIOR CITIZEN CATEGORY IS SELECTED */
+		seniorCitizenCheck: function(){
+			if(jQuery("#patCatSeniorCitizen").is(':checked')){
+				if (jQuery("#bpl").is(":checked")) {
+					jQuery("#bpl").removeAttr("checked");
+					jQuery("#bplNumber").val("");
+					jQuery("#bplField").hide();
+				}
+	            if (jQuery("#rsby").is(":checked")) {
+					jQuery("#rsby").removeAttr("checked");
+					jQuery("#rsbyNumber").val("");
+					jQuery("#rsbyField").hide();					
+				}
+				if (jQuery("#patCatPoor").is(":checked")) jQuery("#patCatPoor").removeAttr("checked");
+				if (jQuery("#patCatGeneral").is(":checked")) jQuery("#patCatGeneral").removeAttr("checked");
+				if (jQuery("#patCatGovEmp").is(":checked")) jQuery("#patCatGovEmp").removeAttr("checked");
+				if(!VALIDATORS.checkPatientAgeForSeniorCitizen()){
+					jQuery("#patCatSeniorCitizen").removeAttr("checked");
+				};	
+			}
+		},
+		
+		/*
+		 * Check patient age for senior citizen
+		 */
+		checkPatientAgeForSeniorCitizen: function() {
+			// check whether patient age is more than 60
+			estAge = jQuery("#estimatedAge").html();
+			var digitPattern = /[0-9]+/;
+			var age = digitPattern.exec(estAge);
+			if(age<60){
+				if(jQuery("#patCatSeniorCitizen").is(':checked')){
+					alert("Senior citizen category is only for patient over 60 years old!");				
+					return false;
+				}
+			}
+			return true;
+		},
+		
+		/*
+		 * Check patient gender
+		 */
+		 genderCheck: function() {
+			
+			jQuery("#patientRelativeNameSection").empty();			
+			if(jQuery("#patientGender").val()=="M"){
+				jQuery("#patientRelativeNameSection").html('<input type="radio" name="person.attribute.15" value="Son of" checked="checked"/> Son of');
+			} else {
+				jQuery("#patientRelativeNameSection").html('<input type="radio" name="person.attribute.15" value="Daughter of"/> Daughter of <input type="radio" name="person.attribute.15" value="Wife of"/> Wife of');
+			}
+			
+		}
 	};
 </script>
 
@@ -470,10 +529,9 @@
 		<tr>
 			<td class="cell"><b>Relative Name *</b></td>
 			<td class="cell">
-				<input type="radio" name="person.attribute.15" value="Son of"/> Son of
-				<input type="radio" name="person.attribute.15" value="Daughter of"/> Daughter of
-				<input type="radio" name="person.attribute.15" value="Wife of"/> Wife of
-				<br/>
+				<div id="patientRelativeNameSection">
+					
+				</div>
 				<input id="patientRelativeName" name="person.attribute.8" style="width:200px;"/>
 			</td>
 		</tr>		
@@ -512,6 +570,11 @@
 						</td>
 						<td>
 							<span id="bplField">BPL Number <input id="bplNumber" name="person.attribute.10"/></span>
+						</td>
+					</tr>					
+					<tr>
+						<td colspan="2">
+							<input id="patCatSeniorCitizen" type="checkbox" name="person.attribute.14" value="Senior Citizen"/> Senior Citizen
 						</td>
 					</tr>
 				</table>

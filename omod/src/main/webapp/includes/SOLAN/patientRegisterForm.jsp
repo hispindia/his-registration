@@ -80,6 +80,11 @@
 		jQuery("#patCatSeniorCitizen").click(function(){
 			VALIDATORS.seniorCitizenCheck();
 		});
+		jQuery("#patientGender").change(function(){
+			VALIDATORS.genderCheck();
+		});
+		
+		
 		
 		
 	});
@@ -274,10 +279,9 @@
 					alert("Please enter phone number in correct format");
 					return false;
 				}
-			}
-			
-			// return true;			
-			return false;
+			}			
+					
+			return true;
 		}
 	};
 	
@@ -462,6 +466,20 @@
 				}
 			}
 			return true;
+		},
+		
+		/*
+		 * Check patient gender
+		 */
+		 genderCheck: function() {
+			
+			jQuery("#patientRelativeNameSection").empty();			
+			if(jQuery("#patientGender").val()=="M"){
+				jQuery("#patientRelativeNameSection").html('<input type="radio" name="person.attribute.15" value="Son of" checked="checked"/> Son of');
+			} else {
+				jQuery("#patientRelativeNameSection").html('<input type="radio" name="person.attribute.15" value="Daughter of"/> Daughter of <input type="radio" name="person.attribute.15" value="Wife of"/> Wife of');
+			}
+			
 		}
 	};
 </script>
@@ -543,10 +561,9 @@
 		<tr>
 			<td class="cell"><b>Relative Name *</b></td>
 			<td class="cell">
-				<input type="radio" name="person.attribute.15" value="Son of"/> Son of
-				<input type="radio" name="person.attribute.15" value="Daughter of"/> Daughter of
-				<input type="radio" name="person.attribute.15" value="Wife of"/> Wife of
-				<br/>
+				<div id="patientRelativeNameSection">
+					
+				</div>
 				<input id="patientRelativeName" name="person.attribute.8" style="width:200px;"/>
 			</td>
 		</tr>
