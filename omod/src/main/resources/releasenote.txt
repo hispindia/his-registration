@@ -2,6 +2,7 @@
 - Added validation for age.
 - Display age in detail.
 - Fixed bug note validating phone number.
+- Added validation for gender and relative name type.
 
 2.0.2
 - Added phone number for Solan.
