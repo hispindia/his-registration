@@ -100,6 +100,14 @@
 			Maximum number of patients can register with a BPL number
 		</description>
 	</globalProperty>
+	<globalProperty>
+		<property>@MODULE_ID@.revisitConcept</property>
+		<defaultValue>REVISIT</defaultValue>
+		<description>
+			Name of concept REVISIT
+		</description>
+	</globalProperty>
+	
 	
 	<messages>
 		<lang>en</lang>
