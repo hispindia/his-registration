@@ -1,3 +1,10 @@
+2.1.0
+- Added privileges.
+- Applied privileges to functions.
+
+2.0.4
+- Fixed bug displaying patient's age in opd slip.
+
 2.0.3
 - Added validation for age.
 - Display age in detail.

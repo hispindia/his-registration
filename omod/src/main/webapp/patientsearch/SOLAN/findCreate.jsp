@@ -50,7 +50,9 @@
 	<c:when test="${not empty patients}" >		
 	<table style="width:100%">
 		<tr>
-			<td><b>Edit</b></td>
+		<openmrs:hasPrivilege privilege="Edit Patient">
+            <td><b>Edit</b></td>
+        </openmrs:hasPrivilege>			
 			<td><b>Identifier</b></td>
 			<td><b>Name</b></td>
 			<td><b>Age</b></td>
@@ -61,11 +63,13 @@
 		</tr>
 		<c:forEach items="${patients}" var="patient" varStatus="varStatus">
 			<tr class='${varStatus.index % 2 == 0 ? "oddRow" : "evenRow" } patientSearchRow'>
-				<td onclick="PATIENTSEARCHRESULT.editPatient(${patient.patientId});">
-					<center>
-						<img class="editImage" title="Edit patient information"/>
-					</center>
-				</td>
+				<openmrs:hasPrivilege privilege="Edit Patient">
+					<td onclick="PATIENTSEARCHRESULT.editPatient(${patient.patientId});">
+						<center>
+							<img class="editImage" title="Edit patient information"/>
+						</center>
+					</td>
+				</openmrs:hasPrivilege>		
 				<td onclick="PATIENTSEARCHRESULT.visit(${patient.patientId});">
 					${patient.patientIdentifier.identifier}
 				</td>
