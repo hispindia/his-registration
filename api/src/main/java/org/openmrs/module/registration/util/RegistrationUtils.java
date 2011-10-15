@@ -229,7 +229,7 @@ public class RegistrationUtils {
 	public static String estimateAge(Date date) throws ParseException {
 		int years = DateUtils.getAgeFromBirthday(date);
 		if (years > 1) {
-			return String.format("~ %s years old", years);
+			return String.format("~ %s years", years);
 		} else {
 			long diff = Math.abs(date.getTime() - (new Date()).getTime())
 					/ (24 * 60 * 60 * 1000);

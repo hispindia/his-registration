@@ -1,6 +1,7 @@
 <%@ include file="/WEB-INF/template/include.jsp" %>
 <%@ include file="/WEB-INF/template/header.jsp" %>
 <%@ include file="../includes/js_css.jsp" %>
+<openmrs:require privilege="View Patient Info" otherwise="/login.htm" redirect="/module/registration/showPatientInfo.form" />
 <openmrs:globalProperty key="hospitalcore.hospitalName" defaultValue="ddu" var="hospitalName"/>
 
 <script type="text/javascript">

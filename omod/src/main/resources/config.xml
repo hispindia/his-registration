@@ -19,7 +19,22 @@
                   <require_module>org.openmrs.module.hospitalcore</require_module>
     </require_modules>
 	
-	<require_version>1.6.1</require_version>		
+	<require_version>1.6.1</require_version>
+	
+	<privilege>
+		<name>Add/Find Patient</name>
+		<description>Add a new patient</description>
+	</privilege>
+	
+	<privilege>
+		<name>Edit Patient</name>
+		<description>Edit a new patient</description>
+	</privilege>	
+	
+	<privilege>
+		<name>View Patient Info</name>
+		<description>View patient information and print OPD slip</description>
+	</privilege>		
 	
 	<globalProperty>
 		<property>@MODULE_ID@.identifier_prefix</property>
@@ -100,6 +115,14 @@
 			Maximum number of patients can register with a BPL number
 		</description>
 	</globalProperty>
+	<globalProperty>
+		<property>@MODULE_ID@.revisitConcept</property>
+		<defaultValue>REVISIT</defaultValue>
+		<description>
+			Name of concept REVISIT
+		</description>
+	</globalProperty>
+	
 	
 	<messages>
 		<lang>en</lang>
