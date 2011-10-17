@@ -1,7 +1,7 @@
 <%@ include file="/WEB-INF/template/include.jsp" %>
 <%@ include file="/WEB-INF/template/header.jsp" %>
 <%@ include file="../includes/js_css.jsp" %>
-<openmrs:require privilege="Edit Patient" otherwise="/login.htm" redirect="/module/registration/editPatient.form" />
+<openmrs:require privilege="Edit Patients" otherwise="/login.htm" redirect="/module/registration/editPatient.form" />
 <openmrs:globalProperty key="hospitalcore.hospitalName" defaultValue="ddu" var="hospitalName"/>
 <br/>
 

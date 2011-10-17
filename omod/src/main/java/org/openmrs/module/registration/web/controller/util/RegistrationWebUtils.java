@@ -108,19 +108,24 @@ public class RegistrationWebUtils {
 			conNewPatient.setConceptClass(conceptClass);
 			Context.getConceptService().saveConcept(conNewPatient);
         }
-        OpdPatientQueue queue = new OpdPatientQueue();
-        queue.setPatient(patient);
-        queue.setCreatedOn(new Date());
-        queue.setBirthDate(patient.getBirthdate());
-        queue.setPatientIdentifier(patient.getPatientIdentifier().getIdentifier());
-        queue.setOpdConcept(selectedOPDConcept);
-        queue.setOpdConceptName(selectedOPDConcept.getName().getName());
-        queue.setPatientName(patient.getGivenName()+" "+patient.getMiddleName() + " "+ patient.getFamilyName());
-        queue.setReferralConcept(conNewPatient);
-        queue.setReferralConceptName(conNewPatient.getName().getName());
-        queue.setSex(patient.getGender());
-        PatientQueueService queueService = Context.getService(PatientQueueService.class);
-        queueService.saveOpdPatientQueue(queue);
+        OpdPatientQueue queue = Context.getService(PatientQueueService.class).getOpdPatientQueue(patient.getPatientIdentifier().getIdentifier(), selectedOPDConcept.getConceptId());
+        if(queue==null){
+        	queue = new OpdPatientQueue();
+            queue.setPatient(patient);
+            queue.setCreatedOn(new Date());
+            queue.setBirthDate(patient.getBirthdate());
+            queue.setPatientIdentifier(patient.getPatientIdentifier().getIdentifier());
+            queue.setOpdConcept(selectedOPDConcept);
+            queue.setOpdConceptName(selectedOPDConcept.getName().getName());
+            queue.setPatientName(patient.getGivenName()+" "+patient.getMiddleName() + " "+ patient.getFamilyName());
+            queue.setReferralConcept(conNewPatient);
+            queue.setReferralConceptName(conNewPatient.getName().getName());
+            queue.setSex(patient.getGender());
+            PatientQueueService queueService = Context.getService(PatientQueueService.class);
+            queueService.saveOpdPatientQueue(queue);
+        }
+        
+        
 	}
 	
 	/**

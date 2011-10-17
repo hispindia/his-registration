@@ -49,6 +49,10 @@
 		
 			// 
 			if(PAGE.validate()){
+				
+				// Hide print button
+				jQuery("#printSlip").hide();
+				
 				// Convert OPDWard dropdown to printable format
 				jQuery("#opdWard").hide();
 				jQuery("#opdWard").after("<span>" + jQuery("#opdWard option:checked").html() +  "</span>");		
@@ -58,7 +62,12 @@
 					if(jQuery(value).is(":checked")){
 						jQuery("#printableTemporaryCategories").append("<span style='margin:5px;'>" + jQuery(value).val() + "</span>");
 					}
-				});
+				});				
+				
+				if(!StringUtils.isBlank(jQuery("#printableTemporaryCategories").html())){
+					jQuery("#printableTemporaryCategories").prepend("<b>Temporary Categories:</b>");
+				}
+				
 				jQuery("#temporaryCategories").hide();
 				
 				// submit form and print			
@@ -191,17 +200,19 @@
 						<span id="datetime"/>
 					</td>
 				</tr>
-				<tr>
+				<tr id="temporaryCategories">
 					<td valign="top"><b>Temporary Categories:</b></td>
 					<td colspan="5">
-						<div id="temporaryCategories">
-							<input type="checkbox" name="temporary.attribute.11" value="MLC"/> MLC <br/>
-							<input type="checkbox" name="temporary.attribute.11" value="Accident"/> Accident <br/>								
-						</div>			
+						<input type="checkbox" name="temporary.attribute.11" value="MLC"/> MLC <br/>
+						<input type="checkbox" name="temporary.attribute.11" value="Accident"/> Accident <br/>										
+					</td>
+				</tr>
+				<tr>
+					<td colspan="6">
 						<div id="printableTemporaryCategories">
 							
-						</div>							
-					</td>
+						</div>
+					</td>						
 				</tr>
 			</table>
 		</form>

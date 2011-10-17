@@ -124,7 +124,6 @@ public class RegistrationAjaxController {
 		Calendar date = Calendar.getInstance();
 		if (type.equalsIgnoreCase("y")) {
 			date.add(Calendar.YEAR, -age);
-			return "01/01/" + date.get(Calendar.YEAR);
 		} else if (type.equalsIgnoreCase("m")) {
 			date.add(Calendar.MONTH, -age);
 		} else if (type.equalsIgnoreCase("w")) {

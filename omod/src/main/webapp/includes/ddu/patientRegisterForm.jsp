@@ -134,6 +134,7 @@
 						
 						jQuery("#estimatedAge").html(json.age);
 						jQuery("#birthdate").val(json.birthdate);
+						jQuery("#calendar").val(json.birthdate);
 					} else {
 						alert(json.error);
 					}

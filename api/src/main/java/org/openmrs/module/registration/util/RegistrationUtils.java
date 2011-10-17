@@ -37,7 +37,6 @@ import org.openmrs.PersonAttribute;
 import org.openmrs.PersonAttributeType;
 import org.openmrs.PersonName;
 import org.openmrs.api.context.Context;
-import org.openmrs.module.hospitalcore.util.DateUtils;
 import org.openmrs.module.hospitalcore.util.GlobalPropertyUtil;
 
 public class RegistrationUtils {
@@ -79,7 +78,7 @@ public class RegistrationUtils {
 
 		if (personName == null)
 			personName = new PersonName();
-		
+
 		personName.setGivenName("");
 		personName.setMiddleName("");
 		personName.setFamilyName("");
@@ -147,7 +146,7 @@ public class RegistrationUtils {
 				+ String.valueOf(now.get(Calendar.DATE))
 				+ String.valueOf(now.get(Calendar.MINUTE))
 				+ String.valueOf(new Random().nextInt(999));
-		return noCheck + "-" + getCheckdigit(noCheck);
+		return noCheck + "-" + generateCheckdigit(noCheck);
 	}
 
 	/*
@@ -157,27 +156,30 @@ public class RegistrationUtils {
 	 * 
 	 * @return idWithCheckdigit
 	 */
-	private static int getCheckdigit(String idWithoutCheckdigit) {
-		String validChars = "0123456789ACDEFGHJKLMNPRSTUVWXY";
-		idWithoutCheckdigit = idWithoutCheckdigit.trim().toUpperCase();
+	private static int generateCheckdigit(String input) {
+		int factor = 2;
 		int sum = 0;
-		for (int i = 0; i < idWithoutCheckdigit.length(); i++) {
-			char ch = idWithoutCheckdigit.charAt(idWithoutCheckdigit.length()
-					- i - 1);
-			if (validChars.indexOf(ch) == -1) {
-				logger.warn("\"" + ch + "\" is an invalid character");
-			}
-			int digit = (int) ch - 48;
-			int weight;
-			if (i % 2 == 0) {
-				weight = (2 * digit) - (int) (digit / 5) * 9;
-			} else {
-				weight = digit;
-			}
-			sum += weight;
+		int n = 10;
+		int length = input.length();
+
+		if (!input.matches("[\\w]+"))
+			throw new RuntimeException("Invalid character in patient id: "
+					+ input);
+		// Work from right to left
+		for (int i = length - 1; i >= 0; i--) {
+			int codePoint = input.charAt(i) - 48;
+			// slight openmrs peculiarity to Luhn's algorithm
+			int accum = factor * codePoint - (factor - 1)
+					* (int) (codePoint / 5) * 9;
+
+			// Alternate the "factor"
+			factor = (factor == 2) ? 1 : 2;
+
+			sum += accum;
 		}
-		sum = Math.abs(sum) + 10;
-		return (10 - (sum % 10)) % 10;
+
+		int remainder = sum % n;
+		return (n - remainder) % n;
 	}
 
 	/**
@@ -195,6 +197,7 @@ public class RegistrationUtils {
 		if (address == null)
 			address = new PersonAddress();
 
+		address.setAddress1("");
 		address.setCountyDistrict(district);
 		address.setCityVillage(tehsil);
 
@@ -219,43 +222,54 @@ public class RegistrationUtils {
 				type.getName(), value));
 		return attribute;
 	}
-	
+
 	/**
 	 * Estimate age using birthdate
+	 * 
 	 * @param birthdate
 	 * @return
 	 * @throws ParseException
 	 */
 	public static String estimateAge(Date date) throws ParseException {
-		int years = DateUtils.getAgeFromBirthday(date);
-		if (years > 1) {
-			return String.format("~ %s years", years);
+
+		String age = "~ ";
+		long diff = Math.abs(date.getTime() - (new Date()).getTime())
+				/ (1000 * 60 * 60 * 24);
+		long yearDiff = diff / 365;
+
+		if (yearDiff > 0) {
+			if (yearDiff == 1) {
+				age += yearDiff + " year";
+			} else {
+				age += yearDiff + " years ";
+			}
 		} else {
-			long diff = Math.abs(date.getTime() - (new Date()).getTime())
-					/ (24 * 60 * 60 * 1000);
-			long month = diff / 30;
-			long day = diff % 30;
-			String age = "";
-			if (month > 0) {
-				if (month == 1) {
-					age += month + " month ";
+			long monthDiff = (diff % 365) / 30;
+
+			if (monthDiff > 0) {
+
+				if (monthDiff == 1) {
+					age += monthDiff + " month";
 				} else {
-					age += month + " months ";
+					age += monthDiff + " months";
+				}
+			} else {
+				long dateDiff = (diff % 365) % 30;
+				if (dateDiff > 0) {
+					if (dateDiff == 1) {
+						age += dateDiff + " day";
+					} else {
+						age += dateDiff + " days";
+					}
 				}
 			}
-			if (day > 0) {
-				if (day == 1) {
-					age += day + " day";
-				} else {
-					age += day + " days";
-				}
-			}
-			return age;
 		}
+		return age;
 	}
-	
+
 	/**
 	 * Estimate age using birthdate
+	 * 
 	 * @param birthdate
 	 * @return
 	 * @throws ParseException
