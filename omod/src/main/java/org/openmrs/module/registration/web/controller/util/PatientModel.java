@@ -26,7 +26,7 @@ import java.util.Map;
 
 import org.openmrs.Patient;
 import org.openmrs.PersonAttribute;
-import org.openmrs.module.hospitalcore.util.PatientUtil;
+import org.openmrs.module.hospitalcore.util.PatientUtils;
 import org.openmrs.module.registration.util.RegistrationUtils;
 
 public class PatientModel {
@@ -44,11 +44,11 @@ public class PatientModel {
 	public PatientModel(Patient patient) throws ParseException {
 		setPatientId(patient.getPatientId().toString());
 		setIdentifier(patient.getPatientIdentifier().getIdentifier());
-		setFullname(PatientUtil.getFullName(patient));
+		setFullname(PatientUtils.getFullName(patient));
 
 		setAge(String.format("%s, %s",
 				RegistrationUtils.estimateAge(patient.getBirthdate()),
-				PatientUtil.getAgeCategory(patient)));
+				PatientUtils.getAgeCategory(patient)));
 
 		if (patient.getGender().equalsIgnoreCase("M")) {
 			setGender("Male");
