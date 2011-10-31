@@ -83,6 +83,7 @@ public class FindCreatePatientController {
 				.optimizeParameters(request);
 		logger.info("Submited parameters: " + parameters);
 
+		System.out.println("=== Before saving patient ===");
 		Patient patient;
 		try {
 			// create patient
@@ -106,6 +107,7 @@ public class FindCreatePatientController {
 			model.addAttribute("status", "error");
 			model.addAttribute("message", e.getMessage());
 		}
+		System.out.println("=== After saving patient ===");
 		return "/module/registration/patient/savePatient";
 	}
 
