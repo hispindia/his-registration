@@ -23,7 +23,9 @@ package org.openmrs.module.registration.db.hibernate;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -32,11 +34,16 @@ import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Expression;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
+import org.openmrs.Encounter;
+import org.openmrs.EncounterType;
 import org.openmrs.Patient;
 import org.openmrs.PersonAttribute;
 import org.openmrs.PersonAttributeType;
+import org.openmrs.api.context.Context;
+import org.openmrs.module.hospitalcore.util.GlobalPropertyUtil;
 import org.openmrs.module.registration.db.RegistrationDAO;
 import org.openmrs.module.registration.model.RegistrationFee;
+import org.openmrs.module.registration.util.RegistrationConstants;
 
 public class HibernateRegistrationDAO implements RegistrationDAO {
 
@@ -107,5 +114,29 @@ public class HibernateRegistrationDAO implements RegistrationDAO {
 		personCriteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
 
 		return criteria.list();
+	}
+
+	/*
+	 * ENCOUNTER
+	 */
+	public Encounter getLastEncounter(Patient patient) {
+		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(
+				Encounter.class);
+		criteria.add(Restrictions.eq("patient", patient));
+
+		// Get encountertypes
+		Set<EncounterType> encounterTypes = new HashSet<EncounterType>();
+		encounterTypes.add(Context.getEncounterService().getEncounterType(
+				GlobalPropertyUtil.getString(
+						RegistrationConstants.PROPERTY_ENCOUNTER_TYPE_REGINIT,
+						"REGINITIAL")));
+		encounterTypes.add(Context.getEncounterService().getEncounterType(
+				GlobalPropertyUtil.getString(
+						RegistrationConstants.PROPERTY_ENCOUNTER_TYPE_REVISIT,
+						"REGREVISIT")));
+		criteria.add(Restrictions.in("encounterType", encounterTypes));
+		criteria.addOrder(Order.desc("dateCreated"));
+		criteria.setMaxResults(1);
+		return (Encounter) criteria.uniqueResult();
 	}
 }

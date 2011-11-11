@@ -203,7 +203,6 @@ public class RegistrationWebUtils {
 		encounter.setEncounterDatetime(new Date());
 		encounter.setPatient(patient);
 		encounter.setLocation(location);	
-		
 		return encounter;
 	}
 }

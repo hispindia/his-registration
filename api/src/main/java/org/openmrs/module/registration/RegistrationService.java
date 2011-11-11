@@ -23,6 +23,7 @@ package org.openmrs.module.registration;
 import java.text.ParseException;
 import java.util.List;
 
+import org.openmrs.Encounter;
 import org.openmrs.Patient;
 import org.openmrs.PersonAttribute;
 import org.openmrs.PersonAttributeType;
@@ -72,4 +73,15 @@ public interface RegistrationService extends OpenmrsService {
 	// PERSON ATTRIBUTE
 	public List<PersonAttribute> getPersonAttribute(PersonAttributeType type,
 			String value);
+	
+	/*
+	 * ENCOUNTER
+	 */
+	
+	/**
+	 * Get last encounter
+	 * @param patient
+	 * @return
+	 */
+	public Encounter getLastEncounter(Patient patient);
 }

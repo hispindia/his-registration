@@ -23,6 +23,7 @@ package org.openmrs.module.registration.db;
 import java.text.ParseException;
 import java.util.List;
 
+import org.openmrs.Encounter;
 import org.openmrs.Patient;
 import org.openmrs.PersonAttribute;
 import org.openmrs.PersonAttributeType;
@@ -75,4 +76,11 @@ public interface RegistrationDAO {
 	 */
 	public List<PersonAttribute> getPersonAttribute(PersonAttributeType type,
 			String value);
+	
+	/**
+	 * Get last encounter
+	 * @param patient
+	 * @return
+	 */
+	public Encounter getLastEncounter(Patient patient);
 }

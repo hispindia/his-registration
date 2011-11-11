@@ -16,13 +16,24 @@
 			optionDelimiter: "|"
 		});
 		
-		// Set the selected OPD (only 
+		// Set the selected OPD
 		if(!StringUtils.isBlank(MODEL.selectedOPD)){			
 			jQuery("#opdWard").val(MODEL.selectedOPD);
 			jQuery("#opdWard").attr("disabled", "disabled");
 		}
 		
 		jQuery("#buySlip").hide();
+		
+		// Set data for reprint page
+		if(MODEL.reprint=="true"){
+			jQuery("#opdWard").val(MODEL.observations[3]);
+			jQuery.each(MODEL.observations[11].split(","), function(index, value){
+				jQuery("input[name=temporary.attribute.11][value='" + value + "']").attr("checked", "checked");
+			});		
+			jQuery("#printSlip").hide();
+		} else {
+			jQuery("#reprint").hide();
+		}
 		
 		/*
 		if(MODEL.dueDate.length>0){
@@ -48,12 +59,13 @@
 	 **/
 	PAGE = {
 		/** Validate and submit */
-		submit: function(){
+		submit: function(reprint){
 		
 			if(PAGE.validate()){
 				
 				// Hide print button
 				jQuery("#printSlip").hide();
+				jQuery("#reprint").hide();
 				
 				// Convert OPDWard dropdown to printable format
 				jQuery("#opdWard").hide();
@@ -73,18 +85,28 @@
 				jQuery("#temporaryCategories").hide();
 				
 				// submit form and print		
-				jQuery("#patientInfoForm").ajaxSubmit({
-					success: function (responseText, statusText, xhr){
-						if(responseText=="success"){						
-							jQuery("#patientInfoPrintArea").printArea({
-								mode : "popup",
-								popClose : true
-							});
-							window.location.href = getContextPath() + "/findPatient.htm";
-						}					
-					}
-				});
+				if(!reprint){
+					jQuery("#patientInfoForm").ajaxSubmit({
+						success: function (responseText, statusText, xhr){
+							if(responseText=="success"){						
+								PAGE.print();
+								window.location.href = getContextPath() + "/findPatient.htm";
+							}					
+						}
+					});
+				} else {
+					PAGE.print();
+				}
+				
 			}
+		},
+		
+		// Print the slip
+		print: function(){
+			jQuery("#patientInfoPrintArea").printArea({
+				mode : "popup",
+				popClose : true
+			});
 		},
 		
 		/** FILL OPTIONS INTO SELECT 
@@ -153,7 +175,8 @@
 		}
 	};
 </script>
-<input id="printSlip" type="button" value="Print" onClick="PAGE.submit();"/>
+<input id="printSlip" type="button" value="Print" onClick="PAGE.submit(false);"/>
+<input id="reprint" type="button" value="RePrint" onClick="PAGE.submit(true);"/>
 <input id="buySlip" type="button" value="Buy a new slip" onClick="PAGE.buySlip();"/>
 <span id="validationDate"></span>
 <div id="patientInfoPrintArea">

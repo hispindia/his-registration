@@ -29,6 +29,11 @@
 		_attributes[${entry.key}] = "${entry.value}";
 	</c:forEach>
 	
+	var _observations = new Array();
+	<c:forEach var="entry" items="${observations}">
+		_observations[${entry.key}] = "${entry.value}";
+	</c:forEach>
+	
 	/**
 	 ** VALUES FROM MODEL
 	 **/
@@ -40,11 +45,13 @@
 		patientGender: "${patient.gender}",
 		patientAddress: "${patient.address}",
 		patientAttributes: _attributes,
+		observations: _observations,
 		currentDateTime: "${currentDateTime}",	
 		selectedOPD: "${selectedOPD}",
 		OPDs: "${OPDs}",
 		dueDate: "${dueDate}",
-		daysLeft: "${daysLeft}"
+		daysLeft: "${daysLeft}",
+		reprint: "${param.reprint eq 'true'}"
 	};
 </script>
 

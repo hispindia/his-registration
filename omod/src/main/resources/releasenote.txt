@@ -1,3 +1,6 @@
+2.2.0
+- Added feature to reprint OPD Slip
+
 2.1.1
 - Fixed bug when click multiple times on print button on View Patient info page.
 - Changed to check OPD Queue before sending patient to.

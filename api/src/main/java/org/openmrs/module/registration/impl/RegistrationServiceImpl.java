@@ -23,6 +23,7 @@ package org.openmrs.module.registration.impl;
 import java.text.ParseException;
 import java.util.List;
 
+import org.openmrs.Encounter;
 import org.openmrs.Patient;
 import org.openmrs.PersonAttribute;
 import org.openmrs.PersonAttributeType;
@@ -69,5 +70,9 @@ public class RegistrationServiceImpl extends BaseOpenmrsService implements
 	public List<PersonAttribute> getPersonAttribute(PersonAttributeType type,
 			String value) {
 		return dao.getPersonAttribute(type, value);
+	}
+
+	public Encounter getLastEncounter(Patient patient) {
+		return dao.getLastEncounter(patient);
 	}
 }

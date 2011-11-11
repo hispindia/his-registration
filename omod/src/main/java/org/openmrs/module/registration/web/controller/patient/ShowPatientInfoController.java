@@ -26,6 +26,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -42,6 +43,7 @@ import org.openmrs.Obs;
 import org.openmrs.Patient;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.hospitalcore.util.GlobalPropertyUtil;
+import org.openmrs.module.hospitalcore.util.ObsUtils;
 import org.openmrs.module.registration.RegistrationService;
 import org.openmrs.module.registration.model.RegistrationFee;
 import org.openmrs.module.registration.util.RegistrationConstants;
@@ -65,6 +67,7 @@ public class ShowPatientInfoController {
 	public String showPatientInfo(
 			@RequestParam("patientId") Integer patientId,
 			@RequestParam(value = "encounterId", required = false) Integer encounterId,
+			@RequestParam(value = "reprint", required=false) Boolean reprint,
 			Model model) throws IOException, ParseException {
 
 		Patient patient = Context.getPatientService().getPatient(patientId);
@@ -108,6 +111,18 @@ public class ShowPatientInfoController {
 					model.addAttribute("selectedOPD", obs.getValueCoded().getConceptId());
 				}
 			}			
+		}
+		
+		// If reprint, get the latest registration encounter
+		if((reprint!=null) && reprint){
+			Encounter encounter = Context.getService(RegistrationService.class).getLastEncounter(patient);
+			if(encounter!=null){
+				Map<Integer, String> observations = new HashMap<Integer, String>();
+				for(Obs obs:encounter.getAllObs()){
+					observations.put(obs.getConcept().getConceptId(), ObsUtils.getValueAsString(obs));
+				}
+				model.addAttribute("observations", observations);
+			}
 		}
 
 		return "/module/registration/patient/showPatientInfo";

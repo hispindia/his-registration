@@ -34,6 +34,10 @@
 		/** Edit a patient */
 		editPatient: function(patientId){
 			window.location.href = openmrsContextPath + "/module/registration/editPatient.form?patientId=" + patientId;
+		},
+		
+		reprint: function(patientId){
+			window.location.href = openmrsContextPath + "/module/registration/showPatientInfo.form?patientId=" + patientId + "&reprint=true";
 		}
 	};
 	
@@ -79,6 +83,7 @@
 			<td><b>Birthdate</b></td>
 			<td><b>Relative Name</b></td>
 			<td><b>Phone number</b></td>
+			<td><b>Reprint OPD slip</b></td>
 		</tr>
 		<c:forEach items="${patients}" var="patient" varStatus="varStatus">
 			<tr class='${varStatus.index % 2 == 0 ? "oddRow" : "evenRow" } patientSearchRow'>
@@ -126,6 +131,9 @@
 						if(phoneNumber!=null)
 							out.print(phoneNumber);
 					%>
+                </td>
+                <td onclick="PATIENTSEARCHRESULT.reprint(${patient.patientId});"> 
+                	Reprint OPD slip
                 </td>
 			</tr>
 		</c:forEach>
