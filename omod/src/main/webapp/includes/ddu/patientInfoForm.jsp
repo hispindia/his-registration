@@ -24,10 +24,12 @@
 		
 		// Set data for reprint page
 		if(MODEL.reprint=="true"){
-			jQuery("#opdWard").val(MODEL.observations[3]);
-			jQuery.each(MODEL.observations[11].split(","), function(index, value){
-				jQuery("input[name=temporary.attribute.11][value='" + value + "']").attr("checked", "checked");
-			});		
+			jQuery("#opdWard").val(MODEL.observations[6148]);
+			if(!StringUtils.isBlank(MODEL.observations[7515])){
+				jQuery.each(MODEL.observations[7515].split(","), function(index, value){
+					jQuery("input[name=temporary.attribute.7515][value='" + value + "']").attr("checked", "checked");
+				});		
+			}
 			jQuery("#printSlip").hide();
 		} else {
 			jQuery("#reprint").hide();
@@ -223,8 +225,8 @@
 				<tr id="temporaryCategories">
 					<td valign="top"><b>Temporary Categories:</b></td>
 					<td colspan="5">
-						<input type="checkbox" name="temporary.attribute.11" value="MLC"/> MLC <br/>
-						<input type="checkbox" name="temporary.attribute.11" value="Accident"/> Accident <br/>										
+						<input type="checkbox" name="temporary.attribute.7515" value="MLC"/> MLC <br/>
+						<input type="checkbox" name="temporary.attribute.7515" value="Accident"/> Accident <br/>										
 					</td>
 				</tr>
 				<tr>

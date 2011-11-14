@@ -20,6 +20,7 @@
 <%@ include file="/WEB-INF/template/include.jsp" %>
 <%@ page import="java.util.Map" %>
 <%@ page import="org.openmrs.Patient" %>
+<%@ page import="org.openmrs.module.hospitalcore.util.PatientUtils"%>
 
 <script type="text/javascript">
 	
@@ -74,15 +75,15 @@
 	<table style="width:100%">
 		<tr>
 			<openmrs:hasPrivilege privilege="Edit Patients">
-				<td><b>Edit</b></td>
+				<td style="text-align:center;"><b>Edit</b></td>
 			</openmrs:hasPrivilege>		
-			<td><b>Identifier</b></td>
-			<td><b>Name</b></td>
-			<td><b>Age</b></td>
-			<td><b>Gender</b></td>			
-			<td><b>Birthdate</b></td>
-			<td><b>Relative Name</b></td>
-			<td><b>Reprint OPD slip</b></td>
+			<td style="text-align:center;"><b>Identifier</b></td>
+			<td style="text-align:center;"><b>Name</b></td>
+			<td style="text-align:center;"><b>Age</b></td>
+			<td style="text-align:center;"><b>Gender</b></td>			
+			<td style="text-align:center;"><b>Birthdate</b></td>
+			<td style="text-align:center;"><b>Relative Name</b></td>
+			<td style="text-align:center;"><b>Reprint</b></td>
 		</tr>
 		<c:forEach items="${patients}" var="patient" varStatus="varStatus">
 			<tr class='${varStatus.index % 2 == 0 ? "oddRow" : "evenRow" } patientSearchRow'>
@@ -97,13 +98,13 @@
 					${patient.patientIdentifier.identifier}
 				</td>
 				<td onclick="PATIENTSEARCHRESULT.visit(${patient.patientId});">${patient.givenName} ${patient.middleName} ${patient.familyName}</td>
-				<td onclick="PATIENTSEARCHRESULT.visit(${patient.patientId});"> 
-                	<c:choose>
-                		<c:when test="${patient.age == 0}">&lt 1</c:when>
-                		<c:otherwise >${patient.age}</c:otherwise>
-                	</c:choose>
+				<td style="text-align:center;" onclick="PATIENTSEARCHRESULT.visit(${patient.patientId});"> 
+                	<%
+						Patient patient = (Patient) pageContext.getAttribute("patient");
+						out.print(PatientUtils.estimateAge(patient));
+					%>
                 </td>
-				<td onclick="PATIENTSEARCHRESULT.visit(${patient.patientId});">
+				<td style="text-align:center;" onclick="PATIENTSEARCHRESULT.visit(${patient.patientId});">
 					<c:choose>
                 		<c:when test="${patient.gender eq 'M'}">
 							<img src="${pageContext.request.contextPath}/images/male.gif"/>
@@ -111,12 +112,12 @@
                 		<c:otherwise><img src="${pageContext.request.contextPath}/images/female.gif"/></c:otherwise>
                 	</c:choose>
 				</td>                
-				<td onclick="PATIENTSEARCHRESULT.visit(${patient.patientId});"> 
+				<td style="text-align:center;" onclick="PATIENTSEARCHRESULT.visit(${patient.patientId});"> 
                 	<openmrs:formatDate date="${patient.birthdate}"/>
                 </td>
 				<td onclick="PATIENTSEARCHRESULT.visit(${patient.patientId});"> 
                 	<%
-						Patient patient = (Patient) pageContext.getAttribute("patient");
+						// Patient patient = (Patient) pageContext.getAttribute("patient");
 						Map<Integer, Map<Integer, String>> attributes = (Map<Integer, Map<Integer, String>>) pageContext.findAttribute("attributeMap");						
 						Map<Integer, String> patientAttributes = (Map<Integer, String>) attributes.get(patient.getPatientId());						
 						String relativeName = patientAttributes.get(8); 
@@ -125,7 +126,9 @@
 					%>
                 </td>
 				<td onclick="PATIENTSEARCHRESULT.reprint(${patient.patientId});"> 
-                	Reprint OPD slip
+					<center>
+						<img src="${pageContext.request.contextPath}/moduleResources/registration/print.png"/>
+					</center>                	
                 </td>
 			</tr>
 		</c:forEach>
