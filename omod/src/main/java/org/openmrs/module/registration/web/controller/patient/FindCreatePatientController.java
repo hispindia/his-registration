@@ -225,7 +225,7 @@ public class FindCreatePatientController {
 		encounter.addObs(opdObs);
 
 		// Send patient to OPD Queue
-		RegistrationWebUtils.sendPatientToOPDQueue(patient, selectedOPDConcept);
+		RegistrationWebUtils.sendPatientToOPDQueue(patient, selectedOPDConcept, false);
 
 		/*
 		 * REFERRAL INFORMATION

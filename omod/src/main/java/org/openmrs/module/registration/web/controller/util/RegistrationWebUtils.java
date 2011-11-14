@@ -40,9 +40,6 @@ import org.jaxen.XPath;
 import org.jaxen.dom4j.Dom4jXPath;
 import org.openmrs.Concept;
 import org.openmrs.ConceptAnswer;
-import org.openmrs.ConceptClass;
-import org.openmrs.ConceptDatatype;
-import org.openmrs.ConceptName;
 import org.openmrs.Encounter;
 import org.openmrs.EncounterType;
 import org.openmrs.Location;
@@ -93,21 +90,16 @@ public class RegistrationWebUtils {
 	 * Send patient for OPD Queue
 	 * @param patient
 	 * @param selectedOPDConcept
+	 * @param revisit TODO
 	 */
-	public static void sendPatientToOPDQueue(Patient patient, Concept selectedOPDConcept){
-		String gpNewPatient = Context.getAdministrationService().getGlobalProperty("registration.newPatientConcept");
-        Concept conNewPatient = Context.getConceptService().getConcept(gpNewPatient);
-        if( conNewPatient == null ){        	
-			
-			ConceptDatatype datatype = Context.getConceptService().getConceptDatatypeByName("N/A");
-			ConceptClass conceptClass = Context.getConceptService().getConceptClassByName("Misc");
-			conNewPatient = new Concept();
-			ConceptName name = new ConceptName(gpNewPatient, Context.getLocale());
-			conNewPatient.addName(name);
-			conNewPatient.setDatatype(datatype);
-			conNewPatient.setConceptClass(conceptClass);
-			Context.getConceptService().saveConcept(conNewPatient);
-        }
+	public static void sendPatientToOPDQueue(Patient patient, Concept selectedOPDConcept, boolean revisit){
+		Concept referralConcept = null;
+		if(!revisit){
+			referralConcept = Context.getConceptService().getConcept("New Patient");
+		} else {
+			referralConcept = Context.getConceptService().getConcept("Revisit");
+		}
+        
         OpdPatientQueue queue = Context.getService(PatientQueueService.class).getOpdPatientQueue(patient.getPatientIdentifier().getIdentifier(), selectedOPDConcept.getConceptId());
         if(queue==null){
         	queue = new OpdPatientQueue();
@@ -118,8 +110,8 @@ public class RegistrationWebUtils {
             queue.setOpdConcept(selectedOPDConcept);
             queue.setOpdConceptName(selectedOPDConcept.getName().getName());
             queue.setPatientName(patient.getGivenName()+" "+patient.getMiddleName() + " "+ patient.getFamilyName());
-            queue.setReferralConcept(conNewPatient);
-            queue.setReferralConceptName(conNewPatient.getName().getName());
+            queue.setReferralConcept(referralConcept);
+            queue.setReferralConceptName(referralConcept.getName().getName());
             queue.setSex(patient.getGender());
             PatientQueueService queueService = Context.getService(PatientQueueService.class);
             queueService.saveOpdPatientQueue(queue);

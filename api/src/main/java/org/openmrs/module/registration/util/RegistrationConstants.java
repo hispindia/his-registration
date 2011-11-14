@@ -63,5 +63,7 @@ public class RegistrationConstants {
 	public static final String CONCEPT_NAME_PATIENT_REFERRED_TO_HOSPITAL = "PATIENT REFERRED TO HOSPITAL?";
 	public static final String CONCEPT_NAME_REASON_FOR_REFERRAL = "REASON FOR REFERRAL";
 	public static final String CONCEPT_NAME_PATIENT_REFERRED_FROM = "PATIENT REFERRED FROM";
+	public static final String CONCEPT_NEW_PATIENT = "New Patient";
+	public static final String CONCEPT_REVISIT = "Revisit";
 
 }

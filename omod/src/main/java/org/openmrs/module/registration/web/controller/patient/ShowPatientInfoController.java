@@ -175,7 +175,7 @@ public class ShowPatientInfoController {
 			opd.setValueCoded(selectedOPDConcept);
 			encounter.addObs(opd);
 			RegistrationWebUtils.sendPatientToOPDQueue(patient,
-					selectedOPDConcept);
+					selectedOPDConcept, true);
 		}
 
 		// create temporary attributes
