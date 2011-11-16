@@ -47,7 +47,7 @@ public class PatientModel {
 		setFullname(PatientUtils.getFullName(patient));
 
 		setAge(String.format("%s, %s",
-				RegistrationUtils.estimateAge(patient.getBirthdate()),
+				PatientUtils.estimateAge(patient.getBirthdate()),
 				PatientUtils.getAgeCategory(patient)));
 
 		if (patient.getGender().equalsIgnoreCase("M")) {
