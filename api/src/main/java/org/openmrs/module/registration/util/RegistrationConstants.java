@@ -42,7 +42,10 @@ public class RegistrationConstants {
 	+ ".patientPerRSBY";
 	public static final String PROPERTY_BPL_NO_OF_PATIENT = MODULE_ID
 	+ ".patientPerBPL";
-	
+	public static final String PROPERTY_BLOODBANK_CONCEPT_ID = MODULE_ID
+			+ ".bloodbankConceptId";	
+	public static final String PROPERTY_ORDER_TYPE_ID = MODULE_ID
+	+ ".bloodbankOrderTypeId";	
 
 	// field names
 	public static final String FORM_FIELD_PATIENT_NAME = "patient.name";

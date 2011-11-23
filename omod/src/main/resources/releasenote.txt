@@ -1,3 +1,6 @@
+2.2.1
+- Send Order to bloodbank 
+
 2.2.0
 - Added feature to reprint OPD Slip
 - Fixed bug incorrectly estimate patient age

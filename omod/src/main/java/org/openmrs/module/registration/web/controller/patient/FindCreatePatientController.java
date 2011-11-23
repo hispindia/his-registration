@@ -21,6 +21,7 @@
 package org.openmrs.module.registration.web.controller.patient;
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -33,11 +34,14 @@ import org.jaxen.JaxenException;
 import org.openmrs.Concept;
 import org.openmrs.Encounter;
 import org.openmrs.Obs;
+import org.openmrs.Order;
+import org.openmrs.OrderType;
 import org.openmrs.Patient;
 import org.openmrs.PatientIdentifier;
 import org.openmrs.PersonAttribute;
 import org.openmrs.PersonName;
 import org.openmrs.api.context.Context;
+import org.openmrs.module.hospitalcore.util.GlobalPropertyUtil;
 import org.openmrs.module.hospitalcore.util.HospitalCoreUtils;
 import org.openmrs.module.registration.includable.validator.attribute.PatientAttributeValidatorService;
 import org.openmrs.module.registration.util.RegistrationConstants;
@@ -93,7 +97,7 @@ public class FindCreatePatientController {
 					patient.getId()));
 
 			// create encounter for the visit
-			Encounter encounter = createEncounter(patient, parameters);			
+			Encounter encounter = createEncounter(patient, parameters);
 			encounter = Context.getEncounterService().saveEncounter(encounter);
 			logger.info(String
 					.format("Saved encounter for the visit of patient [id=%s, patient=%s]",
@@ -102,7 +106,7 @@ public class FindCreatePatientController {
 			model.addAttribute("patientId", patient.getPatientId());
 			model.addAttribute("encounterId", encounter.getId());
 		} catch (Exception e) {
-			
+
 			e.printStackTrace();
 			model.addAttribute("status", "error");
 			model.addAttribute("message", e.getMessage());
@@ -174,8 +178,9 @@ public class FindCreatePatientController {
 
 		// get custom person attribute
 		PatientAttributeValidatorService validator = new PatientAttributeValidatorService();
-		Map<String, Object> validationParameters = HospitalCoreUtils.buildParameters("patient", patient, "attributes", parameters);
-		String validateResult = validator.validate(validationParameters);		
+		Map<String, Object> validationParameters = HospitalCoreUtils
+				.buildParameters("patient", patient, "attributes", parameters);
+		String validateResult = validator.validate(validationParameters);
 		logger.info("Attirubte validation: " + validateResult);
 		if (StringUtils.isBlank(validateResult)) {
 			for (String name : parameters.keySet()) {
@@ -224,8 +229,28 @@ public class FindCreatePatientController {
 		opdObs.setValueCoded(selectedOPDConcept);
 		encounter.addObs(opdObs);
 
-		// Send patient to OPD Queue
-		RegistrationWebUtils.sendPatientToOPDQueue(patient, selectedOPDConcept, false);
+		// Send patient to OPD Queue/bloodbank
+		Concept bloodbankConcept = Context.getConceptService().getConcept(
+				GlobalPropertyUtil.getInteger(
+						RegistrationConstants.PROPERTY_BLOODBANK_CONCEPT_ID,
+						6425));
+		if (selectedOPDConcept != bloodbankConcept) {
+			RegistrationWebUtils.sendPatientToOPDQueue(patient,
+					selectedOPDConcept, false);
+		} else {
+			OrderType ordertype = Context.getOrderService().getOrderType(GlobalPropertyUtil.getInteger(RegistrationConstants.PROPERTY_ORDER_TYPE_ID, 6));
+			Order order = new Order();
+			order.setConcept(bloodbankConcept);
+			order.setCreator(Context.getAuthenticatedUser());
+			order.setDateCreated(new Date());
+			order.setOrderer(Context.getAuthenticatedUser());
+			order.setPatient(patient);
+			order.setStartDate(new Date());
+			order.setAccessionNumber("0");
+			order.setOrderType(ordertype);
+			order.setEncounter(encounter);
+			encounter.addOrder(order);
+		}
 
 		/*
 		 * REFERRAL INFORMATION

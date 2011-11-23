@@ -107,6 +107,20 @@
 			Name of concept REVISIT
 		</description>
 	</globalProperty>
+	<globalProperty>
+		<property>@MODULE_ID@.bloodbankConceptId</property>
+		<defaultValue>6425</defaultValue>
+		<description>
+			Concept id of bloodbank room
+		</description>
+	</globalProperty>
+	<globalProperty>
+		<property>@MODULE_ID@.bloodbankOrderTypeId</property>
+		<defaultValue>6</defaultValue>
+		<description>
+			ID of bloodbank order type
+		</description>
+	</globalProperty>
 	
 	
 	<messages>

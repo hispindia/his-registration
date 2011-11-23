@@ -40,6 +40,8 @@ import org.apache.commons.logging.LogFactory;
 import org.openmrs.Concept;
 import org.openmrs.Encounter;
 import org.openmrs.Obs;
+import org.openmrs.Order;
+import org.openmrs.OrderType;
 import org.openmrs.Patient;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.hospitalcore.util.GlobalPropertyUtil;
@@ -67,7 +69,7 @@ public class ShowPatientInfoController {
 	public String showPatientInfo(
 			@RequestParam("patientId") Integer patientId,
 			@RequestParam(value = "encounterId", required = false) Integer encounterId,
-			@RequestParam(value = "reprint", required=false) Boolean reprint,
+			@RequestParam(value = "reprint", required = false) Boolean reprint,
 			Model model) throws IOException, ParseException {
 
 		Patient patient = Context.getPatientService().getPatient(patientId);
@@ -102,24 +104,32 @@ public class ShowPatientInfoController {
 						dateDiff(dueDate.getTime(), new Date()));
 			}
 		}
-		
+
 		// Get selected OPD room if this is the first time of visit
-		if(encounterId!=null){
-			Encounter encounter = Context.getEncounterService().getEncounter(encounterId);
-			for(Obs obs:encounter.getObs()){
-				if(obs.getConcept().getName().getName().equalsIgnoreCase(RegistrationConstants.CONCEPT_NAME_OPD_WARD)){
-					model.addAttribute("selectedOPD", obs.getValueCoded().getConceptId());
+		if (encounterId != null) {
+			Encounter encounter = Context.getEncounterService().getEncounter(
+					encounterId);
+			for (Obs obs : encounter.getObs()) {
+				if (obs.getConcept()
+						.getName()
+						.getName()
+						.equalsIgnoreCase(
+								RegistrationConstants.CONCEPT_NAME_OPD_WARD)) {
+					model.addAttribute("selectedOPD", obs.getValueCoded()
+							.getConceptId());
 				}
-			}			
+			}
 		}
-		
+
 		// If reprint, get the latest registration encounter
-		if((reprint!=null) && reprint){
-			Encounter encounter = Context.getService(RegistrationService.class).getLastEncounter(patient);
-			if(encounter!=null){
+		if ((reprint != null) && reprint) {
+			Encounter encounter = Context.getService(RegistrationService.class)
+					.getLastEncounter(patient);
+			if (encounter != null) {
 				Map<Integer, String> observations = new HashMap<Integer, String>();
-				for(Obs obs:encounter.getAllObs()){
-					observations.put(obs.getConcept().getConceptId(), ObsUtils.getValueAsString(obs));
+				for (Obs obs : encounter.getAllObs()) {
+					observations.put(obs.getConcept().getConceptId(),
+							ObsUtils.getValueAsString(obs));
 				}
 				model.addAttribute("observations", observations);
 			}
@@ -174,8 +184,29 @@ public class ShowPatientInfoController {
 			opd.setConcept(opdWardConcept);
 			opd.setValueCoded(selectedOPDConcept);
 			encounter.addObs(opd);
-			RegistrationWebUtils.sendPatientToOPDQueue(patient,
-					selectedOPDConcept, true);
+
+			// send patient to opd room/bloodbank
+			Concept bloodbankConcept = Context.getConceptService().getConcept(
+					GlobalPropertyUtil.getInteger(
+							RegistrationConstants.PROPERTY_BLOODBANK_CONCEPT_ID,
+							6425));
+			if (selectedOPDConcept != bloodbankConcept) {
+				RegistrationWebUtils.sendPatientToOPDQueue(patient,
+						selectedOPDConcept, true);
+			} else {
+				OrderType ordertype = Context.getOrderService().getOrderType(GlobalPropertyUtil.getInteger(RegistrationConstants.PROPERTY_ORDER_TYPE_ID, 6));
+				Order order = new Order();
+				order.setConcept(bloodbankConcept);
+				order.setCreator(Context.getAuthenticatedUser());
+				order.setDateCreated(new Date());
+				order.setOrderer(Context.getAuthenticatedUser());
+				order.setPatient(patient);
+				order.setStartDate(new Date());
+				order.setAccessionNumber("0");
+				order.setOrderType(ordertype);
+				order.setEncounter(encounter);
+				encounter.addOrder(order);
+			}
 		}
 
 		// create temporary attributes
