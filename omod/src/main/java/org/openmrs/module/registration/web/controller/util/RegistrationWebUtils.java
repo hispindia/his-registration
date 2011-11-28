@@ -90,7 +90,7 @@ public class RegistrationWebUtils {
 	 * Send patient for OPD Queue
 	 * @param patient
 	 * @param selectedOPDConcept
-	 * @param revisit TODO
+	 * @param revisit
 	 */
 	public static void sendPatientToOPDQueue(Patient patient, Concept selectedOPDConcept, boolean revisit){
 		Concept referralConcept = null;
