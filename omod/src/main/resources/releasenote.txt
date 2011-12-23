@@ -1,3 +1,6 @@
+2.2.4
+- Added feature to capture patient's phone number 
+
 2.2.3
 - Updated concept_id for temporary category in Printing Slip page.
 
