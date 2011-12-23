@@ -22,7 +22,11 @@
 		formValues += "patient.gender==" + MODEL.patientGender + "||";
 		formValues += "patient.identifier==" + MODEL.patientIdentifier + "||";
 		formValues += "patient.gender==" + MODEL.patientGender[0] + "||";
-		formValues += "person.attribute.8==" + MODEL.patientAttributes[8] + "||";							
+		formValues += "person.attribute.8==" + MODEL.patientAttributes[8] + "||";	
+		if(!StringUtils.isBlank(MODEL.patientAttributes[16])){
+			formValues += "person.attribute.16==" + MODEL.patientAttributes[16] + "||";	
+		}
+		
 		jQuery("#patientRegistrationForm").fillForm(formValues);
 		PAGE.checkBirthDate();
 		VALIDATORS.genderCheck();
@@ -244,6 +248,14 @@
 			if(!VALIDATORS.validatePatientCategory()){
 				return false;
 			}
+			
+			if(!StringUtils.isBlank(jQuery("#patientPhoneNumber").val())){
+				if(!StringUtils.isDigit(jQuery("#patientPhoneNumber").val())){
+					alert("Please enter phone number in correct format");
+					return false;
+				}
+			}
+			
 			return true;
 		}
 	};
@@ -465,6 +477,12 @@
 						</td>
 					</tr>
 				</table>
+			</td>
+		</tr>
+		<tr>
+			<td class="cell"><b>Phone number</b></td>
+			<td class="cell">
+				<input id="patientPhoneNumber" name="person.attribute.16" style="width:200px;"/>
 			</td>
 		</tr>
 		<tr>

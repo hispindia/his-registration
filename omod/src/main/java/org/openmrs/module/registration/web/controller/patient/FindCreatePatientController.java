@@ -87,12 +87,12 @@ public class FindCreatePatientController {
 				.optimizeParameters(request);
 		logger.info("Submited parameters: " + parameters);
 
-		System.out.println("=== Before saving patient ===");
 		Patient patient;
 		try {
 			// create patient
 			patient = generatePatient(parameters);
 			patient = Context.getPatientService().savePatient(patient);
+			RegistrationUtils.savePatientSearch(patient);
 			logger.info(String.format("Saved new patient [id=%s]",
 					patient.getId()));
 
@@ -111,7 +111,6 @@ public class FindCreatePatientController {
 			model.addAttribute("status", "error");
 			model.addAttribute("message", e.getMessage());
 		}
-		System.out.println("=== After saving patient ===");
 		return "/module/registration/patient/savePatient";
 	}
 
@@ -302,5 +301,7 @@ public class FindCreatePatientController {
 		}
 		return encounter;
 	}
+	
+	
 
 }

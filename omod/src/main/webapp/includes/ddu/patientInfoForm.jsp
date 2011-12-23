@@ -225,8 +225,8 @@
 				<tr id="temporaryCategories">
 					<td valign="top"><b>Temporary Categories:</b></td>
 					<td colspan="5">
-						<input type="checkbox" name="temporary.attribute.7515" value="MLC"/> MLC <br/>
-						<input type="checkbox" name="temporary.attribute.7515" value="Accident"/> Accident <br/>										
+						<input type="checkbox" name="temporary.attribute.7531" value="MLC"/> MLC <br/>
+						<input type="checkbox" name="temporary.attribute.7531" value="Accident"/> Accident <br/>										
 					</td>
 				</tr>
 				<tr>

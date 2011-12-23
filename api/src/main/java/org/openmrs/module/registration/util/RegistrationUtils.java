@@ -30,6 +30,7 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openmrs.Location;
+import org.openmrs.Patient;
 import org.openmrs.PatientIdentifier;
 import org.openmrs.PatientIdentifierType;
 import org.openmrs.PersonAddress;
@@ -37,6 +38,8 @@ import org.openmrs.PersonAttribute;
 import org.openmrs.PersonAttributeType;
 import org.openmrs.PersonName;
 import org.openmrs.api.context.Context;
+import org.openmrs.module.hospitalcore.HospitalCoreService;
+import org.openmrs.module.hospitalcore.model.PatientSearch;
 import org.openmrs.module.hospitalcore.util.GlobalPropertyUtil;
 import org.openmrs.module.hospitalcore.util.PatientUtils;
 
@@ -234,5 +237,25 @@ public class RegistrationUtils {
 	public static String estimateAge(String birthdate) throws ParseException {
 		Date date = RegistrationUtils.parseDate(birthdate);
 		return PatientUtils.estimateAge(date);
+	}
+	
+	/**
+	 * Save common information to patientSearch table to speed up search process
+	 * @param patient
+	 */
+	public static void savePatientSearch(Patient patient){
+		PatientSearch ps = new PatientSearch();
+		String fullname = PatientUtils.getFullName(patient).replace(" ", "");
+		ps.setFullname(fullname);
+		ps.setPatientId(patient.getPatientId());
+		ps.setAge(patient.getAge());
+		ps.setBirthdate(patient.getBirthdate());
+		ps.setFamilyName(patient.getFamilyName());
+		ps.setGender(patient.getGender());
+		ps.setGivenName(patient.getGivenName());
+		ps.setMiddleName(patient.getMiddleName());
+		ps.setIdentifier(patient.getPatientIdentifier().getIdentifier());
+		ps.setPersonNameId(patient.getPersonName().getId());
+		Context.getService(HospitalCoreService.class).savePatientSearch(ps);
 	}
 }
