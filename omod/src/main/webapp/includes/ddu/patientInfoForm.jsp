@@ -95,6 +95,7 @@
 					});
 				} else {
 					PAGE.print();
+					window.location.href = getContextPath() + "/findPatient.htm";
 				}
 				
 			}
@@ -102,6 +103,10 @@
 		
 		// Print the slip
 		print: function(){
+			jQuery(".patientInfoTable").attr("style", "margin-left:120px; margin-top:60px; font-family:Verdana,'Lucida Grande','Trebuchet MS',Arial,Sans-Serif; font-style:normal; font-size:11px;");
+			jQuery("img", jQuery("#patientInfoPrintArea")).each(function(index, item){
+				jQuery(item).remove();
+			});
 			jQuery("#patientInfoPrintArea").printArea({
 				mode : "popup",
 				popClose : true
@@ -182,16 +187,11 @@
 	<center>
 		<img src="${pageContext.request.contextPath}/moduleResources/registration/header.jpg"/>
 		<form id="patientInfoForm" method="POST">	
-			<table cellspacing="10">
+			<table class="patientInfoTable" cellspacing="1">			
 				<tr>
-					<td><b>ID.NO:</b></td>
-					<td>
-						<span id="identifier"/>
+					<td colspan="3"><b>ID.NO:</b><span id="identifier"/>
 					</td>
-					<td></td>
-					<td></td>
-					<td><b>Age:</b></td>
-					<td>
+					<td colspan="3"><b>Age:</b>					
 						<span id="age"/>
 					</td>
 				</tr>
@@ -202,25 +202,25 @@
 					</td>
 				</tr>
 				<tr>
-					<td><b>OPD room to visit:</b></td>
+					<td><b>Dept:</b></td>
 					<td colspan="5">
 						<select id="opdWard" name="patient.opdWard">
 						</select>
 					</td>
 				</tr>
 				<tr>
-					<td><b>Category:</b></td>
-					<td>
-						<span id="category"/>
+					<td colspan="2">
+								<b>Category:</b>
+									<span id="category"/>
 					</td>
-					<td><b>Gender:</b></td>
-					<td>
-						<span id="gender"/>
+					<td colspan="2">
+								<b>Gender:</b>
+									<span id="gender"/>
+					<td colspan="2">
+								<b>Date/Time:</b>
+									<span id="datetime"/>							
 					</td>
-					<td><b>Date/Time:</b></td>
-					<td>
-						<span id="datetime"/>
-					</td>
+					
 				</tr>
 				<tr id="temporaryCategories">
 					<td valign="top"><b>Temporary Categories:</b></td>
