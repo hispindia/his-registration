@@ -31,7 +31,6 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openmrs.Patient;
@@ -80,19 +79,24 @@ public class RegistrationAjaxController {
 
 		if (date != null) {
 
-			// the user entered the correct birthdate
-			json.put("estimated", false);
-			json.put("birthdate", birthdate);
-			json.put("age", RegistrationUtils.estimateAge(birthdate));
-			logger.info("User entered the correct birthdate.");
+			if(isLaterToday(date)){
+				json.put("error", "Birthdate must be before the current date.");
+			} else {
+				System.out.println("before");
+				// the user entered the correct birthdate
+				json.put("estimated", false);
+				json.put("birthdate", birthdate);
+				json.put("age", RegistrationUtils.estimateAge(birthdate));
+				logger.info("User entered the correct birthdate.");	
+			}
 
 		} else {
 
-			String lastLetter = birthdate.substring(birthdate.length() - 1);
-			if (!StringUtils.isAlpha(lastLetter)) {
+			String lastLetter = birthdate.substring(birthdate.length() - 1).toLowerCase();			
+			if ("ymwd".indexOf(lastLetter)<0) {
 				json.put("error", "Age in wrong format");
 			} else {
-				try {
+				try {					
 					json.put("estimated", true);
 					String estimatedBirthdate = getEstimatedBirthdate(birthdate);
 					json.put("birthdate", estimatedBirthdate);
@@ -104,6 +108,20 @@ public class RegistrationAjaxController {
 		}
 		model.addAttribute("json", json);
 		return "/module/registration/ajax/processPatientBirthDate";
+	}
+	
+	/**
+	 * Check whether a day is later than today
+	 * @param date
+	 * @return
+	 */
+	private boolean isLaterToday(Date date){
+		Calendar c = Calendar.getInstance();
+		c.setTime(new Date());
+		c.set(Calendar.HOUR, 0);
+		c.set(Calendar.MINUTE, 0);
+		c.set(Calendar.SECOND, 0);		
+		return date.after(c.getTime());
 	}
 
 	/*
