@@ -185,7 +185,10 @@
 <span id="validationDate"></span>
 <div id="patientInfoPrintArea">
 	<center>
-		<img src="${pageContext.request.contextPath}/moduleResources/registration/header.jpg"/>
+		<span style="font-size:20px;">
+			<b>Regional Hospital, Hamirpur</b><br/>
+			(HP Govt. Hospital)
+		</span>
 		<form id="patientInfoForm" method="POST">	
 			<table class="patientInfoTable" cellspacing="1">			
 				<tr>
