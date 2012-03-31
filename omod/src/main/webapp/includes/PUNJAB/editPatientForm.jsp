@@ -80,7 +80,16 @@
 		});		
 		jQuery("#patCatGovEmp").click(function(){
 			VALIDATORS.governmentCheck();
-		});				
+		});
+		jQuery("#patPunjabGovernmentEmployee").click(function(){
+			VALIDATORS.punjabGovernmentEmployeeCheck();
+		});
+		jQuery("#patExServicemen").click(function(){
+			VALIDATORS.exServicemenCheck();
+		});
+		jQuery("#patPensioner").click(function(){
+			VALIDATORS.pensionerCheck();
+		});		
 		jQuery("#calendarButton").click(function(){
 			jQuery("#calendar").datepicker("show");
 		});		
@@ -400,6 +409,33 @@
 	        }
 	    },
 		
+		/** CHECK WHEN PUNJAB GOVERNMENT EMPLOYEE CATEGORY IS SELECTED */
+	    punjabGovernmentEmployeeCheck: function () {
+			if (jQuery("#patPunjabGovernmentEmployee").is(':checked')) {
+			
+				if (jQuery("#patExServicemen").is(":checked")) jQuery("#patExServicemen").removeAttr("checked");
+				if (jQuery("#patPensioner").is(":checked")) jQuery("#patPensioner").removeAttr("checked");				
+	        }
+	    },
+		
+		/** CHECK WHEN EX SERVICE MEN CATEGORY IS SELECTED */
+	    exServicemenCheck: function () {
+			if (jQuery("#patExServicemen").is(':checked')) {
+			
+				if (jQuery("#patPunjabGovernmentEmployee").is(":checked")) jQuery("#patPunjabGovernmentEmployee").removeAttr("checked");
+				if (jQuery("#patPensioner").is(":checked")) jQuery("#patPensioner").removeAttr("checked");				
+	        }
+	    },
+		
+		/** CHECK WHEN PENSIONER CATEGORY IS SELECTED */
+	    pensionerCheck: function () {
+			if (jQuery("#patPensioner").is(':checked')) {
+			
+				if (jQuery("#patExServicemen").is(":checked")) jQuery("#patExServicemen").removeAttr("checked");
+				if (jQuery("#patPunjabGovernmentEmployee").is(":checked")) jQuery("#patPunjabGovernmentEmployee").removeAttr("checked");				
+	        }
+	    },
+		
 		/** CHECK WHEN SENIOR CITIZEN CATEGORY IS SELECTED */
 		seniorCitizenCheck: function(){
 			if(jQuery("#patCatSeniorCitizen").is(':checked')){
@@ -574,8 +610,16 @@
 						</td>
 					</tr>					
 					<tr>
-						<td colspan="2">
-							<input id="patCatSeniorCitizen" type="checkbox" name="person.attribute.14" value="Senior Citizen"/> Senior Citizen
+						<td>
+							<input id="patPunjabGovernmentEmployee" type="checkbox" name="person.attribute.14" value="Punjab Government Employee"/> Punjab Government Employee 
+						</td>
+						<td>
+							<input id="patExServicemen" type="checkbox" name="person.attribute.14" value="Ex Servicemen"/> Ex Servicemen 
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<input id="patPensioner" type="checkbox" name="person.attribute.14" value="Pensioner"/> Pensioner  
 						</td>
 					</tr>
 				</table>

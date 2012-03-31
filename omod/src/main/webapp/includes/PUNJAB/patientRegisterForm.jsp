@@ -67,6 +67,15 @@
 		jQuery("#patCatGovEmp").click(function(){
 			VALIDATORS.governmentCheck();
 		});		
+		jQuery("#patPunjabGovernmentEmployee").click(function(){
+			VALIDATORS.punjabGovernmentEmployeeCheck();
+		});
+		jQuery("#patExServicemen").click(function(){
+			VALIDATORS.exServicemenCheck();
+		});
+		jQuery("#patPensioner").click(function(){
+			VALIDATORS.pensionerCheck();
+		});		
 		jQuery("#calendarButton").click(function(){
 			jQuery("#calendar").datepicker("show");
 		});		
@@ -76,9 +85,6 @@
 		});		
 		jQuery("#birthdate").click(function(){
 			jQuery("#birthdate").select();
-		});
-		jQuery("#patCatSeniorCitizen").click(function(){
-			VALIDATORS.seniorCitizenCheck();
 		});
 		jQuery("#patientGender").change(function(){
 			VALIDATORS.genderCheck();
@@ -329,7 +335,7 @@
 				}
 	            if (jQuery("#patCatGovEmp").is(":checked")) jQuery("#patCatGovEmp").removeAttr("checked");
 				if (jQuery("#patCatPoor").is(":checked")) jQuery("#patCatPoor").removeAttr("checked");
-				if (jQuery("#patCatSeniorCitizen").is(":checked")) jQuery("#patCatSeniorCitizen").removeAttr("checked");
+				if (jQuery("#patPunjabGovernmentEmployee").is(":checked")) jQuery("#patPunjabGovernmentEmployee").removeAttr("checked");
 	        } else {
 	            jQuery("#bplNumber").val("");
 	            jQuery("#bplField").hide();
@@ -346,7 +352,7 @@
 				}
 	            if (jQuery("#patCatGovEmp").is(":checked")) jQuery("#patCatGovEmp").removeAttr("checked");       
 				if (jQuery("#patCatPoor").is(":checked")) jQuery("#patCatPoor").removeAttr("checked");		
-				if (jQuery("#patCatSeniorCitizen").is(":checked")) jQuery("#patCatSeniorCitizen").removeAttr("checked");				
+				if (jQuery("#patPunjabGovernmentEmployee").is(":checked")) jQuery("#patPunjabGovernmentEmployee").removeAttr("checked");	
 	        } else {
 	            jQuery("#rsbyNumber").val("");
 	            jQuery("#rsbyField").hide();
@@ -406,7 +412,9 @@
 					jQuery("#rsbyField").hide();
 				}
 	            if (jQuery("#patCatPoor").is(":checked")) jQuery("#patCatPoor").removeAttr("checked");
-				if (jQuery("#patCatSeniorCitizen").is(":checked")) jQuery("#patCatSeniorCitizen").removeAttr("checked");
+				if (jQuery("#patPunjabGovernmentEmployee").is(":checked")) jQuery("#patPunjabGovernmentEmployee").removeAttr("checked");
+				if (jQuery("#patExServicemen").is(":checked")) jQuery("#patExServicemen").removeAttr("checked");
+				if (jQuery("#patPensioner").is(":checked")) jQuery("#patPensioner").removeAttr("checked");				
 	        }
 	    },
 		
@@ -430,27 +438,32 @@
 	        }
 	    },
 		
-		/** CHECK WHEN SENIOR CITIZEN CATEGORY IS SELECTED */
-		seniorCitizenCheck: function(){
-			if(jQuery("#patCatSeniorCitizen").is(':checked')){
-				if (jQuery("#bpl").is(":checked")) {
-					jQuery("#bpl").removeAttr("checked");
-					jQuery("#bplNumber").val("");
-					jQuery("#bplField").hide();
-				}
-	            if (jQuery("#rsby").is(":checked")) {
-					jQuery("#rsby").removeAttr("checked");
-					jQuery("#rsbyNumber").val("");
-					jQuery("#rsbyField").hide();					
-				}
-				if (jQuery("#patCatPoor").is(":checked")) jQuery("#patCatPoor").removeAttr("checked");
-				if (jQuery("#patCatGeneral").is(":checked")) jQuery("#patCatGeneral").removeAttr("checked");
-				if (jQuery("#patCatGovEmp").is(":checked")) jQuery("#patCatGovEmp").removeAttr("checked");
-				if(!VALIDATORS.checkPatientAgeForSeniorCitizen()){
-					jQuery("#patCatSeniorCitizen").removeAttr("checked");
-				};	
-			}
-		},
+		/** CHECK WHEN PUNJAB GOVERNMENT EMPLOYEE CATEGORY IS SELECTED */
+	    punjabGovernmentEmployeeCheck: function () {
+			if (jQuery("#patPunjabGovernmentEmployee").is(':checked')) {
+			
+				if (jQuery("#patExServicemen").is(":checked")) jQuery("#patExServicemen").removeAttr("checked");
+				if (jQuery("#patPensioner").is(":checked")) jQuery("#patPensioner").removeAttr("checked");				
+	        }
+	    },
+		
+		/** CHECK WHEN EX SERVICE MEN CATEGORY IS SELECTED */
+	    exServicemenCheck: function () {
+			if (jQuery("#patExServicemen").is(':checked')) {
+			
+				if (jQuery("#patPunjabGovernmentEmployee").is(":checked")) jQuery("#patPunjabGovernmentEmployee").removeAttr("checked");
+				if (jQuery("#patPensioner").is(":checked")) jQuery("#patPensioner").removeAttr("checked");				
+	        }
+	    },
+		
+		/** CHECK WHEN PENSIONER CATEGORY IS SELECTED */
+	    pensionerCheck: function () {
+			if (jQuery("#patPensioner").is(':checked')) {
+			
+				if (jQuery("#patExServicemen").is(":checked")) jQuery("#patExServicemen").removeAttr("checked");
+				if (jQuery("#patPunjabGovernmentEmployee").is(":checked")) jQuery("#patPunjabGovernmentEmployee").removeAttr("checked");				
+	        }
+	    },
 		
 		/*
 		 * Check patient age for senior citizen
@@ -601,8 +614,19 @@
 				<b>Patient category</b><br/>
 				<table cellspacing="10">
 					<tr>
-						<td colspan="2">
+						<td>
 							<input id="patCatGeneral" type="checkbox" name="person.attribute.14" value="General"/> General 
+						</td>
+						<td>
+							<input id="patCatPoor" type="checkbox" name="person.attribute.14" value="Poor"/> Poor 
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<input id="patCatStaff" type="checkbox" name="person.attribute.14" value="Staff"/> Staff 
+						</td>
+						<td>
+							<input id="patCatGovEmp" type="checkbox" name="person.attribute.14" value="Government Employee"/> Government Employee 
 						</td>
 					</tr>
 					
@@ -632,7 +656,7 @@
 					</tr>
 					<tr>
 						<td>
-							<input id="patPensioner " type="checkbox" name="person.attribute.14" value="Pensioner"/> Pensioner  
+							<input id="patPensioner" type="checkbox" name="person.attribute.14" value="Pensioner"/> Pensioner  
 						</td>
 					</tr>
 				</table>

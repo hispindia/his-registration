@@ -176,58 +176,69 @@
 <input id="reprint" type="button" value="RePrint" onClick="PAGE.submit(true);"/>
 <input id="buySlip" type="button" value="Buy a new slip" onClick="PAGE.buySlip();"/>
 <span id="validationDate"></span>
+
+<!------------------------------------------------------------------------------------------------------------->
 <div id="patientInfoPrintArea">
-	<center>
-		<img src="${pageContext.request.contextPath}/moduleResources/registration/header.jpg"/>
-		<form id="patientInfoForm" method="POST">	
-			<table cellspacing="10">
+	<table border=0>
+		<tr height=115>
+		</tr>
+		<tr>
+		<td width=800>
+		</td>
+		<td>	
+		<form id="patientInfoForm" method="POST">				
+			<table border=0  width="400">
 				<tr>
-					<td><b>ID.NO:</b></td>
-					<td>
+					<td colspan="1""><b>ID.No:</b></td>
+					<td  colspan="5"">
 						<span id="identifier"/>
-					</td>
-					<td></td>
-					<td></td>
-					<td><b>Age:</b></td>
-					<td>
-						<span id="age"/>
 					</td>
 				</tr>
 				<tr>
-					<td><b>Name:</b></td>
-					<td colspan="5">
+					<td colspan="1"><b>Name:</b></td>
+					<td  colspan="5">
 						<span id="name"/>
 					</td>
 				</tr>
 				<tr>
-					<td><b>OPD room to visit:</b></td>
+					<td colspan="1"><b>Age:</b></td>
+					<td colspan="5">
+						<span id="age"/>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="1"><b>Gender:</b></td>
+					<td colspan="5">
+						<span id="gender"/>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="1" valign="top"><b>Phone number:</b></td>
+					<td colspan="5">
+						<span id="phoneNumber"/>			
+					</td>
+				</tr>
+				<tr>
+					<td colspan="1"><b>OPD room to visit:</b></td>
 					<td colspan="5">
 						<select id="opdWard" name="patient.opdWard">
 						</select>
 					</td>
 				</tr>
 				<tr>
-					<td><b>Category:</b></td>
-					<td>
-						<span id="category"/>
-					</td>
-					<td><b>Gender:</b></td>
-					<td>
-						<span id="gender"/>
-					</td>
-					<td><b>Date/Time:</b></td>
-					<td>
+					<td colspan="1"><b>Date/Time:</b></td>
+					<td colspan="5">
 						<span id="datetime"/>
 					</td>
 				</tr>
 				<tr>
-					<td valign="top"><b>Phone number:</b></td>
+					<td colspan="1"><b>Category:</b></td>
 					<td colspan="5">
-						<span id="phoneNumber"/>			
+						<span id="category"/>
 					</td>
 				</tr>
 				<tr id="temporaryCategories">
-					<td valign="top"><b>Temporary Categories:</b></td>
+					<td colspan="1" valign="top"><b>Temporary Categories:</b></td>
 					<td colspan="5">
 						<input type="checkbox" name="temporary.attribute.11" value="MLC"/> MLC <br/>
 						<input type="checkbox" name="temporary.attribute.11" value="Accident"/> Accident <br/>										
@@ -242,6 +253,7 @@
 				</tr>
 			</table>
 		</form>
-	</center>	
-	<img src="${pageContext.request.contextPath}/moduleResources/registration/investigations.jpg"/>
+		</td>
+	</tr>
+	</table>
 </div>
