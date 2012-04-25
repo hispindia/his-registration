@@ -336,6 +336,9 @@
 	            if (jQuery("#patCatGovEmp").is(":checked")) jQuery("#patCatGovEmp").removeAttr("checked");
 				if (jQuery("#patCatPoor").is(":checked")) jQuery("#patCatPoor").removeAttr("checked");
 				if (jQuery("#patPunjabGovernmentEmployee").is(":checked")) jQuery("#patPunjabGovernmentEmployee").removeAttr("checked");
+				// 25/04/2012: Thai Chuong fixed for Punjab validation
+				if (jQuery("#patExServicemen").is(":checked")) jQuery("#patExServicemen").removeAttr("checked");
+				if (jQuery("#patPensioner").is(":checked")) jQuery("#patPensioner").removeAttr("checked");
 	        } else {
 	            jQuery("#bplNumber").val("");
 	            jQuery("#bplField").hide();
@@ -373,7 +376,12 @@
 					jQuery("#rsbyField").hide();
 				}
 	            if (jQuery("#patCatPoor").is(":checked")) jQuery("#patCatPoor").removeAttr("checked");
-				if (jQuery("#patCatGovEmp").is(":checked")) jQuery("#patCatGovEmp").removeAttr("checked");            
+				if (jQuery("#patCatGovEmp").is(":checked")) jQuery("#patCatGovEmp").removeAttr("checked");
+				// 25/04/2012: Thai Chuong fixed for Punjab validation
+				if (jQuery("#patExServicemen").is(":checked")) jQuery("#patExServicemen").removeAttr("checked");
+				if (jQuery("#patPensioner").is(":checked")) jQuery("#patPensioner").removeAttr("checked");
+				if (jQuery("#patCatGeneral").is(":checked")) jQuery("#patCatGeneral").removeAttr("checked");
+				if (jQuery("#patPunjabGovernmentEmployee").is(":checked")) jQuery("#patPunjabGovernmentEmployee").removeAttr("checked");
 	        }
 	    },
 		
@@ -395,6 +403,10 @@
 					jQuery("#rsbyField").hide();
 				}				
 				if (jQuery("#patCatSeniorCitizen").is(":checked")) jQuery("#patCatSeniorCitizen").removeAttr("checked");
+				// 25/04/2012: Thai Chuong fixed for Punjab validation
+				if (jQuery("#patPunjabGovernmentEmployee").is(":checked")) jQuery("#patPunjabGovernmentEmployee").removeAttr("checked");
+				if (jQuery("#patExServicemen").is(":checked")) jQuery("#patExServicemen").removeAttr("checked");
+				if (jQuery("#patPensioner").is(":checked")) jQuery("#patPensioner").removeAttr("checked");
 	        }
 	    },
 		
@@ -414,7 +426,10 @@
 	            if (jQuery("#patCatPoor").is(":checked")) jQuery("#patCatPoor").removeAttr("checked");
 				if (jQuery("#patPunjabGovernmentEmployee").is(":checked")) jQuery("#patPunjabGovernmentEmployee").removeAttr("checked");
 				if (jQuery("#patExServicemen").is(":checked")) jQuery("#patExServicemen").removeAttr("checked");
-				if (jQuery("#patPensioner").is(":checked")) jQuery("#patPensioner").removeAttr("checked");				
+				if (jQuery("#patPensioner").is(":checked")) jQuery("#patPensioner").removeAttr("checked");
+				// 25/04/2012: Thai Chuong fixed for Punjab validation
+				if (jQuery("#patCatStaff").is(":checked")) jQuery("#patCatStaff").removeAttr("checked");
+				if (jQuery("#patCatGovEmp").is(":checked")) jQuery("#patCatGovEmp").removeAttr("checked");
 	        }
 	    },
 		
@@ -435,6 +450,9 @@
 				if (jQuery("#patCatStaff").is(":checked")) jQuery("#patCatStaff").removeAttr("checked");
 				if (jQuery("#patCatGeneral").is(":checked")) jQuery("#patCatGeneral").removeAttr("checked");
 				if (jQuery("#patCatSeniorCitizen").is(":checked")) jQuery("#patCatSeniorCitizen").removeAttr("checked");
+				// 25/04/2012: Thai Chuong fixed for Punjab validation
+				if (jQuery("#patExServicemen").is(":checked")) jQuery("#patExServicemen").removeAttr("checked");
+				if (jQuery("#patPensioner").is(":checked")) jQuery("#patPensioner").removeAttr("checked");
 	        }
 	    },
 		
@@ -443,7 +461,20 @@
 			if (jQuery("#patPunjabGovernmentEmployee").is(':checked')) {
 			
 				if (jQuery("#patExServicemen").is(":checked")) jQuery("#patExServicemen").removeAttr("checked");
-				if (jQuery("#patPensioner").is(":checked")) jQuery("#patPensioner").removeAttr("checked");				
+				if (jQuery("#patPensioner").is(":checked")) jQuery("#patPensioner").removeAttr("checked");
+				// 25/04/2012: Thai Chuong fixed for Punjab validation
+				if (jQuery("#patCatGeneral").is(":checked")) jQuery("#patCatGeneral").removeAttr("checked");
+	            if (jQuery("#bpl").is(":checked")) {
+					jQuery("#bpl").removeAttr("checked");
+					jQuery("#bplNumber").val("");
+					jQuery("#bplField").hide();
+				}
+	            if (jQuery("#rsby").is(":checked")) {
+					jQuery("#rsby").removeAttr("checked");
+					jQuery("#rsbyNumber").val("");
+					jQuery("#rsbyField").hide();					
+				}
+	            if (jQuery("#patCatPoor").is(":checked")) jQuery("#patCatPoor").removeAttr("checked");
 	        }
 	    },
 		
@@ -452,7 +483,22 @@
 			if (jQuery("#patExServicemen").is(':checked')) {
 			
 				if (jQuery("#patPunjabGovernmentEmployee").is(":checked")) jQuery("#patPunjabGovernmentEmployee").removeAttr("checked");
-				if (jQuery("#patPensioner").is(":checked")) jQuery("#patPensioner").removeAttr("checked");				
+				if (jQuery("#patPensioner").is(":checked")) jQuery("#patPensioner").removeAttr("checked");	
+				// 25/04/2012: Thai Chuong fixed for Punjab validation
+				if (jQuery("#patCatGeneral").is(":checked")) jQuery("#patCatGeneral").removeAttr("checked");
+				if (jQuery("#patCatPoor").is(":checked")) jQuery("#patCatPoor").removeAttr("checked");
+				if (jQuery("#bpl").is(":checked")) {
+					jQuery("#bpl").removeAttr("checked");
+					jQuery("#bplNumber").val("");
+					jQuery("#bplField").hide();
+				}
+	            if (jQuery("#rsby").is(":checked")) {
+					jQuery("#rsby").removeAttr("checked");
+					jQuery("#rsbyNumber").val("");
+					jQuery("#rsbyField").hide();					
+				}
+	            if (jQuery("#patCatStaff").is(":checked")) jQuery("#patCatStaff").removeAttr("checked");
+	            if (jQuery("#patCatGovEmp").is(":checked")) jQuery("#patCatGovEmp").removeAttr("checked");
 	        }
 	    },
 		
@@ -461,7 +507,22 @@
 			if (jQuery("#patPensioner").is(':checked')) {
 			
 				if (jQuery("#patExServicemen").is(":checked")) jQuery("#patExServicemen").removeAttr("checked");
-				if (jQuery("#patPunjabGovernmentEmployee").is(":checked")) jQuery("#patPunjabGovernmentEmployee").removeAttr("checked");				
+				if (jQuery("#patPunjabGovernmentEmployee").is(":checked")) jQuery("#patPunjabGovernmentEmployee").removeAttr("checked");
+				// 25/04/2012: Thai Chuong fixed for Punjab validation
+				if (jQuery("#patCatGeneral").is(":checked")) jQuery("#patCatGeneral").removeAttr("checked");
+				if (jQuery("#bpl").is(":checked")) {
+					jQuery("#bpl").removeAttr("checked");
+					jQuery("#bplNumber").val("");
+					jQuery("#bplField").hide();
+				}
+	            if (jQuery("#rsby").is(":checked")) {
+					jQuery("#rsby").removeAttr("checked");
+					jQuery("#rsbyNumber").val("");
+					jQuery("#rsbyField").hide();					
+				}
+	            if (jQuery("#patCatStaff").is(":checked")) jQuery("#patCatStaff").removeAttr("checked");
+	            if (jQuery("#patCatGovEmp").is(":checked")) jQuery("#patCatGovEmp").removeAttr("checked");
+	            if (jQuery("#patCatPoor").is(":checked")) jQuery("#patCatPoor").removeAttr("checked");
 	        }
 	    },
 		
