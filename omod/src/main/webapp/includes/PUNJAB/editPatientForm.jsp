@@ -59,6 +59,13 @@
 			jQuery("#bplField").hide();
 		}
 		
+		// 01/05/2012: Marta, adding pop number. Feature #181
+		if(!StringUtils.isBlank(MODEL.patientAttributes[10])){
+			jQuery("#patientRegistrationForm").fillForm("person.attribute.17==" + MODEL.patientAttributes[17] + "||");
+		} else {
+			jQuery("#popField").hide();
+		}
+		
 		// binding
 		jQuery('#calendar').datepicker({yearRange:'c-100:c+100', dateFormat: 'dd/mm/yy', changeMonth: true, changeYear: true});	
 		jQuery('#birthdate').change(PAGE.checkBirthDate);		
@@ -78,9 +85,6 @@
 		jQuery("#patCatGeneral").click(function(){
 			VALIDATORS.generalCheck();
 		});		
-		jQuery("#patCatGovEmp").click(function(){
-			VALIDATORS.governmentCheck();
-		});
 		jQuery("#patPunjabGovernmentEmployee").click(function(){
 			VALIDATORS.punjabGovernmentEmployeeCheck();
 		});
@@ -90,6 +94,22 @@
 		jQuery("#patPensioner").click(function(){
 			VALIDATORS.pensionerCheck();
 		});		
+		 // 30/04/2012: Marta added for Punjab new categories validation - Bug #177
+		jQuery("#patCatAntenatal").click(function(){
+			VALIDATORS.antenatalCheck();
+		});	
+		jQuery("#patCatTB").click(function(){
+			VALIDATORS.TBCheck();
+		});	
+		jQuery("#patCatSchool").click(function(){
+			VALIDATORS.schoolCheck();
+		});	
+		jQuery("#patCatCancer").click(function(){
+			VALIDATORS.cancerCheck();
+		});	
+		jQuery("#patCatOthersFree").click(function(){
+			VALIDATORS.othersFreeCheck();
+		});	
 		jQuery("#calendarButton").click(function(){
 			jQuery("#calendar").datepicker("show");
 		});		
@@ -161,6 +181,9 @@
 						jQuery("#birthdate").val(json.birthdate);
 					} else {
 						alert(json.error);
+						// 28/04/12: Added by Marta to avoid commiting wrong birthdates - Bug #163
+						jQuery("#birthdate").val("");
+						
 					}
 				},
 				error : function(xhr, ajaxOptions, thrownError) {
@@ -235,7 +258,18 @@
 			if(StringUtils.isBlank(jQuery("#patientName").val())){
 				alert("Please enter patient name");
 				return false;
-			}			
+			} // 30/04/2012: Marta, Added pattern checking to avoid special characters in patient name - Bug #157
+			else { 
+				value = jQuery("#patientName").val();
+				value = value.toUpperCase();
+				pattern = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 -";
+				for(i=0; i<value.length; i++){
+					if(pattern.indexOf(value[i])<0){	
+						alert("Please enter patient name/identifier in correct format.");
+						return false;							
+					}
+				}	
+			}		
 			
 			if(StringUtils.isBlank(jQuery("#patientRelativeName").val())){
 				alert("Please enter relative name");
@@ -281,10 +315,19 @@
 	    validatePatientCategory: function () {
 	        if (jQuery("#patCatGeneral").attr('checked') == false 
 			 && jQuery("#patCatPoor").attr('checked') == false 
-			 && jQuery("#patCatStaff").attr('checked') == false 
-			 && jQuery("#patCatGovEmp").attr('checked') == false 
+			 && jQuery("#patCatStaff").attr('checked') == false  			 
 			 && jQuery("#rsby").attr('checked') == false 
-			 && jQuery("#bpl").attr('checked') == false) {
+			 && jQuery("#bpl").attr('checked') == false
+			// 30/04/2012: Marta fixed for Punjab new Categories validation - Bug #177
+			 && jQuery("#patPensioner").attr('checked') == false
+			 && jQuery("#patPunjabGovernmentEmployee").attr('checked') == false
+			 && jQuery("#patExServicemen").attr('checked') == false
+			 && jQuery("#patCatAntenatal").attr('checked') == false
+			 && jQuery("#patCatTB").attr('checked') == false
+			 && jQuery("#patCatSchool").attr('checked') == false
+			 && jQuery("#patCatCancer").attr('checked') == false
+			 && jQuery("#patCatOthersFree").attr('checked') == false
+	        ) {
 	            alert('You didn\'t choose any of the patient category!');
 	            return false;
 	        } else {
@@ -300,6 +343,13 @@
 	                    return false;
 	                }
 	            }
+	            // 01/05/2012: Marta, adding pop number. Feature #181
+	            if (jQuery("#patPensioner").attr('checked')) {
+	                if (jQuery("#popNumber").val().length <= 0) {
+	                    alert('Please enter POP number');
+	                    return false;
+	                }
+	            }
 	            return true;
 	        }
 	    },
@@ -309,11 +359,23 @@
 	        if (jQuery("#bpl").is(':checked')) {
 	            jQuery("#bplField").show();
 	            if (jQuery("#patCatGeneral").is(":checked")) jQuery("#patCatGeneral").removeAttr("checked");
-	            if (jQuery("#patCatStaff").is(":checked")) {
-					jQuery("#patCatStaff").removeAttr("checked");
+	            if (jQuery("#patCatStaff").is(":checked")) {jQuery("#patCatStaff").removeAttr("checked");}
+	            if (jQuery("#patCatPoor").is(":checked")) jQuery("#patCatPoor").removeAttr("checked");
+				// 28/04/2012: Marta fixed for Punjab validation - Bug #159
+				if (jQuery("#patPunjabGovernmentEmployee").is(":checked")) jQuery("#patPunjabGovernmentEmployee").removeAttr("checked");
+				if (jQuery("#patExServicemen").is(":checked")) jQuery("#patExServicemen").removeAttr("checked");
+				if (jQuery("#patPensioner").is(":checked")){ 
+					jQuery("#patPensioner").removeAttr("checked");
+					// 01/05/2012: Marta, adding pop number. Feature #181
+					jQuery("#popNumber").val("");
+					jQuery("#popField").hide();	
 				}
-	            if (jQuery("#patCatGovEmp").is(":checked")) jQuery("#patCatGovEmp").removeAttr("checked");
-				if (jQuery("#patCatPoor").is(":checked")) jQuery("#patCatPoor").removeAttr("checked");
+				// 30/04/2012: Marta fixed for Punjab new Categories validation - Bug #177
+				if (jQuery("#patCatAntenatal").is(":checked")) jQuery("#patCatAntenatal").removeAttr("checked");
+				if (jQuery("#patCatTB").is(":checked")) jQuery("#patCatTB").removeAttr("checked");
+				if (jQuery("#patCatSchool").is(":checked")) jQuery("#patCatSchool").removeAttr("checked");
+				if (jQuery("#patCatCancer").is(":checked")) jQuery("#patCatCancer").removeAttr("checked");
+				if (jQuery("#patCatOthersFree").is(":checked")) jQuery("#patCatOthersFree").removeAttr("checked");
 	        } else {
 	            jQuery("#bplNumber").val("");
 	            jQuery("#bplField").hide();
@@ -328,8 +390,22 @@
 	            if (jQuery("#patCatStaff").is(":checked")) {
 					jQuery("#patCatStaff").removeAttr("checked");
 				}
-	            if (jQuery("#patCatGovEmp").is(":checked")) jQuery("#patCatGovEmp").removeAttr("checked");       
-				if (jQuery("#patCatPoor").is(":checked")) jQuery("#patCatPoor").removeAttr("checked");				
+	            if (jQuery("#patCatPoor").is(":checked")) jQuery("#patCatPoor").removeAttr("checked");	
+				// 28/04/2012: Marta fixed for Punjab validation - Bug #159
+				if (jQuery("#patPunjabGovernmentEmployee").is(":checked")) jQuery("#patPunjabGovernmentEmployee").removeAttr("checked");
+				if (jQuery("#patExServicemen").is(":checked")) jQuery("#patExServicemen").removeAttr("checked");
+				if (jQuery("#patPensioner").is(":checked")){ 
+					jQuery("#patPensioner").removeAttr("checked");
+					// 01/05/2012: Marta, adding pop number. Feature #181
+					jQuery("#popNumber").val("");
+					jQuery("#popField").hide();	
+				}
+				// 30/04/2012: Marta fixed for Punjab new Categories validation - Bug #177
+				if (jQuery("#patCatAntenatal").is(":checked")) jQuery("#patCatAntenatal").removeAttr("checked");
+				if (jQuery("#patCatTB").is(":checked")) jQuery("#patCatTB").removeAttr("checked");
+				if (jQuery("#patCatSchool").is(":checked")) jQuery("#patCatSchool").removeAttr("checked");
+				if (jQuery("#patCatCancer").is(":checked")) jQuery("#patCatCancer").removeAttr("checked");
+				if (jQuery("#patCatOthersFree").is(":checked")) jQuery("#patCatOthersFree").removeAttr("checked");
 	        } else {
 	            jQuery("#rsbyNumber").val("");
 	            jQuery("#rsbyField").hide();
@@ -349,8 +425,23 @@
 					jQuery("#rsbyNumber").val("");
 					jQuery("#rsbyField").hide();
 				}
-	            if (jQuery("#patCatPoor").is(":checked")) jQuery("#patCatPoor").removeAttr("checked");
-				if (jQuery("#patCatGovEmp").is(":checked")) jQuery("#patCatGovEmp").removeAttr("checked");            
+	            if (jQuery("#patCatPoor").is(":checked")) jQuery("#patCatPoor").removeAttr("checked"); 
+				// 28/04/2012: Marta fixed for Punjab validation - Bug #159
+				if (jQuery("#patExServicemen").is(":checked")) jQuery("#patExServicemen").removeAttr("checked");
+				if (jQuery("#patPensioner").is(":checked")){ 
+					jQuery("#patPensioner").removeAttr("checked");
+					// 01/05/2012: Marta, adding pop number. Feature #181
+					jQuery("#popNumber").val("");
+					jQuery("#popField").hide();	
+				}
+				if (jQuery("#patCatGeneral").is(":checked")) jQuery("#patCatGeneral").removeAttr("checked");
+				if (jQuery("#patPunjabGovernmentEmployee").is(":checked")) jQuery("#patPunjabGovernmentEmployee").removeAttr("checked");
+				// 30/04/2012: Marta fixed for Punjab new Categories validation - Bug #177
+				if (jQuery("#patCatAntenatal").is(":checked")) jQuery("#patCatAntenatal").removeAttr("checked");
+				if (jQuery("#patCatTB").is(":checked")) jQuery("#patCatTB").removeAttr("checked");
+				if (jQuery("#patCatSchool").is(":checked")) jQuery("#patCatSchool").removeAttr("checked");
+				if (jQuery("#patCatCancer").is(":checked")) jQuery("#patCatCancer").removeAttr("checked");
+				if (jQuery("#patCatOthersFree").is(":checked")) jQuery("#patCatOthersFree").removeAttr("checked");
 	        }
 	    },
 		
@@ -359,9 +450,7 @@
 	        if (jQuery("#patCatPoor").is(':checked')) {
 	            if (jQuery("#patCatGeneral").is(":checked")) jQuery("#patCatGeneral").removeAttr("checked");
 	            if (jQuery("#patCatStaff").is(":checked")) jQuery("#patCatStaff").removeAttr("checked");
-	            if (jQuery("#patCatGovEmp").is(":checked")) jQuery("#patCatGovEmp").removeAttr("checked");
-				
-				if (jQuery("#bpl").is(":checked")) {
+	           	if (jQuery("#bpl").is(":checked")) {
 					jQuery("#bpl").removeAttr("checked");
 					jQuery("#bplNumber").val("");
 					jQuery("#bplField").hide();
@@ -370,7 +459,23 @@
 					jQuery("#rsby").removeAttr("checked");
 					jQuery("#rsbyNumber").val("");
 					jQuery("#rsbyField").hide();
-				}				
+				}		
+	            // 28/04/2012: Marta fixed for Punjab validation - Bug #159
+	            if (jQuery("#patCatSeniorCitizen").is(":checked")) jQuery("#patCatSeniorCitizen").removeAttr("checked");
+				if (jQuery("#patPunjabGovernmentEmployee").is(":checked")) jQuery("#patPunjabGovernmentEmployee").removeAttr("checked");
+				if (jQuery("#patExServicemen").is(":checked")) jQuery("#patExServicemen").removeAttr("checked");
+				if (jQuery("#patPensioner").is(":checked")){ 
+					jQuery("#patPensioner").removeAttr("checked");
+					// 01/05/2012: Marta, adding pop number. Feature #181
+					jQuery("#popNumber").val("");
+					jQuery("#popField").hide();	
+				}
+				// 30/04/2012: Marta fixed for Punjab new Categories validation - Bug #177
+				if (jQuery("#patCatAntenatal").is(":checked")) jQuery("#patCatAntenatal").removeAttr("checked");
+				if (jQuery("#patCatTB").is(":checked")) jQuery("#patCatTB").removeAttr("checked");
+				if (jQuery("#patCatSchool").is(":checked")) jQuery("#patCatSchool").removeAttr("checked");
+				if (jQuery("#patCatCancer").is(":checked")) jQuery("#patCatCancer").removeAttr("checked");
+				if (jQuery("#patCatOthersFree").is(":checked")) jQuery("#patCatOthersFree").removeAttr("checked");
 	        }
 	    },
 		
@@ -388,12 +493,38 @@
 					jQuery("#rsbyField").hide();
 				}
 	            if (jQuery("#patCatPoor").is(":checked")) jQuery("#patCatPoor").removeAttr("checked");
+				// 28/04/2012: Marta fixed for Punjab validation - Bug #159
+	            if (jQuery("#patPunjabGovernmentEmployee").is(":checked")) jQuery("#patPunjabGovernmentEmployee").removeAttr("checked");
+				if (jQuery("#patExServicemen").is(":checked")) jQuery("#patExServicemen").removeAttr("checked");
+				if (jQuery("#patPensioner").is(":checked")){ 
+					jQuery("#patPensioner").removeAttr("checked");
+					// 01/05/2012: Marta, adding pop number. Feature #181
+					jQuery("#popNumber").val("");
+					jQuery("#popField").hide();	
+				}
+				if (jQuery("#patCatStaff").is(":checked")) jQuery("#patCatStaff").removeAttr("checked");
+				// 30/04/2012: Marta fixed for Punjab new Categories validation - Bug #177
+				if (jQuery("#patCatAntenatal").is(":checked")) jQuery("#patCatAntenatal").removeAttr("checked");
+				if (jQuery("#patCatTB").is(":checked")) jQuery("#patCatTB").removeAttr("checked");
+				if (jQuery("#patCatSchool").is(":checked")) jQuery("#patCatSchool").removeAttr("checked");
+				if (jQuery("#patCatCancer").is(":checked")) jQuery("#patCatCancer").removeAttr("checked");
+				if (jQuery("#patCatOthersFree").is(":checked")) jQuery("#patCatOthersFree").removeAttr("checked");
 	        }
 	    },
 		
-		/** CHECK WHEN GOVERNMENT CATEGORY IS SELECTED */
-	    governmentCheck: function () {
-	        if (jQuery("#patCatGovEmp").is(':checked')) {
+		/** CHECK WHEN PUNJAB GOVERNMENT EMPLOYEE CATEGORY IS SELECTED */
+	    punjabGovernmentEmployeeCheck: function () {
+			if (jQuery("#patPunjabGovernmentEmployee").is(':checked')) {
+			
+				if (jQuery("#patExServicemen").is(":checked")) jQuery("#patExServicemen").removeAttr("checked");
+				if (jQuery("#patPensioner").is(":checked")){ 
+					jQuery("#patPensioner").removeAttr("checked");
+					// 01/05/2012: Marta, adding pop number. Feature #181
+					jQuery("#popNumber").val("");
+					jQuery("#popField").hide();	
+				}	
+	            // 28/04/2012: Marta fixed for Punjab validation - Bug #159
+				if (jQuery("#patCatGeneral").is(":checked")) jQuery("#patCatGeneral").removeAttr("checked");
 	            if (jQuery("#bpl").is(":checked")) {
 					jQuery("#bpl").removeAttr("checked");
 					jQuery("#bplNumber").val("");
@@ -404,17 +535,14 @@
 					jQuery("#rsbyNumber").val("");
 					jQuery("#rsbyField").hide();					
 				}
-				if (jQuery("#patCatPoor").is(":checked")) jQuery("#patCatPoor").removeAttr("checked");
-				if (jQuery("#patCatStaff").is(":checked")) jQuery("#patCatStaff").removeAttr("checked");
-	        }
-	    },
-		
-		/** CHECK WHEN PUNJAB GOVERNMENT EMPLOYEE CATEGORY IS SELECTED */
-	    punjabGovernmentEmployeeCheck: function () {
-			if (jQuery("#patPunjabGovernmentEmployee").is(':checked')) {
-			
-				if (jQuery("#patExServicemen").is(":checked")) jQuery("#patExServicemen").removeAttr("checked");
-				if (jQuery("#patPensioner").is(":checked")) jQuery("#patPensioner").removeAttr("checked");				
+	            if (jQuery("#patCatPoor").is(":checked")) jQuery("#patCatPoor").removeAttr("checked");
+	            if (jQuery("#patCatStaff").is(":checked")) jQuery("#patCatStaff").removeAttr("checked");
+	            // 30/04/2012: Marta fixed for Punjab new Categories validation - Bug #177
+				if (jQuery("#patCatAntenatal").is(":checked")) jQuery("#patCatAntenatal").removeAttr("checked");
+				if (jQuery("#patCatTB").is(":checked")) jQuery("#patCatTB").removeAttr("checked");
+				if (jQuery("#patCatSchool").is(":checked")) jQuery("#patCatSchool").removeAttr("checked");
+				if (jQuery("#patCatCancer").is(":checked")) jQuery("#patCatCancer").removeAttr("checked");
+				if (jQuery("#patCatOthersFree").is(":checked")) jQuery("#patCatOthersFree").removeAttr("checked");
 	        }
 	    },
 		
@@ -423,16 +551,66 @@
 			if (jQuery("#patExServicemen").is(':checked')) {
 			
 				if (jQuery("#patPunjabGovernmentEmployee").is(":checked")) jQuery("#patPunjabGovernmentEmployee").removeAttr("checked");
-				if (jQuery("#patPensioner").is(":checked")) jQuery("#patPensioner").removeAttr("checked");				
+				if (jQuery("#patPensioner").is(":checked")){ 
+					jQuery("#patPensioner").removeAttr("checked");
+					// 01/05/2012: Marta, adding pop number. Feature #181
+					jQuery("#popNumber").val("");
+					jQuery("#popField").hide();	
+				}
+	            // 28/04/2012: Marta fixed for Punjab validation - Bug #159
+				if (jQuery("#patCatGeneral").is(":checked")) jQuery("#patCatGeneral").removeAttr("checked");
+				if (jQuery("#patCatPoor").is(":checked")) jQuery("#patCatPoor").removeAttr("checked");
+				if (jQuery("#bpl").is(":checked")) {
+					jQuery("#bpl").removeAttr("checked");
+					jQuery("#bplNumber").val("");
+					jQuery("#bplField").hide();
+				}
+	            if (jQuery("#rsby").is(":checked")) {
+					jQuery("#rsby").removeAttr("checked");
+					jQuery("#rsbyNumber").val("");
+					jQuery("#rsbyField").hide();					
+				}
+	            if (jQuery("#patCatStaff").is(":checked")) jQuery("#patCatStaff").removeAttr("checked");
+	            // 30/04/2012: Marta fixed for Punjab new Categories validation - Bug #177
+				if (jQuery("#patCatAntenatal").is(":checked")) jQuery("#patCatAntenatal").removeAttr("checked");
+				if (jQuery("#patCatTB").is(":checked")) jQuery("#patCatTB").removeAttr("checked");
+				if (jQuery("#patCatSchool").is(":checked")) jQuery("#patCatSchool").removeAttr("checked");
+				if (jQuery("#patCatCancer").is(":checked")) jQuery("#patCatCancer").removeAttr("checked");
+				if (jQuery("#patCatOthersFree").is(":checked")) jQuery("#patCatOthersFree").removeAttr("checked");
 	        }
 	    },
 		
 		/** CHECK WHEN PENSIONER CATEGORY IS SELECTED */
 	    pensionerCheck: function () {
 			if (jQuery("#patPensioner").is(':checked')) {
-			
+				// 01/05/2012: Marta, adding pop number. Feature #181
+				jQuery("#popField").show();
 				if (jQuery("#patExServicemen").is(":checked")) jQuery("#patExServicemen").removeAttr("checked");
-				if (jQuery("#patPunjabGovernmentEmployee").is(":checked")) jQuery("#patPunjabGovernmentEmployee").removeAttr("checked");				
+				if (jQuery("#patPunjabGovernmentEmployee").is(":checked")) jQuery("#patPunjabGovernmentEmployee").removeAttr("checked");
+	            // 28/04/2012: Marta fixed for Punjab validation - Bug #159
+				if (jQuery("#patCatGeneral").is(":checked")) jQuery("#patCatGeneral").removeAttr("checked");
+				if (jQuery("#bpl").is(":checked")) {
+					jQuery("#bpl").removeAttr("checked");
+					jQuery("#bplNumber").val("");
+					jQuery("#bplField").hide();
+				}
+	            if (jQuery("#rsby").is(":checked")) {
+					jQuery("#rsby").removeAttr("checked");
+					jQuery("#rsbyNumber").val("");
+					jQuery("#rsbyField").hide();					
+				}
+	            if (jQuery("#patCatStaff").is(":checked")) jQuery("#patCatStaff").removeAttr("checked");
+	            if (jQuery("#patCatPoor").is(":checked")) jQuery("#patCatPoor").removeAttr("checked");
+	         	// 30/04/2012: Marta fixed for Punjab new Categories validation - Bug #177
+				if (jQuery("#patCatAntenatal").is(":checked")) jQuery("#patCatAntenatal").removeAttr("checked");
+				if (jQuery("#patCatTB").is(":checked")) jQuery("#patCatTB").removeAttr("checked");
+				if (jQuery("#patCatSchool").is(":checked")) jQuery("#patCatSchool").removeAttr("checked");
+				if (jQuery("#patCatCancer").is(":checked")) jQuery("#patCatCancer").removeAttr("checked");
+				if (jQuery("#patCatOthersFree").is(":checked")) jQuery("#patCatOthersFree").removeAttr("checked");
+	        }// 01/05/2012: Marta, adding pop number. Feature #181
+			else {
+	            jQuery("#popNumber").val("");
+	            jQuery("#popField").hide();
 	        }
 	    },
 		
@@ -451,13 +629,172 @@
 				}
 				if (jQuery("#patCatPoor").is(":checked")) jQuery("#patCatPoor").removeAttr("checked");
 				if (jQuery("#patCatGeneral").is(":checked")) jQuery("#patCatGeneral").removeAttr("checked");
-				if (jQuery("#patCatGovEmp").is(":checked")) jQuery("#patCatGovEmp").removeAttr("checked");
 				if(!VALIDATORS.checkPatientAgeForSeniorCitizen()){
 					jQuery("#patCatSeniorCitizen").removeAttr("checked");
 				};	
 			}
 		},
 		
+		/* CHECK WHEN ANTENATAL CATEGORY IS SELECTED */
+	    // 30/04/2012: Marta added for Punjab new categories validation - Bug #177
+	    antenatalCheck: function () {			
+	        if (jQuery("#patCatAntenatal").is(':checked')) {						
+	            if (jQuery("#bpl").is(":checked")) {
+					jQuery("#bpl").removeAttr("checked");
+					jQuery("#bplNumber").val("");
+					jQuery("#bplField").hide();
+				}
+	            if (jQuery("#rsby").is(":checked")) {
+					jQuery("#rsby").removeAttr("checked");
+					jQuery("#rsbyNumber").val("");
+					jQuery("#rsbyField").hide();
+				}
+	            if (jQuery("#patCatPoor").is(":checked")) jQuery("#patCatPoor").removeAttr("checked");
+				if (jQuery("#patExServicemen").is(":checked")) jQuery("#patExServicemen").removeAttr("checked");
+				if (jQuery("#patPensioner").is(":checked")){ 
+					jQuery("#patPensioner").removeAttr("checked");
+					// 01/05/2012: Marta, adding pop number. Feature #181
+					jQuery("#popNumber").val("");
+					jQuery("#popField").hide();	
+				}
+				if (jQuery("#patCatGeneral").is(":checked")) jQuery("#patCatGeneral").removeAttr("checked");
+				if (jQuery("#patPunjabGovernmentEmployee").is(":checked")) jQuery("#patPunjabGovernmentEmployee").removeAttr("checked");
+				if (jQuery("#patCatStaff").is(":checked")) jQuery("#patCatStaff").removeAttr("checked");
+				if (jQuery("#patCatTB").is(":checked")) jQuery("#patCatTB").removeAttr("checked");
+				if (jQuery("#patCatSchool").is(":checked")) jQuery("#patCatSchool").removeAttr("checked");
+				if (jQuery("#patCatCancer").is(":checked")) jQuery("#patCatCancer").removeAttr("checked");
+				if (jQuery("#patCatOthersFree").is(":checked")) jQuery("#patCatOthersFree").removeAttr("checked");
+	        }
+	    },
+	    
+	    /* CHECK WHEN TB CATEGORY IS SELECTED */
+	    // 30/04/2012: Marta added for Punjab new categories validation - Bug #177
+	    TBCheck: function () {			
+	        if (jQuery("#patCatTB").is(':checked')) {						
+	            if (jQuery("#bpl").is(":checked")) {
+					jQuery("#bpl").removeAttr("checked");
+					jQuery("#bplNumber").val("");
+					jQuery("#bplField").hide();
+				}
+	            if (jQuery("#rsby").is(":checked")) {
+					jQuery("#rsby").removeAttr("checked");
+					jQuery("#rsbyNumber").val("");
+					jQuery("#rsbyField").hide();
+				}
+	            if (jQuery("#patCatPoor").is(":checked")) jQuery("#patCatPoor").removeAttr("checked");
+				if (jQuery("#patExServicemen").is(":checked")) jQuery("#patExServicemen").removeAttr("checked");
+				if (jQuery("#patPensioner").is(":checked")){ 
+					jQuery("#patPensioner").removeAttr("checked");
+					// 01/05/2012: Marta, adding pop number. Feature #181
+					jQuery("#popNumber").val("");
+					jQuery("#popField").hide();	
+				}
+				if (jQuery("#patCatGeneral").is(":checked")) jQuery("#patCatGeneral").removeAttr("checked");
+				if (jQuery("#patPunjabGovernmentEmployee").is(":checked")) jQuery("#patPunjabGovernmentEmployee").removeAttr("checked");
+				if (jQuery("#patCatStaff").is(":checked")) jQuery("#patCatStaff").removeAttr("checked");
+				if (jQuery("#patCatAntenatal").is(":checked")) jQuery("#patCatAntenatal").removeAttr("checked");
+				if (jQuery("#patCatSchool").is(":checked")) jQuery("#patCatSchool").removeAttr("checked");
+				if (jQuery("#patCatCancer").is(":checked")) jQuery("#patCatCancer").removeAttr("checked");
+				if (jQuery("#patCatOthersFree").is(":checked")) jQuery("#patCatOthersFree").removeAttr("checked");
+	        }
+	    },
+	    
+	    /* CHECK WHEN SCHOOL CATEGORY IS SELECTED */
+	    // 30/04/2012: Marta added for Punjab new categories validation - Bug #177
+	    schoolCheck: function () {			
+	        if (jQuery("#patCatSchool").is(':checked')) {						
+	            if (jQuery("#bpl").is(":checked")) {
+					jQuery("#bpl").removeAttr("checked");
+					jQuery("#bplNumber").val("");
+					jQuery("#bplField").hide();
+				}
+	            if (jQuery("#rsby").is(":checked")) {
+					jQuery("#rsby").removeAttr("checked");
+					jQuery("#rsbyNumber").val("");
+					jQuery("#rsbyField").hide();
+				}
+	            if (jQuery("#patCatPoor").is(":checked")) jQuery("#patCatPoor").removeAttr("checked");
+				if (jQuery("#patExServicemen").is(":checked")) jQuery("#patExServicemen").removeAttr("checked");
+				if (jQuery("#patPensioner").is(":checked")){ 
+					jQuery("#patPensioner").removeAttr("checked");
+					// 01/05/2012: Marta, adding pop number. Feature #181
+					jQuery("#popNumber").val("");
+					jQuery("#popField").hide();	
+				}
+				if (jQuery("#patCatGeneral").is(":checked")) jQuery("#patCatGeneral").removeAttr("checked");
+				if (jQuery("#patPunjabGovernmentEmployee").is(":checked")) jQuery("#patPunjabGovernmentEmployee").removeAttr("checked");
+				if (jQuery("#patCatStaff").is(":checked")) jQuery("#patCatStaff").removeAttr("checked");
+				if (jQuery("#patCatAntenatal").is(":checked")) jQuery("#patCatAntenatal").removeAttr("checked");
+				if (jQuery("#patCatTB").is(":checked")) jQuery("#patCatTB").removeAttr("checked");
+				if (jQuery("#patCatCancer").is(":checked")) jQuery("#patCatCancer").removeAttr("checked");
+				if (jQuery("#patCatOthersFree").is(":checked")) jQuery("#patCatOthersFree").removeAttr("checked");
+	        }
+	    },
+	    
+	    /* CHECK WHEN CANCER CATEGORY IS SELECTED */
+	    // 30/04/2012: Marta added for Punjab new categories validation - Bug #177
+	    cancerCheck: function () {			
+	        if (jQuery("#patCatCancer").is(':checked')) {						
+	            if (jQuery("#bpl").is(":checked")) {
+					jQuery("#bpl").removeAttr("checked");
+					jQuery("#bplNumber").val("");
+					jQuery("#bplField").hide();
+				}
+	            if (jQuery("#rsby").is(":checked")) {
+					jQuery("#rsby").removeAttr("checked");
+					jQuery("#rsbyNumber").val("");
+					jQuery("#rsbyField").hide();
+				}
+	            if (jQuery("#patCatPoor").is(":checked")) jQuery("#patCatPoor").removeAttr("checked");
+				if (jQuery("#patExServicemen").is(":checked")) jQuery("#patExServicemen").removeAttr("checked");
+				if (jQuery("#patPensioner").is(":checked")){ 
+					jQuery("#patPensioner").removeAttr("checked");
+					// 01/05/2012: Marta, adding pop number. Feature #181
+					jQuery("#popNumber").val("");
+					jQuery("#popField").hide();	
+				}
+				if (jQuery("#patCatGeneral").is(":checked")) jQuery("#patCatGeneral").removeAttr("checked");
+				if (jQuery("#patPunjabGovernmentEmployee").is(":checked")) jQuery("#patPunjabGovernmentEmployee").removeAttr("checked");
+				if (jQuery("#patCatStaff").is(":checked")) jQuery("#patCatStaff").removeAttr("checked");
+				if (jQuery("#patCatAntenatal").is(":checked")) jQuery("#patCatAntenatal").removeAttr("checked");
+				if (jQuery("#patCatTB").is(":checked")) jQuery("#patCatTB").removeAttr("checked");
+				if (jQuery("#patCatSchool").is(":checked")) jQuery("#patCatSchool").removeAttr("checked");
+				if (jQuery("#patCatOthersFree").is(":checked")) jQuery("#patCatOthersFree").removeAttr("checked");
+	        }
+	    },
+	    
+	    /* CHECK WHEN OTHER CATEGORY IS SELECTED */
+	    // 30/04/2012: Marta added for Punjab new categories validation - Bug #177
+	    othersFreeCheck: function () {			
+	        if (jQuery("#patCatOthersFree").is(':checked')) {						
+	            if (jQuery("#bpl").is(":checked")) {
+					jQuery("#bpl").removeAttr("checked");
+					jQuery("#bplNumber").val("");
+					jQuery("#bplField").hide();
+				}
+	            if (jQuery("#rsby").is(":checked")) {
+					jQuery("#rsby").removeAttr("checked");
+					jQuery("#rsbyNumber").val("");
+					jQuery("#rsbyField").hide();
+				}
+	            if (jQuery("#patCatPoor").is(":checked")) jQuery("#patCatPoor").removeAttr("checked");
+				if (jQuery("#patExServicemen").is(":checked")) jQuery("#patExServicemen").removeAttr("checked");
+				if (jQuery("#patPensioner").is(":checked")){ 
+					jQuery("#patPensioner").removeAttr("checked");
+					// 01/05/2012: Marta, adding pop number. Feature #181
+					jQuery("#popNumber").val("");
+					jQuery("#popField").hide();	
+				}
+				if (jQuery("#patCatGeneral").is(":checked")) jQuery("#patCatGeneral").removeAttr("checked");
+				if (jQuery("#patPunjabGovernmentEmployee").is(":checked")) jQuery("#patPunjabGovernmentEmployee").removeAttr("checked");
+				if (jQuery("#patCatStaff").is(":checked")) jQuery("#patCatStaff").removeAttr("checked");
+				if (jQuery("#patCatAntenatal").is(":checked")) jQuery("#patCatAntenatal").removeAttr("checked");
+				if (jQuery("#patCatTB").is(":checked")) jQuery("#patCatTB").removeAttr("checked");
+				if (jQuery("#patCatSchool").is(":checked")) jQuery("#patCatSchool").removeAttr("checked");
+				if (jQuery("#patCatCancer").is(":checked")) jQuery("#patCatCancer").removeAttr("checked");
+	        }
+	    },
+	    
 		/*
 		 * Check patient age for senior citizen
 		 */
@@ -540,6 +877,12 @@
 			<td class="cell"><b>Address</b></td>
 			<td class="cell">
 				<table>
+					<tr> <!--  01/05/2012: Marta, adding a field for address. Feature #183   -->
+						<td >Postal Address:
+						</td>
+						<td><input id="patientPostalAddress"
+							name="person.attribute.18" style="width: 500px;" /></td>
+					</tr>
 					<tr>
 						<td>District:</td>
 						<td>
@@ -590,7 +933,7 @@
 							<input id="patCatStaff" type="checkbox" name="person.attribute.14" value="Staff"/> Staff 
 						</td>
 						<td>
-							<input id="patCatGovEmp" type="checkbox" name="person.attribute.14" value="Government Employee"/> Government Employee 
+							<input id="patPunjabGovernmentEmployee" type="checkbox" name="person.attribute.14" value="Punjab Government Employee"/> Punjab Government Employee 
 						</td>
 					</tr>
 					<tr>
@@ -611,15 +954,36 @@
 					</tr>					
 					<tr>
 						<td>
-							<input id="patPunjabGovernmentEmployee" type="checkbox" name="person.attribute.14" value="Punjab Government Employee"/> Punjab Government Employee 
+							<input id="patPensioner" type="checkbox" name="person.attribute.14" value="Pensioner"/> Pensioner 
+						</td>
+						<!-- 01/05/2012: Marta, adding a field for pop number. Feature #181 -->
+						<td> <span id="popField">POP Number<input
+								id="popNumber" name="person.attribute.17" /> </span>
+						</td>
+					</tr>
+					<tr>
+						<!-- 30/04/12: Marta, Added categories Antenatal, TB, School, Cancer, Others. - Bug #177 -->
+						<td>
+							<input id="patCatAntenatal" type="checkbox" name="person.attribute.14" value="Antenatal"/> Antenatal Patient 
 						</td>
 						<td>
-							<input id="patExServicemen" type="checkbox" name="person.attribute.14" value="Ex Servicemen"/> Ex Servicemen 
+							<input id="patCatTB" type="checkbox" name="person.attribute.14" value="TB"/> TB Patient  
 						</td>
 					</tr>
 					<tr>
 						<td>
-							<input id="patPensioner" type="checkbox" name="person.attribute.14" value="Pensioner"/> Pensioner  
+							<input id="patCatSchool" type="checkbox" name="person.attribute.14" value="School"/> School Health Programme  
+						</td>
+						<td>
+							<input id="patCatCancer" type="checkbox" name="person.attribute.14" value="Cancer"/> Cancer Patient  
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<input id="patExServicemen" type="checkbox" name="person.attribute.14" value="Ex Servicemen"/> Ex Servicemen 
+						</td>
+						<td>
+							<input id="patCatOthersFree" type="checkbox" name="person.attribute.14" value="OthersFree"/> Other Free  
 						</td>
 					</tr>
 				</table>

@@ -148,8 +148,7 @@
 						jQuery("#estimatedAge").html(json.age);
 						jQuery("#birthdate").val(json.birthdate);
 					} else {
-						alert(json.error);
-					}
+						alert(json.error);}
 				},
 				error : function(xhr, ajaxOptions, thrownError) {
 					alert(thrownError);

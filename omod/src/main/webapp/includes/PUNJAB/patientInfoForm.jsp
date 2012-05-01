@@ -26,10 +26,14 @@
 		
 		// Set data for reprint page
 		if(MODEL.reprint=="true"){
-			jQuery("#opdWard").val(MODEL.observations[3]);
-			jQuery.each(MODEL.observations[11].split(","), function(index, value){
-				jQuery("input[name=temporary.attribute.11][value='" + value + "']").attr("checked", "checked");
-			});		
+			// 28/04/12: Changed MODEL.observations[3] for MODEL.observations[6148] by Marta - Bug #161
+			jQuery("#opdWard").val(MODEL.observations[6148]);
+			// 28/04/12: Changed MODEL.observations[11] for MODEL.observations[8058] by Marta - Bug #160
+			// 01/05/12: Marta, avoid error from emty string. Bug #180
+			if(!StringUtils.isBlank(jQuery("#temporaryCategories").val())){
+			jQuery.each(MODEL.observations[8058].split(","), function(index, value){
+				jQuery("input[name=temporary.attribute.8058][value='" + value + "']").attr("checked", "checked");
+			});	}	
 			jQuery("#printSlip").hide();
 		} else {
 			jQuery("#reprint").hide();
@@ -48,6 +52,9 @@
 				
 		} else {
 			jQuery("#printSlip").hide();
+			// 01/05/12: Marta, not to allow to store information i this step. Bug #182
+			jQuery("#temporaryCategories").hide();
+			
 		}	
 	});
 	
@@ -238,10 +245,12 @@
 					</td>
 				</tr>
 				<tr id="temporaryCategories">
-					<td colspan="1" valign="top"><b>Temporary Categories:</b></td>
+				<!-- 01/05/12: Marta, Painting Temporary Category in red. Bug #182  -->
+					<td colspan="1" valign="top"><b> <font color="red">Temporary Categories: </font></b></td>
 					<td colspan="5">
-						<input type="checkbox" name="temporary.attribute.11" value="MLC"/> MLC <br/>
-						<input type="checkbox" name="temporary.attribute.11" value="Accident"/> Accident <br/>										
+						<!-- 28/04/12: Changed MODEL.observations[11] for MODEL.observations[8058] by Marta - Bug #160 -->
+					    <input type="checkbox" name="temporary.attribute.8058" value="MLC"/> MLC <br/>
+						<input type="checkbox" name="temporary.attribute.8058" value="Accident"/> Accident <br/>										
 					</td>
 				</tr>
 				<tr>

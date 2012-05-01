@@ -143,7 +143,7 @@
 						jQuery("#calendar").val(json.birthdate);
 					} else {
 						alert(json.error);
-					}
+						}
 				},
 				error : function(xhr, ajaxOptions, thrownError) {
 					alert(thrownError);
