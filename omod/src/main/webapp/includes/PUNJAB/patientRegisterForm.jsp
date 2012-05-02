@@ -55,8 +55,8 @@
 				// hide bpl and rsby number
 				jQuery("#bplField").hide();
 				jQuery("#rsbyField").hide();
-				// 01/05/2012: Marta, adding pop number. Feature #181
-				jQuery("#popField").hide();
+				// 01/05/2012: Marta, adding ppo number. Feature #181
+				jQuery("#ppoField").hide();
 				jQuery("#patCatGeneral").attr("checked", "checked");
 
 				// binding
@@ -393,10 +393,10 @@
 						return false;
 					}
 				}
-				// 01/05/2012: Marta, adding pop number. Feature #181
+				// 01/05/2012: Marta, adding ppo number. Feature #181
 				if (jQuery("#patPensioner").attr('checked')) {
-					if (jQuery("#popNumber").val().length <= 0) {
-						alert('Please enter POP number');
+					if (jQuery("#ppoNumber").val().length <= 0) {
+						alert('Please enter PPO number');
 						return false;
 					}
 				}
@@ -423,9 +423,9 @@
 					jQuery("#patExServicemen").removeAttr("checked");
 				if (jQuery("#patPensioner").is(":checked")) {
 					jQuery("#patPensioner").removeAttr("checked");
-					// 01/05/2012: Marta, adding pop number. Feature #181
-					jQuery("#popNumber").val("");
-					jQuery("#popField").hide();
+					// 01/05/2012: Marta, adding ppo number. Feature #181
+					jQuery("#ppoNumber").val("");
+					jQuery("#ppoField").hide();
 				}
 				// 30/04/2012: Marta fixed for Punjab new Categories validation - Bug #177
 				if (jQuery("#patCatAntenatal").is(":checked"))
@@ -464,9 +464,9 @@
 					jQuery("#patExServicemen").removeAttr("checked");
 				if (jQuery("#patPensioner").is(":checked")) {
 					jQuery("#patPensioner").removeAttr("checked");
-					// 01/05/2012: Marta, adding pop number. Feature #181
-					jQuery("#popNumber").val("");
-					jQuery("#popField").hide();
+					// 01/05/2012: Marta, adding ppo number. Feature #181
+					jQuery("#ppoNumber").val("");
+					jQuery("#ppoField").hide();
 				}
 				// 30/04/2012: Marta fixed for Punjab new Categories validation - Bug #177
 				if (jQuery("#patCatAntenatal").is(":checked"))
@@ -505,9 +505,9 @@
 					jQuery("#patExServicemen").removeAttr("checked");
 				if (jQuery("#patPensioner").is(":checked")) {
 					jQuery("#patPensioner").removeAttr("checked");
-					// 01/05/2012: Marta, adding pop number. Feature #181
-					jQuery("#popNumber").val("");
-					jQuery("#popField").hide();
+					// 01/05/2012: Marta, adding ppo number. Feature #181
+					jQuery("#ppoNumber").val("");
+					jQuery("#ppoField").hide();
 				}
 				if (jQuery("#patCatGeneral").is(":checked"))
 					jQuery("#patCatGeneral").removeAttr("checked");
@@ -555,9 +555,9 @@
 					jQuery("#patExServicemen").removeAttr("checked");
 				if (jQuery("#patPensioner").is(":checked")) {
 					jQuery("#patPensioner").removeAttr("checked");
-					// 01/05/2012: Marta, adding pop number. Feature #181
-					jQuery("#popNumber").val("");
-					jQuery("#popField").hide();
+					// 01/05/2012: Marta, adding ppo number. Feature #181
+					jQuery("#ppoNumber").val("");
+					jQuery("#ppoField").hide();
 				}
 				// 30/04/2012: Marta fixed for Punjab new Categories validation - Bug #177
 				if (jQuery("#patCatAntenatal").is(":checked"))
@@ -595,9 +595,9 @@
 					jQuery("#patExServicemen").removeAttr("checked");
 				if (jQuery("#patPensioner").is(":checked")) {
 					jQuery("#patPensioner").removeAttr("checked");
-					// 01/05/2012: Marta, adding pop number. Feature #181
-					jQuery("#popNumber").val("");
-					jQuery("#popField").hide();
+					// 01/05/2012: Marta, adding ppo number. Feature #181
+					jQuery("#ppoNumber").val("");
+					jQuery("#ppoField").hide();
 				}
 				// 25/04/2012: Thai Chuong fixed for Punjab validation - Bug #159
 				if (jQuery("#patCatStaff").is(":checked"))
@@ -624,9 +624,9 @@
 					jQuery("#patExServicemen").removeAttr("checked");
 				if (jQuery("#patPensioner").is(":checked")) {
 					jQuery("#patPensioner").removeAttr("checked");
-					// 01/05/2012: Marta, adding pop number. Feature #181
-					jQuery("#popNumber").val("");
-					jQuery("#popField").hide();
+					// 01/05/2012: Marta, adding ppo number. Feature #181
+					jQuery("#ppoNumber").val("");
+					jQuery("#ppoField").hide();
 				}
 				// 25/04/2012: Thai Chuong fixed for Punjab validation - Bug #159
 				if (jQuery("#patCatGeneral").is(":checked"))
@@ -669,9 +669,9 @@
 							.removeAttr("checked");
 				if (jQuery("#patPensioner").is(":checked")) {
 					jQuery("#patPensioner").removeAttr("checked");
-					// 01/05/2012: Marta, adding pop number. Feature #181
-					jQuery("#popNumber").val("");
-					jQuery("#popField").hide();
+					// 01/05/2012: Marta, adding ppo number. Feature #181
+					jQuery("#ppoNumber").val("");
+					jQuery("#ppoField").hide();
 				}
 				// 25/04/2012: Thai Chuong fixed for Punjab validation - Bug #159
 				if (jQuery("#patCatGeneral").is(":checked"))
@@ -707,8 +707,8 @@
 		/** CHECK WHEN PENSIONER CATEGORY IS SELECTED */
 		pensionerCheck : function() {
 			if (jQuery("#patPensioner").is(':checked')) {
-				// 01/05/2012: Marta, adding pop number. Feature #181
-				jQuery("#popField").show();
+				// 01/05/2012: Marta, adding ppo number. Feature #181
+				jQuery("#ppoField").show();
 				if (jQuery("#patExServicemen").is(":checked"))
 					jQuery("#patExServicemen").removeAttr("checked");
 				if (jQuery("#patPunjabGovernmentEmployee").is(":checked"))
@@ -742,10 +742,10 @@
 					jQuery("#patCatCancer").removeAttr("checked");
 				if (jQuery("#patCatOthersFree").is(":checked"))
 					jQuery("#patCatOthersFree").removeAttr("checked");
-			} // 01/05/2012: Marta, adding pop number. Feature #181
+			} // 01/05/2012: Marta, adding ppo number. Feature #181
 			else {
-				jQuery("#popNumber").val("");
-				jQuery("#popField").hide();
+				jQuery("#ppoNumber").val("");
+				jQuery("#ppoField").hide();
 			}
 		},
 
@@ -769,9 +769,9 @@
 					jQuery("#patExServicemen").removeAttr("checked");
 				if (jQuery("#patPensioner").is(":checked")) {
 					jQuery("#patPensioner").removeAttr("checked");
-					// 01/05/2012: Marta, adding pop number. Feature #181
-					jQuery("#popNumber").val("");
-					jQuery("#popField").hide();
+					// 01/05/2012: Marta, adding ppo number. Feature #181
+					jQuery("#ppoNumber").val("");
+					jQuery("#ppoField").hide();
 				}
 				if (jQuery("#patCatGeneral").is(":checked"))
 					jQuery("#patCatGeneral").removeAttr("checked");
@@ -811,9 +811,9 @@
 					jQuery("#patExServicemen").removeAttr("checked");
 				if (jQuery("#patPensioner").is(":checked")) {
 					jQuery("#patPensioner").removeAttr("checked");
-					// 01/05/2012: Marta, adding pop number. Feature #181
-					jQuery("#popNumber").val("");
-					jQuery("#popField").hide();
+					// 01/05/2012: Marta, adding ppo number. Feature #181
+					jQuery("#ppoNumber").val("");
+					jQuery("#ppoField").hide();
 				}
 				if (jQuery("#patCatGeneral").is(":checked"))
 					jQuery("#patCatGeneral").removeAttr("checked");
@@ -853,9 +853,9 @@
 					jQuery("#patExServicemen").removeAttr("checked");
 				if (jQuery("#patPensioner").is(":checked")) {
 					jQuery("#patPensioner").removeAttr("checked");
-					// 01/05/2012: Marta, adding pop number. Feature #181
-					jQuery("#popNumber").val("");
-					jQuery("#popField").hide();
+					// 01/05/2012: Marta, adding ppo number. Feature #181
+					jQuery("#ppoNumber").val("");
+					jQuery("#ppoField").hide();
 				}
 				if (jQuery("#patCatGeneral").is(":checked"))
 					jQuery("#patCatGeneral").removeAttr("checked");
@@ -895,9 +895,9 @@
 					jQuery("#patExServicemen").removeAttr("checked");
 				if (jQuery("#patPensioner").is(":checked")) {
 					jQuery("#patPensioner").removeAttr("checked");
-					// 01/05/2012: Marta, adding pop number. Feature #181
-					jQuery("#popNumber").val("");
-					jQuery("#popField").hide();
+					// 01/05/2012: Marta, adding ppo number. Feature #181
+					jQuery("#ppoNumber").val("");
+					jQuery("#ppoField").hide();
 				}
 				if (jQuery("#patCatGeneral").is(":checked"))
 					jQuery("#patCatGeneral").removeAttr("checked");
@@ -937,9 +937,9 @@
 					jQuery("#patExServicemen").removeAttr("checked");
 				if (jQuery("#patPensioner").is(":checked")) {
 					jQuery("#patPensioner").removeAttr("checked");
-					// 01/05/2012: Marta, adding pop number. Feature #181
-					jQuery("#popNumber").val("");
-					jQuery("#popField").hide();
+					// 01/05/2012: Marta, adding ppo number. Feature #181
+					jQuery("#ppoNumber").val("");
+					jQuery("#ppoField").hide();
 				}
 				if (jQuery("#patCatGeneral").is(":checked"))
 					jQuery("#patCatGeneral").removeAttr("checked");
@@ -1138,9 +1138,9 @@
 					<tr>
 						<td><input id="patPensioner" type="checkbox"
 							name="person.attribute.14" value="Pensioner" /> Pensioner</td>
-						<!-- 01/05/2012: Marta, adding a field for pop number. Feature #181 -->
-						<td><span id="popField">POP Number<input
-								id="popNumber" name="person.attribute.17" /> </span></td>
+						<!-- 01/05/2012: Marta, adding a field for ppo number. Feature #181 -->
+						<td><span id="ppoField">PPO Number<input
+								id="ppoNumber" name="person.attribute.17" /> </span></td>
 					</tr>
 					<tr>
 						<!-- 30/04/12: Marta, Added categories Antenatal, TB, School, Cancer, Others. - Bug #177 -->

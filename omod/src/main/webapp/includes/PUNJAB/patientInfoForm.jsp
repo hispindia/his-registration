@@ -52,7 +52,7 @@
 				
 		} else {
 			jQuery("#printSlip").hide();
-			// 01/05/12: Marta, not to allow to store information i this step. Bug #182
+			// 01/05/12: Marta, not to allow to store information in this step. Bug #182
 			jQuery("#temporaryCategories").hide();
 			
 		}	
