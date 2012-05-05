@@ -82,7 +82,6 @@ public class RegistrationAjaxController {
 			if(isLaterToday(date)){
 				json.put("error", "Birthdate must be before the current date.");
 			} else {
-				System.out.println("before");
 				// the user entered the correct birthdate
 				json.put("estimated", false);
 				json.put("birthdate", birthdate);
