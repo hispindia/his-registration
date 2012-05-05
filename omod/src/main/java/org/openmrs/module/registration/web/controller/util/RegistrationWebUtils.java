@@ -56,6 +56,7 @@ public class RegistrationWebUtils {
 	
 	/**
 	 * Optimize the request's parameters
+	 * 
 	 * @param request
 	 * @return
 	 */
@@ -64,7 +65,7 @@ public class RegistrationWebUtils {
 		for (@SuppressWarnings("rawtypes")
 		Enumeration e = request.getParameterNames(); e.hasMoreElements();) {
 			String parameterName = (String) e.nextElement();
-			String[] values = request.getParameterValues(parameterName);			
+			String[] values = request.getParameterValues(parameterName);
 			String value = StringUtils.join(values, ',');
 			parameters.put(parameterName, value);
 		}
@@ -73,64 +74,64 @@ public class RegistrationWebUtils {
 	
 	/**
 	 * Get the list of concepts which are answered for a concept
+	 * 
 	 * @param conceptName
 	 * @return
 	 */
-	public static String getSubConcepts(String conceptName){
+	public static String getSubConcepts(String conceptName) {
 		Concept opdward = Context.getConceptService().getConcept(conceptName);
 		StringBuilder sb = new StringBuilder();
 		for (ConceptAnswer ca : opdward.getAnswers()) {
-			sb.append(ca.getAnswerConcept().getConceptId() + "," + ca
-					.getAnswerConcept().getName().getName() + "|");
+			sb.append(ca.getAnswerConcept().getConceptId() + "," + ca.getAnswerConcept().getName().getName() + "|");
 		}
 		return sb.toString();
 	}
 	
 	/**
 	 * Send patient for OPD Queue
+	 * 
 	 * @param patient
 	 * @param selectedOPDConcept
 	 * @param revisit
 	 */
-	public static void sendPatientToOPDQueue(Patient patient, Concept selectedOPDConcept, boolean revisit){
+	public static void sendPatientToOPDQueue(Patient patient, Concept selectedOPDConcept, boolean revisit) {
 		Concept referralConcept = null;
-		if(!revisit){
+		if (!revisit) {
 			referralConcept = Context.getConceptService().getConcept("New Patient");
 		} else {
 			referralConcept = Context.getConceptService().getConcept("Revisit");
 		}
-        
-        OpdPatientQueue queue = Context.getService(PatientQueueService.class).getOpdPatientQueue(patient.getPatientIdentifier().getIdentifier(), selectedOPDConcept.getConceptId());
-        if(queue==null){
-        	queue = new OpdPatientQueue();
-            queue.setPatient(patient);
-            queue.setCreatedOn(new Date());
-            queue.setBirthDate(patient.getBirthdate());
-            queue.setPatientIdentifier(patient.getPatientIdentifier().getIdentifier());
-            queue.setOpdConcept(selectedOPDConcept);
-            queue.setOpdConceptName(selectedOPDConcept.getName().getName());
-            queue.setPatientName(patient.getGivenName()+" "+patient.getMiddleName() + " "+ patient.getFamilyName());
-            queue.setReferralConcept(referralConcept);
-            queue.setReferralConceptName(referralConcept.getName().getName());
-            queue.setSex(patient.getGender());
-            PatientQueueService queueService = Context.getService(PatientQueueService.class);
-            queueService.saveOpdPatientQueue(queue);
-        }
-        
-        
+		
+		OpdPatientQueue queue = Context.getService(PatientQueueService.class).getOpdPatientQueue(
+		    patient.getPatientIdentifier().getIdentifier(), selectedOPDConcept.getConceptId());
+		if (queue == null) {
+			queue = new OpdPatientQueue();
+			queue.setPatient(patient);
+			queue.setCreatedOn(new Date());
+			queue.setBirthDate(patient.getBirthdate());
+			queue.setPatientIdentifier(patient.getPatientIdentifier().getIdentifier());
+			queue.setOpdConcept(selectedOPDConcept);
+			queue.setOpdConceptName(selectedOPDConcept.getName().getName());
+			queue.setPatientName(patient.getGivenName() + " " + patient.getMiddleName() + " " + patient.getFamilyName());
+			queue.setReferralConcept(referralConcept);
+			queue.setReferralConceptName(referralConcept.getName().getName());
+			queue.setSex(patient.getGender());
+			PatientQueueService queueService = Context.getService(PatientQueueService.class);
+			queueService.saveOpdPatientQueue(queue);
+		}
+		
 	}
 	
 	/**
 	 * Get the list of address
+	 * 
 	 * @param model
 	 * @throws MalformedURLException
 	 * @throws DocumentException
 	 * @throws JaxenException
 	 */
-	public static void getAddressData(Model model) throws MalformedURLException,
-			DocumentException, JaxenException {
-		File addressFile = new File(OpenmrsUtil.getApplicationDataDirectory()
-				+ "addresshierarchy.xml");
+	public static void getAddressData(Model model) throws MalformedURLException, DocumentException, JaxenException {
+		File addressFile = new File(OpenmrsUtil.getApplicationDataDirectory() + "addresshierarchy.xml");
 		if (addressFile.exists()) {
 			SAXReader reader = new SAXReader();
 			Document document = reader.read(addressFile.toURI().toURL());
@@ -141,19 +142,14 @@ public class RegistrationWebUtils {
 			String[] tehsilArr = new String[distList.size()];
 			if (distList.size() > 0) {
 				for (int i = 0; i < distList.size(); i++) {
-					distArr[i] = ((Element) distList.get(i))
-							.attributeValue("name");
+					distArr[i] = ((Element) distList.get(i)).attributeValue("name");
 					@SuppressWarnings("rawtypes")
-					List tehsilList = ((Element) distList.get(i))
-							.elements("tehsil");
-					tehsilArr[i] = ((Element) tehsilList.get(0))
-							.attributeValue("name") + ",";
+					List tehsilList = ((Element) distList.get(i)).elements("tehsil");
+					tehsilArr[i] = ((Element) tehsilList.get(0)).attributeValue("name") + ",";
 					for (int j = 1; j < (tehsilList.size() - 1); j++) {
-						tehsilArr[i] += ((Element) tehsilList.get(j))
-								.attributeValue("name") + ",";
+						tehsilArr[i] += ((Element) tehsilList.get(j)).attributeValue("name") + ",";
 					}
-					tehsilArr[i] += ((Element) tehsilList
-							.get(tehsilList.size() - 1)).attributeValue("name");
+					tehsilArr[i] += ((Element) tehsilList.get(tehsilList.size() - 1)).attributeValue("name");
 				}
 			}
 			model.addAttribute("districts", distArr);
@@ -163,30 +159,26 @@ public class RegistrationWebUtils {
 	
 	/**
 	 * Create a new encounter
+	 * 
 	 * @param patient
 	 * @param revisit
 	 * @return
 	 */
-	public static Encounter createEncounter(Patient patient, boolean revisit){
+	public static Encounter createEncounter(Patient patient, boolean revisit) {
 		EncounterType encounterType = null;
 		if (!revisit) {
-			String encounterTypeName = GlobalPropertyUtil.getString(
-					RegistrationConstants.PROPERTY_ENCOUNTER_TYPE_REGINIT,
-					"REGINITIAL");
-			encounterType = Context.getEncounterService().getEncounterType(
-					encounterTypeName);
+			String encounterTypeName = GlobalPropertyUtil.getString(RegistrationConstants.PROPERTY_ENCOUNTER_TYPE_REGINIT,
+			    "REGINITIAL");
+			encounterType = Context.getEncounterService().getEncounterType(encounterTypeName);
 		} else {
-			String encounterTypeName = GlobalPropertyUtil.getString(
-					RegistrationConstants.PROPERTY_ENCOUNTER_TYPE_REVISIT,
-					"REGREVISIT");
-			encounterType = Context.getEncounterService().getEncounterType(
-					encounterTypeName);
+			String encounterTypeName = GlobalPropertyUtil.getString(RegistrationConstants.PROPERTY_ENCOUNTER_TYPE_REVISIT,
+			    "REGREVISIT");
+			encounterType = Context.getEncounterService().getEncounterType(encounterTypeName);
 		}
 		
 		// get location
-		Location location = new Location(GlobalPropertyUtil.getInteger(
-				RegistrationConstants.PROPERTY_LOCATION, 1));		
-
+		Location location = new Location(GlobalPropertyUtil.getInteger(RegistrationConstants.PROPERTY_LOCATION, 1));
+		
 		// create encounter
 		Encounter encounter = new Encounter();
 		encounter.setEncounterType(encounterType);
@@ -194,7 +186,7 @@ public class RegistrationWebUtils {
 		encounter.setProvider(Context.getAuthenticatedUser().getPerson());
 		encounter.setEncounterDatetime(new Date());
 		encounter.setPatient(patient);
-		encounter.setLocation(location);	
+		encounter.setLocation(location);
 		return encounter;
 	}
 }

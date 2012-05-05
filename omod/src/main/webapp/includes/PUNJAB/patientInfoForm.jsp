@@ -53,6 +53,7 @@
 		} else {
 			jQuery("#printSlip").hide();
 			// 01/05/12: Marta, not to allow to store information in this step. Bug #182
+			jQuery("#opdWardLabel").hide();
 			jQuery("#temporaryCategories").hide();
 			
 		}	
@@ -225,7 +226,8 @@
 						<span id="phoneNumber"/>			
 					</td>
 				</tr>
-				<tr>
+				<!-- 03/05/2012 Thai Chuong: Supported issue #182 -->
+				<tr id="opdWardLabel">
 					<td colspan="1"><b>OPD room to visit:</b></td>
 					<td colspan="5">
 						<select id="opdWard" name="patient.opdWard">

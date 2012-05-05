@@ -69,9 +69,9 @@
 				jQuery("#patCatStaff").click(function() {
 					VALIDATORS.staffCheck();
 				});
-				jQuery("#patCatPoor").click(function() {
+				/* jQuery("#patCatPoor").click(function() {
 					VALIDATORS.poorCheck();
-				});
+				}); */
 				jQuery("#patCatGeneral").click(function() {
 					VALIDATORS.generalCheck();
 				});
@@ -365,7 +365,7 @@
 		/** VALIDATE PATIENT CATEGORY */
 		validatePatientCategory : function() {
 			if (jQuery("#patCatGeneral").attr('checked') == false
-					&& jQuery("#patCatPoor").attr('checked') == false
+					/* && jQuery("#patCatPoor").attr('checked') == false */
 					&& jQuery("#patCatStaff").attr('checked') == false
 					&& jQuery("#rsby").attr('checked') == false
 					&& jQuery("#bpl").attr('checked') == false
@@ -413,8 +413,8 @@
 				if (jQuery("#patCatStaff").is(":checked")) {
 					jQuery("#patCatStaff").removeAttr("checked");
 				}
-				if (jQuery("#patCatPoor").is(":checked"))
-					jQuery("#patCatPoor").removeAttr("checked");
+				/* if (jQuery("#patCatPoor").is(":checked"))
+					jQuery("#patCatPoor").removeAttr("checked"); */
 				if (jQuery("#patPunjabGovernmentEmployee").is(":checked"))
 					jQuery("#patPunjabGovernmentEmployee")
 							.removeAttr("checked");
@@ -454,8 +454,8 @@
 				if (jQuery("#patCatStaff").is(":checked")) {
 					jQuery("#patCatStaff").removeAttr("checked");
 				}
-				if (jQuery("#patCatPoor").is(":checked"))
-					jQuery("#patCatPoor").removeAttr("checked");
+				/* if (jQuery("#patCatPoor").is(":checked"))
+					jQuery("#patCatPoor").removeAttr("checked"); */
 				if (jQuery("#patPunjabGovernmentEmployee").is(":checked"))
 					jQuery("#patPunjabGovernmentEmployee")
 							.removeAttr("checked");
@@ -498,8 +498,8 @@
 					jQuery("#rsbyNumber").val("");
 					jQuery("#rsbyField").hide();
 				}
-				if (jQuery("#patCatPoor").is(":checked"))
-					jQuery("#patCatPoor").removeAttr("checked");
+				/* if (jQuery("#patCatPoor").is(":checked"))
+					jQuery("#patCatPoor").removeAttr("checked"); */
 				// 25/04/2012: Thai Chuong fixed for Punjab validation - Bug #159
 				if (jQuery("#patExServicemen").is(":checked"))
 					jQuery("#patExServicemen").removeAttr("checked");
@@ -586,8 +586,8 @@
 					jQuery("#rsbyNumber").val("");
 					jQuery("#rsbyField").hide();
 				}
-				if (jQuery("#patCatPoor").is(":checked"))
-					jQuery("#patCatPoor").removeAttr("checked");
+/* 				if (jQuery("#patCatPoor").is(":checked"))
+					jQuery("#patCatPoor").removeAttr("checked"); */
 				if (jQuery("#patPunjabGovernmentEmployee").is(":checked"))
 					jQuery("#patPunjabGovernmentEmployee")
 							.removeAttr("checked");
@@ -641,8 +641,8 @@
 					jQuery("#rsbyNumber").val("");
 					jQuery("#rsbyField").hide();
 				}
-				if (jQuery("#patCatPoor").is(":checked"))
-					jQuery("#patCatPoor").removeAttr("checked");
+/* 				if (jQuery("#patCatPoor").is(":checked"))
+					jQuery("#patCatPoor").removeAttr("checked"); */
 				// 28/04/2012: Marta fixed for Punjab validation - Bug #159
 				if (jQuery("#patCatStaff").is(":checked"))
 					jQuery("#patCatStaff").removeAttr("checked");
@@ -676,8 +676,8 @@
 				// 25/04/2012: Thai Chuong fixed for Punjab validation - Bug #159
 				if (jQuery("#patCatGeneral").is(":checked"))
 					jQuery("#patCatGeneral").removeAttr("checked");
-				if (jQuery("#patCatPoor").is(":checked"))
-					jQuery("#patCatPoor").removeAttr("checked");
+/* 				if (jQuery("#patCatPoor").is(":checked"))
+					jQuery("#patCatPoor").removeAttr("checked"); */
 				if (jQuery("#bpl").is(":checked")) {
 					jQuery("#bpl").removeAttr("checked");
 					jQuery("#bplNumber").val("");
@@ -729,8 +729,8 @@
 				}
 				if (jQuery("#patCatStaff").is(":checked"))
 					jQuery("#patCatStaff").removeAttr("checked");
-				if (jQuery("#patCatPoor").is(":checked"))
-					jQuery("#patCatPoor").removeAttr("checked");
+/* 				if (jQuery("#patCatPoor").is(":checked"))
+					jQuery("#patCatPoor").removeAttr("checked"); */
 				// 30/04/2012: Marta fixed for Punjab new Categories validation - Bug #177
 				if (jQuery("#patCatAntenatal").is(":checked"))
 					jQuery("#patCatAntenatal").removeAttr("checked");
@@ -763,8 +763,8 @@
 					jQuery("#rsbyNumber").val("");
 					jQuery("#rsbyField").hide();
 				}
-				if (jQuery("#patCatPoor").is(":checked"))
-					jQuery("#patCatPoor").removeAttr("checked");
+/* 				if (jQuery("#patCatPoor").is(":checked"))
+					jQuery("#patCatPoor").removeAttr("checked"); */
 				if (jQuery("#patExServicemen").is(":checked"))
 					jQuery("#patExServicemen").removeAttr("checked");
 				if (jQuery("#patPensioner").is(":checked")) {
@@ -805,8 +805,8 @@
 					jQuery("#rsbyNumber").val("");
 					jQuery("#rsbyField").hide();
 				}
-				if (jQuery("#patCatPoor").is(":checked"))
-					jQuery("#patCatPoor").removeAttr("checked");
+/* 				if (jQuery("#patCatPoor").is(":checked"))
+					jQuery("#patCatPoor").removeAttr("checked"); */
 				if (jQuery("#patExServicemen").is(":checked"))
 					jQuery("#patExServicemen").removeAttr("checked");
 				if (jQuery("#patPensioner").is(":checked")) {
@@ -847,8 +847,8 @@
 					jQuery("#rsbyNumber").val("");
 					jQuery("#rsbyField").hide();
 				}
-				if (jQuery("#patCatPoor").is(":checked"))
-					jQuery("#patCatPoor").removeAttr("checked");
+/* 				if (jQuery("#patCatPoor").is(":checked"))
+					jQuery("#patCatPoor").removeAttr("checked"); */
 				if (jQuery("#patExServicemen").is(":checked"))
 					jQuery("#patExServicemen").removeAttr("checked");
 				if (jQuery("#patPensioner").is(":checked")) {
@@ -889,8 +889,8 @@
 					jQuery("#rsbyNumber").val("");
 					jQuery("#rsbyField").hide();
 				}
-				if (jQuery("#patCatPoor").is(":checked"))
-					jQuery("#patCatPoor").removeAttr("checked");
+/* 				if (jQuery("#patCatPoor").is(":checked"))
+					jQuery("#patCatPoor").removeAttr("checked"); */
 				if (jQuery("#patExServicemen").is(":checked"))
 					jQuery("#patExServicemen").removeAttr("checked");
 				if (jQuery("#patPensioner").is(":checked")) {
@@ -931,8 +931,8 @@
 					jQuery("#rsbyNumber").val("");
 					jQuery("#rsbyField").hide();
 				}
-				if (jQuery("#patCatPoor").is(":checked"))
-					jQuery("#patCatPoor").removeAttr("checked");
+/* 				if (jQuery("#patCatPoor").is(":checked"))
+					jQuery("#patCatPoor").removeAttr("checked"); */
 				if (jQuery("#patExServicemen").is(":checked"))
 					jQuery("#patExServicemen").removeAttr("checked");
 				if (jQuery("#patPensioner").is(":checked")) {
@@ -1113,8 +1113,8 @@
 					<tr>
 						<td><input id="patCatGeneral" type="checkbox"
 							name="person.attribute.14" value="General" /> General</td>
-						<td><input id="patCatPoor" type="checkbox"
-							name="person.attribute.14" value="Poor" /> Poor</td>
+						<!-- <td><input id="patCatPoor" type="checkbox"
+							name="person.attribute.14" value="Poor" /> Poor</td>  -->
 					</tr>
 					<tr>
 						<td><input id="patCatStaff" type="checkbox"

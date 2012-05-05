@@ -109,9 +109,9 @@
 				jQuery("#patCatStaff").click(function() {
 					VALIDATORS.staffCheck();
 				});
-				jQuery("#patCatPoor").click(function() {
+/* 				jQuery("#patCatPoor").click(function() {
 					VALIDATORS.poorCheck();
-				});
+				}); */
 				jQuery("#patCatGeneral").click(function() {
 					VALIDATORS.generalCheck();
 				});
@@ -359,7 +359,7 @@
 		/** VALIDATE PATIENT CATEGORY */
 		validatePatientCategory : function() {
 			if (jQuery("#patCatGeneral").attr('checked') == false
-					&& jQuery("#patCatPoor").attr('checked') == false
+					/* && jQuery("#patCatPoor").attr('checked') == false */
 					&& jQuery("#patCatStaff").attr('checked') == false
 					&& jQuery("#rsby").attr('checked') == false
 					&& jQuery("#bpl").attr('checked') == false
@@ -413,8 +413,8 @@
 				if (jQuery("#patCatStaff").is(":checked")) {
 					jQuery("#patCatStaff").removeAttr("checked");
 				}
-				if (jQuery("#patCatPoor").is(":checked"))
-					jQuery("#patCatPoor").removeAttr("checked");
+/* 				if (jQuery("#patCatPoor").is(":checked"))
+					jQuery("#patCatPoor").removeAttr("checked"); */
 				// 28/04/2012: Marta fixed for Punjab validation - Bug #159
 				if (jQuery("#patPunjabGovernmentEmployee").is(":checked"))
 					jQuery("#patPunjabGovernmentEmployee")
@@ -459,8 +459,8 @@
 				if (jQuery("#patCatStaff").is(":checked")) {
 					jQuery("#patCatStaff").removeAttr("checked");
 				}
-				if (jQuery("#patCatPoor").is(":checked"))
-					jQuery("#patCatPoor").removeAttr("checked");
+/* 				if (jQuery("#patCatPoor").is(":checked"))
+					jQuery("#patCatPoor").removeAttr("checked"); */
 				// 28/04/2012: Marta fixed for Punjab validation - Bug #159
 				if (jQuery("#patPunjabGovernmentEmployee").is(":checked"))
 					jQuery("#patPunjabGovernmentEmployee")
@@ -503,8 +503,8 @@
 					jQuery("#rsbyNumber").val("");
 					jQuery("#rsbyField").hide();
 				}
-				if (jQuery("#patCatPoor").is(":checked"))
-					jQuery("#patCatPoor").removeAttr("checked");
+/* 				if (jQuery("#patCatPoor").is(":checked"))
+					jQuery("#patCatPoor").removeAttr("checked"); */
 				// 28/04/2012: Marta fixed for Punjab validation - Bug #159
 				if (jQuery("#patExServicemen").is(":checked"))
 					jQuery("#patExServicemen").removeAttr("checked");
@@ -591,8 +591,8 @@
 					jQuery("#rsbyNumber").val("");
 					jQuery("#rsbyField").hide();
 				}
-				if (jQuery("#patCatPoor").is(":checked"))
-					jQuery("#patCatPoor").removeAttr("checked");
+/* 				if (jQuery("#patCatPoor").is(":checked"))
+					jQuery("#patCatPoor").removeAttr("checked"); */
 				// 28/04/2012: Marta fixed for Punjab validation - Bug #159
 				if (jQuery("#patPunjabGovernmentEmployee").is(":checked"))
 					jQuery("#patPunjabGovernmentEmployee")
@@ -646,8 +646,8 @@
 					jQuery("#rsbyNumber").val("");
 					jQuery("#rsbyField").hide();
 				}
-				if (jQuery("#patCatPoor").is(":checked"))
-					jQuery("#patCatPoor").removeAttr("checked");
+/* 				if (jQuery("#patCatPoor").is(":checked"))
+					jQuery("#patCatPoor").removeAttr("checked"); */
 				if (jQuery("#patCatStaff").is(":checked"))
 					jQuery("#patCatStaff").removeAttr("checked");
 				// 30/04/2012: Marta fixed for Punjab new Categories validation - Bug #177
@@ -680,8 +680,8 @@
 				// 28/04/2012: Marta fixed for Punjab validation - Bug #159
 				if (jQuery("#patCatGeneral").is(":checked"))
 					jQuery("#patCatGeneral").removeAttr("checked");
-				if (jQuery("#patCatPoor").is(":checked"))
-					jQuery("#patCatPoor").removeAttr("checked");
+/* 				if (jQuery("#patCatPoor").is(":checked"))
+					jQuery("#patCatPoor").removeAttr("checked"); */
 				if (jQuery("#bpl").is(":checked")) {
 					jQuery("#bpl").removeAttr("checked");
 					jQuery("#bplNumber").val("");
@@ -716,7 +716,7 @@
 					jQuery("#patientRegistrationForm").fillForm(
 							"person.attribute.17=="
 									+ MODEL.patientAttributes[17] + "||");
-				}else {jQuery("#ppoNumber").val("");}
+				}
 				// 01/05/2012: Marta, adding ppo number. Feature #181
 				jQuery("#ppoField").show();
 				if (jQuery("#patExServicemen").is(":checked"))
@@ -739,8 +739,8 @@
 				}
 				if (jQuery("#patCatStaff").is(":checked"))
 					jQuery("#patCatStaff").removeAttr("checked");
-				if (jQuery("#patCatPoor").is(":checked"))
-					jQuery("#patCatPoor").removeAttr("checked");
+/* 				if (jQuery("#patCatPoor").is(":checked"))
+					jQuery("#patCatPoor").removeAttr("checked"); */
 				// 30/04/2012: Marta fixed for Punjab new Categories validation - Bug #177
 				if (jQuery("#patCatAntenatal").is(":checked"))
 					jQuery("#patCatAntenatal").removeAttr("checked");
@@ -772,8 +772,8 @@
 					jQuery("#rsbyNumber").val("");
 					jQuery("#rsbyField").hide();
 				}
-				if (jQuery("#patCatPoor").is(":checked"))
-					jQuery("#patCatPoor").removeAttr("checked");
+/* 				if (jQuery("#patCatPoor").is(":checked"))
+					jQuery("#patCatPoor").removeAttr("checked"); */
 				if (jQuery("#patCatGeneral").is(":checked"))
 					jQuery("#patCatGeneral").removeAttr("checked");
 				if (!VALIDATORS.checkPatientAgeForSeniorCitizen()) {
@@ -797,8 +797,8 @@
 					jQuery("#rsbyNumber").val("");
 					jQuery("#rsbyField").hide();
 				}
-				if (jQuery("#patCatPoor").is(":checked"))
-					jQuery("#patCatPoor").removeAttr("checked");
+/* 				if (jQuery("#patCatPoor").is(":checked"))
+					jQuery("#patCatPoor").removeAttr("checked"); */
 				if (jQuery("#patExServicemen").is(":checked"))
 					jQuery("#patExServicemen").removeAttr("checked");
 				if (jQuery("#patPensioner").is(":checked")) {
@@ -839,8 +839,8 @@
 					jQuery("#rsbyNumber").val("");
 					jQuery("#rsbyField").hide();
 				}
-				if (jQuery("#patCatPoor").is(":checked"))
-					jQuery("#patCatPoor").removeAttr("checked");
+/* 				if (jQuery("#patCatPoor").is(":checked"))
+					jQuery("#patCatPoor").removeAttr("checked"); */
 				if (jQuery("#patExServicemen").is(":checked"))
 					jQuery("#patExServicemen").removeAttr("checked");
 				if (jQuery("#patPensioner").is(":checked")) {
@@ -881,8 +881,8 @@
 					jQuery("#rsbyNumber").val("");
 					jQuery("#rsbyField").hide();
 				}
-				if (jQuery("#patCatPoor").is(":checked"))
-					jQuery("#patCatPoor").removeAttr("checked");
+/* 				if (jQuery("#patCatPoor").is(":checked"))
+					jQuery("#patCatPoor").removeAttr("checked"); */
 				if (jQuery("#patExServicemen").is(":checked"))
 					jQuery("#patExServicemen").removeAttr("checked");
 				if (jQuery("#patPensioner").is(":checked")) {
@@ -923,8 +923,8 @@
 					jQuery("#rsbyNumber").val("");
 					jQuery("#rsbyField").hide();
 				}
-				if (jQuery("#patCatPoor").is(":checked"))
-					jQuery("#patCatPoor").removeAttr("checked");
+/* 				if (jQuery("#patCatPoor").is(":checked"))
+					jQuery("#patCatPoor").removeAttr("checked"); */
 				if (jQuery("#patExServicemen").is(":checked"))
 					jQuery("#patExServicemen").removeAttr("checked");
 				if (jQuery("#patPensioner").is(":checked")) {
@@ -965,8 +965,8 @@
 					jQuery("#rsbyNumber").val("");
 					jQuery("#rsbyField").hide();
 				}
-				if (jQuery("#patCatPoor").is(":checked"))
-					jQuery("#patCatPoor").removeAttr("checked");
+/* 				if (jQuery("#patCatPoor").is(":checked"))
+					jQuery("#patCatPoor").removeAttr("checked"); */
 				if (jQuery("#patExServicemen").is(":checked"))
 					jQuery("#patExServicemen").removeAttr("checked");
 				if (jQuery("#patPensioner").is(":checked")) {
@@ -1035,14 +1035,12 @@
 <form id="patientRegistrationForm" method="POST">
 	<table cellspacing="0">
 		<tr>
-			<td valign="top" class="cell"><b>Name *</b>
-			</td>
+			<td valign="top" class="cell"><b>Name *</b></td>
 			<td class="cell"><input id="patientName" name="patient.name"
 				style="width: 300px;" /></td>
 		</tr>
 		<tr>
-			<td class="cell"><b>Demographics *</b>
-			</td>
+			<td class="cell"><b>Demographics *</b></td>
 			<td class="cell">dd/mm/yyyy<br />
 				<table>
 					<tr>
@@ -1067,23 +1065,19 @@
 				</table></td>
 		</tr>
 		<tr>
-			<td class="cell"><b>ID Number *</b>
-			</td>
+			<td class="cell"><b>ID Number *</b></td>
 			<td class="cell"><input name="patient.identifier"
-				style="border: none;" />
-			</td>
+				style="border: none;" /></td>
 		</tr>
 		<tr>
-			<td class="cell"><b>Address</b>
-			</td>
+			<td class="cell"><b>Address</b></td>
 			<td class="cell">
 				<table>
 					<tr>
 						<!--  01/05/2012: Marta, adding a field for address. Feature #183   -->
 						<td>Postal Address:</td>
 						<td><input id="patientPostalAddress"
-							name="person.attribute.18" style="width: 500px;" />
-						</td>
+							name="person.attribute.18" style="width: 500px;" /></td>
 					</tr>
 					<tr>
 						<td>District:</td>
@@ -1097,32 +1091,31 @@
 							style="width: 200px;">
 						</select></td>
 					</tr>
-				</table></td>
+				</table>
+			</td>
 		</tr>
 		<tr>
-			<td class="cell"><b>Phone number</b>
-			</td>
+			<td class="cell"><b>Phone number</b></td>
 			<td class="cell"><input id="patientPhoneNumber"
 				name="person.attribute.16" style="width: 200px;" /></td>
 		</tr>
 		<tr>
-			<td class="cell"><b>Relative Name *</b>
-			</td>
+			<td class="cell"><b>Relative Name *</b></td>
 			<td class="cell">
 				<div id="patientRelativeNameSection"></div> <input
 				id="patientRelativeName" name="person.attribute.8"
-				style="width: 200px;" /></td>
+				style="width: 200px;" />
+			</td>
 		</tr>
 		<tr>
-			<td valign="top" class="cell"><b>Patient information</b>
-			</td>
+			<td valign="top" class="cell"><b>Patient information</b></td>
 			<td class="cell"><b>Patient category</b><br />
 				<table cellspacing="10">
 					<tr>
 						<td><input id="patCatGeneral" type="checkbox"
 							name="person.attribute.14" value="General" /> General</td>
-						<td><input id="patCatPoor" type="checkbox"
-							name="person.attribute.14" value="Poor" /> Poor</td>
+						<!-- <td><input id="patCatPoor" type="checkbox"
+							name="person.attribute.14" value="Poor" /> Poor</td>  -->
 					</tr>
 					<tr>
 						<td><input id="patCatStaff" type="checkbox"
@@ -1150,13 +1143,14 @@
 							name="person.attribute.14" value="Pensioner" /> Pensioner</td>
 						<!-- 01/05/2012: Marta, adding a field for ppo number. Feature #181 -->
 						<td><span id="ppoField">PPO Number<input
-								id="ppoNumber" name="person.attribute.17" /> </span></td>
+								id="ppoNumber" name="person.attribute.17" />
+						</span></td>
 					</tr>
 					<tr>
 						<!-- 30/04/12: Marta, Added categories Antenatal, TB, School, Cancer, Others. - Bug #177 -->
 						<td><input id="patCatAntenatal" type="checkbox"
-							name="person.attribute.14" value="Antenatal" /> Antenatal Patient
-						</td>
+							name="person.attribute.14" value="Antenatal" /> Antenatal
+							Patient</td>
 						<td><input id="patCatTB" type="checkbox"
 							name="person.attribute.14" value="TB" /> TB Patient</td>
 					</tr>
@@ -1169,8 +1163,8 @@
 					</tr>
 					<tr>
 						<td><input id="patExServicemen" type="checkbox"
-							name="person.attribute.14" value="Ex Servicemen" /> Ex Servicemen
-						</td>
+							name="person.attribute.14" value="Ex Servicemen" /> Ex
+							Servicemen</td>
 						<td><input id="patCatOthersFree" type="checkbox"
 							name="person.attribute.14" value="OthersFree" /> Other Free</td>
 					</tr>
