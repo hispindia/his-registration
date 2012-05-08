@@ -82,7 +82,6 @@ public class EditPatientController {
 			// update patient attribute
 			updatedPatient = setAttributes(patient, parameters);
 			patient = Context.getPatientService().savePatient(updatedPatient);
-			System.out.println("Edit patient");
 			RegistrationUtils.savePatientSearch(patient);
 			
 			model.addAttribute("status", "success");
