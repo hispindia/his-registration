@@ -151,7 +151,10 @@
 						jQuery("#estimatedAge").html(json.age);
 						jQuery("#birthdate").val(json.birthdate);
 					} else {
-						alert(json.error); }
+						alert(json.error); 
+						// 09/05/12: Added by Thai Chuong to avoid commiting wrong birthdates - Bug #137
+						jQuery("#birthdate").val("");	
+					}
 				},
 				error : function(xhr, ajaxOptions, thrownError) {
 					alert(thrownError);
@@ -225,6 +228,17 @@
 			if(StringUtils.isBlank(jQuery("#patientName").val())){
 				alert("Please enter patient name");
 				return false;
+			} // 09/05/2012: Thai Chuong, Added pattern checking to avoid special characters in patient name - Bug #135
+			else {
+				value = jQuery("#patientName").val();
+				value = value.toUpperCase();
+				pattern = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 -";
+				for (i = 0; i < value.length; i++) {
+					if (pattern.indexOf(value[i]) < 0) {
+						alert("Please enter patient name/identifier in correct format.");
+						return false;
+					}
+				}
 			}			
 			
 			if(StringUtils.isBlank(jQuery("#patientRelativeName").val())){
