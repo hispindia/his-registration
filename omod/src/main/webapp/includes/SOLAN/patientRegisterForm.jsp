@@ -92,6 +92,16 @@
 				jQuery("#patientGender").change(function() {
 					VALIDATORS.genderCheck();
 				});
+				// 11/05/2012: Thai Chuong added for Solan new categories validation - Bug #188
+				jQuery("#patCatAntenatal").click(function() {
+					VALIDATORS.patCatAntenatalCheck();
+				});
+				jQuery("#patCatChildLessThan1yr").click(function() {
+					VALIDATORS.patCatChildLessThan1yrCheck();
+				});
+				jQuery("#patCatOtherFree").click(function() {
+					VALIDATORS.patCatOtherFreeCheck();
+				});
 
 			});
 
@@ -383,6 +393,13 @@
 					jQuery("#patCatPoor").removeAttr("checked");
 				if (jQuery("#patCatSeniorCitizen").is(":checked"))
 					jQuery("#patCatSeniorCitizen").removeAttr("checked");
+				// 11/05/2012: Thai Chuong added for Solan new categories validation - Bug #188
+				if (jQuery("#patCatAntenatal").is(":checked"))
+					jQuery("#patCatAntenatal").removeAttr("checked");
+				if (jQuery("#patCatChildLessThan1yr").is(":checked"))
+					jQuery("#patCatChildLessThan1yr").removeAttr("checked");
+				if (jQuery("#patCatOtherFree").is(":checked"))
+					jQuery("#patCatOtherFree").removeAttr("checked");
 			} else {
 				jQuery("#bplNumber").val("");
 				jQuery("#bplField").hide();
@@ -404,6 +421,13 @@
 					jQuery("#patCatPoor").removeAttr("checked");
 				if (jQuery("#patCatSeniorCitizen").is(":checked"))
 					jQuery("#patCatSeniorCitizen").removeAttr("checked");
+				// 11/05/2012: Thai Chuong added for Solan new categories validation - Bug #188
+				if (jQuery("#patCatAntenatal").is(":checked"))
+					jQuery("#patCatAntenatal").removeAttr("checked");
+				if (jQuery("#patCatChildLessThan1yr").is(":checked"))
+					jQuery("#patCatChildLessThan1yr").removeAttr("checked");
+				if (jQuery("#patCatOtherFree").is(":checked"))
+					jQuery("#patCatOtherFree").removeAttr("checked");
 			} else {
 				jQuery("#rsbyNumber").val("");
 				jQuery("#rsbyField").hide();
@@ -427,6 +451,13 @@
 					jQuery("#patCatPoor").removeAttr("checked");
 				if (jQuery("#patCatGovEmp").is(":checked"))
 					jQuery("#patCatGovEmp").removeAttr("checked");
+				// 11/05/2012: Thai Chuong added for Solan new categories validation - Bug #188
+				if (jQuery("#patCatAntenatal").is(":checked"))
+					jQuery("#patCatAntenatal").removeAttr("checked");
+				if (jQuery("#patCatChildLessThan1yr").is(":checked"))
+					jQuery("#patCatChildLessThan1yr").removeAttr("checked");
+				if (jQuery("#patCatOtherFree").is(":checked"))
+					jQuery("#patCatOtherFree").removeAttr("checked");
 			}
 		},
 
@@ -452,6 +483,13 @@
 				}
 				if (jQuery("#patCatSeniorCitizen").is(":checked"))
 					jQuery("#patCatSeniorCitizen").removeAttr("checked");
+				// 11/05/2012: Thai Chuong added for Solan new categories validation - Bug #188
+				if (jQuery("#patCatAntenatal").is(":checked"))
+					jQuery("#patCatAntenatal").removeAttr("checked");
+				if (jQuery("#patCatChildLessThan1yr").is(":checked"))
+					jQuery("#patCatChildLessThan1yr").removeAttr("checked");
+				if (jQuery("#patCatOtherFree").is(":checked"))
+					jQuery("#patCatOtherFree").removeAttr("checked");
 			}
 		},
 
@@ -472,6 +510,13 @@
 					jQuery("#patCatPoor").removeAttr("checked");
 				if (jQuery("#patCatSeniorCitizen").is(":checked"))
 					jQuery("#patCatSeniorCitizen").removeAttr("checked");
+				// 11/05/2012: Thai Chuong added for Solan new categories validation - Bug #188
+				if (jQuery("#patCatAntenatal").is(":checked"))
+					jQuery("#patCatAntenatal").removeAttr("checked");
+				if (jQuery("#patCatChildLessThan1yr").is(":checked"))
+					jQuery("#patCatChildLessThan1yr").removeAttr("checked");
+				if (jQuery("#patCatOtherFree").is(":checked"))
+					jQuery("#patCatOtherFree").removeAttr("checked");
 			}
 		},
 
@@ -496,6 +541,13 @@
 					jQuery("#patCatGeneral").removeAttr("checked");
 				if (jQuery("#patCatSeniorCitizen").is(":checked"))
 					jQuery("#patCatSeniorCitizen").removeAttr("checked");
+				// 11/05/2012: Thai Chuong added for Solan new categories validation - Bug #188
+				if (jQuery("#patCatAntenatal").is(":checked"))
+					jQuery("#patCatAntenatal").removeAttr("checked");
+				if (jQuery("#patCatChildLessThan1yr").is(":checked"))
+					jQuery("#patCatChildLessThan1yr").removeAttr("checked");
+				if (jQuery("#patCatOtherFree").is(":checked"))
+					jQuery("#patCatOtherFree").removeAttr("checked");
 			}
 		},
 
@@ -518,6 +570,13 @@
 					jQuery("#patCatGeneral").removeAttr("checked");
 				if (jQuery("#patCatGovEmp").is(":checked"))
 					jQuery("#patCatGovEmp").removeAttr("checked");
+				// 11/05/2012: Thai Chuong added for Solan new categories validation - Bug #188
+				if (jQuery("#patCatAntenatal").is(":checked"))
+					jQuery("#patCatAntenatal").removeAttr("checked");
+				if (jQuery("#patCatChildLessThan1yr").is(":checked"))
+					jQuery("#patCatChildLessThan1yr").removeAttr("checked");
+				if (jQuery("#patCatOtherFree").is(":checked"))
+					jQuery("#patCatOtherFree").removeAttr("checked");
 				if (!VALIDATORS.checkPatientAgeForSeniorCitizen()) {
 					jQuery("#patCatSeniorCitizen").removeAttr("checked");
 				}
@@ -528,14 +587,15 @@
 		/*
 		 * Check patient age for senior citizen
 		 */
+		// 11/05/2012: Thai Chuong modified for Solan new categories validation - Bug #188
 		checkPatientAgeForSeniorCitizen : function() {
-			// check whether patient age is more than 60
+			// check whether patient age is more than 75
 			estAge = jQuery("#estimatedAge").html();
 			var digitPattern = /[0-9]+/;
 			var age = digitPattern.exec(estAge);
-			if (age < 60) {
+			if (age < 75) {
 				if (jQuery("#patCatSeniorCitizen").is(':checked')) {
-					alert("Senior citizen category is only for patient over 60 years old!");
+					alert("Senior citizen category is only for patient over 75 years old!");
 					return false;
 				}
 			}
@@ -557,7 +617,105 @@
 						.html(
 								'<input type="radio" name="person.attribute.15" value="Daughter of"/> Daughter of <input type="radio" name="person.attribute.15" value="Wife of"/> Wife of');
 			}
+		},
+		// 11/05/2012: Thai Chuong added for Solan new categories validation - Bug #188
+		/** CHECK WHEN ANTENATAL PATIENT CATEGORY IS SELECTED */
+		patCatAntenatalCheck : function() {
+			if (jQuery("#patCatAntenatal").is(':checked')) {
+				if (jQuery("#bpl").is(":checked")) {
+					jQuery("#bpl").removeAttr("checked");
+					jQuery("#bplNumber").val("");
+					jQuery("#bplField").hide();
+				}
+				if (jQuery("#rsby").is(":checked")) {
+					jQuery("#rsby").removeAttr("checked");
+					jQuery("#rsbyNumber").val("");
+					jQuery("#rsbyField").hide();
+				}
+				if (jQuery("#patCatPoor").is(":checked"))
+					jQuery("#patCatPoor").removeAttr("checked");
+				if (jQuery("#patCatGeneral").is(":checked"))
+					jQuery("#patCatGeneral").removeAttr("checked");
+				if (jQuery("#patCatGovEmp").is(":checked"))
+					jQuery("#patCatGovEmp").removeAttr("checked");
+				// 11/05/2012: Thai Chuong modified for Solan new categories validation - Bug #188
+				if (jQuery("#patCatChildLessThan1yr").is(":checked"))
+					jQuery("#patCatChildLessThan1yr").removeAttr("checked");
+				if (jQuery("#patCatOtherFree").is(":checked"))
+					jQuery("#patCatOtherFree").removeAttr("checked");
+				if (jQuery("#patCatStaff").is(":checked"))
+					jQuery("#patCatStaff").removeAttr("checked");
+				if (!VALIDATORS.checkPatientAgeForSeniorCitizen()) {
+					jQuery("#patCatSeniorCitizen").removeAttr("checked");
+				}
+				;
+			}
+		},
+		/** CHECK WHEN CHILD LESS THAN 1YR CATEGORY IS SELECTED */
+		patCatChildLessThan1yrCheck : function() {
+			if (jQuery("#patCatChildLessThan1yr").is(':checked')) {
+				if (jQuery("#bpl").is(":checked")) {
+					jQuery("#bpl").removeAttr("checked");
+					jQuery("#bplNumber").val("");
+					jQuery("#bplField").hide();
+				}
+				if (jQuery("#rsby").is(":checked")) {
+					jQuery("#rsby").removeAttr("checked");
+					jQuery("#rsbyNumber").val("");
+					jQuery("#rsbyField").hide();
+				}
+				if (jQuery("#patCatPoor").is(":checked"))
+					jQuery("#patCatPoor").removeAttr("checked");
+				if (jQuery("#patCatGeneral").is(":checked"))
+					jQuery("#patCatGeneral").removeAttr("checked");
+				if (jQuery("#patCatGovEmp").is(":checked"))
+					jQuery("#patCatGovEmp").removeAttr("checked");
+				// 11/05/2012: Thai Chuong modified for Solan new categories validation - Bug #188
+				if (jQuery("#patCatAntenatal").is(":checked"))
+					jQuery("#patCatAntenatal").removeAttr("checked");
+				if (jQuery("#patCatOtherFree").is(":checked"))
+					jQuery("#patCatOtherFree").removeAttr("checked");
+				if (jQuery("#patCatStaff").is(":checked"))
+					jQuery("#patCatStaff").removeAttr("checked");
+				if (!VALIDATORS.checkPatientAgeForSeniorCitizen()) {
+					jQuery("#patCatSeniorCitizen").removeAttr("checked");
+				}
+				;
+			}
+		},
+		/** CHECK WHEN OTHER FREE CATEGORY IS SELECTED */
+		patCatOtherFreeCheck : function() {
+			if (jQuery("#patCatOtherFree").is(':checked')) {
+				if (jQuery("#bpl").is(":checked")) {
+					jQuery("#bpl").removeAttr("checked");
+					jQuery("#bplNumber").val("");
+					jQuery("#bplField").hide();
+				}
+				if (jQuery("#rsby").is(":checked")) {
+					jQuery("#rsby").removeAttr("checked");
+					jQuery("#rsbyNumber").val("");
+					jQuery("#rsbyField").hide();
+				}
+				if (jQuery("#patCatPoor").is(":checked"))
+					jQuery("#patCatPoor").removeAttr("checked");
+				if (jQuery("#patCatGeneral").is(":checked"))
+					jQuery("#patCatGeneral").removeAttr("checked");
+				if (jQuery("#patCatGovEmp").is(":checked"))
+					jQuery("#patCatGovEmp").removeAttr("checked");
+				// 11/05/2012: Thai Chuong modified for Solan new categories validation - Bug #188
+				if (jQuery("#patCatAntenatal").is(":checked"))
+					jQuery("#patCatAntenatal").removeAttr("checked");
+				if (jQuery("#patCatChildLessThan1yr").is(":checked"))
+					jQuery("#patCatChildLessThan1yr").removeAttr("checked");
+				if (jQuery("#patCatStaff").is(":checked"))
+					jQuery("#patCatStaff").removeAttr("checked");
+				if (!VALIDATORS.checkPatientAgeForSeniorCitizen()) {
+					jQuery("#patCatSeniorCitizen").removeAttr("checked");
+				}
+				;
+			}
 		}
+
 	};
 </script>
 
@@ -696,9 +854,20 @@
 								id="bplNumber" name="person.attribute.10" /></span></td>
 					</tr>
 					<tr>
-						<td colspan="2"><input id="patCatSeniorCitizen"
-							type="checkbox" name="person.attribute.14" value="Senior Citizen" />
-							Senior Citizen</td>
+						<td><input id="patCatSeniorCitizen" type="checkbox"
+							name="person.attribute.14" value="Senior Citizen" /> Senior
+							Citizen</td>
+						<!-- 11/05/12: Thai Chuong, Added categories Antenatal, Child Less Than 1yr, Other Free. - Bug #188 -->
+						<td><input id="patCatAntenatal" type="checkbox"
+							name="person.attribute.14" value="Antenatal" /> Antenatal
+							Patient</td>
+					</tr>
+					<tr>
+						<td><input id="patCatChildLessThan1yr" type="checkbox"
+							name="person.attribute.14" value="Child Less Than 1yr" /> Child
+							Less Than 1yr</td>
+						<td><input id="patCatOtherFree" type="checkbox"
+							name="person.attribute.14" value="Other Free" /> Other Free</td>
 					</tr>
 				</table></td>
 		</tr>
