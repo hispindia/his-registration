@@ -335,7 +335,12 @@
 					&& jQuery("#patCatStaff").attr('checked') == false
 					&& jQuery("#patCatGovEmp").attr('checked') == false
 					&& jQuery("#rsby").attr('checked') == false
-					&& jQuery("#bpl").attr('checked') == false) {
+					&& jQuery("#bpl").attr('checked') == false
+					// 15/05/2012: Marta added for Solan new categories validation - Bug #188
+					&& jQuery("#patCatAntenatal").attr('checked') == false
+					&& jQuery("#patCatChildLessThan1yr").attr('checked') == false
+					&& jQuery("#patCatOtherFree").attr('checked') == false
+					) {
 				alert('You didn\'t choose any of the patient category!');
 				return false;
 			} else {
