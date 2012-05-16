@@ -12,10 +12,24 @@
 	<url>http://openmrs.org</url>
 
 	<scm>
-		<connection>scm:git:git://github.com/truonghatsts/radiology.git/</connection>
-		<developerConnection>scm:git:git://github.com/truonghatsts/radiology.git/</developerConnection>
-		<url>scm:git:git://github.com/truonghatsts/radiology.git/</url>
+		<url>git@github.com:hispindia/registration.git</url>
 	</scm>
+
+	<distributionManagement>
+        <!-- use the following if you're not using a snapshot version. -->
+            <repository>
+                <id>shimla-nexus</id>
+                <name>Shimla nexus repo</name>
+                <url>http://hospdev.hispindia.org:8081/nexus/content/repositories/releases/</url>
+            </repository>
+        <!-- use the following if you ARE using a snapshot version. -->
+            <snapshotRepository>
+                <id>shimla-nexus</id>
+                <name>Shimla nexus repo</name>
+                <url>http://hospdev.hispindia.org:8081/nexus/content/repositories/snapshots/</url>
+                <uniqueVersion>false</uniqueVersion>
+             </snapshotRepository>
+        </distributionManagement>
 
 	<modules>
 		<module>api</module>
