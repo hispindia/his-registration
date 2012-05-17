@@ -242,5 +242,6 @@
 			</table>
 		</form>
 	</center>	
-	<img src="${pageContext.request.contextPath}/moduleResources/registration/investigations.jpg"/>
+	<!-- 17/5/2012 Marta: Remove list of investigations from patient info form Issue #214  -->	
+	<!-- <img src="${pageContext.request.contextPath}/moduleResources/registration/investigations.jpg"/> -->
 </div>

@@ -462,6 +462,11 @@
 					jQuery("#patCatChildLessThan1yr").removeAttr("checked");
 				if (jQuery("#patCatOtherFree").is(":checked"))
 					jQuery("#patCatOtherFree").removeAttr("checked");
+				// 17/05/2012: Marta added for Solan new categories validation - Bug #188
+				if (jQuery("#patCatSeniorCitizen").is(":checked"))
+					jQuery("#patCatSeniorCitizen").removeAttr("checked");
+				if (jQuery("#patCatGeneral").is(":checked"))
+					jQuery("#patCatGeneral").removeAttr("checked");
 			}
 		},
 
@@ -521,6 +526,11 @@
 					jQuery("#patCatChildLessThan1yr").removeAttr("checked");
 				if (jQuery("#patCatOtherFree").is(":checked"))
 					jQuery("#patCatOtherFree").removeAttr("checked");
+				// 17/05/2012: Marta added for Solan new categories validation - Bug #188
+				if (jQuery("#patCatStaff").is(":checked"))
+					jQuery("#patCatStaff").removeAttr("checked");
+				if (jQuery("#patCatGovEmp").is(":checked"))
+					jQuery("#patCatGovEmp").removeAttr("checked");
 			}
 		},
 
@@ -552,6 +562,9 @@
 					jQuery("#patCatChildLessThan1yr").removeAttr("checked");
 				if (jQuery("#patCatOtherFree").is(":checked"))
 					jQuery("#patCatOtherFree").removeAttr("checked");
+				// 17/05/2012: Marta added for Solan new categories validation - Bug #188
+				if (jQuery("#patCatGeneral").is(":checked"))
+					jQuery("#patCatGeneral").removeAttr("checked");
 			}
 		},
 
@@ -581,7 +594,10 @@
 					jQuery("#patCatChildLessThan1yr").removeAttr("checked");
 				if (jQuery("#patCatOtherFree").is(":checked"))
 					jQuery("#patCatOtherFree").removeAttr("checked");
-				if (!VALIDATORS.checkPatientAgeForSeniorCitizen()) {
+				// 17/05/2012: Marta added for Solan new categories validation - Bug #188
+				if (jQuery("#patCatStaff").is(":checked"))
+					jQuery("#patCatStaff").removeAttr("checked");
+					if (!VALIDATORS.checkPatientAgeForSeniorCitizen()) {
 					jQuery("#patCatSeniorCitizen").removeAttr("checked");
 				}
 				;
@@ -649,6 +665,9 @@
 					jQuery("#patCatOtherFree").removeAttr("checked");
 				if (jQuery("#patCatStaff").is(":checked"))
 					jQuery("#patCatStaff").removeAttr("checked");
+				// 17/05/2012: Marta added for Solan new categories validation - Bug #188
+				if (jQuery("#patCatSeniorCitizen").is(":checked"))
+					jQuery("#patCatSeniorCitizen").removeAttr("checked");
 				if (!VALIDATORS.checkPatientAgeForSeniorCitizen()) {
 					jQuery("#patCatSeniorCitizen").removeAttr("checked");
 				}
@@ -681,6 +700,9 @@
 					jQuery("#patCatOtherFree").removeAttr("checked");
 				if (jQuery("#patCatStaff").is(":checked"))
 					jQuery("#patCatStaff").removeAttr("checked");
+				// 17/05/2012: Marta added for Solan new categories validation - Bug #188
+				if (jQuery("#patCatSeniorCitizen").is(":checked"))
+					jQuery("#patCatSeniorCitizen").removeAttr("checked");
 				if (!VALIDATORS.checkPatientAgeForSeniorCitizen()) {
 					jQuery("#patCatSeniorCitizen").removeAttr("checked");
 				}
@@ -713,6 +735,9 @@
 					jQuery("#patCatChildLessThan1yr").removeAttr("checked");
 				if (jQuery("#patCatStaff").is(":checked"))
 					jQuery("#patCatStaff").removeAttr("checked");
+				// 17/05/2012: Marta added for Solan new categories validation - Bug #188
+				if (jQuery("#patCatSeniorCitizen").is(":checked"))
+					jQuery("#patCatSeniorCitizen").removeAttr("checked");
 				if (!VALIDATORS.checkPatientAgeForSeniorCitizen()) {
 					jQuery("#patCatSeniorCitizen").removeAttr("checked");
 				}

@@ -181,6 +181,7 @@
 <span id="validationDate"></span>
 <div id="patientInfoPrintArea">
 	<center>
+		<!-- 17/5/2012 Marta: Remove Name and hospital Logo from patient info form Issue #214  -->
 		<!-- <img src="${pageContext.request.contextPath}/moduleResources/registration/header.jpg"/> -->
 		<form id="patientInfoForm" method="POST">	
 			<table cellspacing="10">
@@ -245,6 +246,7 @@
 				</tr>
 			</table>
 		</form>
-	</center>	
-	<img src="${pageContext.request.contextPath}/moduleResources/registration/investigations.jpg"/>
+	</center>
+	<!-- 17/5/2012 Marta: Remove list of investigations from patient info form Issue #214  -->	
+	<!-- <img src="${pageContext.request.contextPath}/moduleResources/registration/investigations.jpg"/>  -->
 </div>
