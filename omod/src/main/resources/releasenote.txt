@@ -1,3 +1,44 @@
+2.2.14
+- Fixed issues 	#135 Patient name with Special Characters (solan)
+		#137 Accepting Patient Future date of birth (solan)
+		#157 Patient name with Special Characters (punjab)
+		#159 Added Patient categories (punjab)
+		#160 Temporary category-MLC, ACC (punjab)
+		#161 Duplicate OPD slip (punjab)
+		#162 Validation for RSBY and BPL (punjab)
+		#163 Accepting future dates (punjab)
+		#177 Add 6 more new free Categories (punjab)
+		#179 Incorrect spelling of Adolescent (punjab)
+		#180 Inconsistency with Reprint option for patient (punjab)
+		#181 Free Patient Category (punjab)	
+		#182 Temporary Category (punjab)
+		#183 Text box for address (punjab)
+		#184 Address Text Box (punjab)
+		#185 Edit Result (punjab)
+		#186 Pensioner Category (punjab)
+		#187 Free Patient Category (solan)
+		#188 Free Patient Category (solan)
+		#211 text box in address (solan)
+		#214 title (Name of Hospital and logo) and list of investigations removed from Print Slip (solan)
+
+- Configuration
+	- This module should be installed with Billing module version 3.2.5 or higher
+
+	- Three new patient attributes should be added. (In the following order)
+		1 - PPO Number 		(java.lang.stricg)
+		2 - Postal Address	(java.lang.stricg)
+		3 - Free Category	(java.lang.stricg)
+
+	- The following concepts should exist in the system and should have the specified concept_id
+
+							SOLAN		MOHALI
+				---------------------------------------------------------
+				OPD WARD	 	 3		 6148
+				---------------------------------------------------------
+				TEMPORARY CATEGORY	11		 8060
+				---------------------------------------------------------
+	
+
 2.2.4
 - Added feature to capture patient's phone number 
 
