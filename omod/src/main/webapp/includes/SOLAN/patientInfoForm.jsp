@@ -180,53 +180,139 @@
 <input id="buySlip" type="button" value="Buy a new slip" onClick="PAGE.buySlip();"/>
 <span id="validationDate"></span>
 <div id="patientInfoPrintArea">
-	<center>
-		<!-- 17/5/2012 Marta: Remove Name and hospital Logo from patient info form Issue #214  -->
-		<!-- <img src="${pageContext.request.contextPath}/moduleResources/registration/header.jpg"/> -->
-		<form id="patientInfoForm" method="POST">	
-			<table cellspacing="10">
+<!-- <table border=0>
+		<tr height=100>
+		</tr>
+		<tr>
+		<td width=500>
+		</td>
+		<td>	 -->
+		<center>
+		<form id="patientInfoForm" method="POST">				
+			<table border=0  width="600">
 				<tr>
-					<td><b>ID.NO:</b></td>
-					<td>
+				
+				</tr>
+				<tr>
+					<td colspan="1""><b>ID.No:</b></td>
+					<td  colspan="5"">
 						<span id="identifier"/>
-					</td>
-					<td></td>
-					<td></td>
-					<td><b>Age:</b></td>
-					<td>
-						<span id="age"/>
 					</td>
 				</tr>
 				<tr>
-					<td><b>Name:</b></td>
-					<td colspan="5">
+					<td colspan="1"><b>Name:</b></td>
+					<td  colspan="5">
 						<span id="name"/>
 					</td>
 				</tr>
 				<tr>
-					<td><b>OPD room to visit:</b></td>
+					<td colspan="1"><b>Age:</b></td>
+					<td colspan="5">
+						<span id="age"/>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="1"><b>Gender:</b></td>
+					<td colspan="5">
+						<span id="gender"/>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="1" valign="top"><b>Phone number:</b></td>
+					<td colspan="5">
+						<span id="phoneNumber"/>			
+					</td>
+				</tr>
+				<!-- 03/05/2012 Thai Chuong: Supported issue #182 -->
+				<tr id="opdWardLabel">
+					<td colspan="1"><b>OPD room to visit:</b></td>
 					<td colspan="5">
 						<select id="opdWard" name="patient.opdWard">
 						</select>
 					</td>
 				</tr>
 				<tr>
-					<td><b>Category:</b></td>
-					<td>
-						<span id="category"/>
-					</td>
-					<td><b>Gender:</b></td>
-					<td>
-						<span id="gender"/>
-					</td>
-					<td><b>Date/Time:</b></td>
-					<td>
+					<td colspan="1"><b>Date/Time:</b></td>
+					<td colspan="5">
 						<span id="datetime"/>
 					</td>
 				</tr>
 				<tr>
-					<td valign="top"><b>Phone number:</b></td>
+					<td colspan="1"><b>Category:</b></td>
 					<td colspan="5">
+						<span id="category"/>
+					</td>
+				</tr>
+				<tr id="temporaryCategories">
+				<!-- 01/05/12: Marta, Painting Temporary Category in red. Bug #182  -->
+					<td colspan="1" valign="top"><b> <font color="red">Temporary Categories: </font></b></td>
+					<td colspan="5">
+						<!-- 28/04/12: Changed MODEL.observations[11] for MODEL.observations[8058] by Marta - Bug #160 -->
+					    <input type="checkbox" name="temporary.attribute.11" value="MLC"/> MLC <br/>
+						<input type="checkbox" name="temporary.attribute.11" value="Accident"/> Accident <br/>										
+					</td>
+				</tr>
+				<tr>
+					<td colspan="6">
+						<div id="printableTemporaryCategories">
+							
+						</div>
+					</td>						
+				</tr>
+		</table> 
+		</form>
+		</center>
+		<!--	</td>
+	</tr>
+	</table>-->
+
+
+
+	<!--<center>
+		 17/5/2012 Marta: Remove Name and hospital Logo from patient info form Issue #214  -->
+		<!-- <img src="${pageContext.request.contextPath}/moduleResources/registration/header.jpg"/> -->
+		<!-- <form id="patientInfoForm" method="POST">	
+			<table cellspacing="10">
+				<tr>
+					<td><b>ID.NO:</b></td>
+					<td colspan="3" valign="left">
+						<span id="identifier"/>
+					</td>
+					<td><b>Age:</b></td>
+					<td colspan="3" valign="left">
+						<span id="age"/>
+					</td>
+				</tr>
+				<tr>
+					<td><b>Name:</b></td>
+					<td colspan="3" valign="left">
+						<span id="name"/>
+					</td>
+					<td><b>Gender:</b></td>
+					<td colspan="3">
+						<span id="gender"/>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="5"><b>OPD room to visit:</b></td>
+					<td colspan="4">
+						<select id="opdWard" name="patient.opdWard">
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td><b>Category:</b></td>
+					<td colspan="3">
+						<span id="category"/>
+					</td>
+					<td colspan="2"><b>Date/Time:</b></td>
+					<td colspan="3" valign="left">
+						<span id="datetime"/>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="3" valign="top"><b>Phone number:</b></td>
+					<td>
 						<span id="phoneNumber"/>			
 					</td>
 				</tr>
@@ -240,13 +326,12 @@
 				<tr>
 					<td colspan="6">
 						<div id="printableTemporaryCategories">
-							
 						</div>
 					</td>						
 				</tr>
 			</table>
-		</form>
-	</center>
+		</form>  
+	</center>-->
 	<!-- 17/5/2012 Marta: Remove list of investigations from patient info form Issue #214  -->	
 	<!-- <img src="${pageContext.request.contextPath}/moduleResources/registration/investigations.jpg"/>  -->
 </div>
