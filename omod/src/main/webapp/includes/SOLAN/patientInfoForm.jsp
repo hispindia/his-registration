@@ -27,9 +27,12 @@
 		// Set data for reprint page
 		if(MODEL.reprint=="true"){
 			jQuery("#opdWard").val(MODEL.observations[3]);
-			jQuery.each(MODEL.observations[11].split(","), function(index, value){
-				jQuery("input[name=temporary.attribute.11][value='" + value + "']").attr("checked", "checked");
-			});		
+			// 26/05/12: Marta, avoid error from empty string. Bug #219
+
+			if(!StringUtils.isBlank(MODEL.observations[11])){
+				jQuery.each(MODEL.observations[11].split(","), function(index, value){
+					jQuery("input[name=temporary.attribute.11][value='" + value + "']").attr("checked", "checked");
+				});	}
 			jQuery("#printSlip").hide();
 		} else {
 			jQuery("#reprint").hide();
@@ -96,6 +99,8 @@
 					});
 				} else {
 					PAGE.print();
+					// 26/5/2012 Marta - Redirecting to registration screen after reprinting #220
+					window.location.href = getContextPath() + "/findPatient.htm";
 				}
 				
 			}
@@ -180,13 +185,6 @@
 <input id="buySlip" type="button" value="Buy a new slip" onClick="PAGE.buySlip();"/>
 <span id="validationDate"></span>
 <div id="patientInfoPrintArea">
-<!-- <table border=0>
-		<tr height=100>
-		</tr>
-		<tr>
-		<td width=500>
-		</td>
-		<td>	 -->
 		<center>
 		<form id="patientInfoForm" method="POST">				
 			<table border=0  width="600">
@@ -262,76 +260,4 @@
 		</table> 
 		</form>
 		</center>
-		<!--	</td>
-	</tr>
-	</table>-->
-
-
-
-	<!--<center>
-		 17/5/2012 Marta: Remove Name and hospital Logo from patient info form Issue #214  -->
-		<!-- <img src="${pageContext.request.contextPath}/moduleResources/registration/header.jpg"/> -->
-		<!-- <form id="patientInfoForm" method="POST">	
-			<table cellspacing="10">
-				<tr>
-					<td><b>ID.NO:</b></td>
-					<td colspan="3" valign="left">
-						<span id="identifier"/>
-					</td>
-					<td><b>Age:</b></td>
-					<td colspan="3" valign="left">
-						<span id="age"/>
-					</td>
-				</tr>
-				<tr>
-					<td><b>Name:</b></td>
-					<td colspan="3" valign="left">
-						<span id="name"/>
-					</td>
-					<td><b>Gender:</b></td>
-					<td colspan="3">
-						<span id="gender"/>
-					</td>
-				</tr>
-				<tr>
-					<td colspan="5"><b>OPD room to visit:</b></td>
-					<td colspan="4">
-						<select id="opdWard" name="patient.opdWard">
-						</select>
-					</td>
-				</tr>
-				<tr>
-					<td><b>Category:</b></td>
-					<td colspan="3">
-						<span id="category"/>
-					</td>
-					<td colspan="2"><b>Date/Time:</b></td>
-					<td colspan="3" valign="left">
-						<span id="datetime"/>
-					</td>
-				</tr>
-				<tr>
-					<td colspan="3" valign="top"><b>Phone number:</b></td>
-					<td>
-						<span id="phoneNumber"/>			
-					</td>
-				</tr>
-				<tr id="temporaryCategories">
-					<td valign="top"><b>Temporary Categories:</b></td>
-					<td colspan="5">
-						<input type="checkbox" name="temporary.attribute.11" value="MLC"/> MLC <br/>
-						<input type="checkbox" name="temporary.attribute.11" value="Accident"/> Accident <br/>										
-					</td>
-				</tr>
-				<tr>
-					<td colspan="6">
-						<div id="printableTemporaryCategories">
-						</div>
-					</td>						
-				</tr>
-			</table>
-		</form>  
-	</center>-->
-	<!-- 17/5/2012 Marta: Remove list of investigations from patient info form Issue #214  -->	
-	<!-- <img src="${pageContext.request.contextPath}/moduleResources/registration/investigations.jpg"/>  -->
 </div>

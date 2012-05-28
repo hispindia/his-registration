@@ -29,8 +29,8 @@
 			// 28/04/12: Changed MODEL.observations[3] for MODEL.observations[6148] by Marta - Bug #161
 			jQuery("#opdWard").val(MODEL.observations[6148]);
 			// 28/04/12: Changed MODEL.observations[11] for MODEL.observations[8058] by Marta - Bug #160
-			// 01/05/12: Marta, avoid error from emty string. Bug #180
-			if(!StringUtils.isBlank(jQuery("#temporaryCategories").val())){
+			// 01/05/12: Marta, avoid error from empty string. Bug #180
+			if(!StringUtils.isBlank(MODEL.observations[8058])){
 			jQuery.each(MODEL.observations[8058].split(","), function(index, value){
 				jQuery("input[name=temporary.attribute.8058][value='" + value + "']").attr("checked", "checked");
 			});	}	
