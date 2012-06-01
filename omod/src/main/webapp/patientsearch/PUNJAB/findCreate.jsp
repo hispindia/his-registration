@@ -82,6 +82,7 @@
 			<td><b>Gender</b></td>			
 			<td><b>Birthdate</b></td>
 			<td><b>Relative Name</b></td>
+			<td><b>Last day of visit</b></td>
 			<td><b>Phone number</b></td>
 			<td><b>Reprint OPD slip</b></td>
 		</tr>
@@ -124,6 +125,9 @@
 						if(relativeName!=null)
 							out.print(relativeName);
 					%>
+                </td>
+                <td onclick="PATIENTSEARCHRESULT.visit(${patient.patientId});">
+	                <openmrs:formatDate date="${lastVisitTime[patient.patientId]}"/>              	
                 </td>
 				<td onclick="PATIENTSEARCHRESULT.visit(${patient.patientId});"> 
                 	<%
