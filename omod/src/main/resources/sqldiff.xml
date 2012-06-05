@@ -22,15 +22,31 @@
 		<description>
 			Create table registration fee
 		</description>
-		<sql>			
+		<sql>
 			CREATE TABLE IF NOT EXISTS `registration_fee` (
-			  `registration_fee_id` int(11) NOT NULL AUTO_INCREMENT,
-			  `fee` decimal(19,2) NOT NULL,
-			  `patient_id` int(11) NOT NULL,
-			  `created_by` int(11) NOT NULL,
-			  `created_on` datetime NOT NULL,
-			  PRIMARY KEY (`registration_fee_id`)
-			) ENGINE=InnoDB DEFAULT CHARSET=utf8;			
+			`registration_fee_id` int(11) NOT NULL AUTO_INCREMENT,
+			`fee` decimal(19,2) NOT NULL,
+			`patient_id` int(11) NOT NULL,
+			`created_by` int(11) NOT NULL,
+			`created_on` datetime NOT NULL,
+			PRIMARY KEY (`registration_fee_id`)
+			) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 		</sql>
 	</diff>
+
+
+
+	<diff>
+		<version>0.2</version>
+		<author>kesavulu</author>
+		<date>June 5th 2012</date>
+		<description>
+			Alter table person attribute
+		</description>
+		<sql>
+			ALTER TABLE person_attribute MODIFY COLUMN value varchar(255);
+		</sql>
+	</diff>
+
+
 </sqldiff>

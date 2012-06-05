@@ -118,6 +118,7 @@ public class RegistrationWebUtils {
 			queue.setSex(patient.getGender());
 			PatientQueueService queueService = Context.getService(PatientQueueService.class);
 			queueService.saveOpdPatientQueue(queue);
+			
 		}
 		
 	}

@@ -256,6 +256,8 @@ public class RegistrationUtils {
 		ps.setMiddleName(patient.getMiddleName());
 		ps.setIdentifier(patient.getPatientIdentifier().getIdentifier());
 		ps.setPersonNameId(patient.getPersonName().getId());
+		
+		
 		Context.getService(HospitalCoreService.class).savePatientSearch(ps);
 	}
 }
