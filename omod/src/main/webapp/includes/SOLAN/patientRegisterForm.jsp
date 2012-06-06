@@ -681,9 +681,10 @@
 		checkPatientAgeForChildLessThan1yr : function() { 
 		// check whether patient age less than one year
 		estAge = jQuery("#estimatedAge").html();
-		var digitPattern = /[0-9]+/;
+		// 6/6/2012 harsh : changed reg ex mapping on bug #243
+		var digitPattern = /year/;
 		var age = digitPattern.exec(estAge);
-		if (age > 1) {
+		if (age) {
 			if (jQuery("#patCatChildLessThan1yr").is(':checked')) {
 				alert("Child less than one year is only for patient under 1 year!");
 				return false;
