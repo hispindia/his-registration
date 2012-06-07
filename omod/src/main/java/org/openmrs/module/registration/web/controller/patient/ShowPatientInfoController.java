@@ -44,6 +44,7 @@ import org.openmrs.Order;
 import org.openmrs.OrderType;
 import org.openmrs.Patient;
 import org.openmrs.api.context.Context;
+import org.openmrs.module.hospitalcore.HospitalCoreService;
 import org.openmrs.module.hospitalcore.util.GlobalPropertyUtil;
 import org.openmrs.module.hospitalcore.util.ObsUtils;
 import org.openmrs.module.registration.RegistrationService;
@@ -106,6 +107,13 @@ public class ShowPatientInfoController {
 		
 		// If reprint, get the latest registration encounter
 		if ((reprint != null) && reprint) {
+			
+			/**
+			 * June 7th 2012 - Supported #250 - Registration 2.2.14 (Mohali): Date on Reprint
+			 */
+			HospitalCoreService hcs = Context.getService(HospitalCoreService.class);
+			model.addAttribute("currentDateTime", sdf.format(hcs.getLastVisitTime(patientId)));
+			
 			Encounter encounter = Context.getService(RegistrationService.class).getLastEncounter(patient);
 			if (encounter != null) {
 				Map<Integer, String> observations = new HashMap<Integer, String>();
