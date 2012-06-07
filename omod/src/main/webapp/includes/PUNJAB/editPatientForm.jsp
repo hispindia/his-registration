@@ -1152,7 +1152,7 @@
 							name="person.attribute.14" value="Antenatal" /> Antenatal
 							Patient</td>
 						<td><input id="patCatTB" type="checkbox"
-							name="person.attribute.14" value="TB" /> TB Patient</td>
+							name="person.attribute.14" value="TB Patient" /> TB Patient</td>
 					</tr>
 					<tr>
 						<td><input id="patCatSchool" type="checkbox"
@@ -1166,7 +1166,7 @@
 							name="person.attribute.14" value="Ex Servicemen" /> Ex
 							Servicemen</td>
 						<td><input id="patCatOthersFree" type="checkbox"
-							name="person.attribute.14" value="OthersFree" /> Other Free</td>
+							name="person.attribute.14" value="Others Free" /> Other Free</td>
 					</tr>
 				</table></td>
 		</tr>
