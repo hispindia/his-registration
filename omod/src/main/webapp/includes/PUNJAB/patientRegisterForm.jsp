@@ -1169,6 +1169,6 @@
 	</table>
 </form>
 
-<input type="button" value="Save" onclick="PAGE.submit();" />
+<input type="button" value="Buy New Slip and Save" onclick="PAGE.submit();" />
 <input type="button" value="Reset"
 	onclick="window.location.href=window.location.href" />

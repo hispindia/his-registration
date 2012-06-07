@@ -61,83 +61,64 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller("RegistrationShowPatientInfoController")
 @RequestMapping("/module/registration/showPatientInfo.form")
 public class ShowPatientInfoController {
-
-	private static Log logger = LogFactory
-			.getLog(ShowPatientInfoController.class);
-
+	
+	private static Log logger = LogFactory.getLog(ShowPatientInfoController.class);
+	
 	@RequestMapping(method = RequestMethod.GET)
-	public String showPatientInfo(
-			@RequestParam("patientId") Integer patientId,
-			@RequestParam(value = "encounterId", required = false) Integer encounterId,
-			@RequestParam(value = "reprint", required = false) Boolean reprint,
-			Model model) throws IOException, ParseException {
-
+	public String showPatientInfo(@RequestParam("patientId") Integer patientId,
+	                              @RequestParam(value = "encounterId", required = false) Integer encounterId,
+	                              @RequestParam(value = "reprint", required = false) Boolean reprint, Model model)
+	                                                                                                              throws IOException,
+	                                                                                                              ParseException {
+		
 		Patient patient = Context.getPatientService().getPatient(patientId);
 		PatientModel patientModel = new PatientModel(patient);
 		model.addAttribute("patient", patientModel);
-		model.addAttribute("OPDs", RegistrationWebUtils
-				.getSubConcepts(RegistrationConstants.CONCEPT_NAME_OPD_WARD));
-
+		model.addAttribute("OPDs", RegistrationWebUtils.getSubConcepts(RegistrationConstants.CONCEPT_NAME_OPD_WARD));
+		
 		// Get current date
 		SimpleDateFormat sdf = new SimpleDateFormat("EEE dd/MM/yyyy kk:mm");
 		model.addAttribute("currentDateTime", sdf.format(new Date()));
-
+		
 		// Get patient registration fee
-		if (GlobalPropertyUtil.getInteger(
-				RegistrationConstants.PROPERTY_NUMBER_OF_DATE_VALIDATION, 0) > 0) {
-			List<RegistrationFee> fees = Context
-					.getService(RegistrationService.class)
-					.getRegistrationFees(
-							patient,
-							GlobalPropertyUtil
-									.getInteger(
-											RegistrationConstants.PROPERTY_NUMBER_OF_DATE_VALIDATION,
-											0));
+		if (GlobalPropertyUtil.getInteger(RegistrationConstants.PROPERTY_NUMBER_OF_DATE_VALIDATION, 0) > 0) {
+			List<RegistrationFee> fees = Context.getService(RegistrationService.class).getRegistrationFees(patient,
+			    GlobalPropertyUtil.getInteger(RegistrationConstants.PROPERTY_NUMBER_OF_DATE_VALIDATION, 0));
 			if (!CollectionUtils.isEmpty(fees)) {
 				RegistrationFee fee = fees.get(0);
 				Calendar dueDate = Calendar.getInstance();
 				dueDate.setTime(fee.getCreatedOn());
 				dueDate.add(Calendar.DATE, 30);
-				model.addAttribute("dueDate",
-						RegistrationUtils.formatDate(dueDate.getTime()));
-				model.addAttribute("daysLeft",
-						dateDiff(dueDate.getTime(), new Date()));
+				model.addAttribute("dueDate", RegistrationUtils.formatDate(dueDate.getTime()));
+				model.addAttribute("daysLeft", dateDiff(dueDate.getTime(), new Date()));
 			}
 		}
-
+		
 		// Get selected OPD room if this is the first time of visit
 		if (encounterId != null) {
-			Encounter encounter = Context.getEncounterService().getEncounter(
-					encounterId);
+			Encounter encounter = Context.getEncounterService().getEncounter(encounterId);
 			for (Obs obs : encounter.getObs()) {
-				if (obs.getConcept()
-						.getName()
-						.getName()
-						.equalsIgnoreCase(
-								RegistrationConstants.CONCEPT_NAME_OPD_WARD)) {
-					model.addAttribute("selectedOPD", obs.getValueCoded()
-							.getConceptId());
+				if (obs.getConcept().getName().getName().equalsIgnoreCase(RegistrationConstants.CONCEPT_NAME_OPD_WARD)) {
+					model.addAttribute("selectedOPD", obs.getValueCoded().getConceptId());
 				}
 			}
 		}
-
+		
 		// If reprint, get the latest registration encounter
 		if ((reprint != null) && reprint) {
-			Encounter encounter = Context.getService(RegistrationService.class)
-					.getLastEncounter(patient);
+			Encounter encounter = Context.getService(RegistrationService.class).getLastEncounter(patient);
 			if (encounter != null) {
 				Map<Integer, String> observations = new HashMap<Integer, String>();
 				for (Obs obs : encounter.getAllObs()) {
-					observations.put(obs.getConcept().getConceptId(),
-							ObsUtils.getValueAsString(obs));
+					observations.put(obs.getConcept().getConceptId(), ObsUtils.getValueAsString(obs));
 				}
 				model.addAttribute("observations", observations);
 			}
 		}
-
+		
 		return "/module/registration/patient/showPatientInfo";
 	}
-
+	
 	/**
 	 * Get date diff betwwen 2 dates
 	 * 
@@ -149,20 +130,17 @@ public class ShowPatientInfoController {
 		long diff = Math.abs(d1.getTime() - d2.getTime());
 		return (diff / (1000 * 60 * 60 * 24));
 	}
-
+	
 	@RequestMapping(method = RequestMethod.POST)
-	public void savePatientInfo(
-			@RequestParam("patientId") Integer patientId,
-			@RequestParam(value = "encounterId", required = false) Integer encounterId,
-			HttpServletRequest request, HttpServletResponse response)
-			throws ParseException, IOException {
-
-		Map<String, String> parameters = RegistrationWebUtils
-				.optimizeParameters(request);
-
+	public void savePatientInfo(@RequestParam("patientId") Integer patientId,
+	                            @RequestParam(value = "encounterId", required = false) Integer encounterId,
+	                            HttpServletRequest request, HttpServletResponse response) throws ParseException, IOException {
+		
+		Map<String, String> parameters = RegistrationWebUtils.optimizeParameters(request);
+		
 		// get patient
 		Patient patient = Context.getPatientService().getPatient(patientId);
-
+		
 		/*
 		 * SAVE ENCOUNTER
 		 */
@@ -171,30 +149,24 @@ public class ShowPatientInfoController {
 			encounter = Context.getEncounterService().getEncounter(encounterId);
 		} else {
 			encounter = RegistrationWebUtils.createEncounter(patient, true);
-
+			
 			// create OPD obs
-			Concept opdWardConcept = Context.getConceptService().getConcept(
-					RegistrationConstants.CONCEPT_NAME_OPD_WARD);
-			Concept selectedOPDConcept = Context
-					.getConceptService()
-					.getConcept(
-							Integer.parseInt(parameters
-									.get(RegistrationConstants.FORM_FIELD_PATIENT_OPD_WARD)));
+			Concept opdWardConcept = Context.getConceptService().getConcept(RegistrationConstants.CONCEPT_NAME_OPD_WARD);
+			Concept selectedOPDConcept = Context.getConceptService().getConcept(
+			    Integer.parseInt(parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_OPD_WARD)));
 			Obs opd = new Obs();
 			opd.setConcept(opdWardConcept);
 			opd.setValueCoded(selectedOPDConcept);
 			encounter.addObs(opd);
-
+			
 			// send patient to opd room/bloodbank
 			Concept bloodbankConcept = Context.getConceptService().getConcept(
-					GlobalPropertyUtil.getInteger(
-							RegistrationConstants.PROPERTY_BLOODBANK_CONCEPT_ID,
-							6425));
+			    GlobalPropertyUtil.getInteger(RegistrationConstants.PROPERTY_BLOODBANK_CONCEPT_ID, 6425));
 			if (selectedOPDConcept != bloodbankConcept) {
-				RegistrationWebUtils.sendPatientToOPDQueue(patient,
-						selectedOPDConcept, true);
+				RegistrationWebUtils.sendPatientToOPDQueue(patient, selectedOPDConcept, true);
 			} else {
-				OrderType ordertype = Context.getOrderService().getOrderType(GlobalPropertyUtil.getInteger(RegistrationConstants.PROPERTY_ORDER_TYPE_ID, 6));
+				OrderType ordertype = Context.getOrderService().getOrderType(
+				    GlobalPropertyUtil.getInteger(RegistrationConstants.PROPERTY_ORDER_TYPE_ID, 6));
 				Order order = new Order();
 				order.setConcept(bloodbankConcept);
 				order.setCreator(Context.getAuthenticatedUser());
@@ -208,16 +180,14 @@ public class ShowPatientInfoController {
 				encounter.addOrder(order);
 			}
 		}
-
+		
 		// create temporary attributes
 		for (String name : parameters.keySet()) {
-			if ((name.contains(".attribute."))
-					&& (!StringUtils.isBlank(parameters.get(name)))) {
+			if ((name.contains(".attribute.")) && (!StringUtils.isBlank(parameters.get(name)))) {
 				String[] parts = name.split("\\.");
 				String idText = parts[parts.length - 1];
 				Integer id = Integer.parseInt(idText);
-				Concept temporaryAttributeConcept = Context.getConceptService()
-						.getConcept(id);
+				Concept temporaryAttributeConcept = Context.getConceptService().getConcept(id);
 				Obs temporaryAttribute = new Obs();
 				temporaryAttribute.setConcept(temporaryAttributeConcept);
 				logger.info("concept: " + temporaryAttributeConcept);
@@ -226,16 +196,15 @@ public class ShowPatientInfoController {
 				encounter.addObs(temporaryAttribute);
 			}
 		}
-
+		
 		// save encounter
 		Context.getEncounterService().saveEncounter(encounter);
-		logger.info(String
-				.format("Save encounter for the visit of patient [encounterId=%s, patientId=%s]",
-						encounter.getId(), patient.getId()));
-
+		logger.info(String.format("Save encounter for the visit of patient [encounterId=%s, patientId=%s]",
+		    encounter.getId(), patient.getId()));
+		
 		response.setContentType("text/html;charset=UTF-8");
 		PrintWriter out = response.getWriter();
 		out.print("success");
 	}
-
+	
 }

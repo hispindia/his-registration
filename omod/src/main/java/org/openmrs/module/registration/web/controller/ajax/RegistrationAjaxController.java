@@ -48,10 +48,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller("RegistrationAjaxController")
 public class RegistrationAjaxController {
-
-	private static Log logger = LogFactory
-			.getLog(RegistrationAjaxController.class);
-
+	
+	private static Log logger = LogFactory.getLog(RegistrationAjaxController.class);
+	
 	/**
 	 * process patient birth date
 	 * 
@@ -61,48 +60,48 @@ public class RegistrationAjaxController {
 	 * @throws ParseException
 	 */
 	@RequestMapping(value = "/module/registration/ajax/processPatientBirthDate.htm", method = RequestMethod.GET)
-	public String processPatientBirthDate(
-			@RequestParam("birthdate") String birthdate, Model model)
-			throws ParseException {
-
+	public String processPatientBirthDate(@RequestParam("birthdate") String birthdate, Model model) throws ParseException {
+		
 		Map<String, Object> json = new HashMap<String, Object>();
-
+		
 		// try to parse date
 		// if success -> it's a birthdate
 		// otherwise -> it's an age
 		Date date = null;
 		try {
 			date = RegistrationUtils.parseDate(birthdate);
-		} catch (ParseException e) {
-
 		}
-
+		catch (ParseException e) {
+			
+		}
+		
 		if (date != null) {
-
-			if(isLaterToday(date)){
+			
+			if (isLaterToday(date)) {
 				json.put("error", "Birthdate must be before the current date.");
 			} else {
 				// the user entered the correct birthdate
 				json.put("estimated", false);
 				json.put("birthdate", birthdate);
 				json.put("age", RegistrationUtils.estimateAge(birthdate));
-				logger.info("User entered the correct birthdate.");	
+				logger.info("User entered the correct birthdate.");
 			}
-
+			
 		} else {
-
-			String lastLetter = birthdate.substring(birthdate.length() - 1).toLowerCase();			
-			if ("ymwd".indexOf(lastLetter)<0) {
+			
+			String lastLetter = birthdate.substring(birthdate.length() - 1).toLowerCase();
+			if ("ymwd".indexOf(lastLetter) < 0) {
 				json.put("error", "Age in wrong format");
 			} else {
-				try {					
+				try {
 					json.put("estimated", true);
 					String estimatedBirthdate = getEstimatedBirthdate(birthdate);
 					json.put("birthdate", estimatedBirthdate);
 					json.put("age", RegistrationUtils.estimateAge(estimatedBirthdate));
-				} catch (Exception e) {
+				}
+				catch (Exception e) {
 					json.put("error", e.getMessage());
-				}				
+				}
 			}
 		}
 		model.addAttribute("json", json);
@@ -111,18 +110,19 @@ public class RegistrationAjaxController {
 	
 	/**
 	 * Check whether a day is later than today
+	 * 
 	 * @param date
 	 * @return
 	 */
-	private boolean isLaterToday(Date date){
+	private boolean isLaterToday(Date date) {
 		Calendar c = Calendar.getInstance();
 		c.setTime(new Date());
 		c.set(Calendar.HOUR, 0);
 		c.set(Calendar.MINUTE, 0);
-		c.set(Calendar.SECOND, 0);		
+		c.set(Calendar.SECOND, 0);
 		return date.after(c.getTime());
 	}
-
+	
 	/*
 	 * Estimate the birthdate by age
 	 * 
@@ -135,7 +135,7 @@ public class RegistrationAjaxController {
 		String ageStr = text.substring(0, text.length() - 1);
 		String type = text.substring(text.length() - 1);
 		int age = Integer.parseInt(ageStr);
-		if(age<0){
+		if (age < 0) {
 			throw new Exception("Age must not be negative number!");
 		}
 		Calendar date = Calendar.getInstance();
@@ -150,10 +150,10 @@ public class RegistrationAjaxController {
 		}
 		return RegistrationUtils.formatDate(date.getTime());
 	}
-
+	
 	@RequestMapping(value = "/module/registration/ajax/buySlip.htm", method = RequestMethod.GET)
-	public void buySlip(@RequestParam("patientId") Integer patientId,
-			Model model, HttpServletResponse response) throws IOException {
+	public void buySlip(@RequestParam("patientId") Integer patientId, Model model, HttpServletResponse response)
+	                                                                                                            throws IOException {
 		response.setContentType("text/html;charset=UTF-8");
 		PrintWriter out = response.getWriter();
 		RegistrationFee fee = new RegistrationFee();
@@ -161,8 +161,7 @@ public class RegistrationAjaxController {
 		fee.setPatient(patient);
 		fee.setCreatedOn(new Date());
 		fee.setCreatedBy(Context.getAuthenticatedUser());
-		fee.setFee(new BigDecimal(GlobalPropertyUtil.getInteger(
-				RegistrationConstants.PROPERTY_REGISTRATION_FEE, 0)));
+		fee.setFee(new BigDecimal(GlobalPropertyUtil.getInteger(RegistrationConstants.PROPERTY_REGISTRATION_FEE, 0)));
 		Context.getService(RegistrationService.class).saveRegistrationFee(fee);
 		out.print("success");
 	}
