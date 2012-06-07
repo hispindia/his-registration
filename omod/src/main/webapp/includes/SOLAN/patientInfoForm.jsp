@@ -114,6 +114,22 @@
 			});
 		},
 		
+		// harsh #244 Added a save button.
+		save: function(){
+			if (PAGE.validate()){
+			jQuery("#patientInfoForm").ajaxSubmit({
+				success: function (responseText, statusText, xhr){
+					if(responseText=="success"){						
+					
+						window.location.href = getContextPath() + "/findPatient.htm";
+					}					
+				}
+			});
+			}
+			},
+
+		
+		
 		/** FILL OPTIONS INTO SELECT 
 		 * option = {
 		 * 		data: list of values or string
@@ -180,84 +196,73 @@
 		}
 	};
 </script>
-<input id="printSlip" type="button" value="Print" onClick="PAGE.submit(false);"/>
-<input id="reprint" type="button" value="RePrint" onClick="PAGE.submit(true);"/>
-<input id="buySlip" type="button" value="Buy a new slip" onClick="PAGE.buySlip();"/>
+<input id="printSlip" type="button" value="Print"
+	onClick="PAGE.submit(false);" />
+<input id="reprint" type="button" value="RePrint"
+	onClick="PAGE.submit(true);" />
+<input id="buySlip" type="button" value="Buy a new slip"
+	onClick="PAGE.buySlip();" />
+<input id="save" type="button" value="Save" 
+	onClick="PAGE.save();" />
 <span id="validationDate"></span>
 <div id="patientInfoPrintArea">
-		<center>
-		<form id="patientInfoForm" method="POST">				
-			<table border=0  width="600">
+	<center>
+		<form id="patientInfoForm" method="POST">
+			<table border=0 width="600">
 				<tr>
-				
+
 				</tr>
 				<tr>
 					<td colspan="1""><b>ID.No:</b></td>
-					<td  colspan="5"">
-						<span id="identifier"/>
-					</td>
+					<td colspan="5""><span id="identifier" /></td>
 				</tr>
 				<tr>
 					<td colspan="1"><b>Name:</b></td>
-					<td  colspan="5">
-						<span id="name"/>
-					</td>
+					<td colspan="5"><span id="name" /></td>
 				</tr>
 				<tr>
 					<td colspan="1"><b>Age:</b></td>
-					<td colspan="5">
-						<span id="age"/>
-					</td>
+					<td colspan="5"><span id="age" /></td>
 				</tr>
 				<tr>
 					<td colspan="1"><b>Gender:</b></td>
-					<td colspan="5">
-						<span id="gender"/>
-					</td>
+					<td colspan="5"><span id="gender" /></td>
 				</tr>
 				<tr>
 					<td colspan="1" valign="top"><b>Phone number:</b></td>
-					<td colspan="5">
-						<span id="phoneNumber"/>			
-					</td>
+					<td colspan="5"><span id="phoneNumber" /></td>
 				</tr>
 				<!-- 03/05/2012 Thai Chuong: Supported issue #182 -->
 				<tr id="opdWardLabel">
 					<td colspan="1"><b>OPD room to visit:</b></td>
-					<td colspan="5">
-						<select id="opdWard" name="patient.opdWard">
-						</select>
-					</td>
+					<td colspan="5"><select id="opdWard" name="patient.opdWard">
+					</select></td>
 				</tr>
 				<tr>
 					<td colspan="1"><b>Date/Time:</b></td>
-					<td colspan="5">
-						<span id="datetime"/>
-					</td>
+					<td colspan="5"><span id="datetime" /></td>
 				</tr>
 				<tr>
 					<td colspan="1"><b>Category:</b></td>
-					<td colspan="5">
-						<span id="category"/>
-					</td>
+					<td colspan="5"><span id="category" /></td>
 				</tr>
 				<tr id="temporaryCategories">
-				<!-- 01/05/12: Marta, Painting Temporary Category in red. Bug #182  -->
-					<td colspan="1" valign="top"><b> <font color="red">Temporary Categories: </font></b></td>
+					<!-- 01/05/12: Marta, Painting Temporary Category in red. Bug #182  -->
+					<td colspan="1" valign="top"><b> <font color="red">Temporary
+								Categories: </font></b></td>
 					<td colspan="5">
 						<!-- 28/04/12: Changed MODEL.observations[11] for MODEL.observations[8058] by Marta - Bug #160 -->
-					    <input type="checkbox" name="temporary.attribute.11" value="MLC"/> MLC <br/>
-						<input type="checkbox" name="temporary.attribute.11" value="Accident"/> Accident <br/>										
+						<input type="checkbox" name="temporary.attribute.11" value="MLC" />
+						MLC <br /> <input type="checkbox" name="temporary.attribute.11"
+						value="Accident" /> Accident <br />
 					</td>
 				</tr>
 				<tr>
 					<td colspan="6">
-						<div id="printableTemporaryCategories">
-							
-						</div>
-					</td>						
+						<div id="printableTemporaryCategories"></div>
+					</td>
 				</tr>
-		</table> 
+			</table>
 		</form>
-		</center>
+	</center>
 </div>
