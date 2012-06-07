@@ -57,6 +57,8 @@
 				jQuery("#rsbyField").hide();
 				// 01/05/2012: Marta, adding ppo number. Feature #181
 				jQuery("#ppoField").hide();
+				<!-- 07/06/2012 Kesavulu: #245 [PUNJAB] Text box in 'other free' category -->
+				jQuery("#freeField").hide();
 				jQuery("#patCatGeneral").attr("checked", "checked");
 
 				// binding
@@ -1001,6 +1003,10 @@
 				if (jQuery("#patCatCancer").is(":checked"))
 					jQuery("#patCatCancer").removeAttr("checked");
 			}
+			else {
+				jQuery("#freeCategory").val("");
+				jQuery("#freeField").hide();
+			}
 		},
 
 		/*
@@ -1212,6 +1218,6 @@
 	</table>
 </form>
 
-<input type="button" value="Save" onclick="PAGE.submit();" />
+<input type="button" value="Buy New Slip and Save" onclick="PAGE.submit();" />
 <input type="button" value="Reset"
 	onclick="window.location.href=window.location.href" />
