@@ -400,6 +400,13 @@
 						return false;
 					}
 				}
+				<!-- 07/06/2012 Kesavulu: #245 [PUNJAB] Text box in 'other free' category -->
+				if (jQuery("#patCatOthersFree").attr('checked')) {
+					if (jQuery("#freeCategory").val().length <= 0) {
+						alert('Please enter Other Free Category Description');
+						return false;
+					}
+				}
 				return true;
 			}
 		},
@@ -436,8 +443,11 @@
 					jQuery("#patCatSchool").removeAttr("checked");
 				if (jQuery("#patCatCancer").is(":checked"))
 					jQuery("#patCatCancer").removeAttr("checked");
+				<!-- 07/06/2012 Kesavulu: #245 [PUNJAB] Text box in 'other free' category -->
 				if (jQuery("#patCatOthersFree").is(":checked"))
 					jQuery("#patCatOthersFree").removeAttr("checked");
+					jQuery("#freeCategory").val("");
+					jQuery("#freeField").hide();
 
 			} else {
 				jQuery("#bplNumber").val("");
@@ -477,8 +487,11 @@
 					jQuery("#patCatSchool").removeAttr("checked");
 				if (jQuery("#patCatCancer").is(":checked"))
 					jQuery("#patCatCancer").removeAttr("checked");
+				<!-- 07/06/2012 Kesavulu: #245 [PUNJAB] Text box in 'other free' category -->
 				if (jQuery("#patCatOthersFree").is(":checked"))
 					jQuery("#patCatOthersFree").removeAttr("checked");
+					jQuery("#freeCategory").val("");
+					jQuery("#freeField").hide();
 			} else {
 				jQuery("#rsbyNumber").val("");
 				jQuery("#rsbyField").hide();
@@ -523,8 +536,11 @@
 					jQuery("#patCatSchool").removeAttr("checked");
 				if (jQuery("#patCatCancer").is(":checked"))
 					jQuery("#patCatCancer").removeAttr("checked");
+				<!-- 07/06/2012 Kesavulu: #245 [PUNJAB] Text box in 'other free' category -->
 				if (jQuery("#patCatOthersFree").is(":checked"))
 					jQuery("#patCatOthersFree").removeAttr("checked");
+					jQuery("#freeCategory").val("");
+					jQuery("#freeField").hide();
 			}
 		},
 
@@ -568,8 +584,11 @@
 					jQuery("#patCatSchool").removeAttr("checked");
 				if (jQuery("#patCatCancer").is(":checked"))
 					jQuery("#patCatCancer").removeAttr("checked");
+				<!-- 07/06/2012 Kesavulu: #245 [PUNJAB] Text box in 'other free' category -->
 				if (jQuery("#patCatOthersFree").is(":checked"))
 					jQuery("#patCatOthersFree").removeAttr("checked");
+					jQuery("#freeCategory").val("");
+					jQuery("#freeField").hide();
 			}
 		},
 
@@ -586,8 +605,8 @@
 					jQuery("#rsbyNumber").val("");
 					jQuery("#rsbyField").hide();
 				}
-/* 				if (jQuery("#patCatPoor").is(":checked"))
-					jQuery("#patCatPoor").removeAttr("checked"); */
+				/* 				if (jQuery("#patCatPoor").is(":checked"))
+				 jQuery("#patCatPoor").removeAttr("checked"); */
 				if (jQuery("#patPunjabGovernmentEmployee").is(":checked"))
 					jQuery("#patPunjabGovernmentEmployee")
 							.removeAttr("checked");
@@ -611,8 +630,11 @@
 					jQuery("#patCatSchool").removeAttr("checked");
 				if (jQuery("#patCatCancer").is(":checked"))
 					jQuery("#patCatCancer").removeAttr("checked");
+				<!-- 07/06/2012 Kesavulu: #245 [PUNJAB] Text box in 'other free' category -->
 				if (jQuery("#patCatOthersFree").is(":checked"))
 					jQuery("#patCatOthersFree").removeAttr("checked");
+					jQuery("#freeCategory").val("");
+					jQuery("#freeField").hide();
 			}
 		},
 
@@ -641,8 +663,8 @@
 					jQuery("#rsbyNumber").val("");
 					jQuery("#rsbyField").hide();
 				}
-/* 				if (jQuery("#patCatPoor").is(":checked"))
-					jQuery("#patCatPoor").removeAttr("checked"); */
+				/* 				if (jQuery("#patCatPoor").is(":checked"))
+				 jQuery("#patCatPoor").removeAttr("checked"); */
 				// 28/04/2012: Marta fixed for Punjab validation - Bug #159
 				if (jQuery("#patCatStaff").is(":checked"))
 					jQuery("#patCatStaff").removeAttr("checked");
@@ -655,8 +677,11 @@
 					jQuery("#patCatSchool").removeAttr("checked");
 				if (jQuery("#patCatCancer").is(":checked"))
 					jQuery("#patCatCancer").removeAttr("checked");
+				<!-- 07/06/2012 Kesavulu: #245 [PUNJAB] Text box in 'other free' category -->
 				if (jQuery("#patCatOthersFree").is(":checked"))
 					jQuery("#patCatOthersFree").removeAttr("checked");
+					jQuery("#freeCategory").val("");
+					jQuery("#freeField").hide();
 			}
 		},
 
@@ -676,8 +701,8 @@
 				// 25/04/2012: Thai Chuong fixed for Punjab validation - Bug #159
 				if (jQuery("#patCatGeneral").is(":checked"))
 					jQuery("#patCatGeneral").removeAttr("checked");
-/* 				if (jQuery("#patCatPoor").is(":checked"))
-					jQuery("#patCatPoor").removeAttr("checked"); */
+				/* 				if (jQuery("#patCatPoor").is(":checked"))
+				 jQuery("#patCatPoor").removeAttr("checked"); */
 				if (jQuery("#bpl").is(":checked")) {
 					jQuery("#bpl").removeAttr("checked");
 					jQuery("#bplNumber").val("");
@@ -699,8 +724,11 @@
 					jQuery("#patCatSchool").removeAttr("checked");
 				if (jQuery("#patCatCancer").is(":checked"))
 					jQuery("#patCatCancer").removeAttr("checked");
+				<!-- 07/06/2012 Kesavulu: #245 [PUNJAB] Text box in 'other free' category -->
 				if (jQuery("#patCatOthersFree").is(":checked"))
 					jQuery("#patCatOthersFree").removeAttr("checked");
+					jQuery("#freeCategory").val("");
+					jQuery("#freeField").hide();
 			}
 		},
 
@@ -729,8 +757,8 @@
 				}
 				if (jQuery("#patCatStaff").is(":checked"))
 					jQuery("#patCatStaff").removeAttr("checked");
-/* 				if (jQuery("#patCatPoor").is(":checked"))
-					jQuery("#patCatPoor").removeAttr("checked"); */
+				/* 				if (jQuery("#patCatPoor").is(":checked"))
+				 jQuery("#patCatPoor").removeAttr("checked"); */
 				// 30/04/2012: Marta fixed for Punjab new Categories validation - Bug #177
 				if (jQuery("#patCatAntenatal").is(":checked"))
 					jQuery("#patCatAntenatal").removeAttr("checked");
@@ -740,8 +768,11 @@
 					jQuery("#patCatSchool").removeAttr("checked");
 				if (jQuery("#patCatCancer").is(":checked"))
 					jQuery("#patCatCancer").removeAttr("checked");
+				<!-- 07/06/2012 Kesavulu: #245 [PUNJAB] Text box in 'other free' category -->
 				if (jQuery("#patCatOthersFree").is(":checked"))
 					jQuery("#patCatOthersFree").removeAttr("checked");
+					jQuery("#freeCategory").val("");
+					jQuery("#freeField").hide();
 			} // 01/05/2012: Marta, adding ppo number. Feature #181
 			else {
 				jQuery("#ppoNumber").val("");
@@ -763,8 +794,8 @@
 					jQuery("#rsbyNumber").val("");
 					jQuery("#rsbyField").hide();
 				}
-/* 				if (jQuery("#patCatPoor").is(":checked"))
-					jQuery("#patCatPoor").removeAttr("checked"); */
+				/* 				if (jQuery("#patCatPoor").is(":checked"))
+				 jQuery("#patCatPoor").removeAttr("checked"); */
 				if (jQuery("#patExServicemen").is(":checked"))
 					jQuery("#patExServicemen").removeAttr("checked");
 				if (jQuery("#patPensioner").is(":checked")) {
@@ -786,8 +817,11 @@
 					jQuery("#patCatSchool").removeAttr("checked");
 				if (jQuery("#patCatCancer").is(":checked"))
 					jQuery("#patCatCancer").removeAttr("checked");
+				<!-- 07/06/2012 Kesavulu: #245 [PUNJAB] Text box in 'other free' category -->
 				if (jQuery("#patCatOthersFree").is(":checked"))
 					jQuery("#patCatOthersFree").removeAttr("checked");
+					jQuery("#freeCategory").val("");
+					jQuery("#freeField").hide();
 			}
 		},
 
@@ -805,8 +839,8 @@
 					jQuery("#rsbyNumber").val("");
 					jQuery("#rsbyField").hide();
 				}
-/* 				if (jQuery("#patCatPoor").is(":checked"))
-					jQuery("#patCatPoor").removeAttr("checked"); */
+				/* 				if (jQuery("#patCatPoor").is(":checked"))
+				 jQuery("#patCatPoor").removeAttr("checked"); */
 				if (jQuery("#patExServicemen").is(":checked"))
 					jQuery("#patExServicemen").removeAttr("checked");
 				if (jQuery("#patPensioner").is(":checked")) {
@@ -828,8 +862,11 @@
 					jQuery("#patCatSchool").removeAttr("checked");
 				if (jQuery("#patCatCancer").is(":checked"))
 					jQuery("#patCatCancer").removeAttr("checked");
+				<!-- 07/06/2012 Kesavulu: #245 [PUNJAB] Text box in 'other free' category -->
 				if (jQuery("#patCatOthersFree").is(":checked"))
 					jQuery("#patCatOthersFree").removeAttr("checked");
+				jQuery("#freeCategory").val("");
+				jQuery("#freeField").hide();
 			}
 		},
 
@@ -847,8 +884,8 @@
 					jQuery("#rsbyNumber").val("");
 					jQuery("#rsbyField").hide();
 				}
-/* 				if (jQuery("#patCatPoor").is(":checked"))
-					jQuery("#patCatPoor").removeAttr("checked"); */
+				/* 				if (jQuery("#patCatPoor").is(":checked"))
+				 jQuery("#patCatPoor").removeAttr("checked"); */
 				if (jQuery("#patExServicemen").is(":checked"))
 					jQuery("#patExServicemen").removeAttr("checked");
 				if (jQuery("#patPensioner").is(":checked")) {
@@ -870,8 +907,11 @@
 					jQuery("#patCatTB").removeAttr("checked");
 				if (jQuery("#patCatCancer").is(":checked"))
 					jQuery("#patCatCancer").removeAttr("checked");
+				<!-- 07/06/2012 Kesavulu: #245 [PUNJAB] Text box in 'other free' category -->
 				if (jQuery("#patCatOthersFree").is(":checked"))
 					jQuery("#patCatOthersFree").removeAttr("checked");
+					jQuery("#freeCategory").val("");
+					jQuery("#freeField").hide();
 			}
 		},
 
@@ -889,8 +929,8 @@
 					jQuery("#rsbyNumber").val("");
 					jQuery("#rsbyField").hide();
 				}
-/* 				if (jQuery("#patCatPoor").is(":checked"))
-					jQuery("#patCatPoor").removeAttr("checked"); */
+				/* 				if (jQuery("#patCatPoor").is(":checked"))
+				 jQuery("#patCatPoor").removeAttr("checked"); */
 				if (jQuery("#patExServicemen").is(":checked"))
 					jQuery("#patExServicemen").removeAttr("checked");
 				if (jQuery("#patPensioner").is(":checked")) {
@@ -912,8 +952,11 @@
 					jQuery("#patCatTB").removeAttr("checked");
 				if (jQuery("#patCatSchool").is(":checked"))
 					jQuery("#patCatSchool").removeAttr("checked");
+				<!-- 07/06/2012 Kesavulu: #245 [PUNJAB] Text box in 'other free' category -->
 				if (jQuery("#patCatOthersFree").is(":checked"))
 					jQuery("#patCatOthersFree").removeAttr("checked");
+					jQuery("#freeCategory").val("");
+					jQuery("#freeField").hide();
 			}
 		},
 
@@ -921,6 +964,7 @@
 		// 30/04/2012: Marta added for Punjab new categories validation - Bug #177
 		othersFreeCheck : function() {
 			if (jQuery("#patCatOthersFree").is(':checked')) {
+				jQuery("#freeField").show();
 				if (jQuery("#bpl").is(":checked")) {
 					jQuery("#bpl").removeAttr("checked");
 					jQuery("#bplNumber").val("");
@@ -931,8 +975,8 @@
 					jQuery("#rsbyNumber").val("");
 					jQuery("#rsbyField").hide();
 				}
-/* 				if (jQuery("#patCatPoor").is(":checked"))
-					jQuery("#patCatPoor").removeAttr("checked"); */
+				/* 				if (jQuery("#patCatPoor").is(":checked"))
+				 jQuery("#patCatPoor").removeAttr("checked"); */
 				if (jQuery("#patExServicemen").is(":checked"))
 					jQuery("#patExServicemen").removeAttr("checked");
 				if (jQuery("#patPensioner").is(":checked")) {
@@ -1000,16 +1044,14 @@
 <form id="patientRegistrationForm" method="POST">
 	<table cellspacing="0">
 		<tr>
-			<td valign="top" class="cell"><b>Name *</b>
-			</td>
+			<td valign="top" class="cell"><b>Name *</b></td>
 			<td class="cell"><input id="patientName" type="hidden"
 				name="patient.name" />
 				<div id="searchbox"></div>
 				<div id="numberOfFoundPatients"></div></td>
 		</tr>
 		<tr>
-			<td class="cell"><b>Demographics *</b>
-			</td>
+			<td class="cell"><b>Demographics *</b></td>
 			<td class="cell">dd/mm/yyyy<br />
 				<table>
 					<tr>
@@ -1034,20 +1076,17 @@
 				</table></td>
 		</tr>
 		<tr>
-			<td class="cell"><b>ID Number *</b>
-			</td>
+			<td class="cell"><b>ID Number *</b></td>
 			<td class="cell"><input name="patient.identifier"
-				style="border: none;" />
-			</td>
+				style="border: none;" /></td>
 		</tr>
 		<tr>
-			<td class="cell"><b>Address</b>
-			</td>
+			<td class="cell"><b>Address</b></td>
 			<td class="cell">
 				<table>
-					<tr> <!--  01/05/2012: Marta, adding a field for address. Feature #183   -->
-						<td >Postal Address:
-						</td>
+					<tr>
+						<!--  01/05/2012: Marta, adding a field for address. Feature #183   -->
+						<td>Postal Address:</td>
 						<td><input id="patientPostalAddress"
 							name="person.attribute.18" style="width: 500px;" /></td>
 					</tr>
@@ -1063,25 +1102,24 @@
 							style="width: 200px;">
 						</select></td>
 					</tr>
-				</table></td>
+				</table>
+			</td>
 		</tr>
 		<tr>
-			<td class="cell"><b>Phone number</b>
-			</td>
+			<td class="cell"><b>Phone number</b></td>
 			<td class="cell"><input id="patientPhoneNumber"
 				name="person.attribute.16" style="width: 200px;" /></td>
 		</tr>
 		<tr>
-			<td class="cell"><b>Relative Name *</b>
-			</td>
+			<td class="cell"><b>Relative Name *</b></td>
 			<td class="cell">
 				<div id="patientRelativeNameSection"></div> <input
 				id="patientRelativeName" name="person.attribute.8"
-				style="width: 200px;" /></td>
+				style="width: 200px;" />
+			</td>
 		</tr>
 		<tr>
-			<td class="cell"><b>Visit Information</b>
-			</td>
+			<td class="cell"><b>Visit Information</b></td>
 			<td class="cell"><b>Referral Information</b><br /> <input
 				type="checkbox" id="referred"
 				onClick="PAGE.toogleReferralInfo(this);" name="patient.referred"
@@ -1106,8 +1144,7 @@
 			</select></td>
 		</tr>
 		<tr>
-			<td valign="top" class="cell"><b>Patient information</b>
-			</td>
+			<td valign="top" class="cell"><b>Patient information</b></td>
 			<td class="cell"><b>Patient category</b><br />
 				<table cellspacing="10">
 					<tr>
@@ -1127,20 +1164,23 @@
 						<td><input id="rsby" type="checkbox"
 							name="person.attribute.14" value="RSBY" /> RSBY</td>
 						<td><span id="rsbyField">RSBY Number <input
-								id="rsbyNumber" name="person.attribute.11" /> </span></td>
+								id="rsbyNumber" name="person.attribute.11" />
+						</span></td>
 					</tr>
 					<tr>
 						<td><input id="bpl" type="checkbox"
 							name="person.attribute.14" value="BPL" /> BPL</td>
 						<td><span id="bplField">BPL Number <input
-								id="bplNumber" name="person.attribute.10" /> </span></td>
+								id="bplNumber" name="person.attribute.10" />
+						</span></td>
 					</tr>
 					<tr>
 						<td><input id="patPensioner" type="checkbox"
 							name="person.attribute.14" value="Pensioner" /> Pensioner</td>
 						<!-- 01/05/2012: Marta, adding a field for ppo number. Feature #181 -->
 						<td><span id="ppoField">PPO Number<input
-								id="ppoNumber" name="person.attribute.17" /> </span></td>
+								id="ppoNumber" name="person.attribute.17" />
+						</span></td>
 					</tr>
 					<tr>
 						<!-- 30/04/12: Marta, Added categories Antenatal, TB, School, Cancer, Others. - Bug #177 -->
@@ -1159,16 +1199,19 @@
 					</tr>
 					<tr>
 						<td><input id="patExServicemen" type="checkbox"
-							name="person.attribute.14" value="Ex Servicemen" /> Ex
-							Servicemen</td>
+							name="person.attribute.14" value="Ex Servicemen" /> ExServicemen</td>
 						<td><input id="patCatOthersFree" type="checkbox"
-							name="person.attribute.14" value="Others Free" /> Other Free</td>
-					</tr>
+							name="person.attribute.14" value="Other Free" /> Other Free</td>
+						<!-- 07/06/2012 Kesavulu: #245 [PUNJAB] Text box in 'other free' category -->
+						<td><span id="freeField"> <input id="freeCategory"
+								name="person.attribute.19" /></span>
+						</td>
+					</tr> 
 				</table></td>
 		</tr>
 	</table>
 </form>
 
-<input type="button" value="Buy New Slip and Save" onclick="PAGE.submit();" />
+<input type="button" value="Save" onclick="PAGE.submit();" />
 <input type="button" value="Reset"
 	onclick="window.location.href=window.location.href" />

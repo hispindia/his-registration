@@ -36,6 +36,12 @@
 					formValues += "person.attribute.18=="
 							+ MODEL.patientAttributes[18] + "||";
 				}
+				<!-- 07/06/2012 Kesavulu: #245 [PUNJAB] Text box in 'other free' category -->
+				if (!StringUtils.isBlank(MODEL.patientAttributes[19])) {
+					formValues += "person.attribute.19=="
+							+ MODEL.patientAttributes[19] + "||";
+				}
+				
 
 				jQuery("#patientRegistrationForm").fillForm(formValues);
 				PAGE.checkBirthDate();
@@ -79,6 +85,7 @@
 				} else {
 					jQuery("#bplField").hide();
 				}
+				
 
 				// 01/05/2012: Marta, adding ppo number. Feature #181
 				// 01/05/2012 - Marta: Added verification to avoid show old numbers. Bug #185 
@@ -90,6 +97,17 @@
 				} else {
 					jQuery("#ppoField").hide();
 				}
+				<!-- 07/06/2012 Kesavulu: #245 [PUNJAB] Text box in 'other free' category -->
+				// Free Field
+				if (!StringUtils.isBlank(MODEL.patientAttributes[19])
+						&& jQuery("#patCatOthersFree").attr('checked')) {
+					jQuery("#patientRegistrationForm").fillForm(
+							"person.attribute.19=="
+									+ MODEL.patientAttributes[19] + "||");
+				} else {
+					jQuery("#freeField").hide();
+				}
+				
 
 				// binding
 				jQuery('#calendar').datepicker({
@@ -393,7 +411,9 @@
 						alert('Please enter PPO number');
 						return false;
 					}
+					
 				}
+				
 				return true;
 			}
 		},
@@ -436,8 +456,14 @@
 					jQuery("#patCatSchool").removeAttr("checked");
 				if (jQuery("#patCatCancer").is(":checked"))
 					jQuery("#patCatCancer").removeAttr("checked");
-				if (jQuery("#patCatOthersFree").is(":checked"))
+				<!-- 07/06/2012 Kesavulu: #245 [PUNJAB] Text box in 'other free' category -->
+				if (jQuery("#patCatOthersFree").is(":checked")){
 					jQuery("#patCatOthersFree").removeAttr("checked");
+					jQuery("#freeCategory").val("");
+					jQuery("#freeField").hide();
+				}
+				
+				
 			} else {
 				jQuery("#bplNumber").val("");
 				jQuery("#bplField").hide();
@@ -482,8 +508,13 @@
 					jQuery("#patCatSchool").removeAttr("checked");
 				if (jQuery("#patCatCancer").is(":checked"))
 					jQuery("#patCatCancer").removeAttr("checked");
-				if (jQuery("#patCatOthersFree").is(":checked"))
+				<!-- 07/06/2012 Kesavulu: #245 [PUNJAB] Text box in 'other free' category -->
+				if (jQuery("#patCatOthersFree").is(":checked")){
 					jQuery("#patCatOthersFree").removeAttr("checked");
+					jQuery("#freeCategory").val("");
+					jQuery("#freeField").hide();
+				}
+				
 			} else {
 				jQuery("#rsbyNumber").val("");
 				jQuery("#rsbyField").hide();
@@ -528,8 +559,13 @@
 					jQuery("#patCatSchool").removeAttr("checked");
 				if (jQuery("#patCatCancer").is(":checked"))
 					jQuery("#patCatCancer").removeAttr("checked");
-				if (jQuery("#patCatOthersFree").is(":checked"))
+				<!-- 07/06/2012 Kesavulu: #245 [PUNJAB] Text box in 'other free' category -->
+				if (jQuery("#patCatOthersFree").is(":checked")){
 					jQuery("#patCatOthersFree").removeAttr("checked");
+					jQuery("#freeCategory").val("");
+					jQuery("#freeField").hide();
+				}
+				
 			}
 		},
 
@@ -573,8 +609,13 @@
 					jQuery("#patCatSchool").removeAttr("checked");
 				if (jQuery("#patCatCancer").is(":checked"))
 					jQuery("#patCatCancer").removeAttr("checked");
-				if (jQuery("#patCatOthersFree").is(":checked"))
+				<!-- 07/06/2012 Kesavulu: #245 [PUNJAB] Text box in 'other free' category -->
+				if (jQuery("#patCatOthersFree").is(":checked")){
 					jQuery("#patCatOthersFree").removeAttr("checked");
+					jQuery("#freeCategory").val("");
+					jQuery("#freeField").hide();
+				}
+				
 			}
 		},
 
@@ -616,8 +657,13 @@
 					jQuery("#patCatSchool").removeAttr("checked");
 				if (jQuery("#patCatCancer").is(":checked"))
 					jQuery("#patCatCancer").removeAttr("checked");
-				if (jQuery("#patCatOthersFree").is(":checked"))
+				<!-- 07/06/2012 Kesavulu: #245 [PUNJAB] Text box in 'other free' category -->
+				if (jQuery("#patCatOthersFree").is(":checked")){
 					jQuery("#patCatOthersFree").removeAttr("checked");
+					jQuery("#freeCategory").val("");
+					jQuery("#freeField").hide();
+				}
+				
 			}
 		},
 
@@ -659,8 +705,12 @@
 					jQuery("#patCatSchool").removeAttr("checked");
 				if (jQuery("#patCatCancer").is(":checked"))
 					jQuery("#patCatCancer").removeAttr("checked");
-				if (jQuery("#patCatOthersFree").is(":checked"))
+				<!-- 07/06/2012 Kesavulu: #245 [PUNJAB] Text box in 'other free' category -->
+				if (jQuery("#patCatOthersFree").is(":checked")){
 					jQuery("#patCatOthersFree").removeAttr("checked");
+					jQuery("#freeCategory").val("");
+					jQuery("#freeField").hide();
+				}
 			}
 		},
 
@@ -703,8 +753,13 @@
 					jQuery("#patCatSchool").removeAttr("checked");
 				if (jQuery("#patCatCancer").is(":checked"))
 					jQuery("#patCatCancer").removeAttr("checked");
-				if (jQuery("#patCatOthersFree").is(":checked"))
+				<!-- 07/06/2012 Kesavulu: #245 [PUNJAB] Text box in 'other free' category -->
+				if (jQuery("#patCatOthersFree").is(":checked")){
 					jQuery("#patCatOthersFree").removeAttr("checked");
+					jQuery("#freeCategory").val("");
+					jQuery("#freeField").hide();
+				}
+				
 			}
 		},
 
@@ -750,8 +805,13 @@
 					jQuery("#patCatSchool").removeAttr("checked");
 				if (jQuery("#patCatCancer").is(":checked"))
 					jQuery("#patCatCancer").removeAttr("checked");
-				if (jQuery("#patCatOthersFree").is(":checked"))
+				<!-- 07/06/2012 Kesavulu: #245 [PUNJAB] Text box in 'other free' category -->
+				if (jQuery("#patCatOthersFree").is(":checked")){
 					jQuery("#patCatOthersFree").removeAttr("checked");
+					jQuery("#freeCategory").val("");
+					jQuery("#freeField").hide();
+				}
+				
 			}// 01/05/2012: Marta, adding ppo number. Feature #181
 			else {
 				jQuery("#ppoNumber").val("");
@@ -771,6 +831,12 @@
 					jQuery("#rsby").removeAttr("checked");
 					jQuery("#rsbyNumber").val("");
 					jQuery("#rsbyField").hide();
+				}
+				<!-- 07/06/2012 Kesavulu: #245 [PUNJAB] Text box in 'other free' category -->
+				if (jQuery("#patCatOthersFree").is(":checked")){
+					jQuery("#patCatOthersFree").removeAttr("checked");
+					jQuery("#freeCategory").val("");
+					jQuery("#freeField").hide();
 				}
 /* 				if (jQuery("#patCatPoor").is(":checked"))
 					jQuery("#patCatPoor").removeAttr("checked"); */
@@ -820,8 +886,13 @@
 					jQuery("#patCatSchool").removeAttr("checked");
 				if (jQuery("#patCatCancer").is(":checked"))
 					jQuery("#patCatCancer").removeAttr("checked");
-				if (jQuery("#patCatOthersFree").is(":checked"))
+				<!-- 07/06/2012 Kesavulu: #245 [PUNJAB] Text box in 'other free' category -->
+				if (jQuery("#patCatOthersFree").is(":checked")){
 					jQuery("#patCatOthersFree").removeAttr("checked");
+					jQuery("#freeCategory").val("");
+					jQuery("#freeField").hide();
+				}
+				
 			}
 		},
 
@@ -862,8 +933,13 @@
 					jQuery("#patCatSchool").removeAttr("checked");
 				if (jQuery("#patCatCancer").is(":checked"))
 					jQuery("#patCatCancer").removeAttr("checked");
-				if (jQuery("#patCatOthersFree").is(":checked"))
+				<!-- 07/06/2012 Kesavulu: #245 [PUNJAB] Text box in 'other free' category -->
+				if (jQuery("#patCatOthersFree").is(":checked")){
 					jQuery("#patCatOthersFree").removeAttr("checked");
+					jQuery("#freeCategory").val("");
+					jQuery("#freeField").hide();
+				}
+				
 			}
 		},
 
@@ -904,8 +980,13 @@
 					jQuery("#patCatTB").removeAttr("checked");
 				if (jQuery("#patCatCancer").is(":checked"))
 					jQuery("#patCatCancer").removeAttr("checked");
-				if (jQuery("#patCatOthersFree").is(":checked"))
+				<!-- 07/06/2012 Kesavulu: #245 [PUNJAB] Text box in 'other free' category -->
+				if (jQuery("#patCatOthersFree").is(":checked")){
 					jQuery("#patCatOthersFree").removeAttr("checked");
+					jQuery("#freeCategory").val("");
+					jQuery("#freeField").hide();
+				}
+				
 			}
 		},
 
@@ -946,15 +1027,21 @@
 					jQuery("#patCatTB").removeAttr("checked");
 				if (jQuery("#patCatSchool").is(":checked"))
 					jQuery("#patCatSchool").removeAttr("checked");
-				if (jQuery("#patCatOthersFree").is(":checked"))
+				<!-- 07/06/2012 Kesavulu: #245 [PUNJAB] Text box in 'other free' category -->
+				if (jQuery("#patCatOthersFree").is(":checked")){
 					jQuery("#patCatOthersFree").removeAttr("checked");
+					jQuery("#freeCategory").val("");
+					jQuery("#freeField").hide();
+				}
+				
 			}
 		},
 
 		/* CHECK WHEN OTHER CATEGORY IS SELECTED */
 		// 30/04/2012: Marta added for Punjab new categories validation - Bug #177
 		othersFreeCheck : function() {
-			if (jQuery("#patCatOthersFree").is(':checked')) {
+			if (jQuery("#patCatOthersFree").is(':checked')) {	
+				jQuery("#freeField").show();
 				if (jQuery("#bpl").is(":checked")) {
 					jQuery("#bpl").removeAttr("checked");
 					jQuery("#bplNumber").val("");
@@ -990,6 +1077,10 @@
 					jQuery("#patCatSchool").removeAttr("checked");
 				if (jQuery("#patCatCancer").is(":checked"))
 					jQuery("#patCatCancer").removeAttr("checked");
+				
+			}else {
+				jQuery("#freeCategory").val("");
+				jQuery("#freeField").hide();
 			}
 		},
 
@@ -1166,7 +1257,11 @@
 							name="person.attribute.14" value="Ex Servicemen" /> Ex
 							Servicemen</td>
 						<td><input id="patCatOthersFree" type="checkbox"
-							name="person.attribute.14" value="Others Free" /> Other Free</td>
+							name="person.attribute.14" value="Other Free" /> Other Free</td>
+						<!-- 07/06/2012 Kesavulu: #245 [PUNJAB] Text box in 'other free' category -->
+						<td><span id="freeField"> <input id="freeCategory"
+								name="person.attribute.19" /></span></td>
+
 					</tr>
 				</table></td>
 		</tr>
