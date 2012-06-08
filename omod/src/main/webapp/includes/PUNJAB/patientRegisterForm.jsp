@@ -3,6 +3,16 @@
 	border-top: 1px solid lightgrey;
 	padding: 20px;
 }
+
+td.border 
+{
+border-width: 1px;
+border-right: 0px;
+border-bottom: 0px;
+border-color: lightgrey;
+border-style: solid;
+}
+
 </style>
 <script type="text/javascript">
 	jQuery(document).ready(
@@ -1055,6 +1065,8 @@
 				name="patient.name" />
 				<div id="searchbox"></div>
 				<div id="numberOfFoundPatients"></div></td>
+			<td class="cell"><b>ID Number * &nbsp;&nbsp;	<input name="patient.identifier" style="border: none;" /></b></td>
+			
 		</tr>
 		<tr>
 			<td class="cell"><b>Demographics *</b></td>
@@ -1080,11 +1092,75 @@
 						</select></td>
 					</tr>
 				</table></td>
+				<td rowspan="4" class="border">
+					<b>&nbsp;&nbsp;Patient information</b> <br />
+					<b>&nbsp;&nbsp;Patient category</b><br />
+					<table cellspacing="10">
+						<tr>
+							<td><input id="patCatGeneral" type="checkbox"
+								name="person.attribute.14" value="General" /> General</td>
+							<!-- <td><input id="patCatPoor" type="checkbox"
+								name="person.attribute.14" value="Poor" /> Poor</td>  -->
+						</tr>
+						<tr>
+							<td><input id="patCatStaff" type="checkbox"
+								name="person.attribute.14" value="Staff" /> Staff</td>
+							<td><input id="patPunjabGovernmentEmployee" type="checkbox"
+								name="person.attribute.14" value="Punjab Government Employee" />
+								Punjab Government Employee</td>
+						</tr>
+						<tr>
+							<td><input id="rsby" type="checkbox"
+								name="person.attribute.14" value="RSBY" /> RSBY</td>
+							<td><span id="rsbyField">RSBY Number <input
+									id="rsbyNumber" name="person.attribute.11" />
+							</span></td>
+						</tr>
+						<tr>
+							<td><input id="bpl" type="checkbox"
+								name="person.attribute.14" value="BPL" /> BPL</td>
+							<td><span id="bplField">BPL Number <input
+									id="bplNumber" name="person.attribute.10" />
+							</span></td>
+						</tr>
+						<tr>
+							<td><input id="patPensioner" type="checkbox"
+								name="person.attribute.14" value="Pensioner" /> Pensioner</td>
+							<!-- 01/05/2012: Marta, adding a field for ppo number. Feature #181 -->
+							<td><span id="ppoField">PPO Number<input
+									id="ppoNumber" name="person.attribute.17" />
+							</span></td>
+						</tr>
+						<tr>
+							<!-- 30/04/12: Marta, Added categories Antenatal, TB, School, Cancer, Others. - Bug #177 -->
+							<td><input id="patCatAntenatal" type="checkbox"
+								name="person.attribute.14" value="Antenatal" /> Antenatal
+								Patient</td>
+							<td><input id="patCatTB" type="checkbox"
+								name="person.attribute.14" value="TB Patient" /> TB Patient</td>
+						</tr>
+						<tr>
+							<td><input id="patCatSchool" type="checkbox"
+								name="person.attribute.14" value="School" /> School Health
+								Programme</td>
+							<td><input id="patCatCancer" type="checkbox"
+								name="person.attribute.14" value="Cancer" /> Cancer Patient</td>
+						</tr>
+						<tr>
+							<td><input id="patExServicemen" type="checkbox"
+								name="person.attribute.14" value="Ex Servicemen" /> ExServicemen</td>
+							<td><input id="patCatOthersFree" type="checkbox"
+								name="person.attribute.14" value="Other Free" /> Other Free</td>
+							<!-- 07/06/2012 Kesavulu: #245 [PUNJAB] Text box in 'other free' category -->
+							<td><span id="freeField"> <input id="freeCategory"
+									name="person.attribute.19" /></span>
+							</td>
+						</tr> 
+					</table>
+				</td>
 		</tr>
 		<tr>
-			<td class="cell"><b>ID Number *</b></td>
-			<td class="cell"><input name="patient.identifier"
-				style="border: none;" /></td>
+
 		</tr>
 		<tr>
 			<td class="cell"><b>Address</b></td>
@@ -1094,7 +1170,7 @@
 						<!--  01/05/2012: Marta, adding a field for address. Feature #183   -->
 						<td>Postal Address:</td>
 						<td><input id="patientPostalAddress"
-							name="person.attribute.18" style="width: 500px;" /></td>
+							name="person.attribute.18" style="width: 300px;" /></td>
 					</tr>
 					<tr>
 						<td>District:</td>
@@ -1123,9 +1199,8 @@
 				id="patientRelativeName" name="person.attribute.8"
 				style="width: 200px;" />
 			</td>
-		</tr>
-		<tr>
-			<td class="cell"><b>Visit Information</b></td>
+			<!-- -->
+			<b>Visit Information</b> <br />
 			<td class="cell"><b>Referral Information</b><br /> <input
 				type="checkbox" id="referred"
 				onClick="PAGE.toogleReferralInfo(this);" name="patient.referred"
@@ -1148,76 +1223,14 @@
 				</div> <b>OPD Room to Visit: *</b> <select id="opdWard"
 				name="patient.opdWard">
 			</select></td>
+			<!-- -->
 		</tr>
 		<tr>
-			<td valign="top" class="cell"><b>Patient information</b></td>
-			<td class="cell"><b>Patient category</b><br />
-				<table cellspacing="10">
-					<tr>
-						<td><input id="patCatGeneral" type="checkbox"
-							name="person.attribute.14" value="General" /> General</td>
-						<!-- <td><input id="patCatPoor" type="checkbox"
-							name="person.attribute.14" value="Poor" /> Poor</td>  -->
-					</tr>
-					<tr>
-						<td><input id="patCatStaff" type="checkbox"
-							name="person.attribute.14" value="Staff" /> Staff</td>
-						<td><input id="patPunjabGovernmentEmployee" type="checkbox"
-							name="person.attribute.14" value="Punjab Government Employee" />
-							Punjab Government Employee</td>
-					</tr>
-					<tr>
-						<td><input id="rsby" type="checkbox"
-							name="person.attribute.14" value="RSBY" /> RSBY</td>
-						<td><span id="rsbyField">RSBY Number <input
-								id="rsbyNumber" name="person.attribute.11" />
-						</span></td>
-					</tr>
-					<tr>
-						<td><input id="bpl" type="checkbox"
-							name="person.attribute.14" value="BPL" /> BPL</td>
-						<td><span id="bplField">BPL Number <input
-								id="bplNumber" name="person.attribute.10" />
-						</span></td>
-					</tr>
-					<tr>
-						<td><input id="patPensioner" type="checkbox"
-							name="person.attribute.14" value="Pensioner" /> Pensioner</td>
-						<!-- 01/05/2012: Marta, adding a field for ppo number. Feature #181 -->
-						<td><span id="ppoField">PPO Number<input
-								id="ppoNumber" name="person.attribute.17" />
-						</span></td>
-					</tr>
-					<tr>
-						<!-- 30/04/12: Marta, Added categories Antenatal, TB, School, Cancer, Others. - Bug #177 -->
-						<td><input id="patCatAntenatal" type="checkbox"
-							name="person.attribute.14" value="Antenatal" /> Antenatal
-							Patient</td>
-						<td><input id="patCatTB" type="checkbox"
-							name="person.attribute.14" value="TB Patient" /> TB Patient</td>
-					</tr>
-					<tr>
-						<td><input id="patCatSchool" type="checkbox"
-							name="person.attribute.14" value="School" /> School Health
-							Programme</td>
-						<td><input id="patCatCancer" type="checkbox"
-							name="person.attribute.14" value="Cancer" /> Cancer Patient</td>
-					</tr>
-					<tr>
-						<td><input id="patExServicemen" type="checkbox"
-							name="person.attribute.14" value="Ex Servicemen" /> ExServicemen</td>
-						<td><input id="patCatOthersFree" type="checkbox"
-							name="person.attribute.14" value="Other Free" /> Other Free</td>
-						<!-- 07/06/2012 Kesavulu: #245 [PUNJAB] Text box in 'other free' category -->
-						<td><span id="freeField"> <input id="freeCategory"
-								name="person.attribute.19" /></span>
-						</td>
-					</tr> 
-				</table></td>
+			<td colspan="3" style="padding: 0em 30em 0em 30em;">
+				<input type="button" value="Buy New Slip and Save" onclick="PAGE.submit();" />
+				<input type="button" value="Reset" onclick="window.location.href=window.location.href" />
+			</td>
 		</tr>
 	</table>
 </form>
 
-<input type="button" value="Buy New Slip and Save" onclick="PAGE.submit();" />
-<input type="button" value="Reset"
-	onclick="window.location.href=window.location.href" />
