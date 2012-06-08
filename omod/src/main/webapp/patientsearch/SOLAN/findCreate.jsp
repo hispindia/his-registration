@@ -82,7 +82,12 @@
 			<td><b>Gender</b></td>			
 			<td><b>Birthdate</b></td>
 			<td><b>Relative Name</b></td>
-			<td><b>Phone number</b></td>
+			<td><b>Last day of visit</b></td>
+			<!-- June 8th 2012 - Thai Chuong removed Phone Number field to match requirement:
+			 Feature: Search a patient on the basis of last day of visit
+			 UC 7: Advance search of patient
+			 -->
+			<!-- <td><b>Phone number</b></td> -->
 			<td><b>Reprint OPD slip</b></td>
 		</tr>
 		<c:forEach items="${patients}" var="patient" varStatus="varStatus">
@@ -125,13 +130,20 @@
 							out.print(relativeName);
 					%>
                 </td>
-				<td onclick="PATIENTSEARCHRESULT.visit(${patient.patientId});"> 
-                	<%
-						String phoneNumber = patientAttributes.get(16);
-						if(phoneNumber!=null)
-							out.print(phoneNumber);
-					%>
+                <td onclick="PATIENTSEARCHRESULT.visit(${patient.patientId});">
+	                <openmrs:formatDate date="${lastVisitTime[patient.patientId]}"/>              	
                 </td>
+                <!-- June 8th 2012 - Thai Chuong removed Phone Number field to match requirement:
+				 Feature: Search a patient on the basis of last day of visit
+				 UC 7: Advance search of patient
+				 -->
+				<!-- <td onclick="PATIENTSEARCHRESULT.visit(${patient.patientId});"> 
+                	<%
+/* 						String phoneNumber = patientAttributes.get(16);
+						if(phoneNumber!=null)
+							out.print(phoneNumber); */
+					%>
+					</td>  -->
                 <td onclick="PATIENTSEARCHRESULT.reprint(${patient.patientId});"> 
                 	Reprint OPD slip
                 </td>
