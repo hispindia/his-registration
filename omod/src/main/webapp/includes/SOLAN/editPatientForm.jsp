@@ -3,6 +3,24 @@
 	border-top: 1px solid lightgrey;
 	padding: 20px;
 }
+td.border 
+{
+border-width: 1px;
+border-right: 0px;
+border-bottom: 1px;
+border-color: lightgrey;
+border-style: solid;
+}
+
+td.bottom{
+border-width: 1px;
+border-bottom: 1px;
+border-right: 0px;
+border-top: 0px;
+border-left: 0px;
+border-color: lightgrey;
+border-style: solid;
+}
 </style>
 <script type="text/javascript">
 	jQuery(document).ready(
@@ -854,6 +872,7 @@
 			<td valign="top" class="cell"><b>Name *</b></td>
 			<td class="cell"><input id="patientName" name="patient.name"
 				style="width: 300px;" /></td>
+				<td class="cell"><b>ID Number *  &nbsp;&nbsp; <input name="patient.identifier" style="border: none;" /></b></td>
 		</tr>
 		<tr>
 			<td class="cell"><b>Demographics *</b></td>
@@ -878,61 +897,13 @@
 								<option value="F">Female</option>
 						</select></td>
 					</tr>
-				</table>
-			</td>
-		</tr>
-		<tr>
-			<td class="cell"><b>ID Number *</b></td>
-			<td class="cell"><input name="patient.identifier"
-				style="border: none;" /></td>
-		</tr>
-		<tr>
-			<td class="cell"><b>Address</b></td>
-			<td class="cell">
-				<table>
-					<tr>
-						<!--  10/05/2012: Thai Chuong, adding a field for address. Feature #211   -->
-						<td>Postal Address:</td>
-						<td><input id="patientPostalAddress"
-							name="person.attribute.18" style="width: 500px;" /></td>
-					</tr>
-					<tr>
-						<td>District:</td>
-						<td><select id="districts" name="patient.address.district"
-							onChange="PAGE.changeDistrict();" style="width: 200px;">
-						</select></td>
-					</tr>
-					<tr>
-						<td>Tehsil:</td>
-						<td><select id="tehsils" name="patient.address.tehsil"
-							style="width: 200px;">
-						</select></td>
-					</tr>
-				</table>
-			</td>
-		</tr>
-		<tr>
-			<td class="cell"><b>Phone number</b></td>
-			<td class="cell"><input id="patientPhoneNumber"
-				name="person.attribute.16" style="width: 200px;" /></td>
-		</tr>
-		<tr>
-			<td class="cell"><b>Relative Name *</b></td>
-			<td class="cell">
-				<div id="patientRelativeNameSection"></div> <input
-				id="patientRelativeName" name="person.attribute.8"
-				style="width: 200px;" />
-			</td>
-		</tr>
-		<tr>
-			<td valign="top" class="cell"><b>Patient category</b></td>
-			<td class="cell"><!-- <b>Paid Categories		Free Categories</b><br /> -->
-				<table cellspacing="20">
+				</table></td>
+		
+		<td rowspan="2" class="border">
+					<b>&nbsp;&nbsp;Patient information</b> <br />
+					<b>&nbsp;&nbsp;Patient category</b><br />
+					<table cellspacing="10" >
 					<!-- 17/5/2012 Marta: Delete Poor and Government Employee categories for new requirements and reestructure layout #188 -->
-					<tr>
-						<td><b>Paid Categories</b></td>
-						<td><b>Free Categories</b></td>
-					</tr>
 					<tr>
 						<td><input id="patCatGeneral" type="checkbox"
 							name="person.attribute.14" value="General" /> General</td>
@@ -973,11 +944,55 @@
 						<td><span id="freeField"> <input
 								id="freeCategory" name="person.attribute.19" /></span></td>	
 					</tr>
-				</table></td>
+			</table></td>
+		</tr>
+		<tr>
+			<td class="cell"><b>Address</b></td>
+			<td class="cell">
+				<table>
+					<tr>
+						<!--  10/05/2012: Thai Chuong, adding a field for address. Feature #211   -->
+						<td>Postal Address:</td>
+						<td><input id="patientPostalAddress"
+							name="person.attribute.18" style="width: 300px;" /></td>
+					</tr>
+					<tr>
+						<td>District:</td>
+						<td><select id="districts" name="patient.address.district"
+							onChange="PAGE.changeDistrict();" style="width: 200px;">
+						</select></td>
+					</tr>
+					<tr>
+						<td>Tehsil:</td>
+						<td><select id="tehsils" name="patient.address.tehsil"
+							style="width: 200px;">
+						</select></td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+		<tr >
+			<td class="cell"><b>Phone number</b></td>
+			<td class="cell"><input id="patientPhoneNumber"
+				name="person.attribute.16" style="width: 200px;" /></td>
+				<td class="bottom"></td>
+		</tr>
+		<tr>
+			<td class="cell"><b>Relative Name *</b></td>
+			<td class="cell">
+				<div id="patientRelativeNameSection"></div> <input
+				id="patientRelativeName" name="person.attribute.8"
+				style="width: 200px;" />
+			</td>
+		</tr>
+		<tr>
+	
+			<td colspan="3" style="padding: 0em 30em 0em 30em;">
+			<input type="button" value="Save" onclick="PAGE.submit();" />
+			<input type="button" value="Reset"
+			onclick="window.location.href=window.location.href" />
+			</td>
+					
 		</tr>
 	</table>
 </form>
-
-<input type="button" value="Save" onclick="PAGE.submit();" />
-<input type="button" value="Reset"
-	onclick="window.location.href=window.location.href" />
