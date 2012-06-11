@@ -30,9 +30,10 @@
 			jQuery("#opdWard").val(MODEL.observations[6148]);
 			// 28/04/12: Changed MODEL.observations[11] for MODEL.observations[8060] by Marta - Bug #160
 			// 01/05/12: Marta, avoid error from empty string. Bug #180
-			if(!StringUtils.isBlank(MODEL.observations[8060])){
-			jQuery.each(MODEL.observations[8060].split(","), function(index, value){
-				jQuery("input[name=temporary.attribute.8060][value='" + value + "']").attr("checked", "checked");
+			// 11/06/12: Thai Chuong changed from 8060 to 8076
+			if(!StringUtils.isBlank(MODEL.observations[8076])){
+			jQuery.each(MODEL.observations[8076].split(","), function(index, value){
+				jQuery("input[name=temporary.attribute.8076][value='" + value + "']").attr("checked", "checked");
 			});	}	
 			jQuery("#printSlip").hide();
 		} else {
@@ -253,8 +254,9 @@
 					<td colspan="1" valign="top"><b> <font color="red">Temporary Categories: </font></b></td>
 					<td colspan="5">
 						<!-- 28/04/12: Changed MODEL.observations[11] for MODEL.observations[8060] by Marta - Bug #160 -->
-					    <input type="checkbox" name="temporary.attribute.8060" value="MLC"/> MLC <br/>
-						<input type="checkbox" name="temporary.attribute.8060" value="Accident"/> Accident <br/>										
+						<!-- 11/06/12: Thai Chuong changed from 8060 to 8076 -->
+					    <input type="checkbox" name="temporary.attribute.8076" value="MLC"/> MLC <br/>
+						<input type="checkbox" name="temporary.attribute.8076" value="Accident"/> Accident <br/>										
 					</td>
 				</tr>
 				<tr>
