@@ -1103,11 +1103,12 @@ border-style: solid;
 								name="person.attribute.14" value="Poor" /> Poor</td>  -->
 						</tr>
 						<tr>
-							<td><input id="patCatStaff" type="checkbox"
-								name="person.attribute.14" value="Staff" /> Staff</td>
-							<td><input id="patPunjabGovernmentEmployee" type="checkbox"
+							<td><input id="patCatStaff" type="checkbox" hidden
+								name="person.attribute.14" value="Staff" /> <!-- harsh : issue#255 Staff -->
+							<input id="patPunjabGovernmentEmployee" type="checkbox"
 								name="person.attribute.14" value="Punjab Government Employee" />
-								Punjab Government Employee</td>
+								Punjab Government Employee
+								</td>
 						</tr>
 						<tr>
 							<td><input id="rsby" type="checkbox"
