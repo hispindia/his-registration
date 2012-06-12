@@ -423,6 +423,12 @@ border-style: solid;
 				/** CHECK WHEN BPL CATEGORY IS SELECTED */
 				bplCheck : function() {
 					if (jQuery("#bpl").is(':checked')) {
+						// 12/06/2012 - Kesavulu: To load current number. Bug #208
+						if (!StringUtils.isBlank(MODEL.patientAttributes[10])) {
+							jQuery("#patientRegistrationForm").fillForm(
+									"person.attribute.10=="
+											+ MODEL.patientAttributes[10] + "||");
+						}
 						jQuery("#bplField").show();
 						if (jQuery("#patCatGeneral").is(":checked"))
 							jQuery("#patCatGeneral").removeAttr("checked");
@@ -457,6 +463,12 @@ border-style: solid;
 				/** CHECK WHEN RSBY CATEGORY IS SELECTED */
 				rsbyCheck : function() {
 					if (jQuery("#rsby").is(':checked')) {
+						// 12/06/2012 - kESAVULU: To load current number. Bug #208
+						if (!StringUtils.isBlank(MODEL.patientAttributes[11])) {
+							jQuery("#patientRegistrationForm").fillForm(
+									"person.attribute.11=="
+											+ MODEL.patientAttributes[11] + "||");
+						}
 						jQuery("#rsbyField").show();
 						if (jQuery("#patCatGeneral").is(":checked"))
 							jQuery("#patCatGeneral").removeAttr("checked");
@@ -990,8 +1002,7 @@ border-style: solid;
 			<td colspan="3" style="padding: 0em 30em 0em 30em;">
 			<input type="button" value="Save" onclick="PAGE.submit();" />
 			<input type="button" value="Reset"
-			onclick="window.location.href=window.location.href" />
-			</td>
+	onclick="window.location.href=window.location.href" />			</td>
 					
 		</tr>
 	</table>

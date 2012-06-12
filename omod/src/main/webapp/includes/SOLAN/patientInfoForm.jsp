@@ -5,7 +5,29 @@
 		jQuery("#identifier").html(MODEL.patientIdentifier);
 		jQuery("#age").html(MODEL.patientAge);
 		jQuery("#name").html(MODEL.patientName);
-		jQuery("#category").html(MODEL.patientAttributes[14]);
+		
+		// 11/06/12: Kesavulu: added BPL/RSBY number on registration slip Bug #208
+		if(MODEL.patientAttributes[14]){
+			pattern = /[A-Z]+[,][A-Z]/;
+			if(pattern.test(MODEL.patientAttributes[14])){
+
+				jQuery("#BPL").html("BPL No.: " + MODEL.patientAttributes[10]);
+				jQuery("#RSBY").html("RSBY No.: " + MODEL.patientAttributes[11]);
+
+
+			}else{			
+				if("BPL" == MODEL.patientAttributes[14])
+					jQuery("#BPL").html(MODEL.patientAttributes[10]);
+
+				if("RSBY" == MODEL.patientAttributes[14])
+					jQuery("#RSBY").html(MODEL.patientAttributes[11]);
+			
+jQuery("#category").html(MODEL.patientAttributes[14]);
+			}
+								
+		}
+
+
 		jQuery("#phoneNumber").html(MODEL.patientAttributes[16]);
 		jQuery("#gender").html(MODEL.patientGender);
 		jQuery("#datetime").html(MODEL.currentDateTime);
@@ -242,9 +264,17 @@
 					<td colspan="1"><b>Date/Time:</b></td>
 					<td colspan="5"><span id="datetime" /></td>
 				</tr>
+				<!--  11/06/12: Kesavulu: added BPL/RSBY number on registration slip Bug #208 -->
 				<tr>
 					<td colspan="1"><b>Category:</b></td>
-					<td colspan="5"><span id="category" /></td>
+					
+					<td colspan="2"><span id="category" /></td>
+					
+					
+					<td><span id="RSBY" /></td>
+					<td><span id="BPL" /></td>
+					
+					
 				</tr>
 				<tr id="temporaryCategories">
 					<!-- 01/05/12: Marta, Painting Temporary Category in red. Bug #182  -->
