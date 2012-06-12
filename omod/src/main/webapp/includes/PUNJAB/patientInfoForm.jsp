@@ -42,6 +42,8 @@
 		
 		if(MODEL.dueDate.length>0){
 			jQuery("#buySlip").hide();
+		//	harsh 6/12/2012 #244 save button appears when one buys slip!
+			jQuery("#save").show();
 			
 			value = "Validate until " + MODEL.dueDate;
 			if(parseInt(MODEL.daysLeft)>1){
@@ -164,7 +166,7 @@
 				data : ({
 					patientId: MODEL.patientId
 				}),				
-				success : function(data) {										
+				success : function(data) {	
 					window.location.href = window.location.href;
 				},
 				error : function(xhr, ajaxOptions, thrownError) {
@@ -180,12 +182,29 @@
 				return false;
 			};
 			return true;
-		}
+		},
+		
+		<!-- harsh  6/12/2012 #244 added a save button -->
+		/*** SAVE  ***/
+		save: function(){
+			if (PAGE.validate()){
+			jQuery("#patientInfoForm").ajaxSubmit({
+				success: function (responseText, statusText, xhr){
+					if(responseText=="success"){								
+						window.location.href = getContextPath() + "/findPatient.htm";
+					}					
+				}
+			});
+			}
+			}
+
 	};
 </script>
 <input id="printSlip" type="button" value="Print" onClick="PAGE.submit(false);"/>
 <input id="reprint" type="button" value="RePrint" onClick="PAGE.submit(true);"/>
 <input id="buySlip" type="button" value="Buy a new slip" onClick="PAGE.buySlip();"/>
+<!-- harsh  6/12/2012 #244 added a save button; initially hidden only appears when you buy a slip-->
+<input id="save" type="button" value="Save" hidden onClick="PAGE.save();" />
 <span id="validationDate"></span>
 
 <!------------------------------------------------------------------------------------------------------------->
