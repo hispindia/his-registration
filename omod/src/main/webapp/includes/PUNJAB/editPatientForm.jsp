@@ -3,7 +3,6 @@
 	border-top: 1px solid lightgrey;
 	padding: 20px;
 }
-
 td.border {
 	border-width: 1px;
 	border-right: 0px;
@@ -1147,8 +1146,9 @@ border-style: solid;
 			<td valign="top" class="cell"><b>Name *</b></td>
 			<td class="cell"><input id="patientName" name="patient.name"
 				style="width: 300px;" /></td>
-			<td class="cell"><b>ID Number * &nbsp;&nbsp; <input
-					name="patient.identifier" style="border: none;" /></b></td>
+
+				<!--  12/06/2012: Kesavulu: added Screen mock up for registration module[Punjab]- New Requirement #251 -->
+				<td class="cell"><b>ID Number *  &nbsp;&nbsp; <input name="patient.identifier" style="border: none;" /></b></td>	
 		</tr>
 		<tr>
 			<td class="cell"><b>Demographics *</b></td>
@@ -1173,33 +1173,35 @@ border-style: solid;
 								<option value="F">Female</option>
 						</select></td>
 					</tr>
-				</table></td>
-
-			<td rowspan="3" class="border"><b>&nbsp;&nbsp;Patient
-					information</b> <br /> <b>&nbsp;&nbsp;Patient category</b><br />
-				<table cellspacing="10">
+				</table>
+			</td>		
+		<!--  12/06/2012: Kesavulu: added Screen mock up for registration module[Punjab]- New Requirement #251 -->
+		<td rowspan="2" class="border">
+					<!-- <b>&nbsp;&nbsp;Patient information</b> <br /> -->
+					<b>&nbsp;&nbsp;Patient category</b><br />
+					<table cellspacing="10" >
 					<tr>
 						<td><input id="patCatGeneral" type="checkbox"
 							name="person.attribute.14" value="General" /> General</td>
 						<!-- <td><input id="patCatPoor" type="checkbox"
 							name="person.attribute.14" value="Poor" /> Poor</td>  -->
-					</tr>
-					<tr>
-						<td><input id="patCatStaff" type="checkbox" hidden
-							name="person.attribute.14" value="Staff" />  <!-- harsh : issue#255 Staff -->
-						<input id="patPunjabGovernmentEmployee" type="checkbox"
+							<!-- <td><input id="patCatStaff" type="checkbox"
+							name="person.attribute.14" value="Staff" /> Staff</td> -->
+						<td><input id="patPunjabGovernmentEmployee" type="checkbox"
 							name="person.attribute.14" value="Punjab Government Employee" />
-							Punjab Government Employee
-							</td>
-					</tr>
-					<tr>
-						<td><input id="rsby" type="checkbox"
+							Punjab Government Employee</td>
+							<td><input id="rsby" type="checkbox"
 							name="person.attribute.14" value="RSBY" /> RSBY</td>
 						<td><span id="rsbyField">RSBY Number <input
 								id="rsbyNumber" name="person.attribute.11" />
 						</span></td>
-					</tr>
+					</tr>					
 					<tr>
+					 	<td></td>
+					<!-- 30/04/12: Marta, Added categories Antenatal, TB, School, Cancer, Others. - Bug #177 -->
+						<td><input id="patCatAntenatal" type="checkbox"
+							name="person.attribute.14" value="Antenatal" /> Antenatal
+							Patient</td>
 						<td><input id="bpl" type="checkbox"
 							name="person.attribute.14" value="BPL" /> BPL</td>
 						<td><span id="bplField">BPL Number <input
@@ -1207,29 +1209,19 @@ border-style: solid;
 						</span></td>
 					</tr>
 					<tr>
+					<td></td>
+					<td><input id="patCatSchool" type="checkbox"
+							name="person.attribute.14" value="School" /> School Health
+							Programme</td>
 						<td><input id="patPensioner" type="checkbox"
 							name="person.attribute.14" value="Pensioner" /> Pensioner</td>
 						<!-- 01/05/2012: Marta, adding a field for ppo number. Feature #181 -->
 						<td><span id="ppoField">PPO Number<input
 								id="ppoNumber" name="person.attribute.17" />
 						</span></td>
-					</tr>
+					</tr>					
 					<tr>
-						<!-- 30/04/12: Marta, Added categories Antenatal, TB, School, Cancer, Others. - Bug #177 -->
-						<td><input id="patCatAntenatal" type="checkbox"
-							name="person.attribute.14" value="Antenatal" /> Antenatal
-							Patient</td>
-						<td><input id="patCatTB" type="checkbox"
-							name="person.attribute.14" value="TB Patient" /> TB Patient</td>
-					</tr>
-					<tr>
-						<td><input id="patCatSchool" type="checkbox"
-							name="person.attribute.14" value="School" /> School Health
-							Programme</td>
-						<td><input id="patCatCancer" type="checkbox"
-							name="person.attribute.14" value="Cancer" /> Cancer Patient</td>
-					</tr>
-					<tr>
+					<td></td>
 						<td><input id="patExServicemen" type="checkbox"
 							name="person.attribute.14" value="Ex Servicemen" /> Ex
 							Servicemen</td>
@@ -1238,12 +1230,19 @@ border-style: solid;
 						<!-- 07/06/2012 Kesavulu: #245 [PUNJAB] Text box in 'other free' category -->
 						<td><span id="freeField"> <input id="freeCategory"
 								name="person.attribute.19" /></span></td>
-
 					</tr>
-				</table></td>
-
-		</tr>
-		<tr>
+					<tr>
+						<td></td>
+						<td><input id="patCatTB" type="checkbox"
+							name="person.attribute.14" value="TB Patient" /> TB Patient</td>
+					</tr>
+					<tr>
+						<td></td>
+						<td><input id="patCatCancer" type="checkbox"
+							name="person.attribute.14" value="Cancer" /> Cancer Patient</td>
+					</tr>
+				</table>
+			</td>
 
 		</tr>
 		<tr>
@@ -1275,7 +1274,7 @@ border-style: solid;
 			<td class="cell"><b>Phone number</b></td>
 			<td class="cell"><input id="patientPhoneNumber"
 				name="person.attribute.16" style="width: 200px;" /></td>
-					<td class="bottom"></td>
+				<td class="bottom"></td>
 		</tr>
 		<tr>
 			<td class="cell"><b>Relative Name *</b></td>
@@ -1285,13 +1284,12 @@ border-style: solid;
 				style="width: 200px;" />
 			</td>
 		</tr>
+		<!--  12/06/2012: Kesavulu: added Screen mock up for registration module[Punjab]- New Requirement #251 -->
 		<tr>
-
-
-			<td colspan="3" style="padding: 0em 30em 0em 30em;"><input
-				type="button" value="Save" onclick="PAGE.submit();" /> <input
-				type="button" value="Reset"
-				onclick="window.location.href=window.location.href" />
-		</tr>
+			<td colspan="3" style="padding: 0em 30em 0em 30em;">
+			<input type="button" value="Save" onclick="PAGE.submit();" />
+			<input type="button" value="Reset"
+	onclick="window.location.href=window.location.href" /></td>
+			</tr>
 	</table>
 </form>
