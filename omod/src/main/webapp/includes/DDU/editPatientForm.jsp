@@ -46,14 +46,18 @@
 		});
 		
 		// RSBY Number
-		if(!StringUtils.isBlank(MODEL.patientAttributes[11])){
+			/* 13/06/2012 - Kesavulu: Added verification to avoid show old numbers. Bug #230 */ 
+		if(!StringUtils.isBlank(MODEL.patientAttributes[11])
+				&& jQuery("#rsby").attr('checked')){
 			jQuery("#patientRegistrationForm").fillForm("person.attribute.11==" + MODEL.patientAttributes[11] + "||");
 		} else {
 			jQuery("#rsbyField").hide();
 		}
 		
 		// BPL Number
-		if(!StringUtils.isBlank(MODEL.patientAttributes[10])){
+		/* 13/06/2012 - Kesavulu: Added verification to avoid show old numbers. Bug #230 */
+		if(!StringUtils.isBlank(MODEL.patientAttributes[10])
+				&& jQuery("#bpl").attr('checked')){
 			jQuery("#patientRegistrationForm").fillForm("person.attribute.10==" + MODEL.patientAttributes[10] + "||");
 		} else {
 			jQuery("#bplField").hide();
@@ -294,6 +298,12 @@
 		/** CHECK WHEN BPL CATEGORY IS SELECTED */
 		bplCheck: function () {			
 	        if (jQuery("#bpl").is(':checked')) {
+	        	/*  13/06/2012 - Kesavulu: To load current number. Bug #230 */
+	        	if (!StringUtils.isBlank(MODEL.patientAttributes[10])) {
+					jQuery("#patientRegistrationForm").fillForm(
+							"person.attribute.10=="
+									+ MODEL.patientAttributes[10] + "||");
+				}
 	            jQuery("#bplField").show();
 	            if (jQuery("#patCatGeneral").is(":checked")) jQuery("#patCatGeneral").removeAttr("checked");
 	            if (jQuery("#patCatStaff").is(":checked")) {
@@ -310,6 +320,12 @@
 		/** CHECK WHEN RSBY CATEGORY IS SELECTED */
 	    rsbyCheck: function () {
 	        if (jQuery("#rsby").is(':checked')) {
+	        	 /* 13/06/2012 - Kesavulu: To load current number. Bug #230 */
+	        	if (!StringUtils.isBlank(MODEL.patientAttributes[11])) {
+					jQuery("#patientRegistrationForm").fillForm(
+							"person.attribute.11=="
+									+ MODEL.patientAttributes[11] + "||");
+				}
 	            jQuery("#rsbyField").show();
 	            if (jQuery("#patCatGeneral").is(":checked")) jQuery("#patCatGeneral").removeAttr("checked");
 	            if (jQuery("#patCatStaff").is(":checked")) {
