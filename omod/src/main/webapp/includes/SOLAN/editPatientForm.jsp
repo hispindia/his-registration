@@ -912,7 +912,7 @@ border-style: solid;
 				</table></td>
 		
 		<td rowspan="2" class="border">
-					<b>&nbsp;&nbsp;Patient information</b> <br />
+					<!-- <b>&nbsp;&nbsp;Patient information</b> <br /> -->
 					<b>&nbsp;&nbsp;Patient category</b><br />
 					<table cellspacing="10" >
 					<!-- 17/5/2012 Marta: Delete Poor and Government Employee categories for new requirements and reestructure layout #188 -->

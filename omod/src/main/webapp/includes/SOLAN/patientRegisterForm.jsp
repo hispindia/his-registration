@@ -897,7 +897,7 @@ border-style: solid;
 					</tr>
 				    </table></td>
 			<td rowspan="3" class="border">
-					<b>&nbsp;&nbsp;Patient information</b> <br />
+					<!-- <b>&nbsp;&nbsp;Patient information</b> <br /> -->
 					<b>&nbsp;&nbsp;Patient category</b><br />
 					<table cellspacing="10"><!-- <b>Paid Categories		Free Categories</b><br /> -->
 			
@@ -988,7 +988,7 @@ border-style: solid;
 				style="width: 200px;" />
 			</td>
 		
-		<b>Visit Information</b><br />
+		<b>Visit Information</b><br/>
 			<td class="cell"><b>Referral Information</b><br /> <input
 				type="checkbox" id="referred"
 				onClick="PAGE.toogleReferralInfo(this);" name="patient.referred"
