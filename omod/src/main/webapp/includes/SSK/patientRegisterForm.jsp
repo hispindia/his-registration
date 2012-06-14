@@ -408,7 +408,7 @@
 						</td>
 					</tr>
 					<tr>
-						<td>Tehsil:</td>
+						<td>Upazila:</td>
 						<td>
 							<select id="tehsils" name="patient.address.tehsil" style="width:200px;">
 							</select>

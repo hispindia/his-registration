@@ -186,7 +186,7 @@
 <span id="validationDate"></span>
 <div id="patientInfoPrintArea">
 	<center>
-		<img src="${pageContext.request.contextPath}/moduleResources/registration/header.jpg"/>
+		<!--  <img src="${pageContext.request.contextPath}/moduleResources/registration/header.jpg"/>  -->
 		<form id="patientInfoForm" method="POST">	
 			<table class="patientInfoTable" cellspacing="1">			
 				<tr>
@@ -240,5 +240,5 @@
 			</table>
 		</form>
 	</center>	
-	<img src="${pageContext.request.contextPath}/moduleResources/registration/investigations.jpg"/>
+	<!-- <img src="${pageContext.request.contextPath}/moduleResources/registration/investigations.jpg"/> -->
 </div>
