@@ -56,6 +56,7 @@ jQuery("#category").html(MODEL.patientAttributes[14]);
 					jQuery("input[name=temporary.attribute.11][value='" + value + "']").attr("checked", "checked");
 				});	}
 			jQuery("#printSlip").hide();
+			jQuery("#save").hide();
 		} else {
 			jQuery("#reprint").hide();
 		}
