@@ -42,9 +42,10 @@
 		
 		if(MODEL.dueDate.length>0){
 			jQuery("#buySlip").hide();
-		//	harsh 6/12/2012 #244 save button appears when one buys slip!
-			jQuery("#save").show();
-			
+		//	harsh 6/12/2012 #244 save button appears when one buys slip(14/6/2012)-> and reprint is hidden!
+			if (jQuery("#reprint").is(":hidden")) {
+					jQuery("#save").show();
+				}		
 			value = "Validate until " + MODEL.dueDate;
 			if(parseInt(MODEL.daysLeft)>1){
 				value += " (" + MODEL.daysLeft + " days left).";				
