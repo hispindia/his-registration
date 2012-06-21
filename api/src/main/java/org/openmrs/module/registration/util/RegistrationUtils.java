@@ -46,7 +46,6 @@ import org.openmrs.module.hospitalcore.util.PatientUtils;
 public class RegistrationUtils {
 
 	private static Log logger = LogFactory.getLog(RegistrationUtils.class);
-	private static SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
 	/**
 	 * Parse Date
@@ -56,6 +55,7 @@ public class RegistrationUtils {
 	 * @throws ParseException
 	 */
 	public static Date parseDate(String date) throws ParseException {
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		return sdf.parse(date);
 	}
 
@@ -66,6 +66,7 @@ public class RegistrationUtils {
 	 * @return
 	 */
 	public static String formatDate(Date date) {
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		return sdf.format(date);
 	}
 
