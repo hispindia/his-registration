@@ -49,9 +49,9 @@ public class HibernateRegistrationDAO implements RegistrationDAO {
 	
 	private SessionFactory sessionFactory;
 	
-	private static SimpleDateFormat mysqlDateTimeFormatter = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+	private SimpleDateFormat mysqlDateTimeFormatter = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 	
-	private static SimpleDateFormat mysqlDateFormatter = new SimpleDateFormat("yyyy-MM-dd");
+	private SimpleDateFormat mysqlDateFormatter = new SimpleDateFormat("yyyy-MM-dd");
 	
 	private static Log logger = LogFactory.getLog(HibernateRegistrationDAO.class);
 	
