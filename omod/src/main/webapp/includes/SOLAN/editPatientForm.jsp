@@ -393,7 +393,8 @@ border-style: solid;
 							// 15/05/2012: Marta added for Solan new categories validation - Bug #188
 							&& jQuery("#patCatAntenatal").attr('checked') == false
 							&& jQuery("#patCatChildLessThan1yr").attr('checked') == false
-							&& jQuery("#patCatOtherFree").attr('checked') == false) {
+							&& jQuery("#patCatOtherFree").attr('checked') == false
+							&& jQuery("#patCatStaff").attr('checked')== false){
 						alert('You didn\'t choose any of the patient categories!');
 						return false;
 					} else {
