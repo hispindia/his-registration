@@ -166,7 +166,8 @@ public class FindCreatePatientController {
 		
 		// get address
 		if (!StringUtils.isBlank(parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_ADDRESS_DISTRICT))) {
-			patient.addAddress(RegistrationUtils.getPersonAddress(null,
+			patient.addAddress(RegistrationUtils.getPersonAddress(null, 
+				parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_ADDRESS_POSTALADDRESS),
 			    parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_ADDRESS_DISTRICT),
 			    parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_ADDRESS_TEHSIL)));
 		}

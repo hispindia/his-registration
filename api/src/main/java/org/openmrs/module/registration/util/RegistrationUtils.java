@@ -192,22 +192,24 @@ public class RegistrationUtils {
 	 * 
 	 * @param address
 	 *            TODO
+	 * @param postaladdress           
 	 * @param district
 	 * @param tehsil
 	 * @return
 	 */
-	public static PersonAddress getPersonAddress(PersonAddress address,
-			String district, String tehsil) {
+	//26-6-2012 - Marta add postal Addres param. to store the addres in the openmrs person_address table
+		public static PersonAddress getPersonAddress(PersonAddress address, String postalAddress,
+				String district, String tehsil) {
 
-		if (address == null)
-			address = new PersonAddress();
+			if (address == null)
+				address = new PersonAddress();
 
-		address.setAddress1("");
-		address.setCountyDistrict(district);
-		address.setCityVillage(tehsil);
+			address.setAddress1(postalAddress);
+			address.setCountyDistrict(district);
+			address.setCityVillage(tehsil);
 
-		return address;
-	}
+			return address;
+		}
 
 	/**
 	 * Get person attribute

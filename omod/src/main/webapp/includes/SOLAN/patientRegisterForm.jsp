@@ -2,16 +2,15 @@
 .cell {
 	border-top: 1px solid lightgrey;
 	padding: 20px;
-	}
-td.border 
-{
-border-width: 1px;
-border-right: 0px;
-border-bottom: 1px;
-border-color: lightgrey;
-border-style: solid;
 }
 
+td.border {
+	border-width: 1px;
+	border-right: 0px;
+	border-bottom: 1px;
+	border-color: lightgrey;
+	border-style: solid;
+}
 </style>
 <script type="text/javascript">
 	jQuery(document).ready(
@@ -67,7 +66,7 @@ border-style: solid;
 				jQuery("#patCatGeneral").attr("checked", "checked");
 				//17/05/2012 Marta: hide free category description field #188
 				jQuery("#freeField").hide();
-				
+
 				// binding
 				jQuery("#bpl").click(function() {
 					VALIDATORS.bplCheck();
@@ -386,8 +385,8 @@ border-style: solid;
 					// 15/05/2012: Marta added for Solan new categories validation - Bug #188
 					&& jQuery("#patCatAntenatal").attr('checked') == false
 					&& jQuery("#patCatChildLessThan1yr").attr('checked') == false
-					&& jQuery("#patCatOtherFree").attr('checked') == false 
-					&& jQuery("#patCatStaff").attr('checked')== false){
+					&& jQuery("#patCatOtherFree").attr('checked') == false
+					&& jQuery("#patCatStaff").attr('checked') == false) {
 				alert('You didn\'t choose any of the patient categories!');
 				return false;
 			} else {
@@ -437,7 +436,7 @@ border-style: solid;
 				if (jQuery("#patCatChildLessThan1yr").is(":checked"))
 					jQuery("#patCatChildLessThan1yr").removeAttr("checked");
 				//17/05/2012 Marta: Add Free Category text field #188
-				if (jQuery("#patCatOtherFree").is(":checked")){
+				if (jQuery("#patCatOtherFree").is(":checked")) {
 					jQuery("#patCatOtherFree").removeAttr("checked");
 					jQuery("#freeCategory").val("");
 					jQuery("#freeField").hide();
@@ -471,7 +470,7 @@ border-style: solid;
 				if (jQuery("#patCatChildLessThan1yr").is(":checked"))
 					jQuery("#patCatChildLessThan1yr").removeAttr("checked");
 				//17/05/2012 Marta: Add Free Category text field #188
-				if (jQuery("#patCatOtherFree").is(":checked")){
+				if (jQuery("#patCatOtherFree").is(":checked")) {
 					jQuery("#patCatOtherFree").removeAttr("checked");
 					jQuery("#freeCategory").val("");
 					jQuery("#freeField").hide();
@@ -506,7 +505,7 @@ border-style: solid;
 				if (jQuery("#patCatChildLessThan1yr").is(":checked"))
 					jQuery("#patCatChildLessThan1yr").removeAttr("checked");
 				//17/05/2012 Marta: Add Free Category text field #188
-				if (jQuery("#patCatOtherFree").is(":checked")){
+				if (jQuery("#patCatOtherFree").is(":checked")) {
 					jQuery("#patCatOtherFree").removeAttr("checked");
 					jQuery("#freeCategory").val("");
 					jQuery("#freeField").hide();
@@ -515,7 +514,7 @@ border-style: solid;
 				// 26/5/2012 Marta: Changing categories to match with requirements on #240
 				/*if (jQuery("#patCatSeniorCitizen").is(":checked"))
 					jQuery("#patCatSeniorCitizen").removeAttr("checked");
-				*/if (jQuery("#patCatGeneral").is(":checked"))
+				 */if (jQuery("#patCatGeneral").is(":checked"))
 					jQuery("#patCatGeneral").removeAttr("checked");
 			}
 		},
@@ -579,7 +578,7 @@ border-style: solid;
 				if (jQuery("#patCatChildLessThan1yr").is(":checked"))
 					jQuery("#patCatChildLessThan1yr").removeAttr("checked");
 				//17/05/2012 Marta: Add Free Category text field #188
-				if (jQuery("#patCatOtherFree").is(":checked")){
+				if (jQuery("#patCatOtherFree").is(":checked")) {
 					jQuery("#patCatOtherFree").removeAttr("checked");
 					jQuery("#freeCategory").val("");
 					jQuery("#freeField").hide();
@@ -645,27 +644,27 @@ border-style: solid;
 					jQuery("#patCatPoor").removeAttr("checked");
 				if (jQuery("#patCatGovEmp").is(":checked"))
 					jQuery("#patCatGovEmp").removeAttr("checked");*/
-				/*if (jQuery("#patCatGeneral").is(":checked"))
-					jQuery("#patCatGeneral").removeAttr("checked");
-				// 11/05/2012: Thai Chuong added for Solan new categories validation - Bug #188
-				if (jQuery("#patCatAntenatal").is(":checked"))
-					jQuery("#patCatAntenatal").removeAttr("checked");
-				if (jQuery("#patCatChildLessThan1yr").is(":checked"))
-					jQuery("#patCatChildLessThan1yr").removeAttr("checked");
-				//17/05/2012 Marta: Add Free Category text field #188
-				if (jQuery("#patCatOtherFree").is(":checked")){
-					jQuery("#patCatOtherFree").removeAttr("checked");
-					jQuery("#freeCategory").val("");
-					jQuery("#freeField").hide();
-				}
-				// 17/05/2012: Marta added for Solan new categories validation - Bug #188
-				if (jQuery("#patCatStaff").is(":checked"))
-					jQuery("#patCatStaff").removeAttr("checked");
-					if (!VALIDATORS.checkPatientAgeForSeniorCitizen()) {
-					jQuery("#patCatSeniorCitizen").removeAttr("checked");
-				}
-				;
-			}
+		/*if (jQuery("#patCatGeneral").is(":checked"))
+			jQuery("#patCatGeneral").removeAttr("checked");
+		// 11/05/2012: Thai Chuong added for Solan new categories validation - Bug #188
+		if (jQuery("#patCatAntenatal").is(":checked"))
+			jQuery("#patCatAntenatal").removeAttr("checked");
+		if (jQuery("#patCatChildLessThan1yr").is(":checked"))
+			jQuery("#patCatChildLessThan1yr").removeAttr("checked");
+		//17/05/2012 Marta: Add Free Category text field #188
+		if (jQuery("#patCatOtherFree").is(":checked")){
+			jQuery("#patCatOtherFree").removeAttr("checked");
+			jQuery("#freeCategory").val("");
+			jQuery("#freeField").hide();
+		}
+		// 17/05/2012: Marta added for Solan new categories validation - Bug #188
+		if (jQuery("#patCatStaff").is(":checked"))
+			jQuery("#patCatStaff").removeAttr("checked");
+			if (!VALIDATORS.checkPatientAgeForSeniorCitizen()) {
+			jQuery("#patCatSeniorCitizen").removeAttr("checked");
+		}
+		;
+		}
 		},*/
 
 		// 26/5/2012 Marta: Changing categories to match with requirements on #215
@@ -686,22 +685,22 @@ border-style: solid;
 			}
 			return true;
 		},*/
-		
+
 		// 26/5/2012 Marta: Changing categories to match with requirements on #240
-		checkPatientAgeForChildLessThan1yr : function() { 
-		// check whether patient age less than one year
-		estAge = jQuery("#estimatedAge").html();
-		// 6/6/2012 harsh : changed reg ex mapping on bug #243
-		var digitPattern = /year/;
-		var age = digitPattern.exec(estAge);
-		if (age) {
-			if (jQuery("#patCatChildLessThan1yr").is(':checked')) {
-				alert("Child less than one year is only for patient under 1 year!");
-				return false;
+		checkPatientAgeForChildLessThan1yr : function() {
+			// check whether patient age less than one year
+			estAge = jQuery("#estimatedAge").html();
+			// 6/6/2012 harsh : changed reg ex mapping on bug #243
+			var digitPattern = /year/;
+			var age = digitPattern.exec(estAge);
+			if (age) {
+				if (jQuery("#patCatChildLessThan1yr").is(':checked')) {
+					alert("Child less than one year is only for patient under 1 year!");
+					return false;
+				}
 			}
-		}
-		return true;
-	},
+			return true;
+		},
 
 		/*
 		 * Check patient gender
@@ -719,18 +718,18 @@ border-style: solid;
 								'<input type="radio" name="person.attribute.15" value="Daughter of"/> Daughter of <input type="radio" name="person.attribute.15" value="Wife of"/> Wife of');
 			}
 		},
-		
+
 		// 26/5/2012 Marta: Changing categories to match with requirements on #240
-		checkGenderForAntenatal : function() { 
-		// check whether patient age less than one year
-		if (jQuery("#patientGender").val() == "M") {
-			if (jQuery("#patCatAntenatal").is(':checked')) {
-				alert("Antenatal Patient is for Female patients!");
-				return false;
+		checkGenderForAntenatal : function() {
+			// check whether patient age less than one year
+			if (jQuery("#patientGender").val() == "M") {
+				if (jQuery("#patCatAntenatal").is(':checked')) {
+					alert("Antenatal Patient is for Female patients!");
+					return false;
+				}
 			}
-		}
-		return true;
-	},
+			return true;
+		},
 		// 11/05/2012: Thai Chuong added for Solan new categories validation - Bug #188
 		/** CHECK WHEN ANTENATAL PATIENT CATEGORY IS SELECTED */
 		patCatAntenatalCheck : function() {
@@ -756,7 +755,7 @@ border-style: solid;
 				if (jQuery("#patCatChildLessThan1yr").is(":checked"))
 					jQuery("#patCatChildLessThan1yr").removeAttr("checked");
 				//17/05/2012 Marta: Add Free Category text field #188
-				if (jQuery("#patCatOtherFree").is(":checked")){
+				if (jQuery("#patCatOtherFree").is(":checked")) {
 					jQuery("#patCatOtherFree").removeAttr("checked");
 					jQuery("#freeCategory").val("");
 					jQuery("#freeField").hide();
@@ -767,13 +766,13 @@ border-style: solid;
 				// 26/5/2012 Marta: Changing categories to match with requirements on #240
 				/*if (jQuery("#patCatSeniorCitizen").is(":checked"))
 					jQuery("#patCatSeniorCitizen").removeAttr("checked");
-				*/
+				 */
 				if (!VALIDATORS.checkGenderForAntenatal()) {
 					jQuery("#patCatAntenatal").removeAttr("checked");
 				}
 			}
 		},
-		
+
 		/** CHECK WHEN CHILD LESS THAN 1YR CATEGORY IS SELECTED */
 		patCatChildLessThan1yrCheck : function() {
 			if (jQuery("#patCatChildLessThan1yr").is(':checked')) {
@@ -791,14 +790,14 @@ border-style: solid;
 				/*if (jQuery("#patCatPoor").is(":checked"))
 					jQuery("#patCatPoor").removeAttr("checked");
 				if (jQuery("#patCatGovEmp").is(":checked"))
-					jQuery("#patCatGovEmp").removeAttr("checked");*/	
+					jQuery("#patCatGovEmp").removeAttr("checked");*/
 				if (jQuery("#patCatGeneral").is(":checked"))
 					jQuery("#patCatGeneral").removeAttr("checked");
 				// 11/05/2012: Thai Chuong modified for Solan new categories validation - Bug #188
 				if (jQuery("#patCatAntenatal").is(":checked"))
 					jQuery("#patCatAntenatal").removeAttr("checked");
 				//17/05/2012 Marta: Add Free Category text field #188
-				if (jQuery("#patCatOtherFree").is(":checked")){
+				if (jQuery("#patCatOtherFree").is(":checked")) {
 					jQuery("#patCatOtherFree").removeAttr("checked");
 					jQuery("#freeCategory").val("");
 					jQuery("#freeField").hide();
@@ -809,14 +808,14 @@ border-style: solid;
 				// 26/5/2012 Marta: Changing categories to match with requirements on #240
 				/*if (jQuery("#patCatSeniorCitizen").is(":checked"))
 					jQuery("#patCatSeniorCitizen").removeAttr("checked");
-				*/
+				 */
 				if (!VALIDATORS.checkPatientAgeForChildLessThan1yr()) {
 					jQuery("#patCatChildLessThan1yr").removeAttr("checked");
 				}
 				;
 			}
 		},
-	
+
 		/** CHECK WHEN OTHER FREE CATEGORY IS SELECTED */
 		patCatOtherFreeCheck : function() {
 			if (jQuery("#patCatOtherFree").is(':checked')) {
@@ -849,8 +848,8 @@ border-style: solid;
 				// 26/5/2012 Marta: Changing categories to match with requirements on #240
 				// if (jQuery("#patCatSeniorCitizen").is(":checked"))
 				//	jQuery("#patCatSeniorCitizen").removeAttr("checked");
-			
-			}else {
+
+			} else {
 				jQuery("#freeCategory").val("");
 				jQuery("#freeField").hide();
 			}
@@ -864,16 +863,22 @@ border-style: solid;
 <form id="patientRegistrationForm" method="POST">
 	<table cellspacing="0">
 		<tr>
-			<td valign="top" class="cell"><b>Name *</b></td>
+			<td valign="top" class="cell"><b>Name *</b>
+			</td>
 			<td class="cell"><input id="patientName" type="hidden"
 				name="patient.name" />
 				<div id="searchbox"></div>
-				<div id="numberOfFoundPatients"></div></td> 
-				<td class="cell"><b>ID Number * &nbsp;&nbsp;	<input name="patient.identifier" style="border: none;" /></b></td>
+				<div id="numberOfFoundPatients"></div>
+			</td>
+			<td class="cell"><b>ID Number * &nbsp;&nbsp; <input
+					name="patient.identifier" style="border: none;" />
+			</b>
+			</td>
 
 		</tr>
 		<tr>
-			<td class="cell"><b>Demographics *</b></td>
+			<td class="cell"><b>Demographics *</b>
+			</td>
 			<td class="cell">dd/mm/yyyy<br />
 				<table>
 					<tr>
@@ -882,34 +887,41 @@ border-style: solid;
 						<td>Gender</td>
 					</tr>
 					<tr>
-						<td><span id="estimatedAge" /></td>
+						<td><span id="estimatedAge" />
+						</td>
 						<td><input type="hidden" id="calendar" /> <input
 							id="birthdate" name="patient.birthdate" /> <img
 							id="calendarButton"
 							src="moduleResources/registration/calendar.gif" /> <input
 							id="birthdateEstimated" type="hidden"
-							name="patient.birthdateEstimate" value="true" /></td>
+							name="patient.birthdateEstimate" value="true" />
+						</td>
 						<td><select id="patientGender" name="patient.gender">
 								<option value="Any"></option>
 								<option value="M">Male</option>
 								<option value="F">Female</option>
-						</select></td>
+						</select>
+						</td>
 					</tr>
-				    </table></td>
+				</table>
+			</td>
 			<td rowspan="3" class="border">
-					<!-- <b>&nbsp;&nbsp;Patient information</b> <br /> -->
-					<b>&nbsp;&nbsp;Patient category</b><br />
-					<table cellspacing="10"><!-- <b>Paid Categories		Free Categories</b><br /> -->
-			
+				<!-- <b>&nbsp;&nbsp;Patient information</b> <br /> --> <b>&nbsp;&nbsp;Patient
+					category</b><br />
+				<table cellspacing="10">
+					<!-- <b>Paid Categories		Free Categories</b><br /> -->
+
 					<!-- 17/5/2012 Marta: Delete Poor and Government Employee categories for new requirements and reestructure layout #188 -->
-					
+
 					<tr>
 						<td><input id="patCatGeneral" type="checkbox"
 							name="person.attribute.14" value="General" /> General</td>
 						<td><input id="rsby" type="checkbox"
 							name="person.attribute.14" value="RSBY" /> RSBY</td>
 						<td><span id="rsbyField">RSBY Number <input
-								id="rsbyNumber" name="person.attribute.11" /></span></td>
+								id="rsbyNumber" name="person.attribute.11" />
+						</span>
+						</td>
 					</tr>
 					<tr>
 						<td><input id="patCatStaff" type="checkbox"
@@ -917,78 +929,88 @@ border-style: solid;
 						<td><input id="bpl" type="checkbox"
 							name="person.attribute.14" value="BPL" /> BPL</td>
 						<td><span id="bplField">BPL Number <input
-								id="bplNumber" name="person.attribute.10" /></span></td>
+								id="bplNumber" name="person.attribute.10" />
+						</span>
+						</td>
 					</tr>
 					<tr>
 						<!-- 26/5/2012 Marta: Changing categories to match with requirements on #240 
 						<td><input id="patCatSeniorCitizen" type="checkbox"
 							name="person.attribute.14" value="Senior Citizen" /> Senior
-							Citizen</td> --> 
+							Citizen</td> -->
 						<!-- 11/05/12: Thai Chuong, Added categories Antenatal, Child Less Than 1yr, Other Free. - Bug #188 -->
 						<td></td>
 						<td><input id="patCatAntenatal" type="checkbox"
-							name="person.attribute.14" value="Antenatal" /> Antenatal Patient</td>
+							name="person.attribute.14" value="Antenatal" /> Antenatal
+							Patient</td>
 					</tr>
 					<tr>
 						<td></td>
 						<td><input id="patCatChildLessThan1yr" type="checkbox"
-							name="person.attribute.14" value="Child Less Than 1yr" /> Child Less Than 1yr</td>
+							name="person.attribute.14" value="Child Less Than 1yr" /> Child
+							Less Than 1yr</td>
 					</tr>
 					<tr>
 						<td></td>
 						<td><input id="patCatOtherFree" type="checkbox"
 							name="person.attribute.14" value="Other Free" /> Other Free</td>
 						<!-- 17/5/2012 Marta: Add text field to capture the free category description #188 -->
-						<td><span id="freeField"> <input
-								id="freeCategory" name="person.attribute.19" /></span>
-								</td>	
-					</tr>			
-			</table>
-	</td>
+						<td><span id="freeField"> <input id="freeCategory"
+								name="person.attribute.19" />
+						</span></td>
+					</tr>
+				</table></td>
 		</tr>
-		
+
 		<tr>
 		</tr>
-		
+
 		<tr>
-			<td class="cell"><b>Address</b></td>
+			<td class="cell"><b>Address</b>
+			</td>
 			<td class="cell">
 				<table>
 					<tr>
 						<!--  10/05/2012: Thai Chuong, adding a field for address. Feature #211   -->
 						<td>Postal Address:</td>
-						<td><input id="patientPostalAddress"
-							name="person.attribute.18" style="width: 300px;" /></td>
+						<td> <!-- <input id="patientPostalAddress" name="person.attribute.18" style="width: 300px;" />  -->
+						<!-- 26-6-2012 Marta - to store address in the openmrs patient_address table-->
+							<input id="patientPostalAddress" name="patient.address.postalAddress" style="width: 300px;" />
+						</td>
 					</tr>
 					<tr>
 						<td>District:</td>
 						<td><select id="districts" name="patient.address.district"
 							onChange="PAGE.changeDistrict();" style="width: 200px;">
-						</select></td>
+						</select>
+						</td>
 					</tr>
 					<tr>
 						<td>Tehsil:</td>
 						<td><select id="tehsils" name="patient.address.tehsil"
 							style="width: 200px;">
-						</select></td>
+						</select>
+						</td>
 					</tr>
-				</table>
+				</table></td>
+		</tr>
+		<tr>
+			<td class="cell"><b>Phone number</b>
+			</td>
+			<td class="cell"><input id="patientPhoneNumber"
+				name="person.attribute.16" style="width: 200px;" />
 			</td>
 		</tr>
 		<tr>
-			<td class="cell"><b>Phone number</b></td>
-			<td class="cell"><input id="patientPhoneNumber"
-				name="person.attribute.16" style="width: 200px;" /></td>
-		</tr>
-		<tr>
-			<td class="cell"><b>Relative Name *</b></td>
+			<td class="cell"><b>Relative Name *</b>
+			</td>
 			<td class="cell">
 				<div id="patientRelativeNameSection"></div> <input
 				id="patientRelativeName" name="person.attribute.8"
-				style="width: 200px;" />
-			</td>
-		
-		<b>Visit Information</b><br/>
+				style="width: 200px;" /></td>
+
+			<b>Visit Information</b>
+			<br />
 			<td class="cell"><b>Referral Information</b><br /> <input
 				type="checkbox" id="referred"
 				onClick="PAGE.toogleReferralInfo(this);" name="patient.referred"
@@ -999,30 +1021,29 @@ border-style: solid;
 							<td>Referred From</td>
 							<td><select id="referralHospitals"
 								name="patient.referred.from" style="width: 200px;">
-							</select></td>
+							</select>
+							</td>
 						</tr>
 						<tr>
 							<td>Referral Type</td>
 							<td><select id="referralReasons"
 								name="patient.referred.reason" style="width: 200px;">
-							</select></td>
+							</select>
+							</td>
 						</tr>
 					</table>
 				</div> <b>OPD Room to Visit: *</b> <select id="opdWard"
 				name="patient.opdWard">
-			</select></td>
-			
-			
-			</tr>
-		<tr>
-			<td colspan="3" style="padding: 0em 30em 0em 30em;">
+			</select>
+			</td>
 
-<input type="button" value="Save" onclick="PAGE.submit();" />
-<input type="button" value="Reset"
-	onclick="window.location.href=window.location.href" />
-	
-		</td>
+
+		</tr>
+		<tr>
+			<td colspan="3" style="padding: 0em 30em 0em 30em;"><input
+				type="button" value="Save" onclick="PAGE.submit();" /> <input
+				type="button" value="Reset"
+				onclick="window.location.href=window.location.href" /></td>
 		</tr>
 	</table>
 </form>
-	

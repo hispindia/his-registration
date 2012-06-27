@@ -1182,8 +1182,10 @@ border-style: solid;
 					<tr>
 						<!--  01/05/2012: Marta, adding a field for address. Feature #183   -->
 						<td>Postal Address:</td>
-						<td><input id="patientPostalAddress"
-							name="person.attribute.18" style="width: 300px;" /></td>
+						<td> <!-- <input id="patientPostalAddress" name="person.attribute.18" style="width: 300px;" />  -->
+						<!-- 26-6-2012 Marta - to store address in the openmrs patient_address table-->
+							<input id="patientPostalAddress" name="patient.address.postalAddress" style="width: 300px;" />
+						</td>
 					</tr>
 					<tr>
 						<td>District:</td>

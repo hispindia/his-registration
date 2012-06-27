@@ -49,16 +49,24 @@ border-style: solid;
 							+ MODEL.patientAttributes[16] + "||";
 				}
 				// 01/05/2012 - Marta. Fix bug #184
-				if (!StringUtils.isBlank(MODEL.patientAttributes[18])) {
+				/*if (!StringUtils.isBlank(MODEL.patientAttributes[18])) {
 					formValues += "person.attribute.18=="
 							+ MODEL.patientAttributes[18] + "||";
-				}
+				}*/
+				
 				<!-- 07/06/2012 Kesavulu: #245 [PUNJAB] Text box in 'other free' category -->
 				if (!StringUtils.isBlank(MODEL.patientAttributes[19])) {
 					formValues += "person.attribute.19=="
 							+ MODEL.patientAttributes[19] + "||";
 				}
 				
+				// Set value for address 
+				// 26-6-2012 Marta - to store address in the openmrs patient_address table #289
+				addressParts = MODEL.patientAddress.split(',');
+				formValues += "patient.address.postalAddress==" + StringUtils.trim(addressParts[0]) + "||";
+				jQuery("#districts").val(StringUtils.trim(addressParts[2]));
+				PAGE.changeDistrict();
+				jQuery("#tehsils").val(StringUtils.trim(addressParts[1]));
 
 				jQuery("#patientRegistrationForm").fillForm(formValues);
 				PAGE.checkBirthDate();
@@ -67,11 +75,6 @@ border-style: solid;
 						"person.attribute.15==" + MODEL.patientAttributes[15]
 								+ "||");
 
-				// Set value for address
-				addressParts = MODEL.patientAddress.split(',');
-				jQuery("#districts").val(StringUtils.trim(addressParts[1]));
-				PAGE.changeDistrict();
-				jQuery("#tehsils").val(StringUtils.trim(addressParts[0]));
 
 				/* Set Value For Attributes */
 				// Patient Category
@@ -1252,8 +1255,10 @@ border-style: solid;
 					<tr>
 						<!--  01/05/2012: Marta, adding a field for address. Feature #183   -->
 						<td>Postal Address:</td>
-						<td><input id="patientPostalAddress"
-							name="person.attribute.18" style="width: 300px;" /></td>
+						<td> <!-- <input id="patientPostalAddress" name="person.attribute.18" style="width: 300px;" />  -->
+						<!-- 26-6-2012 Marta - to store address in the openmrs patient_address table #289-->
+							<input id="patientPostalAddress" name="patient.address.postalAddress" style="width: 300px;" />
+						</td>
 					</tr>
 					<tr>
 						<td>District:</td>
