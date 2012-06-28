@@ -58,9 +58,9 @@ border-style: solid;
 				
 				
 				// 17/5/2012 Marta: Add Other Free Category text field #188
-				if (!StringUtils.isBlank(MODEL.patientAttributes[19])) {
-					formValues += "person.attribute.19=="
-							+ MODEL.patientAttributes[19] + "||";
+				if (!StringUtils.isBlank(MODEL.patientAttributes[18])) {
+					formValues += "person.attribute.18=="
+							+ MODEL.patientAttributes[18] + "||";
 				}
 				
 				// Set value for address 
@@ -110,11 +110,11 @@ border-style: solid;
 				
 				// 17/5/2012 Marta: Add Other Free Category text field #188
 				// Free Field
-				if (!StringUtils.isBlank(MODEL.patientAttributes[19])
+				if (!StringUtils.isBlank(MODEL.patientAttributes[18])
 						&& jQuery("#patCatOtherFree").attr('checked')) {
 					jQuery("#patientRegistrationForm").fillForm(
-							"person.attribute.19=="
-									+ MODEL.patientAttributes[19] + "||");
+							"person.attribute.18=="
+									+ MODEL.patientAttributes[18] + "||");
 				} else {
 					jQuery("#freeField").hide();
 				}
@@ -960,7 +960,7 @@ border-style: solid;
 							name="person.attribute.14" value="Other Free" /> Other Free</td>
 						<!-- 17/5/2012 Marta: Add text field to capture the free category description #188 -->
 						<td><span id="freeField"> <input
-								id="freeCategory" name="person.attribute.19" /></span></td>	
+								id="freeCategory" name="person.attribute.18" /></span></td>	
 					</tr>
 			</table></td>
 		</tr>

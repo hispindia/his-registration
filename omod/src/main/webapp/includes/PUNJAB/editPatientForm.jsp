@@ -48,16 +48,11 @@ border-style: solid;
 					formValues += "person.attribute.16=="
 							+ MODEL.patientAttributes[16] + "||";
 				}
-				// 01/05/2012 - Marta. Fix bug #184
-				/*if (!StringUtils.isBlank(MODEL.patientAttributes[18])) {
+								
+				<!-- 07/06/2012 Kesavulu: #245 [PUNJAB] Text box in 'other free' category -->
+				if (!StringUtils.isBlank(MODEL.patientAttributes[18])) {
 					formValues += "person.attribute.18=="
 							+ MODEL.patientAttributes[18] + "||";
-				}*/
-				
-				<!-- 07/06/2012 Kesavulu: #245 [PUNJAB] Text box in 'other free' category -->
-				if (!StringUtils.isBlank(MODEL.patientAttributes[19])) {
-					formValues += "person.attribute.19=="
-							+ MODEL.patientAttributes[19] + "||";
 				}
 				
 				// Set value for address 
@@ -119,11 +114,11 @@ border-style: solid;
 				}
 				<!-- 07/06/2012 Kesavulu: #245 [PUNJAB] Text box in 'other free' category -->
 				// Free Field
-				if (!StringUtils.isBlank(MODEL.patientAttributes[19])
+				if (!StringUtils.isBlank(MODEL.patientAttributes[18])
 						&& jQuery("#patCatOthersFree").attr('checked')) {
 					jQuery("#patientRegistrationForm").fillForm(
-							"person.attribute.19=="
-									+ MODEL.patientAttributes[19] + "||");
+							"person.attribute.18=="
+									+ MODEL.patientAttributes[18] + "||");
 				} else {
 					jQuery("#freeField").hide();
 				}
@@ -1232,7 +1227,7 @@ border-style: solid;
 							name="person.attribute.14" value="Other Free" /> Other Free</td>
 						<!-- 07/06/2012 Kesavulu: #245 [PUNJAB] Text box in 'other free' category -->
 						<td><span id="freeField"> <input id="freeCategory"
-								name="person.attribute.19" /></span></td>
+								name="person.attribute.18" /></span></td>
 					</tr>
 					<tr>
 						<td></td>

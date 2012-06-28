@@ -1155,7 +1155,7 @@ border-style: solid;
 								name="person.attribute.14" value="Other Free" /> Other Free</td>
 							<!-- 07/06/2012 Kesavulu: #245 [PUNJAB] Text box in 'other free' category -->
 							<td><span id="freeField"> <input id="freeCategory"
-									name="person.attribute.19" /></span>
+									name="person.attribute.18" /></span>
 							</td>
 						</tr> 
 						<tr>

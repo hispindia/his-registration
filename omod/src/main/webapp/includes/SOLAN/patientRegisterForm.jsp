@@ -956,7 +956,7 @@ td.border {
 							name="person.attribute.14" value="Other Free" /> Other Free</td>
 						<!-- 17/5/2012 Marta: Add text field to capture the free category description #188 -->
 						<td><span id="freeField"> <input id="freeCategory"
-								name="person.attribute.19" />
+								name="person.attribute.18" />
 						</span></td>
 					</tr>
 				</table></td>
