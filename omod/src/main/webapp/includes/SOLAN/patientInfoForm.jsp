@@ -48,11 +48,15 @@ jQuery("#category").html(MODEL.patientAttributes[14]);
 		
 		// Set data for reprint page
 		if(MODEL.reprint=="true"){
-			jQuery("#opdWard").val(MODEL.observations[3]);
+			var opdWardId=MODEL.opdWardId;
+		jQuery("#opdWard").val(MODEL.observations[opdWardId]);
 			// 26/05/12: Marta, avoid error from empty string. Bug #219
-
-			if(!StringUtils.isBlank(MODEL.observations[11])){
-				jQuery.each(MODEL.observations[11].split(","), function(index, value){
+		
+			// 2/7/2012: harsh removed dependency on hardcoded id for temp cat and opd ward.
+			var tempCategoryId=MODEL.tempCategoryId;
+			if(!StringUtils.isBlank(MODEL.observations[tempCategoryId])){
+			
+				jQuery.each(MODEL.observations[tempCategoryId].split(","), function(index, value){
 					jQuery("input[name=temporary.attribute.11][value='" + value + "']").attr("checked", "checked");
 				});	}
 			jQuery("#printSlip").hide();

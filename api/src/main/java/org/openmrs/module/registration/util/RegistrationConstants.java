@@ -70,5 +70,7 @@ public class RegistrationConstants {
 	public static final String CONCEPT_NAME_PATIENT_REFERRED_FROM = "PATIENT REFERRED FROM";
 	public static final String CONCEPT_NEW_PATIENT = "New Patient";
 	public static final String CONCEPT_REVISIT = "Revisit";
+	// harsh 2/7/2012 adding property for temp category
+	public static final String CONCEPT_NAME_TEMPORARY_CATEGORY = "TEMPORARY CATEGORY";
 
 }

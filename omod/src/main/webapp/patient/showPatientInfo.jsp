@@ -51,7 +51,9 @@
 		OPDs: "${OPDs}",
 		dueDate: "${dueDate}",
 		daysLeft: "${daysLeft}",
-		reprint: "${param.reprint eq 'true'}"
+		reprint: "${param.reprint eq 'true'}",
+		tempCategoryId: "${tempCategoryId}",
+		opdWardId: "${opdWardId}"
 	};
 </script>
 

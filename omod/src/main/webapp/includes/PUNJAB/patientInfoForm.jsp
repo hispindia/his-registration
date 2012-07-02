@@ -27,15 +27,22 @@
 		// Set data for reprint page
 		if(MODEL.reprint=="true"){
 			// 28/04/12: Changed MODEL.observations[3] for MODEL.observations[6148] by Marta - Bug #161
+
+			var opdWardId=MODEL.opdWardId;
+			jQuery("#opdWard").val(MODEL.observations[opdWardId]);
+
 			jQuery("#opdWard").val(MODEL.observations[6148]);	
 			// 15/06/2012 OPD & Temp Categories appear and disable on reprint page by Kesavulu - Support #263
 			jQuery("#opdWard").attr("disabled", "disabled");
 			jQuery("input[name='temporary.attribute.8076']").attr("disabled", "disabled");
+
 			// 28/04/12: Changed MODEL.observations[11] for MODEL.observations[8060] by Marta - Bug #160
 			// 01/05/12: Marta, avoid error from empty string. Bug #180
 			// 11/06/12: Thai Chuong changed from 8060 to 8076
-			if(!StringUtils.isBlank(MODEL.observations[8076])){
-			jQuery.each(MODEL.observations[8076].split(","), function(index, value){
+			// 2/7/2012: harsh: removed dependency on hardcoded id for temp category and opd ward.
+			var tempCategoryId=MODEL.tempCategoryId;
+			if(!StringUtils.isBlank(MODEL.observations[tempCategoryId])){
+			jQuery.each(MODEL.observations[tempCategoryId].split(","), function(index, value){
 				jQuery("input[name=temporary.attribute.8076][value='" + value + "']").attr("checked", "checked");
 			});	}	
 			jQuery("#printSlip").hide();

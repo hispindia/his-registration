@@ -117,7 +117,13 @@ public class ShowPatientInfoController {
 			Encounter encounter = Context.getService(RegistrationService.class).getLastEncounter(patient);
 			if (encounter != null) {
 				Map<Integer, String> observations = new HashMap<Integer, String>();
+			
 				for (Obs obs : encounter.getAllObs()) {
+					if (obs.getConcept().getDisplayString().equalsIgnoreCase(RegistrationConstants.CONCEPT_NAME_TEMPORARY_CATEGORY)){
+						model.addAttribute("tempCategoryId", obs.getConcept().getConceptId());
+					}else if (obs.getConcept().getDisplayString().equalsIgnoreCase(RegistrationConstants.CONCEPT_NAME_OPD_WARD)){
+						model.addAttribute("opdWardId", obs.getConcept().getConceptId());
+					}
 					observations.put(obs.getConcept().getConceptId(), ObsUtils.getValueAsString(obs));
 				}
 				model.addAttribute("observations", observations);
@@ -195,7 +201,9 @@ public class ShowPatientInfoController {
 				String[] parts = name.split("\\.");
 				String idText = parts[parts.length - 1];
 				Integer id = Integer.parseInt(idText);
-				Concept temporaryAttributeConcept = Context.getConceptService().getConcept(id);
+			Concept tempCatConcept=	Context.getConceptService().getConceptByName("TEMPORARY CATEGORY");
+				
+			Concept temporaryAttributeConcept = Context.getConceptService().getConcept(tempCatConcept.getConceptId());
 				Obs temporaryAttribute = new Obs();
 				temporaryAttribute.setConcept(temporaryAttributeConcept);
 				logger.info("concept: " + temporaryAttributeConcept);
