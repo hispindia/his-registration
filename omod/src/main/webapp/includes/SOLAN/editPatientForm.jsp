@@ -712,12 +712,26 @@ border-style: solid;
 				},*/
 				
 				// 26/5/2012 Marta: Changing categories to match with requirements on #240
-				checkPatientAgeForChildLessThan1yr : function() { 
+				/* checkPatientAgeForChildLessThan1yr : function() { 
 				// check whether patient age less than one year
 				estAge = jQuery("#estimatedAge").html();
 				var digitPattern = /[0-9]+/;
 				var age = digitPattern.exec(estAge);
 				if (age > 1) {
+					if (jQuery("#patCatChildLessThan1yr").is(':checked')) {
+						alert("Child less than one year is only for patient under 1 year!");
+						return false;
+					}
+				}
+				return true;
+			}, */
+			// 02/07/2012 Kesavulu: Changing categories to match with requirements on #291
+			checkPatientAgeForChildLessThan1yr : function() { 
+				// check whether patient age less than one year
+				estAge = jQuery("#estimatedAge").html();				
+				var digitPattern = /year/;
+				var age = digitPattern.exec(estAge);
+				if (age) {
 					if (jQuery("#patCatChildLessThan1yr").is(':checked')) {
 						alert("Child less than one year is only for patient under 1 year!");
 						return false;
