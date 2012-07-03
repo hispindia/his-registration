@@ -327,9 +327,11 @@ border-style: solid;
 				alert("Please enter relative name");
 				return false;
 			} else {
-				if (jQuery("#patientRegistrationForm input[name=person.attribute.15]:checked").length == 0) {
-					alert("Please select relative name type");
-					return false;
+				if (jQuery("#patientGender").val() == "M"||jQuery("#patientGender").val() == "F") {
+					if (jQuery("#patientRegistrationForm input[name=person.attribute.15]:checked").length == 0) {
+						alert("Please select relative name type");
+						return false;
+					}
 				}
 			}
 
@@ -1046,7 +1048,7 @@ border-style: solid;
 				jQuery("#patientRelativeNameSection")
 						.html(
 								'<input type="radio" name="person.attribute.15" value="Son of" checked="checked"/> Son of');
-			} else {
+			} else if(jQuery("#patientGender").val() == "F"){
 				jQuery("#patientRelativeNameSection")
 						.html(
 								'<input type="radio" name="person.attribute.15" value="Daughter of"/> Daughter of <input type="radio" name="person.attribute.15" value="Wife of"/> Wife of');
@@ -1091,6 +1093,7 @@ border-style: solid;
 								<option value="Any"></option>
 								<option value="M">Male</option>
 								<option value="F">Female</option>
+								<option value="O">Others</option>
 						</select></td>
 					</tr>
 				</table></td>

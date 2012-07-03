@@ -59,8 +59,10 @@ public class PatientModel {
 		
 		if (patient.getGender().equalsIgnoreCase("M")) {
 			setGender("Male");
-		} else {
+		} else if(patient.getGender().equalsIgnoreCase("F")){
 			setGender("Female");
+		} else if(patient.getGender().equalsIgnoreCase("O")){
+			setGender("Others");
 		}
 		
 		setAddress(patient.getPersonAddress().getAddress1() + ", " + 
