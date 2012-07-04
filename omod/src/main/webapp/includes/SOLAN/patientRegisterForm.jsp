@@ -718,6 +718,10 @@ td.border {
 				jQuery("#patientRelativeNameSection")
 						.html(
 								'<input type="radio" name="person.attribute.15" value="Daughter of"/> Daughter of <input type="radio" name="person.attribute.15" value="Wife of"/> Wife of');
+			}else if(jQuery("#patientGender").val() == "O"){
+				jQuery("#patientRelativeNameSection")
+				.html(
+				'<input hidden type="radio" name="person.attribute.15" value="Relative of" checked="checked"/>');
 			}
 		},
 
