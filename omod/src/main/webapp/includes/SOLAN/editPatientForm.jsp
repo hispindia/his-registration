@@ -750,10 +750,14 @@ border-style: solid;
 						jQuery("#patientRelativeNameSection")
 								.html(
 										'<input type="radio" name="person.attribute.15" value="Son of" checked="checked"/> Son of');
-					} else {
+					} else if(jQuery("#patientGender").val() == "F"){
 						jQuery("#patientRelativeNameSection")
 								.html(
 										'<input type="radio" name="person.attribute.15" value="Daughter of"/> Daughter of <input type="radio" name="person.attribute.15" value="Wife of"/> Wife of');
+					}else if(jQuery("#patientGender").val() == "O"){
+						jQuery("#patientRelativeNameSection")
+						.html(
+						'<input hidden type="radio" name="person.attribute.15" value="Relative of" checked="checked"/>');
 					}
 				},
 				
@@ -927,6 +931,7 @@ border-style: solid;
 								<option value="Any"></option>
 								<option value="M">Male</option>
 								<option value="F">Female</option>
+								<option value="O">Others</option>
 						</select></td>
 					</tr>
 				</table></td>
