@@ -876,7 +876,7 @@ td.border {
 				<div id="searchbox"></div>
 				<div id="numberOfFoundPatients"></div>
 			</td>
-			<td class="cell"><b>ID Number * &nbsp;&nbsp; <input
+			<td class="cell"><b>ID Number * &nbsp;&nbsp; <input readonly
 					name="patient.identifier" style="border: none;" />
 			</b>
 			</td>

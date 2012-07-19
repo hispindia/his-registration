@@ -1073,7 +1073,7 @@ border-style: solid;
 				<div id="numberOfFoundPatients"></div></td>
 
 				<!--  12/06/2012: Kesavulu: added Screen mock up for registration module[Punjab]- New Requirement #251 -->
-			<td class="cell"><b>ID Number * &nbsp;&nbsp;	<input name="patient.identifier" style="border: none;" /></b></td>
+			<td class="cell"><b>ID Number * &nbsp;&nbsp;	<input readonly name="patient.identifier" style="border: none;" /></b></td>
 			
 		</tr>
 		<tr>

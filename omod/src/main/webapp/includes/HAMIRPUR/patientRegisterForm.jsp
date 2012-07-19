@@ -473,7 +473,7 @@
 		</tr>		
 		<tr>
 			<td class="cell"><b>ID Number *</b></td>
-			<td class="cell"><input name="patient.identifier" style="border: none;"/></td>
+			<td class="cell"><input readonly name="patient.identifier" style="border: none;"/></td>
 		</tr>
 		<tr>
 			<td class="cell"><b>Address</b></td>
