@@ -229,8 +229,10 @@ jQuery("#category").html(MODEL.patientAttributes[14]);
 	onClick="PAGE.submit(true);" />
 <input id="buySlip" type="button" value="Buy a new slip"
 	onClick="PAGE.buySlip();" />
+<%-- ghanshyam 13-sept-2012 Bug #359 [REGISTRATION] Duplication of revisit patients when saving.Duplication of data being happen in "encounter" table 
+     and "opd_patient_queue" table --%>	
 <input id="save" type="button" value="Save" 
-	onClick="PAGE.save();" />
+	onClick="PAGE.save();this.disabled='true';return true;" />
 <span id="validationDate"></span>
 <div id="patientInfoPrintArea">
 	<center>
