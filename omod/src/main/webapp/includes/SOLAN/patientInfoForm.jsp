@@ -144,6 +144,12 @@ jQuery("#category").html(MODEL.patientAttributes[14]);
 		// harsh #244 Added a save button.
 		save: function(){
 			if (PAGE.validate()){
+			<%-- ghanshyam 13-sept-2012 Bug #359 [REGISTRATION] Duplication of revisit patients when saving.Duplication of data being happen in "encounter" table 
+                 and "opd_patient_queue" table --%>	
+			var save=document.getElementById("save");
+			if(save==save){
+			document.getElementById("save").disabled = true;
+			}
 			jQuery("#patientInfoForm").ajaxSubmit({
 				success: function (responseText, statusText, xhr){
 					if(responseText=="success"){						
@@ -229,10 +235,8 @@ jQuery("#category").html(MODEL.patientAttributes[14]);
 	onClick="PAGE.submit(true);" />
 <input id="buySlip" type="button" value="Buy a new slip"
 	onClick="PAGE.buySlip();" />
-<%-- ghanshyam 13-sept-2012 Bug #359 [REGISTRATION] Duplication of revisit patients when saving.Duplication of data being happen in "encounter" table 
-     and "opd_patient_queue" table --%>	
 <input id="save" type="button" value="Save" 
-	onClick="PAGE.save();this.disabled='true';return true;" />
+	onClick="PAGE.save();" />
 <span id="validationDate"></span>
 <div id="patientInfoPrintArea">
 	<center>

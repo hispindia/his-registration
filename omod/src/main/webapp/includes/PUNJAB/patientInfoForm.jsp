@@ -207,6 +207,12 @@
 		/*** SAVE  ***/
 		save: function(){
 			if (PAGE.validate()){
+			<%-- ghanshyam 13-sept-2012 Bug #359 [REGISTRATION] Duplication of revisit patients when saving.Duplication of data being happen in "encounter" table 
+                 and "opd_patient_queue" table --%>	
+			var save=document.getElementById("save");
+			if(save==save){
+			document.getElementById("save").disabled = true;
+			}
 			jQuery("#patientInfoForm").ajaxSubmit({
 				success: function (responseText, statusText, xhr){
 					if(responseText=="success"){								
@@ -222,10 +228,8 @@
 <input id="printSlip" type="button" value="Print" onClick="PAGE.submit(false);"/>
 <input id="reprint" type="button" value="RePrint" onClick="PAGE.submit(true);"/>
 <input id="buySlip" type="button" value="Buy a new slip" onClick="PAGE.buySlip();"/>
-<%-- ghanshyam 13-sept-2012 Bug #359 [REGISTRATION] Duplication of revisit patients when saving.Duplication of data being happen in "encounter" table 
-     and "opd_patient_queue" table --%>	
 <!-- harsh  6/12/2012 #244 added a save button; initially hidden only appears when you buy a slip-->
-<input id="save" type="button" value="Save" hidden onClick="PAGE.save();this.disabled='true';return true;" />
+<input id="save" type="button" value="Save" hidden onClick="PAGE.save();" />
 <span id="validationDate"></span>
 
 <!------------------------------------------------------------------------------------------------------------->
