@@ -226,7 +226,8 @@
 	};
 </script>
 <input id="printSlip" type="button" value="Print" onClick="PAGE.submit(false);"/>
-<input id="reprint" type="button" value="RePrint" onClick="PAGE.submit(true);"/>
+<!-- Sept 22,2012 -- Sagar Bele -- Issue 387 --Change case of word Reprint-->
+<input id="reprint" type="button" value="Reprint" onClick="PAGE.submit(true);"/>
 <input id="buySlip" type="button" value="Buy a new slip" onClick="PAGE.buySlip();"/>
 <!-- harsh  6/12/2012 #244 added a save button; initially hidden only appears when you buy a slip-->
 <input id="save" type="button" value="Save" hidden onClick="PAGE.save();" />

@@ -80,7 +80,8 @@
 			<td><b>Name</b></td>
 			<td><b>Age</b></td>
 			<td><b>Gender</b></td>			
-			<td><b>Birthdate</b></td>
+			<!--	Sept 27,2012 -- Sagar Bele -- Issue 387 --Removed Birth date from column 
+		<td><b>Birthdate</b></td>  -->
 			<td><b>Relative Name</b></td>
 			<td><b>Last day of visit</b></td>
 			<!-- June 4th 2012 - Thai Chuong removed Phone Number field to match requirement:
@@ -117,9 +118,11 @@
                 		<c:otherwise><img src="${pageContext.request.contextPath}/images/female.gif"/></c:otherwise>
                 	</c:choose>
 				</td>                
+			<!-- 		Sept 27,2012 -- Sagar Bele -- Issue 387 --Removed Birth date from column 
 				<td onclick="PATIENTSEARCHRESULT.visit(${patient.patientId});"> 
                 	<openmrs:formatDate date="${patient.birthdate}"/>
-                </td>
+                </td>  -->
+                
 				<td onclick="PATIENTSEARCHRESULT.visit(${patient.patientId});"> 
                 	<%
 						Patient patient = (Patient) pageContext.getAttribute("patient");

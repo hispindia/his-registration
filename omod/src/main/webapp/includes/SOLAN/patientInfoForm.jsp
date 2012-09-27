@@ -230,8 +230,8 @@ jQuery("#category").html(MODEL.patientAttributes[14]);
 	};
 </script>
 <input id="printSlip" type="button" value="Print"
-	onClick="PAGE.submit(false);" />
-<input id="reprint" type="button" value="RePrint"
+	onClick="PAGE.submit(false);" /> <!-- Sept 22,2012 -- Sagar Bele -- Issue 387 --Change case of word Reprint-->
+<input id="reprint" type="button" value="Reprint"
 	onClick="PAGE.submit(true);" />
 <input id="buySlip" type="button" value="Buy a new slip"
 	onClick="PAGE.buySlip();" />
