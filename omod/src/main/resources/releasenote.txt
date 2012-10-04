@@ -1,3 +1,6 @@
+2.2.16
+Bug #318: [REGISTRATION] The identifier is deleted on pressing backspace/delete
+Bug #359: [REGISTRATION] Duplication of revisit patients when saving
 2.2.15
 - Configuration
 	- The person attribute Postal address should be modified as explained in issue Bug #289
