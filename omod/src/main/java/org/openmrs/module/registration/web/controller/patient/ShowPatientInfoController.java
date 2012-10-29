@@ -47,6 +47,7 @@ import org.openmrs.api.context.Context;
 import org.openmrs.module.hospitalcore.HospitalCoreService;
 import org.openmrs.module.hospitalcore.util.GlobalPropertyUtil;
 import org.openmrs.module.hospitalcore.util.ObsUtils;
+import org.openmrs.module.hospitalcore.util.OrderUtil;
 import org.openmrs.module.registration.RegistrationService;
 import org.openmrs.module.registration.model.RegistrationFee;
 import org.openmrs.module.registration.util.RegistrationConstants;
@@ -117,11 +118,13 @@ public class ShowPatientInfoController {
 			Encounter encounter = Context.getService(RegistrationService.class).getLastEncounter(patient);
 			if (encounter != null) {
 				Map<Integer, String> observations = new HashMap<Integer, String>();
-			
+				
 				for (Obs obs : encounter.getAllObs()) {
-					if (obs.getConcept().getDisplayString().equalsIgnoreCase(RegistrationConstants.CONCEPT_NAME_TEMPORARY_CATEGORY)){
+					if (obs.getConcept().getDisplayString()
+					        .equalsIgnoreCase(RegistrationConstants.CONCEPT_NAME_TEMPORARY_CATEGORY)) {
 						model.addAttribute("tempCategoryId", obs.getConcept().getConceptId());
-					}else if (obs.getConcept().getDisplayString().equalsIgnoreCase(RegistrationConstants.CONCEPT_NAME_OPD_WARD)){
+					} else if (obs.getConcept().getDisplayString()
+					        .equalsIgnoreCase(RegistrationConstants.CONCEPT_NAME_OPD_WARD)) {
 						model.addAttribute("opdWardId", obs.getConcept().getConceptId());
 					}
 					observations.put(obs.getConcept().getConceptId(), ObsUtils.getValueAsString(obs));
@@ -174,22 +177,29 @@ public class ShowPatientInfoController {
 			encounter.addObs(opd);
 			
 			// send patient to opd room/bloodbank
-			Concept bloodbankConcept = Context.getConceptService().getConcept(
-			    GlobalPropertyUtil.getInteger(RegistrationConstants.PROPERTY_BLOODBANK_CONCEPT_ID, 6425));
-			if (selectedOPDConcept != bloodbankConcept) {
+			
+			//harsh 5/10/2012 changed the way to get blood bank concept->shifted hardcoded dependency from id to name
+			//			Concept bloodbankConcept = Context.getConceptService().getConcept(
+			//			    GlobalPropertyUtil.getInteger(RegistrationConstants.PROPERTY_BLOODBANK_CONCEPT_ID, 6425));
+			String bloodBankWardName = GlobalPropertyUtil.getString(RegistrationConstants.PROPERTY_BLOODBANK_OPDWARD_NAME,
+			    "Blood Bank Room");
+			
+			if (selectedOPDConcept.getName().equals(bloodBankWardName)) {
 				RegistrationWebUtils.sendPatientToOPDQueue(patient, selectedOPDConcept, true);
 			} else {
-				OrderType ordertype = Context.getOrderService().getOrderType(
-				    GlobalPropertyUtil.getInteger(RegistrationConstants.PROPERTY_ORDER_TYPE_ID, 6));
+				OrderType orderType = null;
+				String orderTypeName = Context.getAdministrationService().getGlobalProperty("bloodbank.orderTypeName");
+				orderType = OrderUtil.getOrderTypeByName(orderTypeName);
+				
 				Order order = new Order();
-				order.setConcept(bloodbankConcept);
+				order.setConcept(selectedOPDConcept);
 				order.setCreator(Context.getAuthenticatedUser());
 				order.setDateCreated(new Date());
 				order.setOrderer(Context.getAuthenticatedUser());
 				order.setPatient(patient);
 				order.setStartDate(new Date());
 				order.setAccessionNumber("0");
-				order.setOrderType(ordertype);
+				order.setOrderType(orderType);
 				order.setEncounter(encounter);
 				encounter.addOrder(order);
 			}
@@ -201,9 +211,9 @@ public class ShowPatientInfoController {
 				String[] parts = name.split("\\.");
 				String idText = parts[parts.length - 1];
 				Integer id = Integer.parseInt(idText);
-			Concept tempCatConcept=	Context.getConceptService().getConceptByName("TEMPORARY CATEGORY");
+				Concept tempCatConcept = Context.getConceptService().getConceptByName("TEMPORARY CATEGORY");
 				
-			Concept temporaryAttributeConcept = Context.getConceptService().getConcept(tempCatConcept.getConceptId());
+				Concept temporaryAttributeConcept = Context.getConceptService().getConcept(tempCatConcept.getConceptId());
 				Obs temporaryAttribute = new Obs();
 				temporaryAttribute.setConcept(temporaryAttributeConcept);
 				logger.info("concept: " + temporaryAttributeConcept);

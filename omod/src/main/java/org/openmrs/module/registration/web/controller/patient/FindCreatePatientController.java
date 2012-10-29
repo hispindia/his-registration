@@ -45,6 +45,7 @@ import org.openmrs.api.context.Context;
 import org.openmrs.module.hospitalcore.util.GlobalPropertyUtil;
 import org.openmrs.module.hospitalcore.util.HospitalCoreConstants;
 import org.openmrs.module.hospitalcore.util.HospitalCoreUtils;
+import org.openmrs.module.hospitalcore.util.OrderUtil;
 import org.openmrs.module.registration.RegistrationService;
 import org.openmrs.module.registration.includable.validator.attribute.PatientAttributeValidatorService;
 import org.openmrs.module.registration.model.RegistrationFee;
@@ -166,8 +167,8 @@ public class FindCreatePatientController {
 		
 		// get address
 		if (!StringUtils.isBlank(parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_ADDRESS_DISTRICT))) {
-			patient.addAddress(RegistrationUtils.getPersonAddress(null, 
-				parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_ADDRESS_POSTALADDRESS),
+			patient.addAddress(RegistrationUtils.getPersonAddress(null,
+			    parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_ADDRESS_POSTALADDRESS),
 			    parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_ADDRESS_DISTRICT),
 			    parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_ADDRESS_TEHSIL)));
 		}
@@ -218,22 +219,30 @@ public class FindCreatePatientController {
 		encounter.addObs(opdObs);
 		
 		// Send patient to OPD Queue/bloodbank
-		Concept bloodbankConcept = Context.getConceptService().getConcept(
-		    GlobalPropertyUtil.getInteger(RegistrationConstants.PROPERTY_BLOODBANK_CONCEPT_ID, 6425));
-		if (selectedOPDConcept != bloodbankConcept) {
+		
+		//harsh 5/10/2012 changed the way to get blood bank concept->shifted hardcoded dependency from id to name
+		//		Concept bloodbankConcept = Context.getConceptService().getConcept(
+		//		    GlobalPropertyUtil.getInteger(RegistrationConstants.PROPERTY_BLOODBANK_CONCEPT_ID, 6425));
+		
+		String bloodBankWardName = GlobalPropertyUtil.getString(RegistrationConstants.PROPERTY_BLOODBANK_OPDWARD_NAME,
+		    "Blood Bank Room");
+		
+		if (selectedOPDConcept.getName().equals(bloodBankWardName)) {
 			RegistrationWebUtils.sendPatientToOPDQueue(patient, selectedOPDConcept, false);
 		} else {
-			OrderType ordertype = Context.getOrderService().getOrderType(
-			    GlobalPropertyUtil.getInteger(RegistrationConstants.PROPERTY_ORDER_TYPE_ID, 6));
+			OrderType orderType = null;
+			String orderTypeName = Context.getAdministrationService().getGlobalProperty("bloodbank.orderTypeName");
+			orderType = OrderUtil.getOrderTypeByName(orderTypeName);
+			
 			Order order = new Order();
-			order.setConcept(bloodbankConcept);
+			order.setConcept(selectedOPDConcept);
 			order.setCreator(Context.getAuthenticatedUser());
 			order.setDateCreated(new Date());
 			order.setOrderer(Context.getAuthenticatedUser());
 			order.setPatient(patient);
 			order.setStartDate(new Date());
 			order.setAccessionNumber("0");
-			order.setOrderType(ordertype);
+			order.setOrderType(orderType);
 			order.setEncounter(encounter);
 			encounter.addOrder(order);
 		}

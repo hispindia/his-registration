@@ -42,11 +42,13 @@ public class RegistrationConstants {
 	+ ".patientPerRSBY";
 	public static final String PROPERTY_BPL_NO_OF_PATIENT = MODULE_ID
 	+ ".patientPerBPL";
-	public static final String PROPERTY_BLOODBANK_CONCEPT_ID = MODULE_ID
-			+ ".bloodbankConceptId";	
+//	public static final String PROPERTY_BLOODBANK_CONCEPT_ID = MODULE_ID
+	//		+ ".bloodbankConceptId";	
 	public static final String PROPERTY_ORDER_TYPE_ID = MODULE_ID
 	+ ".bloodbankOrderTypeId";	
+	public static final String PROPERTY_BLOODBANK_OPDWARD_NAME =  "bloodbank.wardName";	
 
+	
 	// field names
 	public static final String FORM_FIELD_PATIENT_NAME = "patient.name";
 	public static final String FORM_FIELD_PATIENT_IDENTIFIER = "patient.identifier";
@@ -72,5 +74,6 @@ public class RegistrationConstants {
 	public static final String CONCEPT_REVISIT = "Revisit";
 	// harsh 2/7/2012 adding property for temp category
 	public static final String CONCEPT_NAME_TEMPORARY_CATEGORY = "TEMPORARY CATEGORY";
+	
 
 }
