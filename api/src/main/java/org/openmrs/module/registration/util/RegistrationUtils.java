@@ -149,7 +149,10 @@ public class RegistrationUtils {
 				+ String.valueOf(now.get(Calendar.YEAR)).substring(2, 4)
 				+ String.valueOf(now.get(Calendar.MONTH) + 1)
 				+ String.valueOf(now.get(Calendar.DATE))
+				//Sagar Bele,Ghanshyam Kumar - 12-12-2012 - Bug #467 [Registration]Duplicate Identifier				
+				+ String.valueOf(now.get(Calendar.HOUR))
 				+ String.valueOf(now.get(Calendar.MINUTE))
+				+ String.valueOf(now.get(Calendar.SECOND))
 				//Sagar Bele,Ghanshyam Kumar - 12-12-2012 - Bug #467 [Registration]Duplicate Identifier
 				+ String.valueOf(new Random().nextInt(9999));
 		return noCheck + "-" + generateCheckdigit(noCheck);

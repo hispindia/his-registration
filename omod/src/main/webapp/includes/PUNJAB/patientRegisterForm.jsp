@@ -1073,7 +1073,8 @@ border-style: solid;
 				<div id="numberOfFoundPatients"></div></td>
 
 				<!--  12/06/2012: Kesavulu: added Screen mock up for registration module[Punjab]- New Requirement #251 -->
-			<td class="cell"><b>ID Number * &nbsp;&nbsp;	<input readonly name="patient.identifier" style="border: none;" /></b></td>
+				<%-- Sagar Bele,Ghanshyam Kumar - 12-12-2012 - Bug #467 [Registration]Duplicate Identifier --%>
+			<td class="cell"><b>ID Number * &nbsp;&nbsp;	<input readonly name="patient.identifier" style="border: none;width: 250px;" /></b></td>
 			
 		</tr>
 		<tr>

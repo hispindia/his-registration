@@ -876,8 +876,9 @@ td.border {
 				<div id="searchbox"></div>
 				<div id="numberOfFoundPatients"></div>
 			</td>
+			<%-- Sagar Bele,Ghanshyam Kumar - 12-12-2012 - Bug #467 [Registration]Duplicate Identifier --%>
 			<td class="cell"><b>ID Number * &nbsp;&nbsp; <input readonly
-					name="patient.identifier" style="border: none;" />
+						name="patient.identifier" style="border: none;width: 250px;" />
 			</b>
 			</td>
 
