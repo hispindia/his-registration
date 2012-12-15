@@ -1,4 +1,5 @@
- <%--
+
+<%--
  *  Copyright 2009 Society for Health Information Systems Programmes, India (HISP India)
  *
  *  This file is part of Registration module.
@@ -16,13 +17,15 @@
  *  You should have received a copy of the GNU General Public License
  *  along with Registration module.  If not, see <http://www.gnu.org/licenses/>.
  *
---%> 
-<%@ include file="/WEB-INF/template/include.jsp" %>
-<%@ include file="/WEB-INF/template/header.jsp" %>
-<%@ include file="../includes/js_css.jsp" %>
-<openmrs:require privilege="Edit Patients" otherwise="/login.htm" redirect="/module/registration/editPatient.form" />
-<openmrs:globalProperty key="hospitalcore.hospitalName" defaultValue="ddu" var="hospitalName"/>
-<br/>
+--%>
+<%@ include file="/WEB-INF/template/include.jsp"%>
+<%@ include file="/WEB-INF/template/header.jsp"%>
+<%@ include file="../includes/js_css.jsp"%>
+<openmrs:require privilege="Edit Patients" otherwise="/login.htm"
+	redirect="/module/registration/editPatient.form" />
+<openmrs:globalProperty key="hospitalcore.hospitalName"
+	defaultValue="ddu" var="hospitalName" />
+<br />
 
 <script type="text/javascript">
 
@@ -32,10 +35,11 @@
 		_districts[${status.index}] = "${district}";
 	</c:forEach>
 	
-	// Tehsils
-	var _tehsils = new Array();
-	<c:forEach var="tehsil" items="${tehsils}" varStatus="status">
-		_tehsils[${status.index}] = "${tehsil}";
+	// Ghanshyam - Sagar :  date- 15 Dec, 2012. Redmine issue's for Bangladesh : #510 and #511 and #512
+	// Upazilas
+	var _upazilas = new Array();
+	<c:forEach var="upazila" items="${upazilas}" varStatus="status">
+		_upazilas[${status.index}] = "${upazila}";
 	</c:forEach>	
 	
 	// Patient Attribute
@@ -46,6 +50,7 @@
 	
 	/**
 	 ** MODEL FROM CONTROLLER
+	 ** Ghanshyam - Sagar :  date- 15 Dec, 2012. Redmine issue's for Bangladesh : #510 and #511 and #512
 	 **/
 	MODEL = {
 		patientId: "${patient.patientId}",
@@ -57,10 +62,10 @@
 		patientBirthdate: "${patient.birthdate}",
 		patientAttributes: _attributes,
 		districts: _districts,
-		tehsils: _tehsils
+		upazilas: _upazilas
 	};
 </script>
 
-<jsp:include page="../includes/${hospitalName}/editPatientForm.jsp"/>
+<jsp:include page="../includes/${hospitalName}/editPatientForm.jsp" />
 
-<%@ include file="/WEB-INF/template/footer.jsp" %>  
+<%@ include file="/WEB-INF/template/footer.jsp"%>

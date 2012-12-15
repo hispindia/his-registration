@@ -17,6 +17,7 @@
  *  along with Registration module.  If not, see <http://www.gnu.org/licenses/>.
  *
 --%> 
+
 <%@ include file="/WEB-INF/template/include.jsp" %>
 <%@ include file="/WEB-INF/template/header.jsp" %>
 <%@ include file="../includes/js_css.jsp" %>
@@ -35,10 +36,11 @@
 		_districts[${status.index}] = "${district}";
 	</c:forEach>
 	
-	// Tehsils
-	var _tehsils = new Array();
-	<c:forEach var="tehsil" items="${tehsils}" varStatus="status">
-		_tehsils[${status.index}] = "${tehsil}";
+	// Upazilas
+	//Ghanshyam - Sagar :  date- 15 Dec, 2012. Redmine issue's for Bangladesh : #510 and #511 and #512
+	var _upazilas = new Array();
+	<c:forEach var="upazila" items="${upazilas}" varStatus="status">
+		_upazilas[${status.index}] = "${upazila}";
 	</c:forEach>	
 	
 	/**
@@ -47,7 +49,7 @@
 	MODEL = {
 		patientIdentifier: "${patientIdentifier}",
 		districts: _districts,
-		tehsils: _tehsils,
+		upazilas: _upazilas,
 		OPDs: "${OPDs}",
 		referralHospitals: "${referralHospitals}",
 		referralReasons: "${referralReasons}"
