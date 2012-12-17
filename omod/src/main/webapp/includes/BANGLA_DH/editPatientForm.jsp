@@ -446,7 +446,7 @@ border-style: solid;
 					</tr>
 					<tr>
 					<td>National ID:</td>
-					<td><input id="patNatId" name="patient.attribute.20"/></td>
+					<td><input id="patientNationalId" name="patient.attribute.20"/></td>
 					</tr>
 			</table></td>
 		</tr>
