@@ -71,7 +71,27 @@ border-style: solid;
 							+ MODEL.patientAttributes[16] + "||";
 				}
 				
+				if (!StringUtils.isBlank(MODEL.patientAttributes[20])) {
+					formValues += "patient.attribute.20=="
+							+ MODEL.patientAttributes[20] + "||";
+				}
 				
+				if (!StringUtils.isBlank(MODEL.patientAttributes[21])) {
+					formValues += "patient.attribute.21=="
+							+ MODEL.patientAttributes[21] + "||";
+				}
+
+				if (!StringUtils.isBlank(MODEL.patientAttributes[22])) {
+					formValues += "patient.attribute.22=="
+							+ MODEL.patientAttributes[22] + "||";
+				}
+
+				if (!StringUtils.isBlank(MODEL.patientAttributes[23])) {
+					formValues += "patient.attribute.23=="
+							+ MODEL.patientAttributes[23] + "||";
+				}
+
+
 				// Set value for address 
 				addressParts = MODEL.patientAddress.split(',');
 				formValues += "patient.address.postalAddress==" + StringUtils.trim(addressParts[0]) + "||";
@@ -104,26 +124,7 @@ border-style: solid;
 					jQuery("#freeField").hide();
 				}
 				
-				// National Id
-				 jQuery("#patientRegistrationForm").fillForm(
-                          "patient.attribute.20==" + MODEL.patientAttributes[20]
-                                        + "||");
-
-				// Weight
-				 jQuery("#patientRegistrationForm").fillForm(
-                          "patient.attribute.21==" + MODEL.patientAttributes[21]
-                                        + "||");
-				
-				// Blood Pressure
-				 jQuery("#patientRegistrationForm").fillForm(
-                          "patient.attribute.22==" + MODEL.patientAttributes[22]
-                                        + "||");
-
-				// History
-				 jQuery("#patientRegistrationForm").fillForm(
-                          "patient.attribute.23==" + MODEL.patientAttributes[23]
-                                        + "||");
-                                        
+                                     
 				// binding
 				jQuery('#calendar').datepicker({
 					yearRange : 'c-100:c+100',
