@@ -70,6 +70,10 @@ border-style: solid;
 					formValues += "person.attribute.16=="
 							+ MODEL.patientAttributes[16] + "||";
 				}
+				if (!StringUtils.isBlank(MODEL.patientAttributes[20])) {
+					formValues += "patient.attribute.20=="
+							+ MODEL.patientAttributes[20] + "||";
+				}
 				
 				// Set value for address 
 				addressParts = MODEL.patientAddress.split(',');
@@ -103,11 +107,6 @@ border-style: solid;
 					jQuery("#freeField").hide();
 				}
 				
-				// National Id
-				jQuery("#patientRegistrationForm").fillForm(
-						"patient.attribute.20==" + MODEL.patientAttributes[20]
-								+ "||");
-
 				// binding
 				jQuery('#calendar').datepicker({
 					yearRange : 'c-100:c+100',
