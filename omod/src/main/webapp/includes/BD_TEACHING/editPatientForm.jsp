@@ -511,7 +511,6 @@ border-style: solid;
 			<td class="cell">
 				<table>
 					<tr>
-						<!--  10/05/2012: Thai Chuong, adding a field for address. Feature #211   -->
 						<td>Postal Address:</td>
 							<input id="patientPostalAddress" name="patient.address.postalAddress" style="width: 300px;" />
 						</td>
