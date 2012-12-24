@@ -28,6 +28,7 @@ import org.openmrs.Patient;
 import org.openmrs.PersonAttribute;
 import org.openmrs.PersonAttributeType;
 import org.openmrs.api.OpenmrsService;
+import org.openmrs.module.dms.model.DmsOpdUnit;
 import org.openmrs.module.registration.model.RegistrationFee;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -84,4 +85,7 @@ public interface RegistrationService extends OpenmrsService {
 	 * @return
 	 */
 	public Encounter getLastEncounter(Patient patient);
+	
+	// ghanshyam,sagar date:24-12-2012 New Requirement #512 [Registration] module for Bangladesh specalized hospital
+	public List<DmsOpdUnit> getOpdActivatedIdList();
 }
