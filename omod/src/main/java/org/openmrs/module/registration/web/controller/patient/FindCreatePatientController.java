@@ -22,7 +22,9 @@ package org.openmrs.module.registration.web.controller.patient;
 
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -33,6 +35,7 @@ import org.apache.commons.logging.LogFactory;
 import org.dom4j.DocumentException;
 import org.jaxen.JaxenException;
 import org.openmrs.Concept;
+import org.openmrs.ConceptName;
 import org.openmrs.Encounter;
 import org.openmrs.Obs;
 import org.openmrs.Order;
@@ -42,6 +45,8 @@ import org.openmrs.PatientIdentifier;
 import org.openmrs.PersonAttribute;
 import org.openmrs.PersonName;
 import org.openmrs.api.context.Context;
+import org.openmrs.module.dms.DmsService;
+import org.openmrs.module.dms.model.DmsOpdUnit;
 import org.openmrs.module.hospitalcore.util.GlobalPropertyUtil;
 import org.openmrs.module.hospitalcore.util.HospitalCoreConstants;
 import org.openmrs.module.hospitalcore.util.HospitalCoreUtils;
@@ -66,13 +71,39 @@ public class FindCreatePatientController {
 	@RequestMapping(method = RequestMethod.GET)
 	public String showForm(HttpServletRequest request, Model model) throws JaxenException, DocumentException, IOException {
 		model.addAttribute("patientIdentifier", RegistrationUtils.getNewIdentifier());
-		model.addAttribute("OPDs", RegistrationWebUtils.getSubConcepts(RegistrationConstants.CONCEPT_NAME_OPD_WARD));
 		model.addAttribute("referralHospitals",
 		    RegistrationWebUtils.getSubConcepts(RegistrationConstants.CONCEPT_NAME_PATIENT_REFERRED_FROM));
 		model.addAttribute("referralReasons",
 		    RegistrationWebUtils.getSubConcepts(RegistrationConstants.CONCEPT_NAME_REASON_FOR_REFERRAL));
 		RegistrationWebUtils.getAddressData(model);
-		return "/module/registration/patient/findCreatePatient";
+		
+		// ghanshyam,sagar date:24-12-2012 New Requirement #512 [Registration] module for Bangladesh specalized hospital
+		String hospitalName = GlobalPropertyUtil.getString(
+				HospitalCoreConstants.PROPERTY_HOSPITAL_NAME, "");
+		
+		if(hospitalName.equals("BD_SPECIALIZED")){
+			RegistrationService registrationService=Context.getService(RegistrationService.class);
+			DmsService dmsService = Context.getService(DmsService.class);
+			List<DmsOpdUnit> opdidlist=registrationService.getOpdActivatedIdList();
+			List<ConceptName> lcname = new ArrayList<ConceptName>();
+			for (DmsOpdUnit doci : opdidlist) {
+				Concept con=doci.getOpdConceptId();
+				ConceptName conname = dmsService.getOpdWardNameByConceptId(con);
+				lcname.add(conname);
+			}
+			model.addAttribute("OPDs", lcname);
+		}
+		else{
+			model.addAttribute("OPDs", RegistrationWebUtils.getSubConcepts(RegistrationConstants.CONCEPT_NAME_OPD_WARD));
+		}
+		
+		if(hospitalName.equals("BD_SPECIALIZED")){
+		return "/module/registration/patient/findCreatePatientBdSpecialized";
+		}
+		else{
+			return "/module/registration/patient/findCreatePatient";
+		}
+		
 	}
 	
 	@RequestMapping(method = RequestMethod.POST)
