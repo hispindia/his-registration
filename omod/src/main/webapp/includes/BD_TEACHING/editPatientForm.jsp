@@ -357,10 +357,11 @@ border-style: solid;
 						return false;
 					} else {
 						if (jQuery("#free").attr('checked')) {
+						/* Sagar Bele, 24-12-2012, Issue #550 Removed validation for free reason field
 							if (jQuery("#freeReason").val().length <= 0) {
 								alert('Please enter Reason to make free');
 								return false;
-							}
+							} */
 						}
 						
 						return true;
