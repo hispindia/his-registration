@@ -34,6 +34,13 @@
 			<version>1.4.10.12-SNAPSHOT</version>
 			<scope>provided</scope>
 		</dependency>
+		<!-- ghanshyam,sagar date:24-12-2012 New Requirement #512 [Registration] module for Bangladesh specalized hospital -->
+		<dependency>
+			<groupId>org.openmrs.module</groupId>
+			<artifactId>dms-api</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<scope>provided</scope>
+		</dependency>
 	</dependencies>
 
 </project>
