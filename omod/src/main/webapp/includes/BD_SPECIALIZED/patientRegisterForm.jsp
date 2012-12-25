@@ -549,7 +549,7 @@ td.border {
 						</tr>
 					</table>
 				</div> <b>OPD Room to Visit: *</b> <select id="opdWard"
-				name="opdWard">
+				name="patient.opdWard">
 			</select>
 			</td>
 

@@ -242,8 +242,16 @@ public class FindCreatePatientController {
 		 * ADD OPD ROOM
 		 */
 		Concept opdWardConcept = Context.getConceptService().getConcept(RegistrationConstants.CONCEPT_NAME_OPD_WARD);
+		/*ghanshyam,sagar date:25-12-2012 New Requirement #512 [Registration] module for Bangladesh specalized hospital
+		 * there is no use of Integer.parseInt so removed
+		 */
+		 
+		/*
 		Concept selectedOPDConcept = Context.getConceptService().getConcept(
 		    Integer.parseInt(parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_OPD_WARD)));
+		    */
+		Concept selectedOPDConcept = Context.getConceptService().getConcept(
+			    parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_OPD_WARD));
 		Obs opdObs = new Obs();
 		opdObs.setConcept(opdWardConcept);
 		opdObs.setValueCoded(selectedOPDConcept);
