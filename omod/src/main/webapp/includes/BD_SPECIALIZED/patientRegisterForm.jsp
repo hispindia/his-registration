@@ -353,10 +353,11 @@ td.border {
 				return false;
 			} else {
 				if (jQuery("#free").attr('checked')) {
+		/*  Sagar Bele, 24-12-2012, Issue #550 Removed validation for free reason field
 					if (jQuery("#freeReason").val().length <= 0) {
 						alert('Please enter Free reason');
 						return false;
-					}
+					} */
 				}
 				return true;
 			}
