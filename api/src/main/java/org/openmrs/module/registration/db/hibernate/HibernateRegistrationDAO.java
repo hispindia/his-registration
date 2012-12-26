@@ -141,7 +141,7 @@ public class HibernateRegistrationDAO implements RegistrationDAO {
 		String days[] = { "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday" };
 		GregorianCalendar gcalendar = new GregorianCalendar();
 		String dayName = days[gcalendar.get(Calendar.DAY_OF_WEEK) - 1];
-		String hql="from DmsOpdUnit d where d.opdWorkingDay='"+dayName+"' AND '" +curtime+ "' BETWEEN d.startTime AND d.endTime";
+		String hql="from DmsOpdUnit d where d.opdWorkingDay='"+dayName+"' AND '" +curtime+ "' BETWEEN d.startTime AND d.endTime AND d.unitActiveDate is not null";
 		Session session=sessionFactory.getCurrentSession();
 		Query q=session.createQuery(hql);
 		List<DmsOpdUnit> list=q.list();
