@@ -85,11 +85,11 @@ public class FindCreatePatientController {
 			RegistrationService registrationService=Context.getService(RegistrationService.class);
 			DmsService dmsService = Context.getService(DmsService.class);
 			List<DmsOpdUnit> opdidlist=registrationService.getOpdActivatedIdList();
-			List<ConceptName> lcname = new ArrayList<ConceptName>();
+			List<String> lcname = new ArrayList<String>();
 			for (DmsOpdUnit doci : opdidlist) {
 				Concept con=doci.getOpdConceptId();
 				ConceptName conname = dmsService.getOpdWardNameByConceptId(con);
-				lcname.add(conname);
+				lcname.add(con.getId() + "," + conname);
 			}
 			model.addAttribute("OPDs", lcname);
 		}

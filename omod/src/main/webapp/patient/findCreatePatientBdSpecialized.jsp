@@ -44,11 +44,11 @@
 		_upazilas[${status.index}] = "${upazila}";
 	</c:forEach>
 	
-	//Ghanshyam
-	var _OPDs = new Array();
+	//Opds
+	var _OPDs = "";
 	<c:forEach var="OPD" items="${OPDs}" varStatus="status">
-		_OPDs[${status.index}] = "${OPD}";
-	</c:forEach>			
+		_OPDs = _OPDs + "${OPD} |";
+	</c:forEach>				
 	
 	/**
 	 ** MODEL FROM CONTROLLER

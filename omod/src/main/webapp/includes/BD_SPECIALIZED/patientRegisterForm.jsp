@@ -51,8 +51,12 @@ td.border {
 				PAGE.fillOptions("#upazilas", {
 					data : MODEL.upazilas[0].split(',')
 				});
+				MODEL.OPDs = " ,Please select an OPD room to visit|"
+						+ MODEL.OPDs;
 				PAGE.fillOptions("#opdWard", {
-					data : MODEL.OPDs
+					data : MODEL.OPDs,
+					delimiter : ",",
+					optionDelimiter : "|"
 				});
 				PAGE.fillOptions("#referralHospitals", {
 					data : MODEL.referralHospitals,
