@@ -24,6 +24,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -38,14 +39,18 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openmrs.Concept;
+import org.openmrs.ConceptName;
 import org.openmrs.Encounter;
 import org.openmrs.Obs;
 import org.openmrs.Order;
 import org.openmrs.OrderType;
 import org.openmrs.Patient;
 import org.openmrs.api.context.Context;
+import org.openmrs.module.dms.DmsService;
+import org.openmrs.module.dms.model.DmsOpdUnit;
 import org.openmrs.module.hospitalcore.HospitalCoreService;
 import org.openmrs.module.hospitalcore.util.GlobalPropertyUtil;
+import org.openmrs.module.hospitalcore.util.HospitalCoreConstants;
 import org.openmrs.module.hospitalcore.util.ObsUtils;
 import org.openmrs.module.hospitalcore.util.OrderUtil;
 import org.openmrs.module.registration.RegistrationService;
@@ -76,7 +81,25 @@ public class ShowPatientInfoController {
 		Patient patient = Context.getPatientService().getPatient(patientId);
 		PatientModel patientModel = new PatientModel(patient);
 		model.addAttribute("patient", patientModel);
-		model.addAttribute("OPDs", RegistrationWebUtils.getSubConcepts(RegistrationConstants.CONCEPT_NAME_OPD_WARD));
+		// ghanshyam,Sagar date:26-12-2012 New Requirement #512 [Registration] module for Bangladesh specalized hospital
+		String hospitalName = GlobalPropertyUtil.getString(
+				HospitalCoreConstants.PROPERTY_HOSPITAL_NAME, "");
+		
+		if(hospitalName.equals("BD_SPECIALIZED")){
+			RegistrationService registrationService=Context.getService(RegistrationService.class);
+			DmsService dmsService = Context.getService(DmsService.class);
+			List<DmsOpdUnit> opdidlist=registrationService.getOpdActivatedIdList();
+			List<String> lcname = new ArrayList<String>();
+			for (DmsOpdUnit doci : opdidlist) {
+				Concept con=doci.getOpdConceptId();
+				ConceptName conname = dmsService.getOpdWardNameByConceptId(con);
+				lcname.add(con.getId() + "," + conname);
+			}
+			model.addAttribute("OPDs", lcname);
+		}
+		else{
+			model.addAttribute("OPDs", RegistrationWebUtils.getSubConcepts(RegistrationConstants.CONCEPT_NAME_OPD_WARD));
+		}
 		
 		// Get current date
 		SimpleDateFormat sdf = new SimpleDateFormat("EEE dd/MM/yyyy kk:mm");
@@ -133,7 +156,12 @@ public class ShowPatientInfoController {
 			}
 		}
 		
-		return "/module/registration/patient/showPatientInfo";
+		if(hospitalName.equals("BD_SPECIALIZED")){
+			return "/module/registration/patient/showPatientInfoBdSpecialized";
+			}
+			else{
+				return "/module/registration/patient/showPatientInfo";
+			}
 	}
 	
 	/**
