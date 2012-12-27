@@ -89,7 +89,7 @@ public class FindCreatePatientController {
 			for (DmsOpdUnit doci : opdidlist) {
 				Concept con=doci.getOpdConceptId();
 				ConceptName conname = dmsService.getOpdWardNameByConceptId(con);
-				lcname.add(con.getId() + "," + conname);
+				lcname.add(con.getId() + "," + conname+"(Unit-"+doci.getUnitNo()+")");
 			}
 			model.addAttribute("OPDs", lcname);
 		}
