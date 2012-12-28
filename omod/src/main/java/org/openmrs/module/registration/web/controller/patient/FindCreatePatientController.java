@@ -92,18 +92,12 @@ public class FindCreatePatientController {
 				lcname.add(con.getId() + "," + conname+"(Unit-"+doci.getUnitNo()+")");
 			}
 			model.addAttribute("OPDs", lcname);
+			return "/module/registration/patient/findCreatePatientBdSpecialized";
 		}
 		else{
 			model.addAttribute("OPDs", RegistrationWebUtils.getSubConcepts(RegistrationConstants.CONCEPT_NAME_OPD_WARD));
-		}
-		
-		if(hospitalName.equals("BD_SPECIALIZED")){
-		return "/module/registration/patient/findCreatePatientBdSpecialized";
-		}
-		else{
 			return "/module/registration/patient/findCreatePatient";
 		}
-		
 	}
 	
 	@RequestMapping(method = RequestMethod.POST)
