@@ -46,9 +46,9 @@ import org.openmrs.Order;
 import org.openmrs.OrderType;
 import org.openmrs.Patient;
 import org.openmrs.api.context.Context;
-import org.openmrs.module.dms.DmsService;
-import org.openmrs.module.dms.model.DmsOpdUnit;
+import org.openmrs.module.hospitalcore.DmsCommonService;
 import org.openmrs.module.hospitalcore.HospitalCoreService;
+import org.openmrs.module.hospitalcore.model.DmsOpdUnit;
 import org.openmrs.module.hospitalcore.util.GlobalPropertyUtil;
 import org.openmrs.module.hospitalcore.util.HospitalCoreConstants;
 import org.openmrs.module.hospitalcore.util.ObsUtils;
@@ -86,13 +86,12 @@ public class ShowPatientInfoController {
 				HospitalCoreConstants.PROPERTY_HOSPITAL_NAME, "");
 		
 		if(hospitalName.equals("BD_SPECIALIZED")){
-			RegistrationService registrationService=Context.getService(RegistrationService.class);
-			DmsService dmsService = Context.getService(DmsService.class);
-			List<DmsOpdUnit> opdidlist=registrationService.getOpdActivatedIdList();
+			DmsCommonService dmsCommonService=Context.getService(DmsCommonService.class);
+			List<DmsOpdUnit> opdidlist=dmsCommonService.getOpdActivatedIdList();
 			List<String> lcname = new ArrayList<String>();
 			for (DmsOpdUnit doci : opdidlist) {
 				Concept con=doci.getOpdConceptId();
-				ConceptName conname = dmsService.getOpdWardNameByConceptId(con);
+				ConceptName conname = dmsCommonService.getOpdWardNameByConceptId(con);
 				lcname.add(con.getId() + "," + conname+"(Unit-"+doci.getUnitNo()+")");
 			}
 			model.addAttribute("OPDs", lcname);

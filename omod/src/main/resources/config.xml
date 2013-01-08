@@ -17,8 +17,6 @@
 	
 	<require_modules>
                   <require_module>org.openmrs.module.hospitalcore</require_module>
-                  <!-- ghanshyam,sagar date:24-12-2012 New Requirement #512 [Registration] module for Bangladesh specalized hospital -->
-                  <require_module>org.openmrs.module.dms</require_module>
     </require_modules>
 	
 	<require_version>1.6.1</require_version>	

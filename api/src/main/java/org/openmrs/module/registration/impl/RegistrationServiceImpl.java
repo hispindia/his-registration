@@ -28,7 +28,6 @@ import org.openmrs.Patient;
 import org.openmrs.PersonAttribute;
 import org.openmrs.PersonAttributeType;
 import org.openmrs.api.impl.BaseOpenmrsService;
-import org.openmrs.module.dms.model.DmsOpdUnit;
 import org.openmrs.module.registration.RegistrationService;
 import org.openmrs.module.registration.db.RegistrationDAO;
 import org.openmrs.module.registration.model.RegistrationFee;
@@ -77,8 +76,4 @@ public class RegistrationServiceImpl extends BaseOpenmrsService implements
 		return dao.getLastEncounter(patient);
 	}
 	
-	// ghanshyam,sagar date:24-12-2012 New Requirement #512 [Registration] module for Bangladesh specalized hospital
-	public List<DmsOpdUnit> getOpdActivatedIdList(){
-		return dao.getOpdActivatedIdList();
-	}
 }

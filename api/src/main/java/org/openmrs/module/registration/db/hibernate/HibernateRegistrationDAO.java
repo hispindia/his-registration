@@ -23,8 +23,6 @@ package org.openmrs.module.registration.db.hibernate;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -32,8 +30,6 @@ import java.util.Set;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.Criteria;
-import org.hibernate.Query;
-import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Expression;
 import org.hibernate.criterion.Order;
@@ -44,7 +40,6 @@ import org.openmrs.Patient;
 import org.openmrs.PersonAttribute;
 import org.openmrs.PersonAttributeType;
 import org.openmrs.api.context.Context;
-import org.openmrs.module.dms.model.DmsOpdUnit;
 import org.openmrs.module.hospitalcore.util.GlobalPropertyUtil;
 import org.openmrs.module.registration.db.RegistrationDAO;
 import org.openmrs.module.registration.model.RegistrationFee;
@@ -129,22 +124,5 @@ public class HibernateRegistrationDAO implements RegistrationDAO {
 		criteria.setMaxResults(1);
 		return (Encounter) criteria.uniqueResult();
 	}
-	
-	// ghanshyam,sagar date:24-12-2012 New Requirement #512 [Registration] module for Bangladesh specalized hospital
-	@SuppressWarnings("unchecked")
-	public List<DmsOpdUnit> getOpdActivatedIdList(){
-		Date date=new Date();
-		int hour=date.getHours();
-		int minute=date.getMinutes();
-		int second=date.getSeconds();
-		String curtime=hour+":"+minute+":"+second;
-		String days[] = { "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday" };
-		GregorianCalendar gcalendar = new GregorianCalendar();
-		String dayName = days[gcalendar.get(Calendar.DAY_OF_WEEK) - 1];
-		String hql="from DmsOpdUnit d where d.opdWorkingDay='"+dayName+"' AND '" +curtime+ "' BETWEEN d.startTime AND d.endTime AND d.unitActiveDate is not null";
-		Session session=sessionFactory.getCurrentSession();
-		Query q=session.createQuery(hql);
-		List<DmsOpdUnit> list=q.list();
-		return list;
-	}
+
 }
