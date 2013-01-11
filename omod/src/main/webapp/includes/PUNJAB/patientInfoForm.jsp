@@ -50,6 +50,7 @@
 			jQuery("#buySlip").hide();
 		} else {
 			jQuery("#reprint").hide();
+			jQuery("#tempCat").hide();
 		}
 		
 		if(MODEL.dueDate.length>0){
@@ -104,12 +105,14 @@
 						jQuery("#printableTemporaryCategories").append("<span style='margin:5px;'>" + jQuery(value).val() + "</span>");
 					}
 				});
-				
+
+/*				Sagar Bele, 11-01-2013: Issue #663 Registration alignment					
 				if(!StringUtils.isBlank(jQuery("#printableTemporaryCategories").html())){
 					jQuery("#printableTemporaryCategories").prepend("<b>Temporary Categories:</b>");
 				}
-				
+*/
 				jQuery("#temporaryCategories").hide();
+				jQuery("#tempCat").show();
 				
 				// submit form and print		
 				if(!reprint){
@@ -243,7 +246,7 @@
 		</td>
 		<td>	
 		<form id="patientInfoForm" method="POST">				
-			<table border=0  width="400">
+			<table border=0  width="600">
 				<tr>
 					<td colspan="1""><b>ID.No:</b></td>
 					<td  colspan="5"">
@@ -304,11 +307,11 @@
 						<input type="checkbox" name="temporary.attribute.8076" value="Accident"/> Accident <br/>										
 					</td>
 				</tr>
-				<tr>
-					<td colspan="6">
-						<div id="printableTemporaryCategories">
-							
-						</div>
+				<!-- Sagar Bele, 11-01-2013: Issue #663 Registration alignment -->
+				<tr id="tempCat">
+					<td colspan="1" valign="top"><b>Temporary Categories:</b></td>
+					<td colspan="5">
+						<div id="printableTemporaryCategories"></div>
 					</td>						
 				</tr>
 			</table>
