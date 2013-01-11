@@ -81,6 +81,7 @@ jQuery("#category").html(MODEL.patientAttributes[14]);
 			jQuery("#save").hide();
 		} else {
 			jQuery("#reprint").hide();
+			jQuery("#tempCat").hide();
 		}
 		
 		/*
@@ -122,15 +123,17 @@ jQuery("#category").html(MODEL.patientAttributes[14]);
 				// Convert temporary categories to printable format
 				jQuery("#temporaryCategories input").each(function(index, value){				
 					if(jQuery(value).is(":checked")){
-						jQuery("#printableTemporaryCategories").append("<span style='margin:5px;'>" + jQuery(value).val() + "</span>");
+						jQuery("#printableTemporaryCategories").after("<span style='margin:5px;'>" + jQuery(value).val() + "</span>");
 					}
 				});
 				
+/*				Sagar Bele, 11-01-2013: Issue #663 Registration alignment
 				if(!StringUtils.isBlank(jQuery("#printableTemporaryCategories").html())){
 					jQuery("#printableTemporaryCategories").prepend("<b>Temporary Categories:</b>");
 				}
-				
+*/				
 				jQuery("#temporaryCategories").hide();
+				jQuery("#tempCat").show();
 				
 				// submit form and print		
 				if(!reprint){
@@ -318,8 +321,10 @@ jQuery("#category").html(MODEL.patientAttributes[14]);
 						value="Accident" /> Accident <br />
 					</td>
 				</tr>
-				<tr>
-					<td colspan="6">
+				<!-- Sagar Bele, 11-01-2013: Issue #663 Registration alignment -->
+				<tr id="tempCat">
+					<td colspan="1" valign="top"><b>Temporary Categories:</b></td>
+					<td colspan="5">
 						<div id="printableTemporaryCategories"></div>
 					</td>
 				</tr>

@@ -76,6 +76,7 @@
 			jQuery("#save").hide();
 		} else {
 			jQuery("#reprint").hide();
+			jQuery("#tempCat").hide();
 		}
 		
 	});
@@ -104,11 +105,13 @@
 					}
 				});
 				
+/*				Sagar Bele, 11-01-2013: Issue #663 Registration alignment				
 				if(!StringUtils.isBlank(jQuery("#printableTemporaryCategories").html())){
 					jQuery("#printableTemporaryCategories").prepend("<b>Temporary Categories:</b>");
 				}
-				
+*/				
 				jQuery("#temporaryCategories").hide();
+				jQuery("#tempCat").show();
 				
 				// submit form and print		
 				if(!reprint){
@@ -285,8 +288,10 @@
 						value="Accident" /> Accident <br />
 					</td>
 				</tr>
-				<tr>
-					<td colspan="6">
+				<!-- Sagar Bele, 11-01-2013: Issue #663 Registration alignment -->
+				<tr id="tempCat">
+					<td colspan="1" valign="top"><b>Temporary Categories:</b></td>				
+					<td colspan="5">
 						<div id="printableTemporaryCategories"></div>
 					</td>
 				</tr>
