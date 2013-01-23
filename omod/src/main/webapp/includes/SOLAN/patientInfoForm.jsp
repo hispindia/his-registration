@@ -61,6 +61,8 @@ jQuery("#category").html(MODEL.patientAttributes[14]);
 				});	}
 			jQuery("#printSlip").hide();
 			jQuery("#save").hide();
+			// Sagar Bele : Date: 23-1-2013 : Issue #791
+			jQuery("#tempCat").hide();
 		} else {
 			jQuery("#reprint").hide();
 			jQuery("#tempCat").hide();
@@ -106,6 +108,8 @@ jQuery("#category").html(MODEL.patientAttributes[14]);
 				jQuery("#temporaryCategories input").each(function(index, value){				
 					if(jQuery(value).is(":checked")){
 						jQuery("#printableTemporaryCategories").append("<span style='margin:5px;'>" + jQuery(value).val() + "</span>");
+						// Sagar Bele : Date 23-1-2013 Issue 792
+						jQuery("#tempCat").show();
 					}
 				});
 				
@@ -115,7 +119,7 @@ jQuery("#category").html(MODEL.patientAttributes[14]);
 				}
 */				
 				jQuery("#temporaryCategories").hide();
-				jQuery("#tempCat").show();
+//				jQuery("#tempCat").hide();
 				
 				// submit form and print		
 				if(!reprint){
