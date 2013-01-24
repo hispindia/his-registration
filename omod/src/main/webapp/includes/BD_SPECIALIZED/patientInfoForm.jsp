@@ -74,6 +74,7 @@
 				});	}
 			jQuery("#printSlip").hide();
 			jQuery("#save").hide();
+			jQuery("#tempCat").hide();
 		} else {
 			jQuery("#reprint").hide();
 			jQuery("#tempCat").hide();
@@ -102,6 +103,7 @@
 				jQuery("#temporaryCategories input").each(function(index, value){				
 					if(jQuery(value).is(":checked")){
 						jQuery("#printableTemporaryCategories").append("<span style='margin:5px;'>" + jQuery(value).val() + "</span>");
+						jQuery("#tempCat").show();		
 					}
 				});
 				
@@ -111,7 +113,7 @@
 				}
 */				
 				jQuery("#temporaryCategories").hide();
-				jQuery("#tempCat").show();
+//				jQuery("#tempCat").show();
 				
 				// submit form and print		
 				if(!reprint){
