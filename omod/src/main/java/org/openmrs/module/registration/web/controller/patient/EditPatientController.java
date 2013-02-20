@@ -54,7 +54,8 @@ public class EditPatientController {
 	
 	@RequestMapping(method = RequestMethod.GET)
 	public String showForm(@RequestParam("patientId") Integer patientId, Model model) throws JaxenException,
-	    DocumentException, IOException, ParseException {
+	                                                                                 DocumentException, IOException,
+	                                                                                 ParseException {
 		Patient patient = Context.getPatientService().getPatient(patientId);
 		PatientModel patientModel = new PatientModel(patient);
 		model.addAttribute("patient", patientModel);
@@ -64,7 +65,7 @@ public class EditPatientController {
 	
 	@RequestMapping(method = RequestMethod.POST)
 	public String savePatient(@RequestParam("patientId") Integer patientId, HttpServletRequest request, Model model)
-	    throws ParseException {
+	                                                                                                                throws ParseException {
 		
 		Patient patient = Context.getPatientService().getPatient(patientId);
 		
@@ -125,9 +126,11 @@ public class EditPatientController {
 		// get address
 		if (!StringUtils.isBlank(parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_ADDRESS_DISTRICT))) {
 			RegistrationUtils.getPersonAddress(patient.getPersonAddress(),
-				parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_ADDRESS_POSTALADDRESS),
+			    parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_ADDRESS_POSTALADDRESS),
 			    parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_ADDRESS_DISTRICT),
-			    parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_ADDRESS_TEHSIL));
+			    /*Ghanshyam - Sagar :  date- 15 Dec, 2012. Redmine issue's for Bangladesh : #510 and #511 and #512
+			      changes tehsil to upazila */
+			    parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_ADDRESS_UPAZILA));
 		}
 		
 		return patient;

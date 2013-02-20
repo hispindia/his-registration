@@ -78,22 +78,24 @@ public class FindCreatePatientController {
 		RegistrationWebUtils.getAddressData(model);
 		
 		// ghanshyam,sagar date:24-12-2012 New Requirement #512 [Registration] module for Bangladesh specalized hospital
-		String hospitalName = GlobalPropertyUtil.getString(
-				HospitalCoreConstants.PROPERTY_HOSPITAL_NAME, "");
+		String hospitalName = GlobalPropertyUtil.getString(HospitalCoreConstants.PROPERTY_HOSPITAL_NAME, "");
 		
-		if(hospitalName.equals("BD_SPECIALIZED")){
-			DmsCommonService dmsCommonService=Context.getService(DmsCommonService.class);
-			List<DmsOpdUnit> opdidlist=dmsCommonService.getOpdActivatedIdList();
+		if (hospitalName.equals("BD_SPECIALIZED")) {
+			DmsCommonService dmsCommonService = Context.getService(DmsCommonService.class);
+			List<DmsOpdUnit> opdidlist = dmsCommonService.getOpdActivatedIdList();
 			List<String> lcname = new ArrayList<String>();
 			for (DmsOpdUnit doci : opdidlist) {
-				Concept con=doci.getOpdConceptId();
+				Concept con = doci.getOpdConceptId();
 				ConceptName conname = dmsCommonService.getOpdWardNameByConceptId(con);
-				lcname.add(con.getId() + "," + conname+"(Unit-"+doci.getUnitNo()+")");
+				if (doci.getUnitNo().equals(0)) {
+					lcname.add(con.getId() + "," + conname);
+				} else {
+					lcname.add(con.getId() + "," + conname + "(Unit-" + doci.getUnitNo() + ")");
+				}
 			}
 			model.addAttribute("OPDs", lcname);
 			return "/module/registration/patient/findCreatePatientBdSpecialized";
-		}
-		else{
+		} else {
 			model.addAttribute("OPDs", RegistrationWebUtils.getSubConcepts(RegistrationConstants.CONCEPT_NAME_OPD_WARD));
 			return "/module/registration/patient/findCreatePatient";
 		}
@@ -194,7 +196,9 @@ public class FindCreatePatientController {
 			patient.addAddress(RegistrationUtils.getPersonAddress(null,
 			    parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_ADDRESS_POSTALADDRESS),
 			    parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_ADDRESS_DISTRICT),
-			    parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_ADDRESS_TEHSIL)));
+			    /*Ghanshyam - Sagar :  date- 15 Dec, 2012. Redmine issue's for Bangladesh : #510 and #511 and #512
+			      changes tehsil to upazila */
+			    parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_ADDRESS_UPAZILA)));
 		}
 		
 		// get custom person attribute
@@ -238,13 +242,13 @@ public class FindCreatePatientController {
 		/*ghanshyam,sagar date:25-12-2012 New Requirement #512 [Registration] module for Bangladesh specalized hospital
 		 * there is no use of Integer.parseInt so removed
 		 */
-		 
+
 		/*
 		Concept selectedOPDConcept = Context.getConceptService().getConcept(
 		    Integer.parseInt(parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_OPD_WARD)));
 		    */
 		Concept selectedOPDConcept = Context.getConceptService().getConcept(
-			    parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_OPD_WARD));
+		    parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_OPD_WARD));
 		Obs opdObs = new Obs();
 		opdObs.setConcept(opdWardConcept);
 		opdObs.setValueCoded(selectedOPDConcept);

@@ -53,15 +53,14 @@ import org.openmrs.util.OpenmrsUtil;
 import org.springframework.ui.Model;
 
 public class RegistrationWebUtils {
-
+	
 	/**
 	 * Optimize the request's parameters
 	 * 
 	 * @param request
 	 * @return
 	 */
-	public static Map<String, String> optimizeParameters(
-			HttpServletRequest request) {
+	public static Map<String, String> optimizeParameters(HttpServletRequest request) {
 		Map<String, String> parameters = new HashMap<String, String>();
 		for (@SuppressWarnings("rawtypes")
 		Enumeration e = request.getParameterNames(); e.hasMoreElements();) {
@@ -72,7 +71,7 @@ public class RegistrationWebUtils {
 		}
 		return parameters;
 	}
-
+	
 	/**
 	 * Get the list of concepts which are answered for a concept
 	 * 
@@ -83,12 +82,11 @@ public class RegistrationWebUtils {
 		Concept opdward = Context.getConceptService().getConcept(conceptName);
 		StringBuilder sb = new StringBuilder();
 		for (ConceptAnswer ca : opdward.getAnswers()) {
-			sb.append(ca.getAnswerConcept().getConceptId() + ","
-					+ ca.getAnswerConcept().getName().getName() + "|");
+			sb.append(ca.getAnswerConcept().getConceptId() + "," + ca.getAnswerConcept().getName().getName() + "|");
 		}
 		return sb.toString();
 	}
-
+	
 	/**
 	 * Send patient for OPD Queue
 	 * 
@@ -96,42 +94,35 @@ public class RegistrationWebUtils {
 	 * @param selectedOPDConcept
 	 * @param revisit
 	 */
-	public static void sendPatientToOPDQueue(Patient patient,
-			Concept selectedOPDConcept, boolean revisit) {
+	public static void sendPatientToOPDQueue(Patient patient, Concept selectedOPDConcept, boolean revisit) {
 		Concept referralConcept = null;
 		if (!revisit) {
-			referralConcept = Context.getConceptService().getConcept(
-					"New Patient");
+			referralConcept = Context.getConceptService().getConcept("New Patient");
 		} else {
 			referralConcept = Context.getConceptService().getConcept("Revisit");
 		}
-
-		OpdPatientQueue queue = Context.getService(PatientQueueService.class)
-				.getOpdPatientQueue(
-						patient.getPatientIdentifier().getIdentifier(),
-						selectedOPDConcept.getConceptId());
+		
+		OpdPatientQueue queue = Context.getService(PatientQueueService.class).getOpdPatientQueue(
+		    patient.getPatientIdentifier().getIdentifier(), selectedOPDConcept.getConceptId());
 		if (queue == null) {
 			queue = new OpdPatientQueue();
 			queue.setPatient(patient);
 			queue.setCreatedOn(new Date());
 			queue.setBirthDate(patient.getBirthdate());
-			queue.setPatientIdentifier(patient.getPatientIdentifier()
-					.getIdentifier());
+			queue.setPatientIdentifier(patient.getPatientIdentifier().getIdentifier());
 			queue.setOpdConcept(selectedOPDConcept);
 			queue.setOpdConceptName(selectedOPDConcept.getName().getName());
-			queue.setPatientName(patient.getGivenName() + " "
-					+ patient.getMiddleName() + " " + patient.getFamilyName());
+			queue.setPatientName(patient.getGivenName() + " " + patient.getMiddleName() + " " + patient.getFamilyName());
 			queue.setReferralConcept(referralConcept);
 			queue.setReferralConceptName(referralConcept.getName().getName());
 			queue.setSex(patient.getGender());
-			PatientQueueService queueService = Context
-					.getService(PatientQueueService.class);
+			PatientQueueService queueService = Context.getService(PatientQueueService.class);
 			queueService.saveOpdPatientQueue(queue);
-
+			
 		}
-
+		
 	}
-
+	
 	/**
 	 * Get the list of address
 	 * 
@@ -144,40 +135,33 @@ public class RegistrationWebUtils {
 	 * Ghanshyam - Sagar : date- 15 Dec, 2012. Redmine issue's for Bangladesh :
 	 * #510 and #511 and #512 Tehsil renamed as Upazila
 	 */
-	public static void getAddressData(Model model)
-			throws MalformedURLException, DocumentException, JaxenException {
-		File addressFile = new File(OpenmrsUtil.getApplicationDataDirectory()
-				+ "addresshierarchy.xml");
+	public static void getAddressData(Model model) throws MalformedURLException, DocumentException, JaxenException {
+		File addressFile = new File(OpenmrsUtil.getApplicationDataDirectory() + "addresshierarchy.xml");
 		if (addressFile.exists()) {
 			SAXReader reader = new SAXReader();
 			Document document = reader.read(addressFile.toURI().toURL());
-			XPath distSelector = new Dom4jXPath("//state/district");
+			XPath distSelector = new Dom4jXPath("//country/district");
 			@SuppressWarnings("rawtypes")
 			List distList = distSelector.selectNodes(document);
 			String[] distArr = new String[distList.size()];
 			String[] upazilaArr = new String[distList.size()];
 			if (distList.size() > 0) {
 				for (int i = 0; i < distList.size(); i++) {
-					distArr[i] = ((Element) distList.get(i))
-							.attributeValue("name");
+					distArr[i] = ((Element) distList.get(i)).attributeValue("name");
 					@SuppressWarnings("rawtypes")
-					List upazilaList = ((Element) distList.get(i))
-							.elements("upazila");
-					upazilaArr[i] = ((Element) upazilaList.get(0))
-							.attributeValue("name") + ",";
+					List upazilaList = ((Element) distList.get(i)).elements("upazila");
+					upazilaArr[i] = ((Element) upazilaList.get(0)).attributeValue("name") + ",";
 					for (int j = 1; j < (upazilaList.size() - 1); j++) {
-						upazilaArr[i] += ((Element) upazilaList.get(j))
-								.attributeValue("name") + ",";
+						upazilaArr[i] += ((Element) upazilaList.get(j)).attributeValue("name") + ",";
 					}
-					upazilaArr[i] += ((Element) upazilaList.get(upazilaList
-							.size() - 1)).attributeValue("name");
+					upazilaArr[i] += ((Element) upazilaList.get(upazilaList.size() - 1)).attributeValue("name");
 				}
 			}
 			model.addAttribute("districts", distArr);
 			model.addAttribute("upazilas", upazilaArr);
 		}
 	}
-
+	
 	/**
 	 * Create a new encounter
 	 * 
@@ -188,23 +172,18 @@ public class RegistrationWebUtils {
 	public static Encounter createEncounter(Patient patient, boolean revisit) {
 		EncounterType encounterType = null;
 		if (!revisit) {
-			String encounterTypeName = GlobalPropertyUtil.getString(
-					RegistrationConstants.PROPERTY_ENCOUNTER_TYPE_REGINIT,
-					"REGINITIAL");
-			encounterType = Context.getEncounterService().getEncounterType(
-					encounterTypeName);
+			String encounterTypeName = GlobalPropertyUtil.getString(RegistrationConstants.PROPERTY_ENCOUNTER_TYPE_REGINIT,
+			    "REGINITIAL");
+			encounterType = Context.getEncounterService().getEncounterType(encounterTypeName);
 		} else {
-			String encounterTypeName = GlobalPropertyUtil.getString(
-					RegistrationConstants.PROPERTY_ENCOUNTER_TYPE_REVISIT,
-					"REGREVISIT");
-			encounterType = Context.getEncounterService().getEncounterType(
-					encounterTypeName);
+			String encounterTypeName = GlobalPropertyUtil.getString(RegistrationConstants.PROPERTY_ENCOUNTER_TYPE_REVISIT,
+			    "REGREVISIT");
+			encounterType = Context.getEncounterService().getEncounterType(encounterTypeName);
 		}
-
+		
 		// get location
-		Location location = new Location(GlobalPropertyUtil.getInteger(
-				RegistrationConstants.PROPERTY_LOCATION, 1));
-
+		Location location = new Location(GlobalPropertyUtil.getInteger(RegistrationConstants.PROPERTY_LOCATION, 1));
+		
 		// create encounter
 		Encounter encounter = new Encounter();
 		encounter.setEncounterType(encounterType);

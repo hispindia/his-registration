@@ -82,21 +82,24 @@ public class ShowPatientInfoController {
 		PatientModel patientModel = new PatientModel(patient);
 		model.addAttribute("patient", patientModel);
 		// ghanshyam,Sagar date:26-12-2012 New Requirement #512 [Registration] module for Bangladesh specalized hospital
-		String hospitalName = GlobalPropertyUtil.getString(
-				HospitalCoreConstants.PROPERTY_HOSPITAL_NAME, "");
+		String hospitalName = GlobalPropertyUtil.getString(HospitalCoreConstants.PROPERTY_HOSPITAL_NAME, "");
 		
-		if(hospitalName.equals("BD_SPECIALIZED")){
-			DmsCommonService dmsCommonService=Context.getService(DmsCommonService.class);
-			List<DmsOpdUnit> opdidlist=dmsCommonService.getOpdActivatedIdList();
+		if (hospitalName.equals("BD_SPECIALIZED")) {
+			DmsCommonService dmsCommonService = Context.getService(DmsCommonService.class);
+			List<DmsOpdUnit> opdidlist = dmsCommonService.getOpdActivatedIdList();
 			List<String> lcname = new ArrayList<String>();
 			for (DmsOpdUnit doci : opdidlist) {
-				Concept con=doci.getOpdConceptId();
+				Concept con = doci.getOpdConceptId();
 				ConceptName conname = dmsCommonService.getOpdWardNameByConceptId(con);
-				lcname.add(con.getId() + "," + conname+"(Unit-"+doci.getUnitNo()+")");
+				if (doci.getUnitNo().equals(0)) {
+					lcname.add(con.getId() + "," + conname);
+				} else {
+					lcname.add(con.getId() + "," + conname + "(Unit-" + doci.getUnitNo() + ")");
+				}
+				
 			}
 			model.addAttribute("OPDs", lcname);
-		}
-		else{
+		} else {
 			model.addAttribute("OPDs", RegistrationWebUtils.getSubConcepts(RegistrationConstants.CONCEPT_NAME_OPD_WARD));
 		}
 		
@@ -155,12 +158,11 @@ public class ShowPatientInfoController {
 			}
 		}
 		
-		if(hospitalName.equals("BD_SPECIALIZED")){
+		if (hospitalName.equals("BD_SPECIALIZED")) {
 			return "/module/registration/patient/showPatientInfoBdSpecialized";
-			}
-			else{
-				return "/module/registration/patient/showPatientInfo";
-			}
+		} else {
+			return "/module/registration/patient/showPatientInfo";
+		}
 	}
 	
 	/**
