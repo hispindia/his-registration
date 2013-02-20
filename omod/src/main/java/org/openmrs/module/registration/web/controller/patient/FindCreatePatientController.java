@@ -77,10 +77,10 @@ public class FindCreatePatientController {
 		    RegistrationWebUtils.getSubConcepts(RegistrationConstants.CONCEPT_NAME_REASON_FOR_REFERRAL));
 		RegistrationWebUtils.getAddressData(model);
 		
-		// ghanshyam,sagar date:24-12-2012 New Requirement #512 [Registration] module for Bangladesh specalized hospital
+		// ghanshyam,date:20-02-2013 New Requirement #512 [Registration] module for Bangladesh hospital
 		String hospitalName = GlobalPropertyUtil.getString(HospitalCoreConstants.PROPERTY_HOSPITAL_NAME, "");
 		
-		if (hospitalName.equals("BD_SPECIALIZED")) {
+		if (hospitalName.equals("BD_HOSPITAL")) {
 			DmsCommonService dmsCommonService = Context.getService(DmsCommonService.class);
 			List<DmsOpdUnit> opdidlist = dmsCommonService.getOpdActivatedIdList();
 			List<String> lcname = new ArrayList<String>();
@@ -94,7 +94,7 @@ public class FindCreatePatientController {
 				}
 			}
 			model.addAttribute("OPDs", lcname);
-			return "/module/registration/patient/findCreatePatientBdSpecialized";
+			return "/module/registration/patient/findCreatePatientBdHospital";
 		} else {
 			model.addAttribute("OPDs", RegistrationWebUtils.getSubConcepts(RegistrationConstants.CONCEPT_NAME_OPD_WARD));
 			return "/module/registration/patient/findCreatePatient";
@@ -239,7 +239,7 @@ public class FindCreatePatientController {
 		 * ADD OPD ROOM
 		 */
 		Concept opdWardConcept = Context.getConceptService().getConcept(RegistrationConstants.CONCEPT_NAME_OPD_WARD);
-		/*ghanshyam,sagar date:25-12-2012 New Requirement #512 [Registration] module for Bangladesh specalized hospital
+		/*ghanshyam,date:20-02-2013 New Requirement #512 [Registration] module for Bangladesh hospital
 		 * there is no use of Integer.parseInt so removed
 		 */
 

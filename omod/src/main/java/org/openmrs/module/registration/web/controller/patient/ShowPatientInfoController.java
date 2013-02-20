@@ -81,10 +81,10 @@ public class ShowPatientInfoController {
 		Patient patient = Context.getPatientService().getPatient(patientId);
 		PatientModel patientModel = new PatientModel(patient);
 		model.addAttribute("patient", patientModel);
-		// ghanshyam,Sagar date:26-12-2012 New Requirement #512 [Registration] module for Bangladesh specalized hospital
+		// ghanshyam,date:20-02-2013 New Requirement #512 [Registration] module for Bangladesh hospital
 		String hospitalName = GlobalPropertyUtil.getString(HospitalCoreConstants.PROPERTY_HOSPITAL_NAME, "");
 		
-		if (hospitalName.equals("BD_SPECIALIZED")) {
+		if (hospitalName.equals("BD_HOSPITAL")) {
 			DmsCommonService dmsCommonService = Context.getService(DmsCommonService.class);
 			List<DmsOpdUnit> opdidlist = dmsCommonService.getOpdActivatedIdList();
 			List<String> lcname = new ArrayList<String>();
@@ -159,7 +159,7 @@ public class ShowPatientInfoController {
 		}
 		
 		if (hospitalName.equals("BD_SPECIALIZED")) {
-			return "/module/registration/patient/showPatientInfoBdSpecialized";
+			return "/module/registration/patient/showPatientInfoBdHospital";
 		} else {
 			return "/module/registration/patient/showPatientInfo";
 		}
