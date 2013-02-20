@@ -1,5 +1,5 @@
  <%--
- *  Copyright 2012 Society for Health Information Systems Programmes, India (HISP India)
+ *  Copyright 2013 Society for Health Information Systems Programmes, India (HISP India)
  *
  *  This file is part of Registration module.
  *
@@ -15,53 +15,55 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with Registration module.  If not, see <http://www.gnu.org/licenses/>.
- *  author: Ghanshyam,Sagar
- *  date:   24-12-2012
+ *  author: Ghanshyam
+ *  date:   20-02-2013
 --%> 
-
 <%@ include file="/WEB-INF/template/include.jsp" %>
 <%@ include file="/WEB-INF/template/header.jsp" %>
 <%@ include file="../includes/js_css.jsp" %>
-<openmrs:require privilege="Add Patients" otherwise="/login.htm" redirect="/findPatient.htm" />
+<openmrs:require privilege="View Patients" otherwise="/login.htm" redirect="/module/registration/showPatientInfo.form" />
 <openmrs:globalProperty key="hospitalcore.hospitalName" defaultValue="ddu" var="hospitalName"/>
-<br/>
 
 <script type="text/javascript">
-
-	// Hospital name
-	hospitalName = "${hospitalName}";
-
-	// Districts
-	var _districts = new Array();
-	<c:forEach var="district" items="${districts}" varStatus="status">
-		_districts[${status.index}] = "${district}";
+	var _attributes = new Array();
+	<c:forEach var="entry" items="${patient.attributes}">
+		_attributes[${entry.key}] = "${entry.value}";
 	</c:forEach>
 	
-	// Upazilas
-	//Ghanshyam - Sagar :  date- 15 Dec, 2012. Redmine issue's for Bangladesh : #510 and #511 and #512
-	var _upazilas = new Array();
-	<c:forEach var="upazila" items="${upazilas}" varStatus="status">
-		_upazilas[${status.index}] = "${upazila}";
+	var _observations = new Array();
+	<c:forEach var="entry" items="${observations}">
+		_observations[${entry.key}] = "${entry.value}";
 	</c:forEach>
 	
 	//Opds
 	var _OPDs = "";
 	<c:forEach var="OPD" items="${OPDs}" varStatus="status">
 		_OPDs = _OPDs + "${OPD} |";
-	</c:forEach>				
+	</c:forEach>
 	
 	/**
-	 ** MODEL FROM CONTROLLER
+	 ** VALUES FROM MODEL
 	 **/
 	MODEL = {
-		patientIdentifier: "${patientIdentifier}",
-		districts: _districts,
-		upazilas: _upazilas,
+		patientId: "${patient.patientId}",
+		patientIdentifier: "${patient.identifier}",
+		patientName: "${patient.fullname}",
+		patientAge: "${patient.age}",
+		patientGender: "${patient.gender}",
+		patientAddress: "${patient.address}",
+		patientAttributes: _attributes,
+		observations: _observations,
+		currentDateTime: "${currentDateTime}",	
+		selectedOPD: "${selectedOPD}",
 		OPDs: _OPDs,
-		referralHospitals: "${referralHospitals}",
-		referralReasons: "${referralReasons}"
-	}
+		dueDate: "${dueDate}",
+		daysLeft: "${daysLeft}",
+		reprint: "${param.reprint eq 'true'}",
+		tempCategoryId: "${tempCategoryId}",
+		opdWardId: "${opdWardId}"
+	};
 </script>
-<jsp:include page="../includes/${hospitalName}/patientRegisterForm.jsp"/>
+
+<jsp:include page="../includes/${hospitalName}/patientInfoForm.jsp"/>
 
 <%@ include file="/WEB-INF/template/footer.jsp" %>  
