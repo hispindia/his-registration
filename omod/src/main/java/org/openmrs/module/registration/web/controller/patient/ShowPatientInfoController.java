@@ -158,7 +158,7 @@ public class ShowPatientInfoController {
 			}
 		}
 		
-		if (hospitalName.equals("BD_SPECIALIZED")) {
+		if (hospitalName.equals("BD_HOSPITAL")) {
 			return "/module/registration/patient/showPatientInfoBdHospital";
 		} else {
 			return "/module/registration/patient/showPatientInfo";
