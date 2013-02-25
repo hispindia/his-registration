@@ -433,21 +433,18 @@ td.border {
 <form id="patientRegistrationForm" method="POST">
 	<table cellspacing="0">
 		<tr>
-			<td valign="top" class="cell"><b>Name *</b>
-			</td>
+			<td valign="top" class="cell"><b>Name *</b></td>
 			<td class="cell"><input id="patientName" type="hidden"
 				name="patient.name" />
 				<div id="searchbox"></div>
-				<div id="numberOfFoundPatients"></div>
-			</td>
+				<div id="numberOfFoundPatients"></div></td>
 			<td class="cell"><b>ID Number * &nbsp;&nbsp; <input readonly
 					name="patient.identifier" style="border: none; width: 250px;" /> </b>
 			</td>
 
 		</tr>
 		<tr>
-			<td class="cell"><b>Demographics *</b>
-			</td>
+			<td class="cell"><b>Demographics *</b></td>
 			<td class="cell">dd/mm/yyyy<br />
 				<table>
 					<tr>
@@ -456,27 +453,24 @@ td.border {
 						<td>Gender</td>
 					</tr>
 					<tr>
-						<td><span id="estimatedAge" />
-						</td>
+						<td><span id="estimatedAge" /></td>
 						<td><input type="hidden" id="calendar" /> <input
 							id="birthdate" name="patient.birthdate" /> <img
 							id="calendarButton"
 							src="moduleResources/registration/calendar.gif" /> <input
 							id="birthdateEstimated" type="hidden"
-							name="patient.birthdateEstimate" value="true" />
-						</td>
+							name="patient.birthdateEstimate" value="true" /></td>
 						<td><select id="patientGender" name="patient.gender">
 								<option value="Any"></option>
 								<option value="M">Male</option>
 								<option value="F">Female</option>
 								<option value="O">Others</option>
 
-						</select>
-						</td>
+						</select></td>
 					</tr>
-				</table>
-			</td>
+				</table></td>
 			<td rowspan="3" class="border">
+				<%-- ghanshyam 25-02-2013 New Requirement #966[Billing]Add Paid Bill/Add Free Bill for Bangladesh module(removed Patient Category)--%>
 				<%-- 
 			 <b>&nbsp;&nbsp;Patient category</b><br />
 			 --%>
@@ -498,53 +492,49 @@ td.border {
 						<td><input id="patientNationalId" name="patient.attribute.20" />
 						</td>
 					</tr>
-				</table></td>
-		</tr>
-
-		<tr>
-		</tr>
-
-		<tr>
-			<td class="cell"><b>Address</b>
+				</table>
 			</td>
+		</tr>
+
+		<tr>
+		</tr>
+
+		<tr>
+			<td class="cell"><b>Address</b></td>
 			<td class="cell">
 				<table>
 					<tr>
 						<td>Postal Address:</td>
 						<td><input id="patientPostalAddress"
-							name="patient.address.postalAddress" style="width: 300px;" />
-						</td>
+							name="patient.address.postalAddress" style="width: 300px;" /></td>
 					</tr>
 					<tr>
 						<td>District:</td>
 						<td><select id="districts" name="patient.address.district"
 							onChange="PAGE.changeDistrict();" style="width: 200px;">
-						</select>
-						</td>
+						</select></td>
 					</tr>
 					<tr>
 						<td>Upazila:</td>
 						<td><select id="upazilas" name="patient.address.upazila"
 							style="width: 200px;">
-						</select>
-						</td>
+						</select></td>
 					</tr>
-				</table></td>
+				</table>
+			</td>
 		</tr>
 		<tr>
-			<td class="cell"><b>Phone number</b>
-			</td>
+			<td class="cell"><b>Phone number</b></td>
 			<td class="cell"><input id="patientPhoneNumber"
-				name="person.attribute.16" style="width: 200px;" />
-			</td>
+				name="person.attribute.16" style="width: 200px;" /></td>
 		</tr>
 		<tr>
-			<td class="cell"><b>Relative Name *</b>
-			</td>
+			<td class="cell"><b>Relative Name *</b></td>
 			<td class="cell">
 				<div id="patientRelativeNameSection"></div> <input
 				id="patientRelativeName" name="person.attribute.8"
-				style="width: 200px;" /></td>
+				style="width: 200px;" />
+			</td>
 
 			<b>Visit Information</b>
 			<br />
@@ -558,21 +548,18 @@ td.border {
 							<td>Referred From</td>
 							<td><select id="referralHospitals"
 								name="patient.referred.from" style="width: 200px;">
-							</select>
-							</td>
+							</select></td>
 						</tr>
 						<tr>
 							<td>Referral Type</td>
 							<td><select id="referralReasons"
 								name="patient.referred.reason" style="width: 200px;">
-							</select>
-							</td>
+							</select></td>
 						</tr>
 					</table>
 				</div> <b>OPD Room to Visit: *</b> <select id="opdWard"
 				name="patient.opdWard">
-			</select>
-			</td>
+			</select></td>
 
 
 		</tr>
@@ -580,7 +567,8 @@ td.border {
 			<td colspan="3" style="padding: 0em 30em 0em 30em;"><input
 				type="button" value="Save" onclick="PAGE.submit();" /> <input
 				type="button" value="Reset"
-				onclick="window.location.href=window.location.href" /></td>
+				onclick="window.location.href=window.location.href" />
+			</td>
 		</tr>
 	</table>
 </form>
