@@ -1,5 +1,5 @@
 <%--
- *  Copyright 2012 Society for Health Information Systems Programmes, India (HISP India)
+ *  Copyright 2013 Society for Health Information Systems Programmes, India (HISP India)
  *
  *  This file is part of Registration module.
  *
@@ -15,8 +15,8 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with Registration module.  If not, see <http://www.gnu.org/licenses/>.
- *  author: Ghanshyam,Sagar
- *  date:   24-12-2012
+ *  author: Ghanshyam
+ *  date:   20-02-2013
 --%> 
 
 <script type="text/javascript">
