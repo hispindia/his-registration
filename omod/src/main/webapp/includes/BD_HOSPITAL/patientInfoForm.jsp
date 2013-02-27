@@ -27,6 +27,8 @@
 		jQuery("#age").html(MODEL.patientAge);
 		jQuery("#name").html(MODEL.patientName);
 		
+		// ghanshyam 27-02-2013 Feedback #966[Billing]Add Paid Bill/Add Free Bill for Bangladesh module(remove category from registration,OPD,IPD,Inventory)
+		/*
 		if(MODEL.patientAttributes[14]){
 			pattern = /[A-Z]+[,][A-Z]/;
 			if(pattern.test(MODEL.patientAttributes[14])){
@@ -42,6 +44,8 @@
 			}
 								
 		}
+		*/
+		
         jQuery("#nationalId").html(MODEL.patientAttributes[20]);
 		jQuery("#phoneNumber").html(MODEL.patientAttributes[16]);
 		jQuery("#gender").html(MODEL.patientGender);
@@ -272,11 +276,14 @@
 					<td colspan="1"><b>Date/Time:</b></td>
 					<td colspan="5"><span id="datetime" /></td>
 				</tr>
+			<%-- ghanshyam 27-02-2013 Feedback #966[Billing]Add Paid Bill/Add Free Bill for Bangladesh module(remove category from registration,OPD,IPD,Inventory)--%>
+				<%--
 				<tr>
 					<td colspan="1"><b>Category:</b></td>
 					<td colspan="2"><span id="category" /></td>
 					<td><span id="FREE" /></td>
 				</tr>
+				--%>
 				<tr>
 					<td colspan="1"><b>National ID:</b></td>
 					<td colspan="2"><span id="nationalId" /></td>	
