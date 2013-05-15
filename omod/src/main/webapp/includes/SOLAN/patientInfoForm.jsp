@@ -51,6 +51,10 @@ jQuery("#category").html(MODEL.patientAttributes[14]);
 			var opdWardId=MODEL.opdWardId;
 		jQuery("#opdWard").val(MODEL.observations[opdWardId]);
 			// 26/05/12: Marta, avoid error from empty string. Bug #219
+			
+			//ghanshyam 15-may-2013 Bug #1614 Reprint Slip: Solan, DDU, Mandi
+			jQuery("#opdWard").attr("disabled", "disabled");
+			jQuery("input[name='temporary.attribute.11']").attr("disabled", "disabled");
 		
 			// 2/7/2012: harsh removed dependency on hardcoded id for temp cat and opd ward.
 			var tempCategoryId=MODEL.tempCategoryId;
