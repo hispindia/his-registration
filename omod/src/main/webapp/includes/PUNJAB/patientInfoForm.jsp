@@ -48,6 +48,8 @@
 			jQuery("#printSlip").hide();
 			// 14/06/12: Buy new slip is hided by Kesavulu - Support #263
 			jQuery("#buySlip").hide();
+			//ghanshyam 15-may-2013 Bug #1609 Mohali- The temporary category appears twice on reprint screen
+			jQuery("#tempCat").hide();
 		} else {
 			jQuery("#reprint").hide();
 			jQuery("#tempCat").hide();
