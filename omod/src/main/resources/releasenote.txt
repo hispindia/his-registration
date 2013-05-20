@@ -1,3 +1,19 @@
+2.2.17
+released by ghanshyam on 20-may-2013
+- #467	 Duplicate Identifier in registration
+- #570	Advance search issues while using  age ,  Relative Name and phone No,
+- #663	Temporary category alignment issue in print out
+- #791	Temporary Category appears twice on Reprint Screen(Mandi)
+- #792	Temporary category appears in the printout even if it is not selected.
+- #1050	The print out of the generated slip shows a strange redmine issue message (in Mandi)
+- #1107	The spelling of ADOLESCENT is wrong in the patient registration slip
+- #1110	Search improved manifold in registration , billing , laboratory, opd  and pharmacy in HP
+- #1298	Slowness in the server in Solan, Mandi and Tanda
+- #1300	Search improved manifold in registration , billing , laboratory, opd  and pharmacy in Punjab
+- #1379	Under Advance Search , 'Others' under gender option doesn’t populate
+- #1438	The print out of the registration slip shows a strange redmine issue message (in Solan)
+
+
 2.2.16
 Bug #318: [REGISTRATION] The identifier is deleted on pressing backspace/delete
 Bug #359: [REGISTRATION] Duplication of revisit patients when saving
