@@ -13,10 +13,11 @@ released by ghanshyam on 20-may-2013
 - #1379	Under Advance Search , 'Others' under gender option doesn’t populate
 - #1438	The print out of the registration slip shows a strange redmine issue message (in Solan)
 
-
 2.2.16
+released by harsh
 Bug #318: [REGISTRATION] The identifier is deleted on pressing backspace/delete
 Bug #359: [REGISTRATION] Duplication of revisit patients when saving
+
 2.2.15
 - Configuration
 	- The person attribute Postal address should be modified as explained in issue Bug #289
