@@ -158,6 +158,8 @@ public class ShowPatientInfoController {
 			}
 		}
 		
+		//ghanshyam  20-may-2013 #1648 capture Health ID and Registration Fee Type
+		model.addAttribute("regFee", GlobalPropertyUtil.getString(RegistrationConstants.PROPERTY_REGISTRATION_FEE, ""));
 		if (hospitalName.equals("BD_HOSPITAL")) {
 			return "/module/registration/patient/showPatientInfoBdHospital";
 		} else {
@@ -240,15 +242,32 @@ public class ShowPatientInfoController {
 				String[] parts = name.split("\\.");
 				String idText = parts[parts.length - 1];
 				Integer id = Integer.parseInt(idText);
-				Concept tempCatConcept = Context.getConceptService().getConceptByName("TEMPORARY CATEGORY");
+			
+				//ghanshyam  20-may-2013 #1648 capture Health ID and Registration Fee Type
+				Concept concept = Context.getConceptService().getConcept(id);
+				String conname=concept.getName().toString();
 				
-				Concept temporaryAttributeConcept = Context.getConceptService().getConcept(tempCatConcept.getConceptId());
-				Obs temporaryAttribute = new Obs();
-				temporaryAttribute.setConcept(temporaryAttributeConcept);
-				logger.info("concept: " + temporaryAttributeConcept);
-				logger.info("value: " + parameters.get(name));
-				temporaryAttribute.setValueAsString(parameters.get(name));
-				encounter.addObs(temporaryAttribute);
+				if(conname.equals("REGISTRATION FEE")){
+					Obs registrationFeeAttribute = new Obs();
+					registrationFeeAttribute.setConcept(concept);
+					registrationFeeAttribute .setValueAsString(parameters.get(name));
+					encounter.addObs(registrationFeeAttribute);
+				}
+				
+				if(conname.equals("REGISTRATION FEE FREE REASON")){
+					Obs registrationFeeFreeReasonAttribute = new Obs();
+					registrationFeeFreeReasonAttribute.setConcept(concept);
+					registrationFeeFreeReasonAttribute.setValueAsString(parameters.get(name));
+					encounter.addObs(registrationFeeFreeReasonAttribute);
+				}
+				
+				if(conname.equals("TEMPORARY CATEGORY")){
+					Obs temporaryAttribute = new Obs();
+					temporaryAttribute.setConcept(concept);
+					temporaryAttribute.setValueAsString(parameters.get(name));
+					encounter.addObs(temporaryAttribute);
+				}
+				
 			}
 		}
 		

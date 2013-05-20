@@ -81,7 +81,9 @@ td.border {
 							beforeNewSearch : PAGE.searchPatientBefore
 						});
 
-				// hide free number
+				// hide free reason
+				//ghanshyam 25-feb-2013 New Requirement #966[Billing]Add Paid Bill/Add Free Bill for Bangladesh module(removed Patient Category)
+				/*
 				jQuery("#freeField").hide();
 				jQuery("#patCatGeneral").attr("checked", "checked");
 
@@ -89,11 +91,10 @@ td.border {
 				jQuery("#free").click(function() {
 					VALIDATORS.freeCheck();
 				});
-				
-				
 				jQuery("#patCatGeneral").click(function() {
 					VALIDATORS.generalCheck();
 				});
+				*/
 				
 				jQuery("#calendarButton").click(function() {
 					jQuery("#calendar").datepicker("show");
@@ -334,9 +335,12 @@ td.border {
 			}
 			;
 
+			 //ghanshyam 25-feb-2013 New Requirement #966[Billing]Add Paid Bill/Add Free Bill for Bangladesh module(removed Patient Category)
+            /*
 			if (!VALIDATORS.validatePatientCategory()) {
 				return false;
 			}
+			*/
 
 			if (!StringUtils.isBlank(jQuery("#patientPhoneNumber").val())) {
 				if (!StringUtils.isDigit(jQuery("#patientPhoneNumber").val())) {
@@ -355,6 +359,8 @@ td.border {
 	VALIDATORS = {
 
 		/** VALIDATE PATIENT CATEGORY */
+		//ghanshyam 25-feb-2013 New Requirement #966[Billing]Add Paid Bill/Add Free Bill for Bangladesh module(removed Patient Category)
+		/*
 		validatePatientCategory : function() {
 			if (jQuery("#patCatGeneral").attr('checked') == false
 					&& jQuery("#free").attr('checked') == false) {
@@ -362,19 +368,21 @@ td.border {
 				return false;
 			} else {
 				if (jQuery("#free").attr('checked')) {
-				/*   Sagar Bele, 24-12-2012, Issue #550 Removed validation for free reason field 
 					if (jQuery("#freeReason").val().length <= 0) {
 						alert('Please enter Reason for Free');
 						return false;
-					} */
+					}
 				}
 				
 				return true;
 			} 
 		},
+		*/
 
 	
 		/** CHECK WHEN FREE CATEGORY IS SELECTED */
+		//ghanshyam 25-feb-2013 New Requirement #966[Billing]Add Paid Bill/Add Free Bill for Bangladesh module(removed Patient Category)
+		/*
 		freeCheck : function() {
 			if (jQuery("#free").is(':checked')) {
 				jQuery("#freeField").show();
@@ -385,10 +393,13 @@ td.border {
 				jQuery("#freeField").hide();
 			}
 		},
+		*/
 
 	
 
 		/** CHECK WHEN GENERAL CATEGORY IS SELECTED */
+		//ghanshyam 25-feb-2013 New Requirement #966[Billing]Add Paid Bill/Add Free Bill for Bangladesh module(removed Patient Category)
+		/*
 		generalCheck : function(obj) {
 			if (jQuery("#patCatGeneral").is(':checked')) {
 				
@@ -399,6 +410,7 @@ td.border {
 				}
 			}
 		},
+		*/
 
 			
 		/*
@@ -455,7 +467,7 @@ td.border {
 						<td>Gender</td>
 					</tr>
 					<tr>
-						<td><span id="estimatedAge" />
+						<td><span id="estimatedAge"></span>
 						</td>
 						<td><input type="hidden" id="calendar" /> <input
 							id="birthdate" name="patient.birthdate" /> <img
@@ -475,10 +487,12 @@ td.border {
 				</table>
 			</td>
 			<td rowspan="3" class="border">
-				<!-- <b>&nbsp;&nbsp;Patient information</b> <br /> --> <b>&nbsp;&nbsp;Patient
-					category</b><br />
+			<%-- ghanshyam 25-02-2013 New Requirement #966[Billing]Add Paid Bill/Add Free Bill for Bangladesh module(removed Patient Category)--%>
+			<%--
+			<b>&nbsp;&nbsp;Patient category</b><br />
+			--%>
 				<table cellspacing="10">
-
+				<%--
 					<tr>
 						<td><input id="patCatGeneral" type="checkbox"
 							name="person.attribute.14" value="General" /> General</td>
@@ -491,16 +505,19 @@ td.border {
 						</span>
 						</td>
 					</tr>
-					<tr>
-					</tr>		
-				
-					<tr>
-					</tr>		
+					--%>
 					<tr>
 						<td><b>National ID:</b></td>
 							<td> 
 								<input id="patientNationalId" name="patient.attribute.20" />
 							</td>
+					</tr>
+					
+					<%-- ghanshyam  20-may-2013 #1648 capture Health ID and Registration Fee Type --%>
+					<tr>
+						<td><b>Health ID:</b></td>
+						<td><input id="patientHealthId" name="patient.attribute.24" />
+						</td>
 					</tr>
 					
 					<tr>

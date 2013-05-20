@@ -27,6 +27,18 @@
 		jQuery("#age").html(MODEL.patientAge);
 		jQuery("#name").html(MODEL.patientName);
 		
+		//ghanshyam  20-may-2013 #1648 capture Health ID and Registration Fee Type
+		jQuery("#freeRegField").hide();
+	    jQuery("#paidReg").attr("checked", "checked");
+	    jQuery("#freeReg").click(function() {
+		VALIDATORS.freeRegCheck();
+		});
+		jQuery("#paidReg").click(function() {
+		VALIDATORS.paidRegCheck();
+		});
+		
+		// ghanshyam 27-02-2013 Feedback #966[Billing]Add Paid Bill/Add Free Bill for Bangladesh module(remove category from registration,OPD,IPD,Inventory)
+		/*
 		if(MODEL.patientAttributes[14]){
 			pattern = /[A-Z]+[,][A-Z]/;
 			if(pattern.test(MODEL.patientAttributes[14])){
@@ -38,14 +50,17 @@
 				if("Free" == MODEL.patientAttributes[14])
 					jQuery("#Free").html(MODEL.patientAttributes[19]);
 			
-jQuery("#category").html(MODEL.patientAttributes[14]);
+               jQuery("#category").html(MODEL.patientAttributes[14]);
 			}
 								
 		}
+		*/
 
 
 		jQuery("#phoneNumber").html(MODEL.patientAttributes[16]);
 		jQuery("#patientNationalId").html(MODEL.patientAttributes[20]);
+		//ghanshyam  20-may-2013 #1648 capture Health ID and Registration Fee Type
+        jQuery("#healthId").html(MODEL.patientAttributes[24]);
 		jQuery("#patientWeight").html(MODEL.patientAttributes[21]);
 		jQuery("#patientBloodPressure").html(MODEL.patientAttributes[22]);
 		jQuery("#patientHistory").html(MODEL.patientAttributes[23]);
@@ -79,9 +94,13 @@ jQuery("#category").html(MODEL.patientAttributes[14]);
 				});	}
 			jQuery("#printSlip").hide();
 			jQuery("#save").hide();
+			//ghanshyam  20-may-2013 #1648 capture Health ID and Registration Fee Type
+			jQuery("#regFee").hide()
 			jQuery("#tempCat").hide();			
 		} else {
 			jQuery("#reprint").hide();
+			//ghanshyam  20-may-2013 #1648 capture Health ID and Registration Fee Type
+			jQuery("#regFee").hide()
 			jQuery("#tempCat").hide();
 		}
 		
@@ -119,7 +138,16 @@ jQuery("#category").html(MODEL.patientAttributes[14]);
 				
 				// Convert OPDWard dropdown to printable format
 				jQuery("#opdWard").hide();
-				jQuery("#opdWard").after("<span>" + jQuery("#opdWard option:checked").html() +  "</span>");		
+				jQuery("#opdWard").after("<span>" + jQuery("#opdWard option:checked").html() +  "</span>");	
+				
+				//ghanshyam  20-may-2013 #1648 capture Health ID and Registration Fee Type	
+                 jQuery("#regFeeType input").each(function(index, value){				
+					if(jQuery(value).is(":checked")){
+						jQuery("#printableRegFee").append("<span style='margin:5px;'>" + jQuery(value).val() + "</span>");
+						jQuery("#regFee").show();		
+					}
+				});
+				jQuery("#regFeeType").hide();	
 
 				// Convert temporary categories to printable format
 				jQuery("#temporaryCategories input").each(function(index, value){				
@@ -244,10 +272,60 @@ jQuery("#category").html(MODEL.patientAttributes[14]);
 				alert("Please select OPD ward");
 				return false;
 			};
+			
+			//ghanshyam  20-may-2013 #1648 capture Health ID and Registration Fee Type
+			if (jQuery("#paidReg").attr('checked') == false
+					&& jQuery("#freeReg").attr('checked') == false) {
+				alert('Please select Registration Type!');
+				return false;
+			} else {
+				if (jQuery("#freeReg").attr('checked')) {
+					if (jQuery("#freeRegReason").val().length <= 0) {
+						alert('Please enter Free reason');
+						return false;
+					} 
+				}
+		   }
+			
 			return true;
 		}
 	};
+	
+	//ghanshyam  20-may-2013 #1648 capture Health ID and Registration Fee Type
+	VALIDATORS = {
+	
+		freeRegCheck : function() {
+			if (jQuery("#freeReg").is(':checked')) {
+				jQuery("#freeRegField").show();
+				if (jQuery("#paidReg").is(":checked"))
+					jQuery("#paidReg").removeAttr("checked");
+			} else {
+				jQuery("#freeRegReason").val("");
+				jQuery("#freeRegField").hide();
+			}
+		},
+		
+		paidRegCheck : function(obj) {
+			if (jQuery("#paidReg").is(':checked')) {
+				if (jQuery("#freeReg").is(":checked")) {
+					jQuery("#freeReg").removeAttr("checked");
+					jQuery("#freeRegReason").val("");
+					jQuery("#freeRegField").hide();
+				}
+			}
+		}
+	
+	};
 </script>
+<!-- ghanshyam  20-may-2013 #1648 capture Health ID and Registration Fee Type -->
+<tr>
+	<FONT SIZE="4" FACE="courier" COLOR=blue><MARQUEE WIDTH=1150
+			BEHAVIOR=ALTERNATE BGColor=yellow>
+			Please collect <font color="#FF0000">${regFee} TK </font>for Paid
+			Registration
+		</MARQUEE> </FONT>
+</tr>
+<br />
 <input id="printSlip" type="button" value="Print"
 	onClick="PAGE.submit(false);" /> 
 <input id="reprint" type="button" value="Reprint"
@@ -266,53 +344,73 @@ jQuery("#category").html(MODEL.patientAttributes[14]);
 				</tr>
 				<tr>
 					<td colspan="1""><b>ID.No:</b></td>
-					<td colspan="5""><span id="identifier" /></td>
+					<td colspan="5""><span id="identifier"></span></td>
 				</tr>
 				<tr>
 					<td colspan="1"><b>Name:</b></td>
-					<td colspan="5"><span id="name" /></td>
+					<td colspan="5"><span id="name"></span></td>
 				</tr>
 				<tr>
 					<td colspan="1"><b>Age:</b></td>
-					<td colspan="5"><span id="age" /></td>
+					<td colspan="5"><span id="age"></span></td>
 				</tr>
 				<tr>
 					<td colspan="1"><b>Gender:</b></td>
-					<td colspan="5"><span id="gender" /></td>
+					<td colspan="5"><span id="gender"></span></td>
 				</tr>
 				<tr>
 					<td colspan="1" valign="top"><b>Phone number:</b></td>
-					<td colspan="5"><span id="phoneNumber" /></td>
+					<td colspan="5"><span id="phoneNumber"></span></td>
 				</tr>
 				<tr>
 					<td colspan="1"><b>Date/Time:</b></td>
-					<td colspan="5"><span id="datetime" /></td>
+					<td colspan="5"><span id="datetime"></span></td>
 				</tr>
+				<%-- ghanshyam 27-02-2013 Feedback #966[Billing]Add Paid Bill/Add Free Bill for Bangladesh module(remove category from registration,OPD,IPD,Inventory)--%>
+				<%--
 				<tr>
 					<td colspan="1"><b>Category:</b></td>
 					<td colspan="2"><span id="category" /></td>
 					<td><span id="Free" /></td>
 				</tr>
+				--%>
 				<tr>
 					<td colspan="1" valign="top"><b>National ID:</b></td>
-					<td colspan="5"><span id="patientNationalId" /></td>
+					<td colspan="5"><span id="patientNationalId"></span></td>
+				</tr>
+				<%-- ghanshyam  20-may-2013 #1648 capture Health ID and Registration Fee Type --%>
+				<tr>
+					<td colspan="1"><b>Health ID:</b></td>
+					<td colspan="2"><span id="healthId"></span></td>
+				</tr>
+				<tr>
+					<td colspan="1" valign="top"><b>Weight:</b></td>
+					<td colspan="5"><span id="patientWeight"></span></td>
+				</tr>
+				<tr>
+					<td colspan="1" valign="top"><b>Blood Pressure:</b></td>
+					<td colspan="5"><span id="patientBloodPressure"></span></td>
+				</tr>
+				<tr>
+					<td colspan="1" valign="top"><b>History:</b></td>
+					<td colspan="5"><span id="patientHistory"></span></td>
 				</tr>
 				<tr id="opdWardLabel">
 					<td colspan="1"><b>OPD room to visit:</b></td>
 					<td colspan="5"><select id="opdWard" name="patient.opdWard">
 					</select></td>
 				</tr>
-				<tr>
-					<td colspan="1" valign="top"><b>Weight:</b></td>
-					<td colspan="5"><span id="patientWeight" /></td>
-				</tr>
-				<tr>
-					<td colspan="1" valign="top"><b>Blood Pressure:</b></td>
-					<td colspan="5"><span id="patientBloodPressure" /></td>
-				</tr>
-				<tr>
-					<td colspan="1" valign="top"><b>History:</b></td>
-					<td colspan="5"><span id="patientHistory" /></td>
+				<tr id="regFeeType">
+					<td><b> <font color="red"> Registration Fee Type:</font> </b>
+					</td>
+					<td><input id="paidReg" type="checkbox"
+						name="patient.registration.fee.attribute.3950" value="${regFee}" />
+						Paid</td>
+					<td><input id="freeReg" type="checkbox"
+						name="patient.registration.fee.attribute.3950" value="0" /> Free</td>
+					<td><span id="freeRegField">Reason <input
+							id="freeRegReason"
+							name="patient.registration.fee.free.reason.attribute.3951" /> </span></td>
 				</tr>
 				<tr id="temporaryCategories">
 					<td colspan="1" valign="top"><b> <font color="red">Temporary
@@ -321,6 +419,13 @@ jQuery("#category").html(MODEL.patientAttributes[14]);
 						<input type="checkbox" name="temporary.attribute.11" value="MLC" />
 						MLC <br /> <input type="checkbox" name="temporary.attribute.11"
 						value="Accident" /> Accident <br />
+					</td>
+				</tr>
+				<!-- ghanshyam  20-may-2013 #1648 capture Health ID and Registration Fee Type -->
+				<tr id="regFee">
+					<td colspan="1" valign="top"><b>Registration Fee:</b></td>
+					<td colspan="5">
+						<div id="printableRegFee">TK</div>
 					</td>
 				</tr>
 				<!-- Sagar Bele, 11-01-2013: Issue #663 Registration alignment -->

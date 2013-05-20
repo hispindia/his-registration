@@ -96,4 +96,10 @@ public class RegistrationConstants {
 	// harsh 2/7/2012 adding property for temp category
 	public static final String CONCEPT_NAME_TEMPORARY_CATEGORY = "TEMPORARY CATEGORY";
 	
+	//ghanshyam  20-may-2013 #1648 capture Health ID and Registration Fee Type
+	public static final String FORM_FIELD_PATIENT_REGISTRATION_FEE_ATTRIBUTE = "patient.registration.fee.attribute";
+	public static final String FORM_FIELD_PATIENT_REGISTRATION_FEE_FREE_REASON_ATTRIBUTE = "patient.registration.fee.free.reason.attribute";
+	public static final String CONCEPT_NAME_REGISTRATION_FEE = "REGISTRATION FEE";
+	public static final String CONCEPT_NAME_REGISTRATION_FEE_FREE_REASON = "REGISTRATION FEE FREE REASON";
+	
 }

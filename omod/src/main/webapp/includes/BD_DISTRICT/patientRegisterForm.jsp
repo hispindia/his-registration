@@ -17,7 +17,7 @@
  *  along with Registration module.  If not, see <http://www.gnu.org/licenses/>.
  *  author: Ghanshyam
  *  date:   15-12-2012
---%> 
+--%>
 
 <style>
 .cell {
@@ -82,6 +82,8 @@ td.border {
 						});
 
 				// hide free reason
+				//ghanshyam 25-feb-2013 New Requirement #966[Billing]Add Paid Bill/Add Free Bill for Bangladesh module(removed Patient Category)
+				/*
 				jQuery("#freeField").hide();
 				jQuery("#patCatGeneral").attr("checked", "checked");
 
@@ -92,6 +94,8 @@ td.border {
 				jQuery("#patCatGeneral").click(function() {
 					VALIDATORS.generalCheck();
 				});
+				*/
+				
 				jQuery("#calendarButton").click(function() {
 					jQuery("#calendar").datepicker("show");
 				});
@@ -330,9 +334,12 @@ td.border {
 			}
 			;
 
+			//ghanshyam 25-feb-2013 New Requirement #966[Billing]Add Paid Bill/Add Free Bill for Bangladesh module(removed Patient Category)
+			/*
 			if (!VALIDATORS.validatePatientCategory()) {
 				return false;
 			}
+			*/
 
 			if (!StringUtils.isBlank(jQuery("#patientPhoneNumber").val())) {
 				if (!StringUtils.isDigit(jQuery("#patientPhoneNumber").val())) {
@@ -351,6 +358,8 @@ td.border {
 	VALIDATORS = {
 
 		/** VALIDATE PATIENT CATEGORY */
+		//ghanshyam 25-feb-2013 New Requirement #966[Billing]Add Paid Bill/Add Free Bill for Bangladesh module(removed Patient Category)
+		/*
 		validatePatientCategory : function() {
 			if (jQuery("#patCatGeneral").attr('checked') == false
 					&& jQuery("#free").attr('checked') == false) {
@@ -358,18 +367,20 @@ td.border {
 				return false;
 			} else {
 				if (jQuery("#free").attr('checked')) {
-				/* Sagar Bele, 24-12-2012, Issue #550 Removed validation for free reason field
 					if (jQuery("#freeReason").val().length <= 0) {
 						alert('Please enter Free reason');
 						return false;
-					} */
+					} 
 				}
 				return true;
 			}
 		},
+		*/
 
 
 		/** CHECK WHEN FREE CATEGORY IS SELECTED */
+		//ghanshyam 25-feb-2013 New Requirement #966[Billing]Add Paid Bill/Add Free Bill for Bangladesh module(removed Patient Category)
+		/*
 		freeCheck : function() {
 			if (jQuery("#free").is(':checked')) {
 				jQuery("#freeField").show();
@@ -380,8 +391,11 @@ td.border {
 				jQuery("#freeField").hide();
 			}
 		},
+		*/
 		
 		/** CHECK WHEN GENERAL CATEGORY IS SELECTED */
+		//ghanshyam 25-feb-2013 New Requirement #966[Billing]Add Paid Bill/Add Free Bill for Bangladesh module(removed Patient Category)
+		/*
 		generalCheck : function(obj) {
 			if (jQuery("#patCatGeneral").is(':checked')) {
 				if (jQuery("#free").is(":checked")) {
@@ -391,6 +405,7 @@ td.border {
 				}
 			}
 		},
+		*/
 
 		/*
 		 * Check patient gender
@@ -429,8 +444,7 @@ td.border {
 				<div id="numberOfFoundPatients"></div>
 			</td>
 			<td class="cell"><b>ID Number * &nbsp;&nbsp; <input readonly
-						name="patient.identifier" style="border: none;width: 250px;" />
-			</b>
+					name="patient.identifier" style="border: none; width: 250px;" /> </b>
 			</td>
 
 		</tr>
@@ -445,7 +459,7 @@ td.border {
 						<td>Gender</td>
 					</tr>
 					<tr>
-						<td><span id="estimatedAge" />
+						<td><span id="estimatedAge"></span>
 						</td>
 						<td><input type="hidden" id="calendar" /> <input
 							id="birthdate" name="patient.birthdate" /> <img
@@ -459,29 +473,38 @@ td.border {
 								<option value="M">Male</option>
 								<option value="F">Female</option>
 								<option value="O">Others</option>
-								
+
 						</select>
 						</td>
 					</tr>
 				</table>
 			</td>
 			<td rowspan="3" class="border">
-			 <b>&nbsp;&nbsp;Patient category</b><br />
+				<%-- ghanshyam 25-02-2013 New Requirement #966[Billing]Add Paid Bill/Add Free Bill for Bangladesh module(removed Patient Category)--%>
+				<%--
+			<b>&nbsp;&nbsp;Patient category</b><br />
+			--%>
 				<table cellspacing="10">
-
+					<%--
 					<tr>
 						<td><input id="patCatGeneral" type="checkbox"
 							name="person.attribute.14" value="General" /> General</td>
 						<td><input id="free" type="checkbox"
 							name="person.attribute.14" value="Free" /> Free</td>
-						<td><span id="freeField">Reason <input
-								id="freeReason" name="person.attribute.19" />
-						</span>
+						<td><span id="freeField">Reason <input id="freeReason"
+								name="person.attribute.19" /> </span></td>
+					</tr>
+					--%>
+					<tr>
+						<td><b>National ID:</b></td>
+						<td><input id="patientNationalId" name="patient.attribute.20" />
 						</td>
 					</tr>
+					<%-- ghanshyam  20-may-2013 #1648 capture Health ID and Registration Fee Type --%>
 					<tr>
-					<td>National ID:</td>
-					<td><input id="patientNationalId" name="patient.attribute.20"/></td>
+						<td><b>Health ID:</b></td>
+						<td><input id="patientHealthId" name="patient.attribute.24" />
+						</td>
 					</tr>
 				</table></td>
 		</tr>
@@ -496,8 +519,8 @@ td.border {
 				<table>
 					<tr>
 						<td>Postal Address:</td>
-						<td> 
-							<input id="patientPostalAddress" name="patient.address.postalAddress" style="width: 300px;" />
+						<td><input id="patientPostalAddress"
+							name="patient.address.postalAddress" style="width: 300px;" />
 						</td>
 					</tr>
 					<tr>

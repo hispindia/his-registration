@@ -74,6 +74,11 @@ td.bottom {
 					formValues += "patient.attribute.20=="
 							+ MODEL.patientAttributes[20] + "||";
 				}
+				//ghanshyam  20-may-2013 #1648 capture Health ID and Registration Fee Type
+				if (!StringUtils.isBlank(MODEL.patientAttributes[24])) {
+					formValues += "patient.attribute.24=="
+							+ MODEL.patientAttributes[24] + "||";
+				}
 				
 				// Set value for address 
 				addressParts = MODEL.patientAddress.split(',');
@@ -420,18 +425,14 @@ td.bottom {
 <form id="patientRegistrationForm" method="POST">
 	<table cellspacing="0">
 		<tr>
-			<td valign="top" class="cell"><b>Name *</b>
-			</td>
+			<td valign="top" class="cell"><b>Name *</b></td>
 			<td class="cell"><input id="patientName" name="patient.name"
-				style="width: 300px;" />
-			</td>
+				style="width: 300px;" /></td>
 			<td class="cell"><b>ID Number * &nbsp;&nbsp; <input
-					name="patient.identifier" style="border: none;" /> </b>
-			</td>
+					name="patient.identifier" style="border: none;" /> </b></td>
 		</tr>
 		<tr>
-			<td class="cell"><b>Demographics *</b>
-			</td>
+			<td class="cell"><b>Demographics *</b></td>
 			<td class="cell">dd/mm/yyyy<br />
 				<table>
 					<tr>
@@ -440,25 +441,21 @@ td.bottom {
 						<td>Gender</td>
 					</tr>
 					<tr>
-						<td><span id="estimatedAge" />
-						</td>
+						<td><span id="estimatedAge"></span></td>
 						<td><input type="hidden" id="calendar" /> <input
 							id="birthdate" name="patient.birthdate" /> <img
 							id="calendarButton"
 							src="../../moduleResources/registration/calendar.gif" /> <input
 							id="birthdateEstimated" type="hidden"
-							name="patient.birthdateEstimate" value="true" />
-						</td>
+							name="patient.birthdateEstimate" value="true" /></td>
 						<td><select id="patientGender" name="patient.gender">
 								<option value="Any"></option>
 								<option value="M">Male</option>
 								<option value="F">Female</option>
 								<option value="O">Others</option>
-						</select>
-						</td>
+						</select></td>
 					</tr>
-				</table>
-			</td>
+				</table></td>
 
 			<td rowspan="2" class="border">
 				<%-- ghanshyam 25-02-2013 New Requirement #966[Billing]Add Paid Bill/Add Free Bill for Bangladesh module(removed Patient Category)--%>
@@ -477,61 +474,64 @@ td.bottom {
 					</tr>
 					--%>
 					<tr>
-						<td>National ID:</td>
+						<td><b>National ID:</b></td>
 						<td><input id="patientNationalId" name="patient.attribute.20" />
 						</td>
 					</tr>
-				</table>
-			</td>
-		</tr>
-		<tr>
-			<td class="cell"><b>Address</b>
-			</td>
-			<td class="cell">
-				<table>
+					<%-- ghanshyam  20-may-2013 #1648 capture Health ID and Registration Fee Type --%>
 					<tr>
-						<td>Postal Address:</td>
-						<td><input id="patientPostalAddress"
-							name="patient.address.postalAddress" style="width: 300px;" /></td>
-					</tr>
-					<tr>
-						<td>District:</td>
-						<td><select id="districts" name="patient.address.district"
-							onChange="PAGE.changeDistrict();" style="width: 200px;">
-						</select>
-						</td>
-					</tr>
-					<tr>
-						<td>Upazila:</td>
-						<td><select id="upazilas" name="patient.address.upazila"
-							style="width: 200px;">
-						</select>
+						<td><b>Health ID:</b></td>
+						<td><input id="patientHealthId" name="patient.attribute.24" />
 						</td>
 					</tr>
 				</table></td>
 		</tr>
 		<tr>
-			<td class="cell"><b>Phone number</b>
+			<td class="cell"><b>Address</b></td>
+			<td class="cell">
+				<table>
+					<tr>
+						<td>Postal Address:</td>
+						<td><input id="patientPostalAddress"
+							name="patient.address.postalAddress" style="width: 300px;" />
+						</td>
+					</tr>
+					<tr>
+						<td>District:</td>
+						<td><select id="districts" name="patient.address.district"
+							onChange="PAGE.changeDistrict();" style="width: 200px;">
+						</select></td>
+					</tr>
+					<tr>
+						<td>Upazila:</td>
+						<td><select id="upazilas" name="patient.address.upazila"
+							style="width: 200px;">
+						</select></td>
+					</tr>
+				</table>
 			</td>
+		</tr>
+		<tr>
+			<td class="cell"><b>Phone number</b></td>
 			<td class="cell"><input id="patientPhoneNumber"
-				name="person.attribute.16" style="width: 200px;" />
-			</td>
+				name="person.attribute.16" style="width: 200px;" /></td>
 			<td class="bottom"></td>
 		</tr>
 		<tr>
-			<td class="cell"><b>Relative Name *</b>
-			</td>
+			<td class="cell"><b>Relative Name *</b></td>
 			<td class="cell">
 				<div id="patientRelativeNameSection"></div> <input
 				id="patientRelativeName" name="person.attribute.8"
-				style="width: 200px;" /></td>
+				style="width: 200px;" />
+			</td>
 		</tr>
 		<tr>
 
 			<td colspan="3" style="padding: 0em 30em 0em 30em;"><input
 				type="button" value="Save" onclick="PAGE.submit();" /> <input
 				type="button" value="Reset"
-				onclick="window.location.href=window.location.href" /></td>
+				onclick="window.location.href=window.location.href" />
+			</td>
 
 		</tr>
 	</table>

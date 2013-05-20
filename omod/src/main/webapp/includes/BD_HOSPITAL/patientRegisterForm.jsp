@@ -332,8 +332,9 @@ td.border {
 				return false;
 			}
 			;
-      //ghanshyam 25-feb-2013 New Requirement #966[Billing]Add Paid Bill/Add Free Bill for Bangladesh module(removed Patient Category)
-      /*
+			
+            //ghanshyam 25-feb-2013 New Requirement #966[Billing]Add Paid Bill/Add Free Bill for Bangladesh module(removed Patient Category)
+            /*
 			if (!VALIDATORS.validatePatientCategory()) {
 				return false;
 			}
@@ -453,7 +454,7 @@ td.border {
 						<td>Gender</td>
 					</tr>
 					<tr>
-						<td><span id="estimatedAge" /></td>
+						<td><span id="estimatedAge"></span></td>
 						<td><input type="hidden" id="calendar" /> <input
 							id="birthdate" name="patient.birthdate" /> <img
 							id="calendarButton"
@@ -488,8 +489,14 @@ td.border {
 					</tr>
 					--%>
 					<tr>
-						<td>National ID:</td>
+						<td><b>National ID:</b></td>
 						<td><input id="patientNationalId" name="patient.attribute.20" />
+						</td>
+					</tr>
+					<%-- ghanshyam  20-may-2013 #1648 capture Health ID and Registration Fee Type --%>
+					<tr>
+						<td><b>Health ID:</b></td>
+						<td><input id="patientHealthId" name="patient.attribute.24" />
 						</td>
 					</tr>
 				</table>
