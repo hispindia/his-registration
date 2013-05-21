@@ -159,6 +159,12 @@ public class ShowPatientInfoController {
 		}
 		
 		//ghanshyam  20-may-2013 #1648 capture Health ID and Registration Fee Type
+		Concept conforregfee = Context.getConceptService().getConcept("REGISTRATION FEE");
+		Integer conforregfeeid=conforregfee.getConceptId();
+		model.addAttribute("regFeeConId",conforregfeeid);
+		Concept conforregfreereason = Context.getConceptService().getConcept("REGISTRATION FEE FREE REASON");
+		Integer conforregfreereasonid=conforregfreereason.getConceptId();
+		model.addAttribute("regFeeReasonConId",conforregfreereasonid);
 		model.addAttribute("regFee", GlobalPropertyUtil.getString(RegistrationConstants.PROPERTY_REGISTRATION_FEE, ""));
 		if (hospitalName.equals("BD_HOSPITAL")) {
 			return "/module/registration/patient/showPatientInfoBdHospital";
