@@ -371,13 +371,13 @@
 					<td><b> <font color="red"> Registration Fee Type:</font> </b>
 					</td>
 					<td><input id="paidReg" type="checkbox"
-						name="patient.registration.fee.attribute.3950" value="${regFee}" />
+						name="patient.registration.fee.attribute.${regFeeConId}" value="${regFee}" />
 						Paid</td>
 					<td><input id="freeReg" type="checkbox"
-						name="patient.registration.fee.attribute.3950" value="0" /> Free</td>
+						name="patient.registration.fee.attribute.${regFeeConId}" value="0" /> Free</td>
 					<td><span id="freeRegField">Reason <input
 							id="freeRegReason"
-							name="patient.registration.fee.free.reason.attribute.3951" /> </span></td>
+							name="patient.registration.fee.free.reason.attribute.${regFeeReasonConId}" /> </span></td>
 				</tr>
 				<tr id="temporaryCategories">
 					<td colspan="1" valign="top"><b> <font color="red">Temporary
