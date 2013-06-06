@@ -136,7 +136,7 @@ public class RegistrationWebUtils {
 	 * #510 and #511 and #512 Tehsil renamed as Upazila
 	 */
 	public static void getAddressData(Model model) throws MalformedURLException, DocumentException, JaxenException {
-		File addressFile = new File(OpenmrsUtil.getApplicationDataDirectory() + "addresshierarchy.xml");
+		File addressFile = new File(OpenmrsUtil.getApplicationDataDirectory() + "bdaddresshierarchy.xml");
 		if (addressFile.exists()) {
 			SAXReader reader = new SAXReader();
 			Document document = reader.read(addressFile.toURI().toURL());
