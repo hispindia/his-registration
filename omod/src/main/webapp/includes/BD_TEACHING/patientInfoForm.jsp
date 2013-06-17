@@ -29,7 +29,8 @@
 		
 		//ghanshyam  20-may-2013 #1648 capture Health ID and Registration Fee Type
 		jQuery("#freeRegField").hide();
-	    jQuery("#paidReg").attr("checked", "checked");
+		//ghanshyam 17-june-2013 (note:commented below line as per chahat suggestion for issue #1648)
+	    //jQuery("#paidReg").attr("checked", "checked");
 	    jQuery("#freeReg").click(function() {
 		VALIDATORS.freeRegCheck();
 		});
@@ -317,7 +318,23 @@
 	
 	};
 </script>
+<script type="text/javascript">
+function paidClick(){
+if (jQuery("#paidReg").attr('checked') == true){
+document.getElementById("message").innerHTML="Please collect "+${regFee}+" TK";
+jQuery("#message").show();
+ }
+else{
+jQuery("#message").hide();
+  }
+}
+
+function freeClick(){
+jQuery("#message").hide();
+}
+</script>
 <!-- ghanshyam  20-may-2013 #1648 capture Health ID and Registration Fee Type -->
+<!--  
 <tr>
 	<FONT SIZE="4" FACE="courier" COLOR=blue><MARQUEE WIDTH=1150
 			BEHAVIOR=ALTERNATE BGColor=yellow>
@@ -326,6 +343,7 @@
 		</MARQUEE> </FONT>
 </tr>
 <br />
+-->
 <input id="printSlip" type="button" value="Print"
 	onClick="PAGE.submit(false);" /> 
 <input id="reprint" type="button" value="Reprint"
@@ -404,13 +422,14 @@
 					<td><b> <font color="red"> Registration Fee Type:</font> </b>
 					</td>
 					<td><input id="paidReg" type="checkbox"
-						name="patient.registration.fee.attribute.${regFeeConId}" value="${regFee}" />
+						name="patient.registration.fee.attribute.${regFeeConId}" value="${regFee}" onClick="paidClick();" />
 						Paid</td>
 					<td><input id="freeReg" type="checkbox"
-						name="patient.registration.fee.attribute.${regFeeConId}" value="0" /> Free</td>
+						name="patient.registration.fee.attribute.${regFeeConId}" value="0" onClick="freeClick();" /> Free</td>
 					<td><span id="freeRegField">Reason <input
 							id="freeRegReason"
 							name="patient.registration.fee.free.reason.attribute.${regFeeReasonConId}" /> </span></td>
+					<td><span style="color:red;" id="message" > </span></td>
 				</tr>
 				<tr id="temporaryCategories">
 					<td colspan="1" valign="top"><b> <font color="red">Temporary
