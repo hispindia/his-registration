@@ -30,6 +30,8 @@ import java.util.Set;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.Criteria;
+import org.hibernate.Query;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Expression;
 import org.hibernate.criterion.Order;
@@ -123,6 +125,63 @@ public class HibernateRegistrationDAO implements RegistrationDAO {
 		criteria.addOrder(Order.desc("dateCreated"));
 		criteria.setMaxResults(1);
 		return (Encounter) criteria.uniqueResult();
+	}
+	
+	//ghanshya,3-july-2013 #1962 Create validation for length of Health ID and National ID
+	/*
+	 * Validate NationalId
+	 */
+	public int getNationalId(String nationalId) {
+		String hql = "from PersonAttribute pa where pa.attributeType=20 AND pa.value like '"+ nationalId +"' ";
+		Session session = sessionFactory.getCurrentSession();
+		Query q = session.createQuery(hql);
+		List<PersonAttribute> list = q.list();
+		if (list.size()>0)
+			{return 1;}
+		else 
+			{return 0;}
+	}
+	
+	public int getNationalId(Integer patientId,String nationalId) {
+		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(PersonAttribute.class);
+		criteria.add(Restrictions.eq("attributeType.id", 20));
+		criteria.add(Restrictions.eq("value", nationalId));
+		criteria.add(Restrictions.eq("voided", false));
+		criteria.add(Restrictions.not(Restrictions.eq("person.id",patientId)));
+		List<PersonAttribute> list = criteria.list();
+		if (list.size()>0)
+		{return 1;}
+	    else 
+		{return 0;}
+		
+	}
+	
+	/*
+	 * Validate HealthId
+	 */
+	public int getHealthId(String healthId){
+		String hql = "from PersonAttribute pa where pa.attributeType=24 AND pa.value like '"+ healthId +"' ";
+		Session session = sessionFactory.getCurrentSession();
+		Query q = session.createQuery(hql);
+		List<PersonAttribute> list = q.list();
+		if (list.size()>0)
+			{return 1;}
+		else 
+			{return 0;}
+		}
+	
+	public int getHealthId(Integer patientId,String healthId) {
+		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(PersonAttribute.class);
+		criteria.add(Restrictions.eq("attributeType.id", 24));
+		criteria.add(Restrictions.eq("value", healthId));
+		criteria.add(Restrictions.eq("voided", false));
+		criteria.add(Restrictions.not(Restrictions.eq("person.id",patientId)));
+		List<PersonAttribute> list = criteria.list();
+		if (list.size()>0)
+		{return 1;}
+	    else 
+		{return 0;}
+		
 	}
 
 }

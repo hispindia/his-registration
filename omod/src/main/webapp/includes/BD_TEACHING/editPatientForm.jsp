@@ -208,6 +208,27 @@ td.bottom {
 						});
 			}
 		},
+		
+		 //ghanshya,3-july-2013 #1962 Create validation for length of Health ID and National ID
+		//Add Validation for checking duplicate National Id and Health Id
+		checkHealthNationalID : function() {
+		        patientId=MODEL.patientId;
+		        healthId=jQuery("#patientHealthId").val();
+				nationalId=jQuery("#patientNationalId").val();
+				jQuery.ajax({
+				type : "GET",
+				url : getContextPath() + "/module/registration/validatenationalidandhealthidedit.form",
+				data : ({
+					patientId			: patientId,
+					healthId			: healthId,
+					nationalId			: nationalId
+				}),
+				success : function(data) {	
+				    jQuery("#validationMessage").html(data);	
+					 
+		           } 
+               });
+			},	
 
 		/** VALIDATE BIRTHDATE */
 		checkBirthDate : function() {
@@ -360,6 +381,37 @@ td.bottom {
 					return false;
 				}
 			}
+			
+			        //ghanshya,3-july-2013 #1962 Create validation for length of Health ID and National ID
+			       //Add Validation for checking duplicate National Id and Health Id
+			        PAGE.checkHealthNationalID();
+		            alert("click ok to proceed");
+					nId=jQuery("#nId").val();
+					hId=jQuery("#hId").val();
+				
+					if(nId=="1" && hId=="1"){
+					//document.getElementById("nationalIdValidationMessage").innerHTML="Patient already registered with this National id";
+					//document.getElementById("healthIdValidationMessage").innerHTML="Patient already registered with this Health id";
+                    //jQuery("#nationalIdValidationMessage").show();
+                    //jQuery("#healthIdValidationMessage").show();
+		            alert("Patient already registered with this National id and Health id");
+					return false
+		            }
+		            else if(nId=="1"){
+                    //document.getElementById("nationalIdValidationMessage").innerHTML="Patient already registered with this National id";
+                    //jQuery("#nationalIdValidationMessage").show();
+                    //jQuery("#healthIdValidationMessage").hide();
+		            alert("Patient already registered with this National id");
+                    return false;					
+		            }
+		            else if(hId=="1"){
+		             //document.getElementById("healthIdValidationMessage").innerHTML="Patient already registered with this Health id";
+                     //jQuery("#healthIdValidationMessage").show();
+                     //jQuery("#nationalIdValidationMessage").hide();
+		             alert("Patient already registered with this Health id");	
+					 return false;
+		            }
+			
 			return true;
 		}
 	};
@@ -508,6 +560,10 @@ td.bottom {
 					<tr>
 						<td><b>National ID:</b></td>
 						<td><input id="patientNationalId" name="patient.attribute.20" />
+						<!-- ghanshya,3-july-2013 #1962 Create validation for length of Health ID and National ID -->
+						<td><span style="color: red;"
+							id="nationalIdValidationMessage"> </span>
+						</td>
 						</td>
 					</tr>
 
@@ -515,6 +571,10 @@ td.bottom {
 					<tr>
 						<td><b>Health ID:</b></td>
 						<td><input id="patientHealthId" name="patient.attribute.24" />
+						<!-- ghanshya,3-july-2013 #1962 Create validation for length of Health ID and National ID -->
+						<td><span style="color: red;" id="healthIdValidationMessage">
+						</span>
+						</td>
 						</td>
 					</tr>
 
@@ -536,6 +596,8 @@ td.bottom {
 						<td><input id="patientHistory" name="patient.attribute.23" />
 						</td>
 					</tr>
+					<!-- ghanshya,3-july-2013 #1962 Create validation for length of Health ID and National ID -->
+					<div id="validationMessage"></div>
 				</table></td>
 		</tr>
 		<tr>

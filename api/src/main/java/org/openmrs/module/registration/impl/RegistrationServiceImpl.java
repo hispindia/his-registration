@@ -76,4 +76,21 @@ public class RegistrationServiceImpl extends BaseOpenmrsService implements
 		return dao.getLastEncounter(patient);
 	}
 	
+	//ghanshya,3-july-2013 #1962 Create validation for length of Health ID and National ID
+	public int getNationalId(String nationalId){
+		return dao.getNationalId(nationalId);
+	}
+	
+	public int getNationalId(Integer patientId,String nationalId){
+		return dao.getNationalId(patientId,nationalId);
+	}
+	
+	public int getHealthId(String healthId){
+		return dao.getHealthId(healthId);
+	}
+	
+	public int getHealthId(Integer patientId,String healthId){
+		return dao.getHealthId(patientId,healthId);
+	}
+	
 }
