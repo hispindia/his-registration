@@ -371,6 +371,8 @@ td.border {
 			       //Add Validation for checking duplicate National Id and Health Id
 			        PAGE.checkHealthNationalID();
 		            alert("click ok to proceed");
+		            abc=jQuery("#abc").val();
+					def=jQuery("#def").val();
 					nId=jQuery("#nId").val();
 					hId=jQuery("#hId").val();
 				

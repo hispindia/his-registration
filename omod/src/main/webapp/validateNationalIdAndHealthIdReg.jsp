@@ -20,6 +20,8 @@
  *  issue no: #1962
 --%>
 <form>
+<input id="abc"  name="abc" type='hidden' value="abc"/>
+<input id="def"  name="def" type='hidden' value="def"/>
 <input id="nId"  name="nId" type='hidden' value="${nid}"/>
 <input id="hId"  name="hId" type='hidden' value="${hid}"/>
 </form>
