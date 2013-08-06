@@ -221,7 +221,8 @@ public class ShowPatientInfoController {
 			String bloodBankWardName = GlobalPropertyUtil.getString(RegistrationConstants.PROPERTY_BLOODBANK_OPDWARD_NAME,
 			    "Blood Bank Room");
 			
-			if (!selectedOPDConcept.getName().equals(bloodBankWardName)) {
+			//ghanshyam 6-august-2013 code review bug
+			if (!selectedOPDConcept.getName().toString().equals(bloodBankWardName)) {
 				RegistrationWebUtils.sendPatientToOPDQueue(patient, selectedOPDConcept, true);
 			} else {
 				OrderType orderType = null;
