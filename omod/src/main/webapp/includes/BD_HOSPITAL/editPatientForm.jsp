@@ -367,6 +367,8 @@ td.bottom {
 		            alert("click ok to proceed");
 		            abc=jQuery("#abc").val();
 					def=jQuery("#def").val();
+					nd=jQuery("#nId").val();
+					hd=jQuery("#hId").val();
 					nId=jQuery("#nId").val();
 					hId=jQuery("#hId").val();
 				
