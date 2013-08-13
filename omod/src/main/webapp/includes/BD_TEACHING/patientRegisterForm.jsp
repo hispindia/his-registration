@@ -379,6 +379,7 @@ td.border {
 					nId=jQuery("#nId").val();
 					hId=jQuery("#hId").val();
 				
+					if(typeof nId!="undefined" || typeof hId!="undefined"){
 					if(nId=="1" && hId=="1"){
 					//document.getElementById("nationalIdValidationMessage").innerHTML="Patient already registered with this National id";
 					//document.getElementById("healthIdValidationMessage").innerHTML="Patient already registered with this Health id";
@@ -400,6 +401,11 @@ td.border {
                      //jQuery("#nationalIdValidationMessage").hide();
 		             alert("Patient already registered with this Health id");	
 					 return false;
+		            }
+		            }
+		            else{
+		            alert("please try again");
+		            return false;
 		            }
 			
 			return true;
