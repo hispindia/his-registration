@@ -227,7 +227,11 @@ public class FindCreatePatientController {
 		String bloodBankWardName = GlobalPropertyUtil.getString(RegistrationConstants.PROPERTY_BLOODBANK_OPDWARD_NAME,
 		    "Blood Bank Room");
 		
-		if (!selectedOPDConcept.getName().equals(bloodBankWardName)) {
+		 //ghanshyam 03-sept-2013 Bug #394 [Blood bank]queue
+		 String socn=new String(selectedOPDConcept.getName().toString());
+		 String substringofsocn=socn.substring(0,15);
+		
+		 if (!substringofsocn.equalsIgnoreCase(bloodBankWardName)) {
 			RegistrationWebUtils.sendPatientToOPDQueue(patient, selectedOPDConcept, false);
 		} else {
 			OrderType orderType = null;
