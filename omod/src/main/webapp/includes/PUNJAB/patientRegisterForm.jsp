@@ -125,6 +125,9 @@ border-style: solid;
 				jQuery("#patientGender").change(function() {
 					VALIDATORS.genderCheck();
 				});
+				
+				//ghanshyam 07-sept-2013 Support #2686 GUI Changes (spellings/ fonts/ alignments)
+				jQuery("#bh").hide();
 
 			});
 
@@ -189,7 +192,12 @@ border-style: solid;
 						success : function(json) {
 							if (json.error == undefined) {
 								if (json.estimated == "true") {
-									jQuery("#birthdateEstimated").val("true")
+									jQuery("#birthdateEstimated").val("true");
+									//ghanshyam 07-sept-2013 Support #2686 GUI Changes (spellings/ fonts/ alignments)
+									jQuery("#birthdateh").hide();
+									jQuery("#birthdate").hide();
+									jQuery("#calendarButton").hide();
+									jQuery("#bh").show();
 								} else {
 									jQuery("#birthdateEstimated").val("false");
 								}
@@ -1062,6 +1070,8 @@ border-style: solid;
 </script>
 
 <h2>Patient Registration</h2>
+<!-- ghanshyam 07-sept-2013 Support #2686 GUI Changes (spellings/ fonts/ alignments) -->
+<b>Visit Information</b> <br />		
 <div id="patientSearchResult"></div>
 <form id="patientRegistrationForm" method="POST">
 	<table cellspacing="0">
@@ -1083,7 +1093,9 @@ border-style: solid;
 				<table>
 					<tr>
 						<td>Age</td>
-						<td>Birthdate</td>
+						<!-- ghanshyam 07-sept-2013 Support #2686 GUI Changes (spellings/ fonts/ alignments) -->
+						<td id="birthdateh">Birthdate</td>
+						<td id="bh"></td>
 						<td>Gender</td>
 					</tr>
 					<tr>
@@ -1105,8 +1117,8 @@ border-style: solid;
 
 				<!--  12/06/2012: Kesavulu: added Screen mock up for registration module[Punjab]- New Requirement #251 -->
 				<td rowspan="3" class="border">
-					<!-- <b>&nbsp;&nbsp;Patient information</b> <br /> -->
-					<b>&nbsp;&nbsp;Patient category</b><br />
+					<!-- ghanshyam 07-sept-2013 Support #2686 GUI Changes (spellings/ fonts/ alignments) -->
+					<b>&nbsp;&nbsp;Patient Category</b><br />
 					<table cellspacing="10">
 						<tr>
 							<!-- <td><input id="patCatPoor" type="checkbox"
@@ -1211,7 +1223,8 @@ border-style: solid;
 			</td>
 		</tr>
 		<tr>
-			<td class="cell"><b>Phone number</b></td>
+			<!-- ghanshyam 07-sept-2013 Support #2686 GUI Changes (spellings/ fonts/ alignments) -->
+			<td class="cell"><b>Phone Number</b></td>
 			<td class="cell"><input id="patientPhoneNumber"
 				name="person.attribute.16" style="width: 200px;" /></td>
 		</tr>
@@ -1223,21 +1236,25 @@ border-style: solid;
 				style="width: 200px;" />
 			</td>
 			<!--  12/06/2012: Kesavulu: added Screen mock up for registration module[Punjab]- New Requirement #251 -->
-			<b>Visit Information</b> <br />		
-			<td class="cell"><b>Referral Information</b><br /> <input
+			<!-- ghanshyam 07-sept-2013 Support #2686 GUI Changes (spellings/ fonts/ alignments) -->
+			<td class="cell"><b>Referral Information </b> <input
 				type="checkbox" id="referred"
 				onClick="PAGE.toogleReferralInfo(this);" name="patient.referred"
 				value="referred" /> Referred<br />
 				<div id="referralDiv" style="display: none;">
 					<table>
 						<tr>
-							<td>Referred From</td>
+							<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Referred
+								From</td>
 							<td><select id="referralHospitals"
 								name="patient.referred.from" style="width: 200px;">
 							</select></td>
 						</tr>
 						<tr>
-							<td>Referral Type</td>
+							<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Referral
+								Type</td>
 							<td><select id="referralReasons"
 								name="patient.referred.reason" style="width: 200px;">
 							</select></td>
@@ -1258,3 +1275,5 @@ border-style: solid;
 	</table>
 </form>
 
+<!-- ghanshyam 07-sept-2013 Support #2686 GUI Changes (spellings/ fonts/ alignments) -->
+<font size="3" color="red">Fields marked with * are mandatory!</font>
