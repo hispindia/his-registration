@@ -969,8 +969,8 @@ td.border {
 						<td></td>
 						<!-- ghanshyam 07-sept-2013 Support #2686 GUI Changes (spellings/ fonts/ alignments) -->
 						<td><input id="patCatChildLessThan1yr" type="checkbox"
-							name="person.attribute.14" value="Child Less Than 1 Year" /> Child
-							Less Than 1yr</td>
+							name="person.attribute.14" value="Child Less Than 1yr" /> Child
+							Less Than 1 Year</td>
 					</tr>
 					<tr>
 						<td></td>
