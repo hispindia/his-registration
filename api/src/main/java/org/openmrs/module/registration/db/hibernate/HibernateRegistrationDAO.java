@@ -30,6 +30,8 @@ import java.util.Set;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.Criteria;
+import org.hibernate.Query;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Expression;
 import org.hibernate.criterion.Order;
@@ -123,5 +125,34 @@ public class HibernateRegistrationDAO implements RegistrationDAO {
 		criteria.addOrder(Order.desc("dateCreated"));
 		criteria.setMaxResults(1);
 		return (Encounter) criteria.uniqueResult();
+	}
+	
+	//ghanshyam 12-sept-2013 New Requirement #2684 Introducing a field at the time of registration to put Aadhar Card Number
+	/*
+	 * Validate Aadhar Card Number
+	 */
+	public int getAadharCardNo(String aadharCardNo) {
+		String hql = "from PersonAttribute pa where pa.attributeType=20 AND pa.value like '"+ aadharCardNo +"' ";
+		Session session = sessionFactory.getCurrentSession();
+		Query q = session.createQuery(hql);
+		List<PersonAttribute> list = q.list();
+		if (list.size()>0)
+			{return 1;}
+		else 
+			{return 0;}
+	}
+	
+	public int getAadharCardNo(Integer patientId,String aadharCardNo) {
+		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(PersonAttribute.class);
+		criteria.add(Restrictions.eq("attributeType.id", 20));
+		criteria.add(Restrictions.eq("value", aadharCardNo));
+		criteria.add(Restrictions.eq("voided", false));
+		criteria.add(Restrictions.not(Restrictions.eq("person.id",patientId)));
+		List<PersonAttribute> list = criteria.list();
+		if (list.size()>0)
+		{return 1;}
+	    else 
+		{return 0;}
+		
 	}
 }

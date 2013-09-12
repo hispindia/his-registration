@@ -75,4 +75,13 @@ public class RegistrationServiceImpl extends BaseOpenmrsService implements
 	public Encounter getLastEncounter(Patient patient) {
 		return dao.getLastEncounter(patient);
 	}
+	
+	//ghanshyam 12-sept-2013 New Requirement #2684 Introducing a field at the time of registration to put Aadhar Card Number
+	public int getAadharCardNo(String aadharCardNo){
+		return dao.getAadharCardNo(aadharCardNo);
+	}
+	
+	public int getAadharCardNo(Integer patientId,String aadharCardNo){
+		return dao.getAadharCardNo(patientId,aadharCardNo);
+	}
 }

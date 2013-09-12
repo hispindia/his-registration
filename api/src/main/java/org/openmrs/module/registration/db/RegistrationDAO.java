@@ -83,4 +83,8 @@ public interface RegistrationDAO {
 	 * @return
 	 */
 	public Encounter getLastEncounter(Patient patient);
+	
+	//ghanshyam 12-sept-2013 New Requirement #2684 Introducing a field at the time of registration to put Aadhar Card Number
+	public int getAadharCardNo(String aadharCardNo);
+	public int getAadharCardNo(Integer patientId,String aadharCardNo);
 }
