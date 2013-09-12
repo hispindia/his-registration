@@ -31,6 +31,8 @@ jQuery("#category").html(MODEL.patientAttributes[14]);
 		jQuery("#phoneNumber").html(MODEL.patientAttributes[16]);
 		jQuery("#gender").html(MODEL.patientGender);
 		jQuery("#datetime").html(MODEL.currentDateTime);
+		//ghanshyam 12-sept-2013 New Requirement #2684 Introducing a field at the time of registration to put Aadhar Card Number
+		jQuery("#aadharCardNo").html(MODEL.patientAttributes[20]);
 		MODEL.OPDs = " ,Please select an OPD room to visit|" + MODEL.OPDs;
 		PAGE.fillOptions("#opdWard", {
 			data:MODEL.OPDs,
@@ -297,6 +299,11 @@ jQuery("#category").html(MODEL.patientAttributes[14]);
 					<td><span id="BPL" /></td>
 					
 					
+				</tr>
+				<!-- ghanshyam 12-sept-2013 New Requirement #2684 Introducing a field at the time of registration to put Aadhar Card Number  -->
+				<tr>
+					<td colspan="1"><b>Aadhar Card Number:</b></td>
+					<td colspan="2"><span id="aadharCardNo"></span></td>
 				</tr>
 				<tr id="temporaryCategories">
 					<!-- 01/05/12: Marta, Painting Temporary Category in red. Bug #182  -->

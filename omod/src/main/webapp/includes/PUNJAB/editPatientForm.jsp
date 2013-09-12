@@ -55,6 +55,12 @@ border-style: solid;
 							+ MODEL.patientAttributes[18] + "||";
 				}
 				
+				//ghanshyam 12-sept-2013 New Requirement #2684 Introducing a field at the time of registration to put Aadhar Card Number
+				if (!StringUtils.isBlank(MODEL.patientAttributes[20])) {
+					formValues += "patient.attribute.20=="
+							+ MODEL.patientAttributes[20] + "||";
+				}
+				
 				// Set value for address 
 				// 26-6-2012 Marta - to store address in the openmrs patient_address table #289
 				addressParts = MODEL.patientAddress.split(',');
@@ -228,6 +234,24 @@ border-style: solid;
 						});
 			}
 		},
+		
+		//ghanshyam 12-sept-2013 New Requirement #2684 Introducing a field at the time of registration to put Aadhar Card Number
+		checkAadharCardNumber : function() {
+		        patientId=MODEL.patientId;
+		        aadharCardNo=jQuery("#aadharCardNo").val();
+				jQuery.ajax({
+				type : "GET",
+				url : getContextPath() + "/module/registration/validateaadharcardnoedit.form",
+				data : ({
+					patientId			: patientId,
+					aadharCardNo		: aadharCardNo
+				}),
+				success : function(data) {	
+				    jQuery("#validationMessage").html(data);	
+					 
+		           } 
+               });
+			},	
 
 		/** VALIDATE BIRTHDATE */
 		checkBirthDate : function() {
@@ -379,6 +403,25 @@ border-style: solid;
 					return false;
 				}
 			}
+			
+			        //ghanshyam 12-sept-2013 New Requirement #2684 Introducing a field at the time of registration to put Aadhar Card Number
+			        PAGE.checkAadharCardNumber();
+		            alert("click ok to proceed");
+		            abc=jQuery("#abc").val();
+					def=jQuery("#def").val();
+					aadharCardNo=jQuery("#aCardNo").val();
+				
+					if(typeof aadharCardNo!="undefined"){
+					if(aadharCardNo=="1"){
+		            alert("Patient already registered with this Aadhar Card Number");
+					return false
+		            }
+		       
+		            }
+		            else{
+		            alert("please try again");
+		            return false;
+		            }		
 
 			return true;
 		}
@@ -1180,8 +1223,11 @@ border-style: solid;
 			</td>		
 		<!--  12/06/2012: Kesavulu: added Screen mock up for registration module[Punjab]- New Requirement #251 -->
 		<td rowspan="2" class="border">
-					<!-- <b>&nbsp;&nbsp;Patient information</b> <br /> -->
-					<b>&nbsp;&nbsp;Patient category</b><br />
+		            <!-- ghanshyam 12-sept-2013 New Requirement #2684 Introducing a field at the time of registration to put Aadhar Card Number -->
+					<b>&nbsp;&nbsp;Aadhar Card Number:</b> 
+			        <input id="aadharCardNo" name="patient.attribute.20" placeholder="Aadhar Card No"/> <br />
+			        <!-- ghanshyam 07-sept-2013 Support #2686 GUI Changes (spellings/ fonts/ alignments) -->	
+					<b>&nbsp;&nbsp;Patient Category</b><br />
 					<table cellspacing="10" >
 					<tr>
 						<td><input id="patCatGeneral" type="checkbox"
@@ -1244,6 +1290,8 @@ border-style: solid;
 						<td><input id="patCatCancer" type="checkbox"
 							name="person.attribute.14" value="Cancer" /> Cancer Patient</td>
 					</tr>
+					<!-- ghanshyam 12-sept-2013 New Requirement #2684 Introducing a field at the time of registration to put Aadhar Card Number -->
+					<div id="validationMessage"></div>
 				</table>
 			</td>
 
@@ -1276,7 +1324,8 @@ border-style: solid;
 			</td>
 		</tr>
 		<tr>
-			<td class="cell"><b>Phone number</b></td>
+			<!-- ghanshyam 07-sept-2013 Support #2686 GUI Changes (spellings/ fonts/ alignments) -->
+			<td class="cell"><b>Phone Number</b></td>
 			<td class="cell"><input id="patientPhoneNumber"
 				name="person.attribute.16" style="width: 200px;" /></td>
 				<td class="bottom"></td>

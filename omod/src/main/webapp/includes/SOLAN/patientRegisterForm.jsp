@@ -118,6 +118,8 @@ td.border {
 				
 				//ghanshyam 07-sept-2013 Support #2686 GUI Changes (spellings/ fonts/ alignments)
 				jQuery("#bh").hide();
+				//ghanshyam 12-sept-2013 New Requirement #2684 Introducing a field at the time of registration to put Aadhar Card Number
+				jQuery("#aadharCardReason").hide();
 
 			});
 
@@ -167,6 +169,22 @@ td.border {
 								});
 			}
 		},
+		
+		//ghanshyam 12-sept-2013 New Requirement #2684 Introducing a field at the time of registration to put Aadhar Card Number
+		checkAadharCardNumber : function() {
+		        aadharCardNo=jQuery("#aadharCardNo").val();
+				jQuery.ajax({
+				type : "GET",
+				url : getContextPath() + "/module/registration/validateaadharcardnoreg.form",
+				data : ({
+					aadharCardNo			: aadharCardNo
+				}),
+				success : function(data) {	
+				    jQuery("#validationMessage").html(data);	
+					 
+		           } 
+               });
+			},	
 
 		/** VALIDATE BIRTHDATE */
 		checkBirthDate : function() {
@@ -371,6 +389,44 @@ td.border {
 					return false;
 				}
 			}
+			
+			//ghanshyam 12-sept-2013 New Requirement #2684 Introducing a field at the time of registration to put Aadhar Card Number
+			if (jQuery("#yes").attr('checked') == false
+					&& jQuery("#no").attr('checked') == false) {
+				alert('Please select Yes or No for  Aadhar Card Number!');
+				return false;
+			} else {
+			if (jQuery("#yes").attr('checked')) {
+					if (jQuery("#aadharCardNo").val().length <= 0) {
+						alert('Please enter Aadhar Card');
+						return false;
+					} 
+				}
+			else if(jQuery("#no").attr('checked')){
+			       if (jQuery("#aadharCardReason").val().length <= 0) {
+						alert('Please enter Aadhar Card Reason');
+						return false;
+					} 
+			   }	
+			}	
+			
+			        PAGE.checkAadharCardNumber();
+		            alert("click ok to proceed");
+		            abc=jQuery("#abc").val();
+					def=jQuery("#def").val();
+					aadharCardNo=jQuery("#aCardNo").val();
+				
+					if(typeof aadharCardNo!="undefined"){
+					if(aadharCardNo=="1"){
+		            alert("Patient already registered with this  Aadhar Card Number");
+					return false
+		            }
+		       
+		            }
+		            else{
+		            alert("please try again");
+		            return false;
+		            }		
 
 			return true;
 		}
@@ -872,6 +928,32 @@ td.border {
 	};
 </script>
 
+<!-- ghanshyam 12-sept-2013 New Requirement #2684 Introducing a field at the time of registration to put Aadhar Card Number -->
+<script type="text/javascript">
+function yesClick(){
+if (jQuery("#yes").attr('checked') == true){
+jQuery("#aadharCardNo").show();
+jQuery("#aadharCardReason").hide();
+jQuery("#no").removeAttr("checked");
+}
+else{
+jQuery("#aadharCardNo").hide();
+}
+}
+
+function noClick(){
+if (jQuery("#no").attr('checked') == true){
+jQuery("#aadharCardNo").hide();
+jQuery("#aadharCardReason").show();
+jQuery("#yes").removeAttr("checked");
+}
+else{
+jQuery("#aadharCardReason").hide();
+}
+}
+</script>
+
+
 <h2>Patient Registration</h2>
 <!-- ghanshyam 07-sept-2013 Support #2686 GUI Changes (spellings/ fonts/ alignments) -->
 <b>Visit Information</b> <br />
@@ -927,6 +1009,12 @@ td.border {
 				</table>
 			</td>
 			<td rowspan="3" class="border">
+			<!-- ghanshyam 12-sept-2013 New Requirement #2684 Introducing a field at the time of registration to put Aadhar Card Number -->
+			<b>&nbsp;&nbsp;Aadhar Card Number:</b> 
+			Yes &nbsp;<input type="checkbox" checked="checked" id="yes" name="yes" onClick="yesClick();"> &nbsp;
+			No &nbsp;<input type="checkbox" id="no" name="no" onClick="noClick();">
+			<input id="aadharCardNo" name="patient.attribute.20" placeholder="Aadhar Card No"/>
+			<input id="aadharCardReason" name="patient.attribute.21" placeholder="Reason"/> <br />
 			<!-- ghanshyam 07-sept-2013 Support #2686 GUI Changes (spellings/ fonts/ alignments) -->
 				 <b>&nbsp;&nbsp;Patient Category</b><br />
 				<table cellspacing="10">
@@ -981,6 +1069,8 @@ td.border {
 								name="person.attribute.18" />
 						</span></td>
 					</tr>
+					<!-- ghanshyam 12-sept-2013 New Requirement #2684 Introducing a field at the time of registration to put Aadhar Card Number -->
+					<div id="validationMessage"></div>
 				</table></td>
 		</tr>
 
