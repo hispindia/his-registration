@@ -1199,6 +1199,7 @@ jQuery("#aadharCardReason").hide();
 
 				<!--  12/06/2012: Kesavulu: added Screen mock up for registration module[Punjab]- New Requirement #251 -->
 				<td rowspan="3" class="border">
+				<br />
 				<!-- ghanshyam 12-sept-2013 New Requirement #2684 Introducing a field at the time of registration to put Aadhar Card Number -->
 				<b>&nbsp;&nbsp;Aadhar Card Number:</b> 
 			    Yes &nbsp;<input type="checkbox" checked="checked" id="yes" name="yes" onClick="yesClick();"> &nbsp;
