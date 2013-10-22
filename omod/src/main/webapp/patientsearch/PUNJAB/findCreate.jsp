@@ -27,16 +27,28 @@
 		oldBackgroundColor: "",
 		
 		/** Click to view patient info */
-		visit: function(patientId){			
+		visit: function(patientId,deadInfo){
+		if(deadInfo=="true"){
+		alert("This Patient is Dead");
+		return false;
+		}			
 			window.location.href = openmrsContextPath + "/module/registration/showPatientInfo.form?patientId=" + patientId;
 		},
 		
 		/** Edit a patient */
-		editPatient: function(patientId){
+		editPatient: function(patientId,deadInfo){
+		if(deadInfo=="true"){
+		alert("This Patient is Dead");
+		return false;
+		}
 			window.location.href = openmrsContextPath + "/module/registration/editPatient.form?patientId=" + patientId;
 		},
 		
-		reprint: function(patientId){
+		reprint: function(patientId,deadInfo){
+		if(deadInfo=="true"){
+		alert("This Patient is Dead");
+		return false;
+		}
 			window.location.href = openmrsContextPath + "/module/registration/showPatientInfo.form?patientId=" + patientId + "&reprint=true";
 		}
 	};
@@ -94,23 +106,24 @@
 		<c:forEach items="${patients}" var="patient" varStatus="varStatus">
 			<tr class='${varStatus.index % 2 == 0 ? "oddRow" : "evenRow" } patientSearchRow'>
 				<openmrs:hasPrivilege privilege="Edit Patients">
-					<td onclick="PATIENTSEARCHRESULT.editPatient(${patient.patientId});">
+				<!-- ghanshyam,22-oct-2013,New Requirement #2940 Dealing with dead patient -->
+					<td onclick="PATIENTSEARCHRESULT.editPatient(${patient.patientId},'${patient.dead}');">
 						<center>
 							<img class="editImage" title="Edit patient information"/>
 						</center>
 					</td>
 				</openmrs:hasPrivilege>		
-				<td onclick="PATIENTSEARCHRESULT.visit(${patient.patientId});">
+				<td onclick="PATIENTSEARCHRESULT.visit(${patient.patientId},'${patient.dead}');">
 					${patient.patientIdentifier.identifier}
 				</td>
-				<td onclick="PATIENTSEARCHRESULT.visit(${patient.patientId});">${patient.givenName} ${patient.middleName} ${patient.familyName}</td>
-				<td onclick="PATIENTSEARCHRESULT.visit(${patient.patientId});"> 
+				<td onclick="PATIENTSEARCHRESULT.visit(${patient.patientId},'${patient.dead}');">${patient.givenName} ${patient.middleName} ${patient.familyName}</td>
+				<td onclick="PATIENTSEARCHRESULT.visit(${patient.patientId},'${patient.dead}');"> 
                 	<c:choose>
                 		<c:when test="${patient.age == 0}">&lt 1</c:when>
                 		<c:otherwise >${patient.age}</c:otherwise>
                 	</c:choose>
                 </td>
-				<td onclick="PATIENTSEARCHRESULT.visit(${patient.patientId});">
+				<td onclick="PATIENTSEARCHRESULT.visit(${patient.patientId},'${patient.dead}');">
 					<c:choose>
                 		<c:when test="${patient.gender eq 'M'}">
 							<img src="${pageContext.request.contextPath}/images/male.gif"/>
@@ -123,7 +136,7 @@
                 	<openmrs:formatDate date="${patient.birthdate}"/>
                 </td>  -->
                 
-				<td onclick="PATIENTSEARCHRESULT.visit(${patient.patientId});"> 
+				<td onclick="PATIENTSEARCHRESULT.visit(${patient.patientId},'${patient.dead}');"> 
                 	<%
 						Patient patient = (Patient) pageContext.getAttribute("patient");
 						Map<Integer, Map<Integer, String>> attributes = (Map<Integer, Map<Integer, String>>) pageContext.findAttribute("attributeMap");						
@@ -133,7 +146,7 @@
 							out.print(relativeName);
 					%>
                 </td>
-                <td onclick="PATIENTSEARCHRESULT.visit(${patient.patientId});">
+                <td onclick="PATIENTSEARCHRESULT.visit(${patient.patientId},'${patient.dead}');">
 	                <openmrs:formatDate date="${lastVisitTime[patient.patientId]}"/>              	
                 </td>
                 <!-- June 4th 2012 - Thai Chuong removed Phone Number field to match requirement:
@@ -147,7 +160,7 @@
 							out.print(phoneNumber); */
 					%>
                 </td>  -->
-                <td onclick="PATIENTSEARCHRESULT.reprint(${patient.patientId});"> 
+                <td onclick="PATIENTSEARCHRESULT.reprint(${patient.patientId},'${patient.dead}');"> 
                 	Reprint OPD slip
                 </td>
 			</tr>
