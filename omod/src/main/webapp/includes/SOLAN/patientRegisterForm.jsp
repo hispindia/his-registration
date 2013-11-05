@@ -933,21 +933,25 @@ td.border {
 function yesClick(){
 if (jQuery("#yes").attr('checked') == true){
 jQuery("#aadharCardNo").show();
+jQuery("#aadharCardReason").val('');
 jQuery("#aadharCardReason").hide();
 jQuery("#no").removeAttr("checked");
 }
 else{
+jQuery("#aadharCardNo").val('');
 jQuery("#aadharCardNo").hide();
 }
 }
 
 function noClick(){
 if (jQuery("#no").attr('checked') == true){
+jQuery("#aadharCardNo").val('');
 jQuery("#aadharCardNo").hide();
 jQuery("#aadharCardReason").show();
 jQuery("#yes").removeAttr("checked");
 }
 else{
+jQuery("#aadharCardReason").val('');
 jQuery("#aadharCardReason").hide();
 }
 }
