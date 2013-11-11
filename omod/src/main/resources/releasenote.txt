@@ -1,3 +1,11 @@
+2.3.0
+released by ghanshyam on 11-Nov-2013
+- #1609 Mohali- The temporary category appears twice on reprint screen
+- #1614 Reprint Slip: Solan, DDU, Mandi
+- #1625 Advance search-Witout selecting gender if age is selected say undefined
+- #2684 [Registration] Introducing a field at the time of registration to put Aadhar Card Number - IN Modules
+- #2940 [Registration] Dealing with dead patient
+
 2.2.17
 released by ghanshyam on 20-may-2013
 - #467	 Duplicate Identifier in registration
