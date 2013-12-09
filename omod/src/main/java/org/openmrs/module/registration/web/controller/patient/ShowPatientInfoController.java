@@ -84,7 +84,7 @@ public class ShowPatientInfoController {
 		// ghanshyam,date:20-02-2013 New Requirement #512 [Registration] module for Bangladesh hospital
 		String hospitalName = GlobalPropertyUtil.getString(HospitalCoreConstants.PROPERTY_HOSPITAL_NAME, "");
 		
-		if (hospitalName.equals("BD_HOSPITAL")) {
+		if (hospitalName.equals("KENYA_HOSPITAL") ) {
 			DmsCommonService dmsCommonService = Context.getService(DmsCommonService.class);
 			List<DmsOpdUnit> opdidlist = dmsCommonService.getOpdActivatedIdList();
 			List<String> lcname = new ArrayList<String>();
@@ -166,7 +166,7 @@ public class ShowPatientInfoController {
 		Integer conforregfreereasonid=conforregfreereason.getConceptId();
 		model.addAttribute("regFeeReasonConId",conforregfreereasonid);
 		model.addAttribute("regFee", GlobalPropertyUtil.getString(RegistrationConstants.PROPERTY_REGISTRATION_FEE, ""));
-		if (hospitalName.equals("BD_HOSPITAL")) {
+		if (hospitalName.equals("KENYA_HOSPITAL")) {
 			return "/module/registration/patient/showPatientInfoBdHospital";
 		} else {
 			return "/module/registration/patient/showPatientInfo";
