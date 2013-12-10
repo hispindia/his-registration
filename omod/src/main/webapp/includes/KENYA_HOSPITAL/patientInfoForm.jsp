@@ -486,7 +486,7 @@ jQuery("#message").hide();
 				</tr>
 				<tr>
 					<td colspan="1"><b>Patient Category:</b></td>
-					<td><select id="patientCategory" name="person.attribute.31">
+					<td><select id="patientCategory" name="person.attribute.14">
 										<option value="Patient Category"></option>
 										<option value="General">General</option>
 										<option value="Child Less Than 5 yr">Child less than 5 years</option>
