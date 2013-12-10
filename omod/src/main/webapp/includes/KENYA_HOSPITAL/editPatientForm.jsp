@@ -425,6 +425,21 @@ td.bottom {
 				alert("Please select gender");
 				return false;
 			}
+			
+			if (jQuery("#patientMaritalStatus").val() == "Marital") {
+				alert("Please select Marital Status of Patient");
+				return false;
+			} 
+			
+			if (StringUtils.isBlank(jQuery("#patientPostalAddress").val())) {
+				alert("Please enter physical address of Patient");
+				return false;
+			} 
+			
+			if (jQuery("#patientOtherName").val() == "") {
+				alert("Please select patients other name");
+				return false;
+			} 
             //ghanshyam 25-feb-2013 New Requirement #966[Billing]Add Paid Bill/Add Free Bill for Bangladesh module(removed Patient Category)
             /*
 			if (!VALIDATORS.validatePatientCategory()) {
@@ -675,6 +690,13 @@ td.bottom {
 					jQuery("#nhifCardNumber").val("");
 					jQuery("#nhifCardField").hide();
 
+				}
+				
+				if (jQuery("#patientGender").val() == "M") {
+					jQuery("#patCatMother").removeAttr("checked");
+					jQuery("#exemptionNumber3").val("");
+					jQuery("#exemptionField3").hide();
+					alert("Expectant Mother can not be Male");
 				}
 
 			}
