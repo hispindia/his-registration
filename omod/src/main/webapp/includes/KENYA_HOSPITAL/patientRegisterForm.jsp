@@ -366,12 +366,28 @@ td.border {
 				alert("Please select gender");
 				return false;
 			} 
+			
+			if (jQuery("#patientMaritalStatus").val() == "Marital") {
+				alert("Please select Marital Status of Patient");
+				return false;
+			} 
+			
+			if (StringUtils.isBlank(jQuery("#patientPostalAddress").val())) {
+				alert("Please enter physical address of Patient");
+				return false;
+			} 
 
+			
+			if (jQuery("#patientOtherName").val() == "") {
+				alert("Please select patients other name");
+				return false;
+			} 
+			
 			if (StringUtils.isBlank(jQuery("#opdWard").val())) {
 				alert("Please select Triage");
 				return false;
 			}
-			;
+			
 			
  
 			if (!StringUtils.isBlank(jQuery("#patientPhoneNumber").val())) {
@@ -467,7 +483,6 @@ td.border {
 						return false;
 					}
 				}
-				
 				return true;
 			}
 		},
@@ -502,6 +517,10 @@ td.border {
 					jQuery("#nhifCardNumber").val("");
 					jQuery("#nhifCardField").hide();
 
+				}
+
+				if (!VALIDATORS.checkPatientAgeForChildLessThan5yr()) {
+					jQuery("#patCatChildLessThan5yr").removeAttr("checked");
 				}
 
 			}
@@ -610,6 +629,14 @@ td.border {
 					jQuery("#nhifCardField").hide();
 
 				}
+				
+				if (jQuery("#patientGender").val() == "M") {
+					jQuery("#patCatMother").removeAttr("checked");
+					jQuery("#exemptionNumber3").val("");
+					jQuery("#exemptionField3").hide();
+					alert("Expectant Mother can not be Male");
+				}
+
 
 			}
 		},
@@ -692,12 +719,13 @@ td.border {
 		
 		checkPatientAgeForChildLessThan5yr : function() {
 			// check whether patient age less than five year
-			estAge = jQuery("#estimatedAge").html();
+			alert(estAge);
 			var digitPattern = /year/;
 			var age = digitPattern.exec(estAge);
-			if (age) {
-				if (jQuery("#patCatChildLessThan1yr").is(':checked')) {
-					alert("Child less than one year is only for patient under 5 year!");
+			if (estAge > 5) {
+				alert("baba ji ka thullu");
+				if (jQuery("#patCatChildLessThan5yr").is(':checked')) {
+					alert("Child less than five year is only for patient under 5 year!");
 					return false;
 				}
 			}
