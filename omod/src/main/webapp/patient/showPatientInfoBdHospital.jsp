@@ -60,7 +60,9 @@
 		daysLeft: "${daysLeft}",
 		reprint: "${param.reprint eq 'true'}",
 		tempCategoryId: "${tempCategoryId}",
-		opdWardId: "${opdWardId}"
+		opdWardId: "${opdWardId}",
+		//ghanshyam,11-dec-2013,#3327 Defining patient categories based on Kenyan requirements
+		selectedCategory: "${selectedCategory}"
 	};
 </script>
 

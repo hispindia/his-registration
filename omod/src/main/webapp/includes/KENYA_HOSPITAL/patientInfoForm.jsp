@@ -67,6 +67,11 @@
 		jQuery("#gender").html(MODEL.patientGender);
 		jQuery("#datetime").html(MODEL.currentDateTime);
 		jQuery("#othername1").html(MODEL.patientAttributes[25]+" "+MODEL.patientName);
+		//ghanshyam,11-dec-2013,#3327 Defining patient categories based on Kenyan requirements
+		if(!StringUtils.isBlank(MODEL.selectedCategory)){			
+			jQuery("#patientCategory").val(MODEL.selectedCategory);
+			jQuery("#patientCategory").attr("disabled", "disabled");
+		}
 		MODEL.OPDs = " ,Please select an Triage to visit|" + MODEL.OPDs;
 		PAGE.fillOptions("#opdWard", {
 			data:MODEL.OPDs,

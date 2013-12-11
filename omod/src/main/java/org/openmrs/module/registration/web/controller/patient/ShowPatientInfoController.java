@@ -45,6 +45,8 @@ import org.openmrs.Obs;
 import org.openmrs.Order;
 import org.openmrs.OrderType;
 import org.openmrs.Patient;
+import org.openmrs.PersonAttribute;
+import org.openmrs.PersonAttributeType;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.hospitalcore.DmsCommonService;
 import org.openmrs.module.hospitalcore.HospitalCoreService;
@@ -79,6 +81,7 @@ public class ShowPatientInfoController {
 	                                                                                                              ParseException {
 		
 		Patient patient = Context.getPatientService().getPatient(patientId);
+		HospitalCoreService hcs = Context.getService(HospitalCoreService.class);
 		PatientModel patientModel = new PatientModel(patient);
 		model.addAttribute("patient", patientModel);
 		// ghanshyam,date:20-02-2013 New Requirement #512 [Registration] module for Bangladesh hospital
@@ -123,6 +126,15 @@ public class ShowPatientInfoController {
 		
 		// Get selected OPD room if this is the first time of visit
 		if (encounterId != null) {
+			//ghanshyam,11-dec-2013,#3327 Defining patient categories based on Kenyan requirements
+			List<PersonAttribute> pas = hcs.getPersonAttributes(patientId);
+			 for (PersonAttribute pa : pas) {
+				 PersonAttributeType attributeType = pa.getAttributeType(); 
+				 if(attributeType.getPersonAttributeTypeId()==14){
+					 model.addAttribute("selectedCategory",pa.getValue()); 
+				 }
+			 }
+			 
 			Encounter encounter = Context.getEncounterService().getEncounter(encounterId);
 			for (Obs obs : encounter.getObs()) {
 				if (obs.getConcept().getName().getName().equalsIgnoreCase(RegistrationConstants.CONCEPT_NAME_OPD_WARD)) {
@@ -137,7 +149,6 @@ public class ShowPatientInfoController {
 			/**
 			 * June 7th 2012 - Supported #250 - Registration 2.2.14 (Mohali): Date on Reprint
 			 */
-			HospitalCoreService hcs = Context.getService(HospitalCoreService.class);
 			model.addAttribute("currentDateTime", sdf.format(hcs.getLastVisitTime(patientId)));
 			
 			Encounter encounter = Context.getService(RegistrationService.class).getLastEncounter(patient);
