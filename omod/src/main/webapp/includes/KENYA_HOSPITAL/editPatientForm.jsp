@@ -73,9 +73,7 @@ td.bottom {
 				formValues += "person.attribute.27=="
 						+ MODEL.patientAttributes[27] + "||";
 
-				formValues += "patient.attribute.28=="
-						+ MODEL.patientAttributes[28] + "||";
-				
+			
 								
 				attributes = MODEL.patientAttributes[14];
 				jQuery.each(attributes.split(","), function(index, value) {
@@ -97,14 +95,18 @@ td.bottom {
 							+ MODEL.patientAttributes[25] + "||";
 				}
 				
-			
+				if (!StringUtils.isBlank(MODEL.patientAttributes[28])) {
+					formValues += "person.attribute.28=="
+							+ MODEL.patientAttributes[28] + "||";
+				}
+				
 				if (!StringUtils.isBlank(MODEL.patientAttributes[29])) {
-					formValues += "patient.attribute.29=="
+					formValues += "person.attribute.29=="
 							+ MODEL.patientAttributes[29] + "||";
 				}
 				
 				if (!StringUtils.isBlank(MODEL.patientAttributes[30])) {
-					formValues += "patient.attribute.30=="
+					formValues += "person.attribute.30=="
 							+ MODEL.patientAttributes[30] + "||";
 				}
 
@@ -811,7 +813,7 @@ td.bottom {
 				},
 			};
 </script>
-
+<h3 align="center" style="color:red">WORK IN PROGRESS</h3>
 <h2>Patient Registration</h2>
 <div id="patientSearchResult"></div>
 <form id="patientRegistrationForm" method="POST">
@@ -880,7 +882,7 @@ td.bottom {
 							<td><input id="patCatGeneral" type="checkbox"
 								name="person.attribute.14" value="General" /> General</td>
 							<td><input id="patCatChildLessThan5yr" type="checkbox"
-								name="person.attribute.14" value="Child Less Than 5 yr" /> Child Less Than 5 yr</td>
+								name="person.attribute.14" value="Child Less Than 5 yr" />Child less than 5 year old</td>
 							<td><span id="exemptionField1">Exemption Number <input
 									id="exemptionNumber1" name="person.attribute.31" />
 							</span>
@@ -957,7 +959,7 @@ td.bottom {
 						</select></td>
 					</tr>
 					<tr>
-						<td>Sub County:</td>
+						<td>Sub-County:</td>
 						<td><select id="upazilas" name="patient.address.upazila"
 							style="width: 200px;">
 						</select></td>
@@ -968,7 +970,7 @@ td.bottom {
 										<option value="Nation"></option>
 										<option value="S">East Africa Kenya</option>
 										<option value="M">East Africa</option>
-										<option value="D">Africa</option>
+										<option value="D">Kenyan</option>
 						</select></td>
 						</tr>
 

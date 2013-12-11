@@ -755,7 +755,7 @@ td.border {
 		
 	};
 </script>
-
+<h3 align="center" style="color:red">WORK IN PROGRESS</h3>
 <h2>Patient Registration</h2>
 <div id="patientSearchResult"></div>
 <form id="patientRegistrationForm" method="POST">
@@ -829,7 +829,7 @@ td.border {
 							<td><input id="patCatGeneral" type="checkbox"
 								name="person.attribute.14" value="General" /> General</td>
 							<td><input id="patCatChildLessThan5yr" type="checkbox"
-								name="person.attribute.14" value="Child Less Than 5 yr" /> Child Less Than 5 yr</td>
+								name="person.attribute.14" value="Child Less Than 5 yr" /> Child less than 5 year old</td>
 							<td><span id="exemptionField1">Exemption Number <input
 									id="exemptionNumber1" name="person.attribute.31" />
 							</span>
@@ -906,7 +906,7 @@ td.border {
 						</select></td>
 					</tr>
 					<tr>
-						<td>Sub County:</td>
+						<td>Sub-County:</td>
 						<td><select id="upazilas" name="patient.address.upazila"
 							style="width: 200px;">
 						</select></td>
@@ -917,7 +917,7 @@ td.border {
 										<option value="Nation"></option>
 										<option value="S">East Africa Kenya</option>
 										<option value="M">East Africa</option>
-										<option value="D">Africa</option>
+										<option value="D">Kenyan</option>
 						</select></td>
 						</tr>
 
@@ -946,7 +946,7 @@ td.border {
 						<td>Physical Residence</td>
 						<td><input type="text" id="relativePostalAddress"
 							name="person.attribute.28" style="width: 200px;" /></td>
-						<td><input id="sameAddress" type="checkbox"/> Same as Above</td>
+						<td><input id="sameAddress" type="checkbox"/> Same as above</td>
 					</tr>
 					<tr>
 						<td>Telephone Number</td>

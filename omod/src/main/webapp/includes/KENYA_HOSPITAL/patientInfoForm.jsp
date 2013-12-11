@@ -489,7 +489,7 @@ jQuery("#message").hide();
 					<td><select id="patientCategory" name="person.attribute.14">
 										<option value="Patient Category"></option>
 										<option value="General">General</option>
-										<option value="Child Less Than 5 yr">Child less than 5 years</option>
+										<option value="Child Less Than 5 yr">Child less than 5 year old</option>
 										<option value="CCC">Comprehensive Care Clinic Patient</option>
 										<option value="Expectant Mother">Expectant Mothers</option>
 										<option value="Waver">Waiver</option>
