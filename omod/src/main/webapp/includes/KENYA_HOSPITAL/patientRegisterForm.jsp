@@ -915,9 +915,9 @@ td.border {
 						<td>Nationality:</td>
 						<td><select id="patientNation" name="person.attribute.27">
 										<option value="Nation"></option>
-										<option value="S">East Africa Kenya</option>
-										<option value="M">East Africa</option>
-										<option value="D">Kenyan</option>
+										<option value="East Africa Kenya">East Africa Kenya</option>
+										<option value="East Africa">East Africa</option>
+										<option value="Kenyan">Kenyan</option>
 						</select></td>
 						</tr>
 
