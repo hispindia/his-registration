@@ -397,7 +397,14 @@ td.border {
 				}
 			}
 
-			       //Add Validation for checking duplicate National Id 
+			if (!StringUtils.isBlank(jQuery("#relativePhoneNumber").val())) {
+				if (!StringUtils.isDigit(jQuery("#relativePhoneNumber").val())) {
+					alert("Please enter relative phone number in correct format");
+					return false;
+				}
+			}
+
+			//Add Validation for checking duplicate National Id 
 			//        PAGE.checkHealthNationalID();
 		            alert("click ok to proceed");
 		     /*       abc=jQuery("#abc").val();
@@ -925,7 +932,7 @@ td.border {
 			</td>
 		</tr>
 		<tr>
-			<td class="cell"><b>Phone number</b></td>
+			<td class="cell"><b>Contact number</b></td>
 			<td class="cell"><input id="patientPhoneNumber"
 				name="person.attribute.16" style="width: 200px;" /></td>
 		</tr>
@@ -949,7 +956,7 @@ td.border {
 						<td><input id="sameAddress" type="checkbox"/> Same as above</td>
 					</tr>
 					<tr>
-						<td>Telephone Number</td>
+						<td>Contact Number</td>
 						<td><input id="relativePhoneNumber"
 							name="person.attribute.29" style="width: 200px;" /></td>
 						</select></td>
