@@ -80,6 +80,7 @@ td.border {
 							beforeNewSearch : PAGE.searchPatientBefore
 						});
 
+
 				// hide exemption and waver number
 				jQuery("#exemptionField1").hide();
 				jQuery("#exemptionField2").hide();
@@ -799,10 +800,6 @@ td.border {
 				jQuery("#patientRelativeNameSection")
 						.html(
 								'<input type="radio" name="person.attribute.15" value="Daughter of"/> Daughter of <input type="radio" name="person.attribute.15" value="Wife of"/> Wife of');
-			}else if(jQuery("#patientGender").val() == "O"){
-				jQuery("#patientRelativeNameSection")
-				.html(
-				'<input hidden type="radio" name="person.attribute.15" value="Relative of" checked="checked"/>');
 			}
 		}
 		
@@ -926,8 +923,9 @@ td.border {
 							</td>
 						</tr>
 						<tr>
-							<td></td>
-							<td><span id="nhifCardField">&nbsp;&nbsp;&nbsp;&nbsp;NHIF Card ID <input
+							<td>&nbsp;</td>
+							<td>&nbsp;</td>
+							<td><span id="nhifCardField">NHIF Card ID &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;<input
 									id="nhifCardNumber" name="person.attribute.33" />
 							</span>
 							</td>
@@ -985,12 +983,17 @@ td.border {
 		
 		<tr>
 			<td class="cell"><b>Next of Kin (NOK) Information</b></td>
+
 			<td class="cell">
 				<table>
 					<tr>
+					<td>&nbsp;</td><td>
+					<div id="patientRelativeNameSection"></div> </td>
+					</tr>
+					<tr>
 						<td>Relative Name</td>
 						<td>
-							<div id="patientRelativeNameSection"></div> <input
+							<input
 							id="patientRelativeName" name="person.attribute.8"
 							style="width: 200px;" />
 						</td>

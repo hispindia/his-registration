@@ -967,8 +967,9 @@ td.bottom {
 							</td>
 						</tr>
 						<tr>
-							<td></td>
-							<td><span id="nhifCardField">&nbsp;&nbsp;&nbsp;&nbsp;NHIF Card ID <input
+							<td>&nbsp;</td>
+							<td>&nbsp;</td>
+							<td><span id="nhifCardField">NHIF Card ID &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; <input
 									id="nhifCardNumber" name="person.attribute.33" />
 							</span>
 							</td>
@@ -1029,9 +1030,13 @@ td.bottom {
 			<td class="cell">
 				<table>
 					<tr>
+						<td>&nbsp;</td><td>
+						<div id="patientRelativeNameSection"></div> </td>
+					</tr>
+					<tr>
 						<td>Relative Name</td>
 						<td>
-							<div id="patientRelativeNameSection"></div> <input
+							<input
 							id="patientRelativeName" name="person.attribute.8"
 							style="width: 200px;" />
 						</td>
