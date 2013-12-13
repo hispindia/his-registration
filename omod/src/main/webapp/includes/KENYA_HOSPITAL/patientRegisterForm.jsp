@@ -140,17 +140,16 @@ td.border {
 		submit : function() {
 
 			// Capitalize fullname and relative name
-			fullNameInCapital = StringUtils.capitalize(jQuery(
-					"#nameOrIdentifier", jQuery("#patientSearchForm")).val());
-			jQuery("#patientName", jQuery("#patientRegistrationForm")).val(
-					fullNameInCapital);
-			jQuery("#nameOrIdentifier", jQuery("#patientSearchForm")).val(
-					fullNameInCapital);
-			jQuery("#patientName", jQuery("#patientRegistrationForm")).val(
-					fullNameInCapital);
-			relativeNameInCaptital = StringUtils.capitalize(jQuery(
-					"#patientRelativeName").val());
+			fullNameInCapital = StringUtils.capitalize(jQuery("#nameOrIdentifier", jQuery("#patientSearchForm")).val());
+			jQuery("#patientName", jQuery("#patientRegistrationForm")).val(fullNameInCapital);
+			jQuery("#nameOrIdentifier", jQuery("#patientSearchForm")).val(fullNameInCapital);
+			jQuery("#patientName", jQuery("#patientRegistrationForm")).val(fullNameInCapital);
+			
+			relativeNameInCaptital = StringUtils.capitalize(jQuery("#patientRelativeName").val());
 			jQuery("#patientRelativeName").val(relativeNameInCaptital);
+
+			otherNameInCaptital = StringUtils.capitalize(jQuery("#patientOtherName").val());
+			jQuery("#patientOtherName").val(otherNameInCaptital);
 
 			// Validate and submit
 			if (this.validateRegisterForm()) {
@@ -378,10 +377,11 @@ td.border {
 			} 
 
 			
-			if (jQuery("#patientOtherName").val() == "") {
+			if (StringUtils.isBlank(jQuery("#patientOtherName").val())) {
 				alert("Please select patients other name");
 				return false;
 			} 
+
 			
 			if (StringUtils.isBlank(jQuery("#opdWard").val())) {
 				alert("Please select Triage");
