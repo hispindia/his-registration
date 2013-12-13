@@ -244,9 +244,11 @@ td.bottom {
 					jQuery("#patientRegistrationForm")).val());
 			jQuery("#patientName", jQuery("#patientRegistrationForm")).val(
 					fullNameInCapital);
-			relativeNameInCaptital = StringUtils.capitalize(jQuery(
-					"#patientRelativeName").val());
+			relativeNameInCaptital = StringUtils.capitalize(jQuery("#patientRelativeName").val());
 			jQuery("#patientRelativeName").val(relativeNameInCaptital);
+
+			otherNameInCaptital = StringUtils.capitalize(jQuery("#patientOtherName").val());
+			jQuery("#patientOtherName").val(otherNameInCaptital);
 
 			// Validate and submit
 			if (this.validateRegisterForm()) {
@@ -455,6 +457,58 @@ td.bottom {
 					return false;
 				}
 			}
+
+			if (!StringUtils.isBlank(jQuery("#relativePhoneNumber").val())) {
+				if (!StringUtils.isDigit(jQuery("#relativePhoneNumber").val())) {
+					alert("Please enter relative phone number in correct format");
+					return false;
+				}
+			}
+
+
+			if (jQuery("#patCatGeneral").attr('checked') == false
+					&& jQuery("#patCatChildLessThan5yr").attr('checked') == false
+					&& jQuery("#CCC").attr('checked') == false
+					&& jQuery("#patCatMother").attr('checked') == false
+					&& jQuery("#patCatFree").attr('checked') == false
+					&& jQuery("#patCatNHIF").attr('checked') == false) {
+				alert('You didn\'t choose any of the patient categories!');
+				return false;
+			} else {
+				if (jQuery("#patCatChildLessThan5yr").attr('checked')) {
+					if (jQuery("#exemptionNumber1").val().length <= 0) {
+						alert('Please fill Exemption number');
+						return false;
+					}
+				}
+				if (jQuery("#CCC").attr('checked')) {
+					if (jQuery("#exemptionNumber2").val().length <= 0) {
+						alert('Please fill Exemption number');
+						return false;
+					}
+				}
+
+				if (jQuery("#patCatMother").attr('checked')) {
+					if (jQuery("#exemptionNumber3").val().length <= 0) {
+						alert('Please fill Exemption number');
+						return false;
+					}
+				}
+				
+				if (jQuery("#patCatFree").attr('checked')) {
+					if (jQuery("#waverNumber").val().length <= 0) {
+						alert('Please fill Waver number');
+						return false;
+					}
+				}
+				
+				if (jQuery("#patCatNHIF").attr('checked')) {
+					if (jQuery("#exemptionNumber4").val().length <= 0 || jQuery("#nhifCardNumber").val().length <= 0) {
+						alert('Please fill Both Exemption number and NHIF Card Number');
+						return false;
+					}
+				}
+			}		
 			
 		/*	        //ghanshya,3-july-2013 #1962 Create validation for length of Health ID and National ID
 			       //Add Validation for checking duplicate National Id and Health Id
@@ -519,34 +573,34 @@ td.bottom {
 			} else {
 				if (jQuery("#patCatChildLessThan5yr").attr('checked')) {
 					if (jQuery("#exemptionNumber1").val().length <= 0) {
-						alert('Please enter Exemption number');
+						alert('Please fill Exemption number');
 						return false;
 					}
 				}
 				if (jQuery("#CCC").attr('checked')) {
 					if (jQuery("#exemptionNumber2").val().length <= 0) {
-						alert('Please enter Exemption number');
+						alert('Please fill Exemption number');
 						return false;
 					}
 				}
 
 				if (jQuery("#patCatMother").attr('checked')) {
 					if (jQuery("#exemptionNumber3").val().length <= 0) {
-						alert('Please enter Exemption number');
+						alert('Please fill Exemption number');
 						return false;
 					}
 				}
 				
 				if (jQuery("#patCatFree").attr('checked')) {
 					if (jQuery("#waverNumber").val().length <= 0) {
-						alert('Please enter Waver number');
+						alert('Please fill Waver number');
 						return false;
 					}
 				}
 				
 				if (jQuery("#patCatNHIF").attr('checked')) {
 					if (jQuery("#exemptionNumber4").val().length <= 0 || jQuery("#nhifCardNumber").val().length <= 0) {
-						alert('Please enter Both Exemption number and NHIF Card Number');
+						alert('Please fill Both Exemption number and NHIF Card Number');
 						return false;
 					}
 				}
@@ -562,31 +616,28 @@ td.bottom {
 				if (jQuery("#patCatGeneral").is(":checked")) {
 					jQuery("#patCatGeneral").removeAttr("checked");
 				}
-				if (jQuery("#CCC").is(":checked")) {
+				
 					jQuery("#CCC").removeAttr("checked");
 					jQuery("#exemptionNumber2").val("");
 					jQuery("#exemptionField2").hide();
-				}
-				if (jQuery("#patCatMother").is(":checked")){
+				
 					jQuery("#patCatMother").removeAttr("checked");
 				    jQuery("#exemptionNumber3").val("");
 					jQuery("#exemptionField3").hide();
-				}
-				if (jQuery("#patCatFree").is(":checked")) {
+				
 					jQuery("#patCatFree").removeAttr("checked");
 					jQuery("#waverNumber").val("");
 					jQuery("#waverField").hide();
-				}
-
-				if (jQuery("#patCatNHIF").is(":checked")) {
+				
 					jQuery("#patCatNHIF").removeAttr("checked");
 					jQuery("#exemptionNumber4").val("");
 					jQuery("#exemptionField4").hide();
 					jQuery("#nhifCardNumber").val("");
 					jQuery("#nhifCardField").hide();
-
-				}
-
+			}
+			else {
+			jQuery("#exemptionNumber1").val("");
+			jQuery("#exemptionField1").hide();
 			}
 		},
 
@@ -597,67 +648,57 @@ td.bottom {
 				if (jQuery("#patCatGeneral").is(":checked")) {
 					jQuery("#patCatGeneral").removeAttr("checked");
 				}
-				if (jQuery("#patCatChildLessThan5yr").is(":checked")) {
+				
 					jQuery("#patCatChildLessThan5yr").removeAttr("checked");
 					jQuery("#exemptionNumber1").val("");
 					jQuery("#exemptionField1").hide();
-				}
-				if (jQuery("#patCatMother").is(":checked")){
+				
 					jQuery("#patCatMother").removeAttr("checked");
 				    jQuery("#exemptionNumber3").val("");
 					jQuery("#exemptionField3").hide();
-				}
-				if (jQuery("#patCatFree").is(":checked")) {
+				
 					jQuery("#patCatFree").removeAttr("checked");
 					jQuery("#waverNumber").val("");
 					jQuery("#waverField").hide();
-				}
+				
 
-				if (jQuery("#patCatNHIF").is(":checked")) {
 					jQuery("#patCatNHIF").removeAttr("checked");
 					jQuery("#exemptionNumber4").val("");
 					jQuery("#exemptionField4").hide();
 					jQuery("#nhifCardNumber").val("");
 					jQuery("#nhifCardField").hide();
-
-				}
-
+			}
+			else {
+			jQuery("#exemptionNumber2").val("");
+			jQuery("#exemptionField2").hide();
 			}
 		},
 		
 		/** CHECK WHEN GENERAL CATEGORY IS SELECTED */
 		generalCheck : function(obj) {
 			if (jQuery("#patCatGeneral").is(':checked')) {
-				if (jQuery("#CCC").is(":checked")) {
+				
 					jQuery("#CCC").removeAttr("checked");
 					jQuery("#exemptionNumber2").val("");
 					jQuery("#exemptionField2").hide();
-				}
 				
-				if (jQuery("#patCatChildLessThan5yr").is(":checked")) {
 					jQuery("#patCatChildLessThan5yr").removeAttr("checked");
 					jQuery("#exemptionNumber1").val("");
 					jQuery("#exemptionField1").hide();
-				}
-				if (jQuery("#patCatMother").is(":checked")){
+				
 					jQuery("#patCatMother").removeAttr("checked");
 					jQuery("#exemptionNumber3").val("");
 					jQuery("#exemptionField3").removeAttr("checked");
-					}
-				if (jQuery("#patCatFree").is(":checked")) {
+				
 					jQuery("#patCatFree").removeAttr("checked");
 					jQuery("#waverNumber").val("");
 					jQuery("#waverField").hide();
-				}
-
-				if (jQuery("#patCatNHIF").is(":checked")) {
+				
 					jQuery("#patCatNHIF").removeAttr("checked");
 					jQuery("#exemptionNumber4").val("");
 					jQuery("#exemptionField4").hide();
 					jQuery("#nhifCardNumber").val("");
 					jQuery("#nhifCardField").hide();
-
-				}
 
 			}
 		},
@@ -669,30 +710,25 @@ td.bottom {
 				if (jQuery("#patCatGeneral").is(":checked")) {
 					jQuery("#patCatGeneral").removeAttr("checked");
 				}
-				if (jQuery("#patCatChildLessThan5yr").is(":checked")) {
+				
 					jQuery("#patCatChildLessThan5yr").removeAttr("checked");
 					jQuery("#exemptionNumber1").val("");
 					jQuery("#exemptionField1").hide();
-				}
-				if (jQuery("#CCC").is(":checked")){
+				
 					jQuery("#CCC").removeAttr("checked");
 				    jQuery("#exemptionNumber2").val("");
 					jQuery("#exemptionField2").hide();
-				}
-				if (jQuery("#patCatFree").is(":checked")) {
+				
 					jQuery("#patCatFree").removeAttr("checked");
 					jQuery("#waverNumber").val("");
 					jQuery("#waverField").hide();
-				}
-
-				if (jQuery("#patCatNHIF").is(":checked")) {
+				
 					jQuery("#patCatNHIF").removeAttr("checked");
 					jQuery("#exemptionNumber4").val("");
 					jQuery("#exemptionField4").hide();
 					jQuery("#nhifCardNumber").val("");
 					jQuery("#nhifCardField").hide();
 
-				}
 				
 				if (jQuery("#patientGender").val() == "M") {
 					jQuery("#patCatMother").removeAttr("checked");
@@ -701,6 +737,10 @@ td.bottom {
 					alert("Expectant Mother can not be Male");
 				}
 
+			}
+			else {
+			jQuery("#exemptionNumber3").val("");
+			jQuery("#exemptionField3").hide();
 			}
 		},
 
@@ -711,31 +751,29 @@ td.bottom {
 				if (jQuery("#patCatGeneral").is(":checked")) {
 					jQuery("#patCatGeneral").removeAttr("checked");
 				}
-				if (jQuery("#patCatChildLessThan5yr").is(":checked")) {
+				
 					jQuery("#patCatChildLessThan5yr").removeAttr("checked");
 					jQuery("#exemptionNumber1").val("");
 					jQuery("#exemptionField1").hide();
-				}
-				if (jQuery("#CCC").is(":checked")){
+				
 					jQuery("#CCC").removeAttr("checked");
 				    jQuery("#exemptionNumber2").val("");
 					jQuery("#exemptionField2").hide();
-				}
-				if (jQuery("#patCatMother").is(":checked")) {
+				
 					jQuery("#patCatMother").removeAttr("checked");
 					jQuery("#exemptionNumber3").val("");
 					jQuery("#exemptionField3").hide();
-				}
-
-				if (jQuery("#patCatNHIF").is(":checked")) {
+				
 					jQuery("#patCatNHIF").removeAttr("checked");
 					jQuery("#exemptionNumber4").val("");
 					jQuery("#exemptionField4").hide();
 					jQuery("#nhifCardNumber").val("");
 					jQuery("#nhifCardField").hide();
 
-				}
-
+			}
+			else {
+			jQuery("#waverNumber").val("");
+			jQuery("#waverField").hide();
 			}
 		},
 
@@ -747,29 +785,32 @@ td.bottom {
 				if (jQuery("#patCatGeneral").is(":checked")) {
 					jQuery("#patCatGeneral").removeAttr("checked");
 				}
-				if (jQuery("#patCatChildLessThan5yr").is(":checked")) {
+				
 					jQuery("#patCatChildLessThan5yr").removeAttr("checked");
 					jQuery("#exemptionNumber1").val("");
 					jQuery("#exemptionField1").hide();
-				}
-				if (jQuery("#CCC").is(":checked")){
+				
 					jQuery("#CCC").removeAttr("checked");
 				    jQuery("#exemptionNumber2").val("");
 					jQuery("#exemptionField2").hide();
-				}
-				if (jQuery("#patCatMother").is(":checked")) {
+				
 					jQuery("#patCatMother").removeAttr("checked");
 					jQuery("#exemptionNumber3").val("");
 					jQuery("#exemptionField3").hide();
-				}
-
-				if (jQuery("#patCatFree").is(":checked")) {
+				
 					jQuery("#patCatFree").removeAttr("checked");
 					jQuery("#waverNumber").val("");
 					jQuery("#waverField").hide();
-				}
-
+				
 			}
+			else {
+			jQuery("#exemptionNumber4").val("");
+			jQuery("#exemptionField4").hide();
+			jQuery("#nhifCardNumber").val("");
+			jQuery("#nhifCardField").hide();
+			
+			}
+			
 		},
 
 		
@@ -978,7 +1019,7 @@ td.bottom {
 			</td>
 		</tr>
 		<tr>
-			<td class="cell"><b>Phone number</b></td>
+			<td class="cell"><b>Contact Number</b></td>
 			<td class="cell"><input id="patientPhoneNumber"
 				name="person.attribute.16" style="width: 200px;" /></td>
 		</tr>
@@ -1002,7 +1043,7 @@ td.bottom {
 						<td><input id="sameAddress" type="checkbox"/> Same as Above</td>
 					</tr>
 					<tr>
-						<td>Telephone Number</td>
+						<td>Contact Number</td>
 						<td><input id="relativePhoneNumber"
 							name="person.attribute.29" style="width: 200px;" /></td>
 						</select></td>

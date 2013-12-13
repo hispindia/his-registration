@@ -403,6 +403,51 @@ td.border {
 					return false;
 				}
 			}
+			
+			
+			if (jQuery("#patCatGeneral").attr('checked') == false
+					&& jQuery("#patCatChildLessThan5yr").attr('checked') == false
+					&& jQuery("#CCC").attr('checked') == false
+					&& jQuery("#patCatMother").attr('checked') == false
+					&& jQuery("#patCatFree").attr('checked') == false
+					&& jQuery("#patCatNHIF").attr('checked') == false) {
+				alert('You didn\'t choose any of the patient categories!');
+				return false;
+			} else {
+				if (jQuery("#patCatChildLessThan5yr").attr('checked')) {
+					if (jQuery("#exemptionNumber1").val().length <= 0) {
+						alert('Please fill Exemption number');
+						return false;
+					}
+				}
+				if (jQuery("#CCC").attr('checked')) {
+					if (jQuery("#exemptionNumber2").val().length <= 0) {
+						alert('Please fill Exemption number');
+						return false;
+					}
+				}
+
+				if (jQuery("#patCatMother").attr('checked')) {
+					if (jQuery("#exemptionNumber3").val().length <= 0) {
+						alert('Please fill Exemption number');
+						return false;
+					}
+				}
+				
+				if (jQuery("#patCatFree").attr('checked')) {
+					if (jQuery("#waverNumber").val().length <= 0) {
+						alert('Please fill Waver number');
+						return false;
+					}
+				}
+				
+				if (jQuery("#patCatNHIF").attr('checked')) {
+					if (jQuery("#exemptionNumber4").val().length <= 0 || jQuery("#nhifCardNumber").val().length <= 0) {
+						alert('Please fill Both Exemption number and NHIF Card Number');
+						return false;
+					}
+				}
+			}
 
 			//Add Validation for checking duplicate National Id 
 			//        PAGE.checkHealthNationalID();
@@ -459,34 +504,34 @@ td.border {
 			} else {
 				if (jQuery("#patCatChildLessThan5yr").attr('checked')) {
 					if (jQuery("#exemptionNumber1").val().length <= 0) {
-						alert('Please enter Exemption number');
+						alert('Please fill Exemption number');
 						return false;
 					}
 				}
 				if (jQuery("#CCC").attr('checked')) {
 					if (jQuery("#exemptionNumber2").val().length <= 0) {
-						alert('Please enter Exemption number');
+						alert('Please fill Exemption number');
 						return false;
 					}
 				}
 
 				if (jQuery("#patCatMother").attr('checked')) {
 					if (jQuery("#exemptionNumber3").val().length <= 0) {
-						alert('Please enter Exemption number');
+						alert('Please fill Exemption number');
 						return false;
 					}
 				}
 				
 				if (jQuery("#patCatFree").attr('checked')) {
 					if (jQuery("#waverNumber").val().length <= 0) {
-						alert('Please enter Waver number');
+						alert('Please fill Waver number');
 						return false;
 					}
 				}
 				
 				if (jQuery("#patCatNHIF").attr('checked')) {
 					if (jQuery("#exemptionNumber4").val().length <= 0 || jQuery("#nhifCardNumber").val().length <= 0) {
-						alert('Please enter Both Exemption number and NHIF Card Number');
+						alert('Please fill Both Exemption number and NHIF Card Number');
 						return false;
 					}
 				}
@@ -501,35 +546,38 @@ td.border {
 				if (jQuery("#patCatGeneral").is(":checked")) {
 					jQuery("#patCatGeneral").removeAttr("checked");
 				}
-				if (jQuery("#CCC").is(":checked")) {
+
 					jQuery("#CCC").removeAttr("checked");
 					jQuery("#exemptionNumber2").val("");
 					jQuery("#exemptionField2").hide();
-				}
-				if (jQuery("#patCatMother").is(":checked")){
+
+
 					jQuery("#patCatMother").removeAttr("checked");
 				    jQuery("#exemptionNumber3").val("");
 					jQuery("#exemptionField3").hide();
-				}
-				if (jQuery("#patCatFree").is(":checked")) {
+
+
 					jQuery("#patCatFree").removeAttr("checked");
 					jQuery("#waverNumber").val("");
 					jQuery("#waverField").hide();
-				}
 
-				if (jQuery("#patCatNHIF").is(":checked")) {
+
+
 					jQuery("#patCatNHIF").removeAttr("checked");
 					jQuery("#exemptionNumber4").val("");
 					jQuery("#exemptionField4").hide();
 					jQuery("#nhifCardNumber").val("");
 					jQuery("#nhifCardField").hide();
 
-				}
+
 
 				if (!VALIDATORS.checkPatientAgeForChildLessThan5yr()) {
 					jQuery("#patCatChildLessThan5yr").removeAttr("checked");
 				}
-
+			}
+			else{
+			jQuery("#exemptionNumber1").val("");
+			jQuery("#exemptionField1").hide();
 			}
 		},
 
@@ -540,68 +588,67 @@ td.border {
 				if (jQuery("#patCatGeneral").is(":checked")) {
 					jQuery("#patCatGeneral").removeAttr("checked");
 				}
-				if (jQuery("#patCatChildLessThan5yr").is(":checked")) {
+				
 					jQuery("#patCatChildLessThan5yr").removeAttr("checked");
 					jQuery("#exemptionNumber1").val("");
 					jQuery("#exemptionField1").hide();
-				}
-				if (jQuery("#patCatMother").is(":checked")){
+				
+				
 					jQuery("#patCatMother").removeAttr("checked");
 				    jQuery("#exemptionNumber3").val("");
 					jQuery("#exemptionField3").hide();
-				}
-				if (jQuery("#patCatFree").is(":checked")) {
+				
+				
 					jQuery("#patCatFree").removeAttr("checked");
 					jQuery("#waverNumber").val("");
 					jQuery("#waverField").hide();
-				}
+				
 
-				if (jQuery("#patCatNHIF").is(":checked")) {
+				
 					jQuery("#patCatNHIF").removeAttr("checked");
 					jQuery("#exemptionNumber4").val("");
 					jQuery("#exemptionField4").hide();
 					jQuery("#nhifCardNumber").val("");
 					jQuery("#nhifCardField").hide();
 
-				}
-
+			}
+			else {
+			jQuery("#exemptionNumber2").val("");
+			jQuery("#exemptionField2").hide();
 			}
 		},
 		
 		/** CHECK WHEN GENERAL CATEGORY IS SELECTED */
 		generalCheck : function(obj) {
 			if (jQuery("#patCatGeneral").is(':checked')) {
-				if (jQuery("#CCC").is(":checked")) {
+				
 					jQuery("#CCC").removeAttr("checked");
 					jQuery("#exemptionNumber2").val("");
 					jQuery("#exemptionField2").hide();
-				}
 				
-				if (jQuery("#patCatChildLessThan5yr").is(":checked")) {
+				
+				
 					jQuery("#patCatChildLessThan5yr").removeAttr("checked");
 					jQuery("#exemptionNumber1").val("");
 					jQuery("#exemptionField1").hide();
-				}
-				if (jQuery("#patCatMother").is(":checked")){
+				
+				
 					jQuery("#patCatMother").removeAttr("checked");
 					jQuery("#exemptionNumber3").val("");
 					jQuery("#exemptionField3").removeAttr("checked");
-					}
-				if (jQuery("#patCatFree").is(":checked")) {
+				
+				
 					jQuery("#patCatFree").removeAttr("checked");
 					jQuery("#waverNumber").val("");
 					jQuery("#waverField").hide();
-				}
+				
 
-				if (jQuery("#patCatNHIF").is(":checked")) {
+				
 					jQuery("#patCatNHIF").removeAttr("checked");
 					jQuery("#exemptionNumber4").val("");
 					jQuery("#exemptionField4").hide();
 					jQuery("#nhifCardNumber").val("");
 					jQuery("#nhifCardField").hide();
-
-				}
-
 			}
 		},
 		
@@ -612,30 +659,25 @@ td.border {
 				if (jQuery("#patCatGeneral").is(":checked")) {
 					jQuery("#patCatGeneral").removeAttr("checked");
 				}
-				if (jQuery("#patCatChildLessThan5yr").is(":checked")) {
+				
 					jQuery("#patCatChildLessThan5yr").removeAttr("checked");
 					jQuery("#exemptionNumber1").val("");
 					jQuery("#exemptionField1").hide();
-				}
-				if (jQuery("#CCC").is(":checked")){
+				
 					jQuery("#CCC").removeAttr("checked");
 				    jQuery("#exemptionNumber2").val("");
 					jQuery("#exemptionField2").hide();
-				}
-				if (jQuery("#patCatFree").is(":checked")) {
+				
 					jQuery("#patCatFree").removeAttr("checked");
 					jQuery("#waverNumber").val("");
 					jQuery("#waverField").hide();
-				}
-
-				if (jQuery("#patCatNHIF").is(":checked")) {
+				
 					jQuery("#patCatNHIF").removeAttr("checked");
 					jQuery("#exemptionNumber4").val("");
 					jQuery("#exemptionField4").hide();
 					jQuery("#nhifCardNumber").val("");
 					jQuery("#nhifCardField").hide();
 
-				}
 				
 				if (jQuery("#patientGender").val() == "M") {
 					jQuery("#patCatMother").removeAttr("checked");
@@ -643,9 +685,12 @@ td.border {
 					jQuery("#exemptionField3").hide();
 					alert("Expectant Mother can not be Male");
 				}
-
-
 			}
+			else {
+			jQuery("#exemptionNumber3").val("");
+			jQuery("#exemptionField3").hide();
+			}
+
 		},
 
 		/** CHECK WHEN Free CATEGORY IS SELECTED */
@@ -655,32 +700,31 @@ td.border {
 				if (jQuery("#patCatGeneral").is(":checked")) {
 					jQuery("#patCatGeneral").removeAttr("checked");
 				}
-				if (jQuery("#patCatChildLessThan5yr").is(":checked")) {
+				
 					jQuery("#patCatChildLessThan5yr").removeAttr("checked");
 					jQuery("#exemptionNumber1").val("");
 					jQuery("#exemptionField1").hide();
-				}
-				if (jQuery("#CCC").is(":checked")){
+				
 					jQuery("#CCC").removeAttr("checked");
 				    jQuery("#exemptionNumber2").val("");
 					jQuery("#exemptionField2").hide();
-				}
-				if (jQuery("#patCatMother").is(":checked")) {
+				
 					jQuery("#patCatMother").removeAttr("checked");
 					jQuery("#exemptionNumber3").val("");
 					jQuery("#exemptionField3").hide();
-				}
-
-				if (jQuery("#patCatNHIF").is(":checked")) {
+				
 					jQuery("#patCatNHIF").removeAttr("checked");
 					jQuery("#exemptionNumber4").val("");
 					jQuery("#exemptionField4").hide();
 					jQuery("#nhifCardNumber").val("");
 					jQuery("#nhifCardField").hide();
 
-				}
-
 			}
+			else {
+			jQuery("#waverNumber").val("");
+			jQuery("#waverField").hide();
+			}
+			
 		},
 
 		/** CHECK WHEN Free CATEGORY IS SELECTED */
@@ -691,28 +735,30 @@ td.border {
 				if (jQuery("#patCatGeneral").is(":checked")) {
 					jQuery("#patCatGeneral").removeAttr("checked");
 				}
-				if (jQuery("#patCatChildLessThan5yr").is(":checked")) {
+				
 					jQuery("#patCatChildLessThan5yr").removeAttr("checked");
 					jQuery("#exemptionNumber1").val("");
 					jQuery("#exemptionField1").hide();
-				}
-				if (jQuery("#CCC").is(":checked")){
+				
 					jQuery("#CCC").removeAttr("checked");
 				    jQuery("#exemptionNumber2").val("");
 					jQuery("#exemptionField2").hide();
-				}
-				if (jQuery("#patCatMother").is(":checked")) {
+				
 					jQuery("#patCatMother").removeAttr("checked");
 					jQuery("#exemptionNumber3").val("");
 					jQuery("#exemptionField3").hide();
-				}
-
-				if (jQuery("#patCatFree").is(":checked")) {
+				
 					jQuery("#patCatFree").removeAttr("checked");
 					jQuery("#waverNumber").val("");
 					jQuery("#waverField").hide();
-				}
+				
 
+			}
+			else {
+			jQuery("#nhifCardNumber").val("");
+			jQuery("#exemptionNumber4").val("");
+			jQuery("#exemptionField4").hide();
+			jQuery("#nhifCardField").hide();
 			}
 		},
 
