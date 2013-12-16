@@ -84,27 +84,8 @@ public class ShowPatientInfoController {
 		HospitalCoreService hcs = Context.getService(HospitalCoreService.class);
 		PatientModel patientModel = new PatientModel(patient);
 		model.addAttribute("patient", patientModel);
-		// ghanshyam,date:20-02-2013 New Requirement #512 [Registration] module for Bangladesh hospital
-		String hospitalName = GlobalPropertyUtil.getString(HospitalCoreConstants.PROPERTY_HOSPITAL_NAME, "");
-		
-		if (hospitalName.equals("KENYA_HOSPITAL") ) {
-			DmsCommonService dmsCommonService = Context.getService(DmsCommonService.class);
-			List<DmsOpdUnit> opdidlist = dmsCommonService.getOpdActivatedIdList();
-			List<String> lcname = new ArrayList<String>();
-			for (DmsOpdUnit doci : opdidlist) {
-				Concept con = doci.getOpdConceptId();
-				ConceptName conname = dmsCommonService.getOpdWardNameByConceptId(con);
-				if (doci.getUnitNo().equals(0)) {
-					lcname.add(con.getId() + "," + conname);
-				} else {
-					lcname.add(con.getId() + "," + conname + "(Unit-" + doci.getUnitNo() + ")");
-				}
-				
-			}
-			model.addAttribute("OPDs", lcname);
-		} else {
-			model.addAttribute("OPDs", RegistrationWebUtils.getSubConcepts(RegistrationConstants.CONCEPT_NAME_OPD_WARD));
-		}
+		//ghanshyam,16-dec-2013,3438 Remove the interdependency
+		model.addAttribute("TRIAGE", RegistrationWebUtils.getSubConcepts(RegistrationConstants.CONCEPT_NAME_TRIAGE));
 		
 		// Get current date
 		SimpleDateFormat sdf = new SimpleDateFormat("EEE dd/MM/yyyy kk:mm");
@@ -137,8 +118,9 @@ public class ShowPatientInfoController {
 			 
 			Encounter encounter = Context.getEncounterService().getEncounter(encounterId);
 			for (Obs obs : encounter.getObs()) {
-				if (obs.getConcept().getName().getName().equalsIgnoreCase(RegistrationConstants.CONCEPT_NAME_OPD_WARD)) {
-					model.addAttribute("selectedOPD", obs.getValueCoded().getConceptId());
+				//ghanshyam,16-dec-2013,3438 Remove the interdependency
+				if (obs.getConcept().getName().getName().equalsIgnoreCase(RegistrationConstants.CONCEPT_NAME_TRIAGE)) {
+					model.addAttribute("selectedTRIAGE", obs.getValueCoded().getConceptId());
 				}
 			}
 		}
@@ -161,7 +143,7 @@ public class ShowPatientInfoController {
 						model.addAttribute("tempCategoryId", obs.getConcept().getConceptId());
 					} else if (obs.getConcept().getDisplayString()
 					        .equalsIgnoreCase(RegistrationConstants.CONCEPT_NAME_OPD_WARD)) {
-						model.addAttribute("opdWardId", obs.getConcept().getConceptId());
+						model.addAttribute("triageId", obs.getConcept().getConceptId());
 					}
 					observations.put(obs.getConcept().getConceptId(), ObsUtils.getValueAsString(obs));
 				}
@@ -177,11 +159,7 @@ public class ShowPatientInfoController {
 		Integer conforregfreereasonid=conforregfreereason.getConceptId();
 		model.addAttribute("regFeeReasonConId",conforregfreereasonid);
 		model.addAttribute("regFee", GlobalPropertyUtil.getString(RegistrationConstants.PROPERTY_REGISTRATION_FEE, ""));
-		if (hospitalName.equals("KENYA_HOSPITAL")) {
-			return "/module/registration/patient/showPatientInfoBdHospital";
-		} else {
-			return "/module/registration/patient/showPatientInfo";
-		}
+		return "/module/registration/patient/showPatientInfo";
 	}
 	
 	/**
@@ -215,43 +193,19 @@ public class ShowPatientInfoController {
 		} else {
 			encounter = RegistrationWebUtils.createEncounter(patient, true);
 			
-			// create OPD obs
-			Concept opdWardConcept = Context.getConceptService().getConcept(RegistrationConstants.CONCEPT_NAME_OPD_WARD);
-			Concept selectedOPDConcept = Context.getConceptService().getConcept(
-			    Integer.parseInt(parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_OPD_WARD)));
+			// create TRIAGE obs
+			//ghanshyam,16-dec-2013,3438 Remove the interdependency
+			Concept triageConcept = Context.getConceptService().getConcept(RegistrationConstants.CONCEPT_NAME_TRIAGE);
+			Concept selectedTRIAGEConcept = Context.getConceptService().getConcept(
+			    Integer.parseInt(parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_TRIAGE)));
 			Obs opd = new Obs();
-			opd.setConcept(opdWardConcept);
-			opd.setValueCoded(selectedOPDConcept);
+			opd.setConcept(triageConcept);
+			opd.setValueCoded(selectedTRIAGEConcept);
 			encounter.addObs(opd);
 			
-			// send patient to opd room/bloodbank
+			// send patient to opd room
+			RegistrationWebUtils.sendPatientToOPDQueue(patient, selectedTRIAGEConcept, true);
 			
-			//harsh 5/10/2012 changed the way to get blood bank concept->shifted hardcoded dependency from id to name
-			//			Concept bloodbankConcept = Context.getConceptService().getConcept(
-			//			    GlobalPropertyUtil.getInteger(RegistrationConstants.PROPERTY_BLOODBANK_CONCEPT_ID, 6425));
-			String bloodBankWardName = GlobalPropertyUtil.getString(RegistrationConstants.PROPERTY_BLOODBANK_OPDWARD_NAME,
-			    "Blood Bank Room");
-			
-			//ghanshyam 6-august-2013 code review bug
-			if (!selectedOPDConcept.getName().toString().equals(bloodBankWardName)) {
-				RegistrationWebUtils.sendPatientToOPDQueue(patient, selectedOPDConcept, true);
-			} else {
-				OrderType orderType = null;
-				String orderTypeName = Context.getAdministrationService().getGlobalProperty("bloodbank.orderTypeName");
-				orderType = OrderUtil.getOrderTypeByName(orderTypeName);
-				
-				Order order = new Order();
-				order.setConcept(selectedOPDConcept);
-				order.setCreator(Context.getAuthenticatedUser());
-				order.setDateCreated(new Date());
-				order.setOrderer(Context.getAuthenticatedUser());
-				order.setPatient(patient);
-				order.setStartDate(new Date());
-				order.setAccessionNumber("0");
-				order.setOrderType(orderType);
-				order.setEncounter(encounter);
-				encounter.addOrder(order);
-			}
 		}
 		
 		// create temporary attributes

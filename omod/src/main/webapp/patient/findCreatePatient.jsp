@@ -50,7 +50,8 @@
 		patientIdentifier: "${patientIdentifier}",
 		districts: _districts,
 		upazilas: _upazilas,
-		OPDs: "${OPDs}",
+		////ghanshyam,16-dec-2013,3438 Remove the interdependency
+		TRIAGE: "${TRIAGE}",
 		referralHospitals: "${referralHospitals}",
 		referralReasons: "${referralReasons}"
 	}

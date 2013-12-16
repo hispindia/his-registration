@@ -72,17 +72,17 @@
 			jQuery("#patientCategory").val(MODEL.selectedCategory);
 			jQuery("#patientCategory").attr("disabled", "disabled");
 		}
-		MODEL.OPDs = " ,Please select an Triage to visit|" + MODEL.OPDs;
-		PAGE.fillOptions("#opdWard", {
-			data:MODEL.OPDs,
+		MODEL.TRIAGE = " ,Please select an Triage to visit|" + MODEL.TRIAGE;
+		PAGE.fillOptions("#triage", {
+			data:MODEL.TRIAGE,
 			delimiter: ",",
 			optionDelimiter: "|"
 		});
 		
 		// Set the selected OPD
-		if(!StringUtils.isBlank(MODEL.selectedOPD)){			
-			jQuery("#opdWard").val(MODEL.selectedOPD);
-			jQuery("#opdWard").attr("disabled", "disabled");
+		if(!StringUtils.isBlank(MODEL.selectedTRIAGE)){			
+			jQuery("#triage").val(MODEL.selectedTRIAGE);
+			jQuery("#triage").attr("disabled", "disabled");
 		}
 		
 		jQuery("#buySlip").hide();
@@ -106,8 +106,8 @@
 		
 		// Set data for reprint page
 		if(MODEL.reprint=="true"){
-			var opdWardId=MODEL.opdWardId;
-		jQuery("#opdWard").val(MODEL.observations[opdWardId]);
+			var triageId=MODEL.triageId;
+		jQuery("#triage").val(MODEL.observations[triageId]);
 		
 			var tempCategoryId=MODEL.tempCategoryId;
 			if(!StringUtils.isBlank(MODEL.observations[tempCategoryId])){
@@ -143,8 +143,8 @@
 				jQuery("#reprint").hide();
 				
 				// Convert OPDWard dropdown to printable format
-				jQuery("#opdWard").hide();
-				jQuery("#opdWard").after("<span>" + jQuery("#opdWard option:checked").html() +  "</span>");	
+				jQuery("#triage").hide();
+				jQuery("#triage").after("<span>" + jQuery("#triage option:checked").html() +  "</span>");	
 				
 				//ghanshyam  20-may-2013 #1648 capture Health ID and Registration Fee Type	
                  jQuery("#regFeeType input").each(function(index, value){				
@@ -275,7 +275,7 @@
 		
 		/** Validate Form */
 		validate: function(){
-			if(StringUtils.isBlank(jQuery("#opdWard").val())){
+			if(StringUtils.isBlank(jQuery("#triage").val())){
 				alert("Please select Triage");
 				return false;
 			};
@@ -540,7 +540,7 @@ jQuery("#message").hide();
 				
 				<tr id="opdWardLabel">
 					<td colspan="1"><b>Triage to visit:</b></td>
-					<td colspan="5"><select id="opdWard" name="patient.opdWard">
+					<td colspan="5"><select id="triage" name="patient.triage">
 					</select></td>
 				</tr>
 				<tr>

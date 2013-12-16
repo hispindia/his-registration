@@ -22,9 +22,7 @@ package org.openmrs.module.registration.web.controller.patient;
 
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -35,22 +33,16 @@ import org.apache.commons.logging.LogFactory;
 import org.dom4j.DocumentException;
 import org.jaxen.JaxenException;
 import org.openmrs.Concept;
-import org.openmrs.ConceptName;
 import org.openmrs.Encounter;
 import org.openmrs.Obs;
-import org.openmrs.Order;
-import org.openmrs.OrderType;
 import org.openmrs.Patient;
 import org.openmrs.PatientIdentifier;
 import org.openmrs.PersonAttribute;
 import org.openmrs.PersonName;
 import org.openmrs.api.context.Context;
-import org.openmrs.module.hospitalcore.DmsCommonService;
-import org.openmrs.module.hospitalcore.model.DmsOpdUnit;
 import org.openmrs.module.hospitalcore.util.GlobalPropertyUtil;
 import org.openmrs.module.hospitalcore.util.HospitalCoreConstants;
 import org.openmrs.module.hospitalcore.util.HospitalCoreUtils;
-import org.openmrs.module.hospitalcore.util.OrderUtil;
 import org.openmrs.module.registration.RegistrationService;
 import org.openmrs.module.registration.includable.validator.attribute.PatientAttributeValidatorService;
 import org.openmrs.module.registration.model.RegistrationFee;
@@ -76,29 +68,11 @@ public class FindCreatePatientController {
 		model.addAttribute("referralReasons",
 		    RegistrationWebUtils.getSubConcepts(RegistrationConstants.CONCEPT_NAME_REASON_FOR_REFERRAL));
 		RegistrationWebUtils.getAddressData(model);
+		//model.addAttribute("OPDs", RegistrationWebUtils.getSubConcepts(RegistrationConstants.CONCEPT_NAME_OPD_WARD));
+		//ghanshyam,16-dec-2013,3438 Remove the interdependency
+		model.addAttribute("TRIAGE", RegistrationWebUtils.getSubConcepts(RegistrationConstants.CONCEPT_NAME_TRIAGE));
+		return "/module/registration/patient/findCreatePatient";
 		
-		// ghanshyam,date:20-02-2013 New Requirement #512 [Registration] module for Bangladesh hospital
-		String hospitalName = GlobalPropertyUtil.getString(HospitalCoreConstants.PROPERTY_HOSPITAL_NAME, "");
-		
-		if (hospitalName.equals("KENYA_HOSPITAL")) {
-			DmsCommonService dmsCommonService = Context.getService(DmsCommonService.class);
-			List<DmsOpdUnit> opdidlist = dmsCommonService.getOpdActivatedIdList();
-			List<String> lcname = new ArrayList<String>();
-			for (DmsOpdUnit doci : opdidlist) {
-				Concept con = doci.getOpdConceptId();
-				ConceptName conname = dmsCommonService.getOpdWardNameByConceptId(con);
-				if (doci.getUnitNo().equals(0)) {
-					lcname.add(con.getId() + "," + conname);
-				} else {
-					lcname.add(con.getId() + "," + conname + "(Unit-" + doci.getUnitNo() + ")");
-				}
-			}
-			model.addAttribute("OPDs", lcname);
-			return "/module/registration/patient/findCreatePatientBdHospital";
-		} else {
-			model.addAttribute("OPDs", RegistrationWebUtils.getSubConcepts(RegistrationConstants.CONCEPT_NAME_OPD_WARD));
-			return "/module/registration/patient/findCreatePatient";
-		}
 	}
 	
 	@RequestMapping(method = RequestMethod.POST)
@@ -238,51 +212,17 @@ public class FindCreatePatientController {
 		/*
 		 * ADD OPD ROOM
 		 */
-		Concept opdWardConcept = Context.getConceptService().getConcept(RegistrationConstants.CONCEPT_NAME_OPD_WARD);
-		/*ghanshyam,date:20-02-2013 New Requirement #512 [Registration] module for Bangladesh hospital
-		 * there is no use of Integer.parseInt so removed
-		 */
+		//ghanshyam,16-dec-2013,3438 Remove the interdependency
+		Concept triageConcept = Context.getConceptService().getConcept(RegistrationConstants.CONCEPT_NAME_TRIAGE);
 
-		/*
-		Concept selectedOPDConcept = Context.getConceptService().getConcept(
-		    Integer.parseInt(parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_OPD_WARD)));
-		    */
-		Concept selectedOPDConcept = Context.getConceptService().getConcept(
-		    parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_OPD_WARD));
-		Obs opdObs = new Obs();
-		opdObs.setConcept(opdWardConcept);
-		opdObs.setValueCoded(selectedOPDConcept);
-		encounter.addObs(opdObs);
+		Concept selectedTRIAGEConcept = Context.getConceptService().getConcept(
+		    parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_TRIAGE));
+		Obs triageObs = new Obs();
+		triageObs.setConcept(triageConcept);
+		triageObs.setValueCoded(selectedTRIAGEConcept);
+		encounter.addObs(triageObs);
 		
-		// Send patient to OPD Queue/bloodbank
-		
-		//harsh 5/10/2012 changed the way to get blood bank concept->shifted hardcoded dependency from id to name
-		//		Concept bloodbankConcept = Context.getConceptService().getConcept(
-		//		    GlobalPropertyUtil.getInteger(RegistrationConstants.PROPERTY_BLOODBANK_CONCEPT_ID, 6425));
-		
-		String bloodBankWardName = GlobalPropertyUtil.getString(RegistrationConstants.PROPERTY_BLOODBANK_OPDWARD_NAME,
-		    "Blood Bank Room");
-		
-		//ghanshyam 6-august-2013 code review bug
-		if (!selectedOPDConcept.getName().toString().equals(bloodBankWardName)) {
-			RegistrationWebUtils.sendPatientToOPDQueue(patient, selectedOPDConcept, false);
-		} else {
-			OrderType orderType = null;
-			String orderTypeName = Context.getAdministrationService().getGlobalProperty("bloodbank.orderTypeName");
-			orderType = OrderUtil.getOrderTypeByName(orderTypeName);
-			
-			Order order = new Order();
-			order.setConcept(selectedOPDConcept);
-			order.setCreator(Context.getAuthenticatedUser());
-			order.setDateCreated(new Date());
-			order.setOrderer(Context.getAuthenticatedUser());
-			order.setPatient(patient);
-			order.setStartDate(new Date());
-			order.setAccessionNumber("0");
-			order.setOrderType(orderType);
-			order.setEncounter(encounter);
-			encounter.addOrder(order);
-		}
+		RegistrationWebUtils.sendPatientToOPDQueue(patient, selectedTRIAGEConcept, false);
 		
 		/*
 		 * REFERRAL INFORMATION

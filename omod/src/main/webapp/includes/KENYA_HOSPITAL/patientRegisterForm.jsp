@@ -51,10 +51,10 @@ td.border {
 				PAGE.fillOptions("#upazilas", {
 					data : MODEL.upazilas[0].split(',')
 				});
-				MODEL.OPDs = " ,Please select Triage room to visit|"
-						+ MODEL.OPDs;
-				PAGE.fillOptions("#opdWard", {
-					data : MODEL.OPDs,
+				MODEL.TRIAGE = " ,Please select Triage room to visit|"
+						+ MODEL.TRIAGE;
+				PAGE.fillOptions("#triage", {
+					data : MODEL.TRIAGE,
 					delimiter : ",",
 					optionDelimiter : "|"
 				});
@@ -384,7 +384,7 @@ td.border {
 			} 
 
 			
-			if (StringUtils.isBlank(jQuery("#opdWard").val())) {
+			if (StringUtils.isBlank(jQuery("#triage").val())) {
 				alert("Please select Triage");
 				return false;
 			}
@@ -773,7 +773,6 @@ td.border {
 		
 		checkPatientAgeForChildLessThan5yr : function() {
 			// check whether patient age less than five year
-			alert(estAge);
 			var digitPattern = /year/;
 			var age = digitPattern.exec(estAge);
 			if (estAge > 5) {
@@ -1045,7 +1044,7 @@ td.border {
 							</div> </td>
 					</tr>
 					<tr>
-						<b>Triage Room to Visit: *</b> <select id="opdWard" name="patient.opdWard">	</select>
+						<b>Triage Room to Visit: *</b> <select id="triage" name="patient.triage">	</select>
 					</tr>
 				</table>
 			</td>

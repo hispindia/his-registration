@@ -74,6 +74,9 @@ public class RegistrationConstants {
 	
 	public static final String FORM_FIELD_PATIENT_OPD_WARD = "patient.opdWard";
 	
+	//ghanshyam,16-dec-2013,3438 Remove the interdependency
+	public static final String FORM_FIELD_PATIENT_TRIAGE = "patient.triage";
+	
 	public static final String FORM_FIELD_PATIENT_REFERRED = "patient.referred";
 	
 	public static final String FORM_FIELD_PATIENT_REFERRED_FROM = "patient.referred.from";
@@ -82,6 +85,8 @@ public class RegistrationConstants {
 	
 	// concept name
 	public static final String CONCEPT_NAME_OPD_WARD = "OPD WARD";
+	//ghanshyam,16-dec-2013,3438 Remove the interdependency
+	public static final String CONCEPT_NAME_TRIAGE = "TRIAGE";
 	
 	public static final String CONCEPT_NAME_PATIENT_REFERRED_TO_HOSPITAL = "PATIENT REFERRED TO HOSPITAL?";
 	
