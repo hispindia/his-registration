@@ -1008,7 +1008,7 @@ td.bottom {
 					</tr>
 					<tr>
 						<td>Nationality:</td>
-						<td><select id="patientNation" name="person.attribute.27">
+						<td><select id="patientNation" name="person.attribute.27" style="width: 200px;">
 										<option value="Nation"></option>
 										<option value="S">East Africa Kenya</option>
 										<option value="M">East Africa</option>
@@ -1034,29 +1034,29 @@ td.bottom {
 						<div id="patientRelativeNameSection"></div> </td>
 					</tr>
 					<tr>
-						<td>Relative Name</td>
+						<td>Relative Name *</td>
 						<td>
 							<input
 							id="patientRelativeName" name="person.attribute.8"
-							style="width: 200px;" />
+							style="width: 250px;" />
 						</td>
 					</tr>
 					<tr>
 						<td>Physical Residence</td>
 						<td><input type="text" id="relativePostalAddress"
-							name="person.attribute.28" style="width: 200px;" /></td>
+							name="person.attribute.28" style="width: 250px;" /></td>
 						<td><input id="sameAddress" type="checkbox"/> Same as Above</td>
 					</tr>
 					<tr>
 						<td>Contact Number</td>
 						<td><input id="relativePhoneNumber"
-							name="person.attribute.29" style="width: 200px;" /></td>
+							name="person.attribute.29" style="width: 250px;" /></td>
 						</select></td>
 					</tr>
 					<tr>
 						<td>Email Address</td>
 						<td><input id="relativeEmail"
-							name="person.attribute.30" style="width: 200px;" /></td>
+							name="person.attribute.30" style="width: 250px;" /></td>
 					</tr>
 				</table>
 			
