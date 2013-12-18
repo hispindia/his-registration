@@ -55,7 +55,14 @@
 		tempCategoryId: "${tempCategoryId}",
 		triageId: "${triageId}",
 		//ghanshyam,11-dec-2013,#3327 Defining patient categories based on Kenyan requirements
-		selectedCategory: "${selectedCategory}"
+		selectedCategory: "${selectedCategory}",
+		//ghanshyam,18-dec-2013,# 3457 Exemption number for selected category should show on registration receipt
+		categoryValue1: "${categoryValue1}",
+		categoryValue2: "${categoryValue2}",
+		categoryValue3: "${categoryValue3}",
+		categoryValue4: "${categoryValue4}",
+		categoryValue5: "${categoryValue5}",
+		categoryValue6: "${categoryValue6}"
 	};
 </script>
 

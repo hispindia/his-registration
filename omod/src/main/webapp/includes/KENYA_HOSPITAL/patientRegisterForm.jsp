@@ -367,7 +367,7 @@ td.border {
 				return false;
 			} 
 			
-			if (jQuery("#patientMaritalStatus").val() == "Marital") {
+			if (jQuery("#maritalStatus").val() == "Marital") {
 				alert("Please select Marital Status of Patient");
 				return false;
 			} 
@@ -860,7 +860,7 @@ td.border {
 						<td>Marital Status</td>
 					</tr>
 					<tr>	
-						<td><select id="patientMaritalStatus" name="person.attribute.26">
+						<td><select id="maritalStatus" name="person.attribute.26">
 										<option value="Marital"></option>
 										<option value="Single">Single</option>
 										<option value="Married">Married</option>
