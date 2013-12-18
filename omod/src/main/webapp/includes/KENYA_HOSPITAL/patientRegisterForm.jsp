@@ -393,17 +393,52 @@ td.border {
  
 			if (!StringUtils.isBlank(jQuery("#patientPhoneNumber").val())) {
 				if (!StringUtils.isDigit(jQuery("#patientPhoneNumber").val())) {
-					alert("Please enter phone number in correct format");
+					alert("Please enter contact number in correct format");
 					return false;
+				}
+			}
+			
+			
+			if (!StringUtils.isBlank(jQuery("#relativeEmail").val())) {
+				var x=jQuery("#relativeEmail").val();
+				var atpos=x.indexOf("@");
+				var dotpos=x.lastIndexOf(".");
+				if (atpos<1 || dotpos<atpos+2 || dotpos+2>=x.length)
+				  {
+				  alert("Not a valid e-mail address");
+				  return false;
+				  }
+			}
+			
+			if (!StringUtils.isBlank(jQuery("#relativePhoneNumber").val())) {
+				if (!StringUtils.isDigit(jQuery("#relativePhoneNumber").val())) {
+					alert("Please enter relative contact number in correct format");
+					return false;
+				}
+			}
+			
+			if (!StringUtils.isBlank(jQuery("#estimatedAge").html())) {
+				estAge = jQuery("#estimatedAge").html();
+				var rest=estAge.slice(1,-6); 
+				if (rest>5) {
+					if (jQuery("#patCatChildLessThan5yr").is(':checked')) {
+						alert("This category is only valid for patient under 5 years of age");
+						jQuery("#patCatChildLessThan5yr").removeAttr("checked");
+						jQuery("#exemptionNumber1").val("");
+						jQuery("#exemptionField1").hide();
+						jQuery("#bdate").show();
+						return false;
+					}
 				}
 			}
 
-			if (!StringUtils.isBlank(jQuery("#relativePhoneNumber").val())) {
-				if (!StringUtils.isDigit(jQuery("#relativePhoneNumber").val())) {
-					alert("Please enter relative phone number in correct format");
+			if (jQuery("#patientGender").val() == "M" || jQuery("#patCatMother").is(':checked') ) {
+					jQuery("#patCatMother").removeAttr("checked");
+					jQuery("#exemptionNumber3").val("");
+					jQuery("#exemptionField3").hide();
+					alert("Expectant Mother can not be Male");
 					return false;
-				}
-			}
+				}		
 			
 			
 			if (jQuery("#patCatGeneral").attr('checked') == false
@@ -570,10 +605,10 @@ td.border {
 					jQuery("#nhifCardNumber").val("");
 					jQuery("#nhifCardField").hide();
 
-
-
-				if (!VALIDATORS.checkPatientAgeForChildLessThan5yr()) {
+					if (!VALIDATORS.checkPatientAgeForChildLessThan5yr()) {
 					jQuery("#patCatChildLessThan5yr").removeAttr("checked");
+					jQuery("#exemptionNumber1").val("");
+					jQuery("#exemptionField1").hide();
 				}
 			}
 			else{
@@ -772,13 +807,11 @@ td.border {
 		},
 		
 		checkPatientAgeForChildLessThan5yr : function() {
-			// check whether patient age less than five year
-			var digitPattern = /year/;
-			var age = digitPattern.exec(estAge);
-			if (estAge > 5) {
-				alert("baba ji ka thullu");
+			estAge = jQuery("#estimatedAge").html();
+			var rest=estAge.slice(1,-6); 
+			if (rest>5) {
 				if (jQuery("#patCatChildLessThan5yr").is(':checked')) {
-					alert("Child less than five year is only for patient under 5 year!");
+					alert("This category is only valid for patient under 5 years of age");
 					return false;
 				}
 			}
