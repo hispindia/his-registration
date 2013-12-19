@@ -325,7 +325,30 @@
 						return false;
 					} 
 				}
-		   }
+		   };
+		   
+		   	if(jQuery("#gender").html() =="Male" && jQuery("#patientCategory").val()=="Expectant Mother"){
+				alert("This category is only valid for female patient");
+				jQuery("#patientCategory").val("");
+				jQuery("#exemptionNumber3").val("");
+				jQuery("#exemptionField3").hide();
+				jQuery("#exe_wav_number").hide();
+				return false;
+			};
+
+			if(jQuery("#patientCategory").val()=="Child Less Than 5 yr"){
+				var check1=jQuery("#age").html();
+				var check2=check1.slice(-5); 
+				if(check2=="ADULT"){
+					alert("This category is only valid for patient under 5 years");
+					jQuery("#patientCategory").val("");
+					jQuery("#exemptionNumber1").val("");
+					jQuery("#exemptionField1").hide();
+					jQuery("#exe_wav_number").hide();
+					return false;
+				}
+			};
+
 		
 			return true;
 		}
@@ -338,12 +361,12 @@
 			
 			if (jQuery("#patientCategory").val() == "General") {
 				
-				jQuery("#exemptionField2").val("");
-				jQuery("#waiverField").val("");
-				jQuery("#exemptionField1").val("");
-				jQuery("#exemptionField3").val("");
-				jQuery("#exemptionField4").val("");
-				jQuery("#nhifCardIdField").val("");
+				jQuery("#exemptionNumber2").val("");
+				jQuery("#waiverNumber").val("");
+				jQuery("#exemptionNumber1").val("");
+				jQuery("#exemptionNumber3").val("");
+				jQuery("#exemptionNumber4").val("");
+				jQuery("#nhifCardIdNumber").val("");
 				
 				jQuery("#exe_wav_number").hide();
 				jQuery("#nhif_number").hide();
@@ -357,11 +380,11 @@
 			} else if(jQuery("#patientCategory").val() == "Child Less Than 5 yr"){
 				jQuery("#exe_wav_number").show();
 				jQuery("#exemptionField1").show();
-				jQuery("#exemptionField2").val("");
-				jQuery("#waiverField").val("");
-				jQuery("#exemptionField3").val("");
-				jQuery("#exemptionField4").val("");
-				jQuery("#nhifCardIdField").val("");
+				jQuery("#exemptionNumber2").val("");
+				jQuery("#waiverNumber").val("");
+				jQuery("#exemptionNumber3").val("");
+				jQuery("#exemptionNumber4").val("");
+				jQuery("#nhifCardIdNumber").val("");
 				jQuery("#nhif_number").hide();
 				jQuery("#exemptionField2").hide();
 				jQuery("#waiverField").hide();
@@ -373,13 +396,13 @@
 			}else if(jQuery("#patientCategory").val() == "CCC"){
 				
 				jQuery("#exe_wav_number").show();
-				jQuery("#exemptionField1").val("");
+				jQuery("#exemptionNumber1").val("");
 				jQuery("#exemptionField1").hide();
 				jQuery("#exemptionField2").show();
-				jQuery("#waiverField").val("");
-				jQuery("#exemptionField3").val("");
-				jQuery("#exemptionField4").val("");
-				jQuery("#nhifCardIdField").val("");
+				jQuery("#waiverNumber").val("");
+				jQuery("#exemptionNumber3").val("");
+				jQuery("#exemptionNumber4").val("");
+				jQuery("#nhifCardIdNumber").val("");
 				jQuery("#nhif_number").hide();
 				jQuery("#waiverField").hide();
 				jQuery("#exemptionField3").hide();
@@ -390,11 +413,11 @@
 			}else if(jQuery("#patientCategory").val() == "Expectant Mother"){
 				jQuery("#exe_wav_number").show();
 				jQuery("#exemptionField3").show();
-				jQuery("#exemptionField2").val("");
-				jQuery("#waiverField").val("");
-				jQuery("#exemptionField1").val("");
-				jQuery("#exemptionField4").val("");
-				jQuery("#nhifCardIdField").val("");
+				jQuery("#exemptionNumber2").val("");
+				jQuery("#waiverNumber").val("");
+				jQuery("#exemptionNumber1").val("");
+				jQuery("#exemptionNumber4").val("");
+				jQuery("#nhifCardIdNumber").val("");
 				jQuery("#nhif_number").hide();
 				jQuery("#exemptionField2").hide();
 				jQuery("#waiverField").hide();
@@ -406,11 +429,11 @@
 			}else if(jQuery("#patientCategory").val() == "Waver"){
 				jQuery("#exe_wav_number").show();
 				jQuery("#waiverField").show();
-				jQuery("#exemptionField2").val("");
-				jQuery("#exemptionField1").val("");
-				jQuery("#exemptionField3").val("");
-				jQuery("#exemptionField4").val("");
-				jQuery("#nhifCardIdField").val("");
+				jQuery("#exemptionNumber2").val("");
+				jQuery("#exemptionNumber1").val("");
+				jQuery("#exemptionNumber3").val("");
+				jQuery("#exemptionNumber4").val("");
+				jQuery("#nhifCardIdNumber").val("");
 				jQuery("#nhif_number").hide();
 				jQuery("#exemptionField2").hide();
 				jQuery("#exemptionField1").hide();
@@ -422,10 +445,10 @@
 			}else if(jQuery("#patientCategory").val() == "NHIF"){
 				jQuery("#exe_wav_number").show();
 				jQuery("#exemptionField4").show();
-				jQuery("#exemptionField2").val("");
-				jQuery("#waiverField").val("");
-				jQuery("#exemptionField3").val("");
-				jQuery("#exemptionField1").val("");
+				jQuery("#exemptionNumber2").val("");
+				jQuery("#waiverNumber").val("");
+				jQuery("#exemptionNumber3").val("");
+				jQuery("#exemptionNumber1").val("");
 				jQuery("#nhif_number").show();
 				jQuery("#nhifCardIdField").show();
 				jQuery("#exemptionField2").hide();

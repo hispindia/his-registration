@@ -432,11 +432,11 @@ td.border {
 				}
 			}
 
-			if (jQuery("#patientGender").val() == "M" || jQuery("#patCatMother").is(':checked') ) {
+			if (jQuery("#patientGender").val() == "M" && jQuery("#patCatMother").is(':checked') ) {
 					jQuery("#patCatMother").removeAttr("checked");
 					jQuery("#exemptionNumber3").val("");
 					jQuery("#exemptionField3").hide();
-					alert("Expectant Mother can not be Male");
+					alert("This category is only valid for female patient");
 					return false;
 				}		
 			
@@ -719,7 +719,7 @@ td.border {
 					jQuery("#patCatMother").removeAttr("checked");
 					jQuery("#exemptionNumber3").val("");
 					jQuery("#exemptionField3").hide();
-					alert("Expectant Mother can not be Male");
+					alert("This category is only valid for female patient");
 				}
 			}
 			else {
