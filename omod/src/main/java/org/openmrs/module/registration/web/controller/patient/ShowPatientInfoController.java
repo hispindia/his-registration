@@ -86,7 +86,7 @@ public class ShowPatientInfoController {
 		model.addAttribute("patient", patientModel);
 		//ghanshyam,16-dec-2013,3438 Remove the interdependency
 		model.addAttribute("TRIAGE", RegistrationWebUtils.getSubConcepts(RegistrationConstants.CONCEPT_NAME_TRIAGE));
-		
+		model.addAttribute("TEMPORARYCAT", RegistrationWebUtils.getSubConcepts(RegistrationConstants.CONCEPT_NAME_TEMPORARY_CATEGORY));
 		// Get current date
 		SimpleDateFormat sdf = new SimpleDateFormat("EEE dd/MM/yyyy kk:mm");
 		model.addAttribute("currentDateTime", sdf.format(new Date()));
@@ -141,6 +141,10 @@ public class ShowPatientInfoController {
 				if (obs.getConcept().getName().getName().equalsIgnoreCase(RegistrationConstants.CONCEPT_NAME_TRIAGE)) {
 					model.addAttribute("selectedTRIAGE", obs.getValueCoded().getConceptId());
 				}
+				if (obs.getConcept().getName().getName().equalsIgnoreCase(RegistrationConstants.CONCEPT_NAME_TEMPORARY_CATEGORY)) {
+					model.addAttribute("tempCategory", obs.getValueCoded().getConceptId());
+				}
+
 			}
 		}
 		
@@ -225,6 +229,16 @@ public class ShowPatientInfoController {
 			// send patient to opd room
 			RegistrationWebUtils.sendPatientToOPDQueue(patient, selectedTRIAGEConcept, true);
 			
+			
+			Concept tempCatConcept = Context.getConceptService().getConcept(RegistrationConstants.CONCEPT_NAME_TEMPORARY_CATEGORY);
+			Concept selectedTempCatConcept = Context.getConceptService().getConcept(
+			    Integer.parseInt(parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_TEMPORARY_ATTRIBUTE)));
+			Obs temp = new Obs();
+			temp.setConcept(tempCatConcept);
+			temp.setValueCoded(selectedTempCatConcept);
+			encounter.addObs(temp);
+						
+			
 		}
 		
 		// create temporary attributes
@@ -252,12 +266,12 @@ public class ShowPatientInfoController {
 					encounter.addObs(registrationFeeFreeReasonAttribute);
 				}
 				
-				if(conname.equals("TEMPORARY CATEGORY")){
+			/*	if(conname.equals("TEMPORARY CATEGORY")){
 					Obs temporaryAttribute = new Obs();
 					temporaryAttribute.setConcept(concept);
 					temporaryAttribute.setValueAsString(parameters.get(name));
 					encounter.addObs(temporaryAttribute);
-				}
+				}*/
 				
 			}
 		}

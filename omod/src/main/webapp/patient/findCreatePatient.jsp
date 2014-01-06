@@ -53,7 +53,8 @@
 		////ghanshyam,16-dec-2013,3438 Remove the interdependency
 		TRIAGE: "${TRIAGE}",
 		referralHospitals: "${referralHospitals}",
-		referralReasons: "${referralReasons}"
+		referralReasons: "${referralReasons}",
+		TEMPORARYCAT: "${TEMPORARYCAT}"
 	}
 </script>
 <jsp:include page="../includes/${hospitalName}/patientRegisterForm.jsp"/>

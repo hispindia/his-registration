@@ -63,14 +63,14 @@ public class FindCreatePatientController {
 	@RequestMapping(method = RequestMethod.GET)
 	public String showForm(HttpServletRequest request, Model model) throws JaxenException, DocumentException, IOException {
 		model.addAttribute("patientIdentifier", RegistrationUtils.getNewIdentifier());
-		model.addAttribute("referralHospitals",
-		    RegistrationWebUtils.getSubConcepts(RegistrationConstants.CONCEPT_NAME_PATIENT_REFERRED_FROM));
-		model.addAttribute("referralReasons",
-		    RegistrationWebUtils.getSubConcepts(RegistrationConstants.CONCEPT_NAME_REASON_FOR_REFERRAL));
+		model.addAttribute("referralHospitals", RegistrationWebUtils.getSubConcepts(RegistrationConstants.CONCEPT_NAME_PATIENT_REFERRED_FROM));
+		model.addAttribute("referralReasons",   RegistrationWebUtils.getSubConcepts(RegistrationConstants.CONCEPT_NAME_REASON_FOR_REFERRAL));
 		RegistrationWebUtils.getAddressData(model);
 		//model.addAttribute("OPDs", RegistrationWebUtils.getSubConcepts(RegistrationConstants.CONCEPT_NAME_OPD_WARD));
 		//ghanshyam,16-dec-2013,3438 Remove the interdependency
 		model.addAttribute("TRIAGE", RegistrationWebUtils.getSubConcepts(RegistrationConstants.CONCEPT_NAME_TRIAGE));
+		model.addAttribute("TEMPORARYCAT", RegistrationWebUtils.getSubConcepts(RegistrationConstants.CONCEPT_NAME_TEMPORARY_CATEGORY));
+		
 		return "/module/registration/patient/findCreatePatient";
 		
 	}
@@ -223,6 +223,16 @@ public class FindCreatePatientController {
 		encounter.addObs(triageObs);
 		
 		RegistrationWebUtils.sendPatientToOPDQueue(patient, selectedTRIAGEConcept, false);
+		
+
+		Concept tempCatConcept = Context.getConceptService().getConcept(RegistrationConstants.CONCEPT_NAME_TEMPORARY_CATEGORY);
+
+		Concept selectedTempCatConcept = Context.getConceptService().getConcept(
+		    parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_TEMPORARY_ATTRIBUTE));
+		Obs tempCatObs = new Obs();
+		tempCatObs.setConcept(tempCatConcept);
+		tempCatObs.setValueCoded(selectedTempCatConcept);
+		encounter.addObs(tempCatObs);
 		
 		/*
 		 * REFERRAL INFORMATION

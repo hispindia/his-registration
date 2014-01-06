@@ -75,12 +75,24 @@
 			optionDelimiter: "|"
 		});
 		
+		MODEL.TEMPORARYCAT = " ,Please select an Temporary Category|" + MODEL.TEMPORARYCAT;
+		PAGE.fillOptions("#mlcCat", {
+			data:MODEL.TEMPORARYCAT,
+			delimiter: ",",
+			optionDelimiter: "|"
+		});
+		
 		// Set the selected OPD
 		if(!StringUtils.isBlank(MODEL.selectedTRIAGE)){			
 			jQuery("#triage").val(MODEL.selectedTRIAGE);
 			jQuery("#triage").attr("disabled", "disabled");
 		}
 		
+		if(!StringUtils.isBlank(MODEL.tempCategory)){			
+			jQuery("#mlcCat").val(MODEL.tempCategory);
+			jQuery("#mlcCat").attr("disabled", "disabled");
+		}
+
 		jQuery("#buySlip").hide();
 		
 
@@ -93,6 +105,7 @@
 		jQuery("#exemptionField3").hide();
 		jQuery("#exemptionField4").hide();
 		jQuery("#nhifCardIdField").hide();
+		jQuery("#mlcOtherVal").hide();
 		
 		//ghanshyam,11-dec-2013,#3327 Defining patient categories based on Kenyan requirements
 		if(!StringUtils.isBlank(MODEL.selectedCategory)){			
@@ -136,6 +149,9 @@
 			VALIDATORS.categoryCheck();
 		});
 
+		jQuery("#mlcCat").change(function() {
+			VALIDATORS.tempCatCheck();
+		});
 		
 		// Set data for reprint page
 		if(MODEL.reprint=="true"){
@@ -457,6 +473,19 @@
 				jQuery("#exemptionField1").hide();
 			}
 		},
+
+	
+		tempCatCheck : function () {
+			if(jQuery("#mlcCat").val() == "OPD TRIAGE" ){
+				//alert("hihi12");
+				jQuery("#mlcOtherVal").show();
+			}
+			else {
+				jQuery("#mlcOtherVal").hide();
+				jQuery("#mlcOtherVal").val("");
+				}
+		},
+	
 		
 		freeRegCheck : function() {
 			if (jQuery("#freeReg").is(':checked')) {
@@ -632,12 +661,13 @@ jQuery("#message").hide();
 				</tr> --%>
 				
 				<tr id="temporaryCategories">
-					<td colspan="1" valign="top"><b> <font color="red">Temporary
-								Categories: </font> </b></td>
-					<td colspan="5"><input type="checkbox"
-						name="temporary.attribute.11" value="Rape Case" /> Rape Case <br /> <input
-						type="checkbox" name="temporary.attribute.11" value="Road Traffic Accident" /> Road Traffic Accident <br />
-					</td>
+					<td colspan="1" valign="top"><b>Temporary
+								Categories:</b></td>
+					<td colspan="5"><select id="mlcCat" name="patient.temporary.attribute"></td>			
+					<td>
+							<span><input id="mlcOtherVal" name="mlcOtherVal" />
+							</span>
+					</td>		
 				</tr>
 				<!-- ghanshyam  20-may-2013 #1648 capture Health ID and Registration Fee Type 
 				<tr id="regFee">

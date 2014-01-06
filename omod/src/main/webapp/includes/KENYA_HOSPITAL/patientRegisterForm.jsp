@@ -58,6 +58,14 @@ td.border {
 					delimiter : ",",
 					optionDelimiter : "|"
 				});
+				MODEL.TEMPORARYCAT = " ,Please select Temporary Category|"
+						+ MODEL.TEMPORARYCAT;
+				PAGE.fillOptions("#tempCat", {
+					data : MODEL.TEMPORARYCAT,
+					delimiter : ",",
+					optionDelimiter : "|"
+				});
+							
 				PAGE.fillOptions("#referralHospitals", {
 					data : MODEL.referralHospitals,
 					delimiter : ",",
@@ -90,6 +98,7 @@ td.border {
 				jQuery("#nhifCardField").hide();
 				jQuery("#patCatGeneral").attr("checked", "checked");
 				jQuery("#hide_show").hide();
+				jQuery("#tempCat").hide();
 				// binding
 				jQuery("#patCatChildLessThan5yr").click(function() {
 					VALIDATORS.childYearCheck();
@@ -108,6 +117,10 @@ td.border {
 				});
 				jQuery("#patCatNHIF").click(function() {
 					VALIDATORS.nhifCheck();
+				});
+
+				jQuery("#mlcCase").click(function() {
+					VALIDATORS.tempCatCheck();
 				});
 
 				jQuery("#sameAddress").click(function() {
@@ -396,6 +409,17 @@ td.border {
 					alert("Please enter contact number in correct format");
 					return false;
 				}
+			}
+			
+			if (!StringUtils.isBlank(jQuery("#patientEmail").val())) {
+				var x=jQuery("#patientEmail").val();
+				var atpos=x.indexOf("@");
+				var dotpos=x.lastIndexOf(".");
+				if (atpos<1 || dotpos<atpos+2 || dotpos+2>=x.length)
+				  {
+				  alert("Not a valid patients e-mail address");
+				  return false;
+				  }
 			}
 			
 			
@@ -797,6 +821,17 @@ td.border {
 			jQuery("#nhifCardField").hide();
 			}
 		},
+		
+		tempCatCheck : function () {
+			if (jQuery("#mlcCase").is(':checked')) {
+					jQuery("#tempCat").show();	
+			}
+			else {
+				jQuery("#tempCat").val("");	
+				jQuery("#tempCat").hide();	
+			}
+			return true;
+		},
 
 		
 		copyaddress : function () {
@@ -898,15 +933,22 @@ td.border {
 										<option value="Single">Single</option>
 										<option value="Married">Married</option>
 										<option value="Divorced">Divorced</option>
-										<option value="Spouse Dead">Spouse Dead</option>
-								</select></td>
+										<option value="Widow">Widow</option>
+										<option value="Widower">Widower</option>
+										<option value="Separated">Separated</option>
+							</select></td>
 					</tr>
 				</table>
 				</td>
-			
-				<td rowspan="3" class="border">
+
+				<td rowspan="3" class="cell" style="border-width: 1px;
+	border-right: 1px;
+	border-bottom: 1px;
+	border-color: lightgrey;
+	border-style: solid;">
 					<b>&nbsp;&nbsp;Patient category</b><br />
 					<table cellspacing="5">
+					<tr>	
 						<tr>
 							<td><input id="patCatGeneral" type="checkbox"
 								name="person.attribute.14" value="General" /> General</td>
@@ -962,7 +1004,21 @@ td.border {
 							</span>
 							</td>
 						</tr>
-
+					</tr>	
+					</table>
+					
+					<table>
+					<tr>
+						<td class="cell" style="border-width: 0px;border-style: solid;"><b>Temporary Category</b></td>
+					</tr>
+					<tr>
+						<td><input id="mlcCase" type="checkbox"
+								name="mlcCase"/> MLC
+						</td>
+						<td><select id="tempCat" name="patient.temporary.attribute">	</select>
+						</td>
+						
+					</tr>
 					</table>
 				</td>
 				
@@ -998,19 +1054,81 @@ td.border {
 						<td>Nationality:</td>
 						<td><select id="patientNation" name="person.attribute.27" style="width: 200px;">
 										<option value="Nation"></option>
-										<option value="East Africa Kenya">East Africa Kenya</option>
+										<option value="Kenya">Kenya</option>
 										<option value="East Africa">East Africa</option>
-										<option value="Kenyan">Kenyan</option>
+										<option value="Kenyan">Africa</option>
+										<option value="Algeria">Algeria</option>
+										<option value="Angola">Angola</option>
+										<option value="Benin">Benin</option>
+										<option value="Botswana">Botswana</option>
+										<option value="Burkina Faso">Burkina Faso</option>
+										<option value="Burundi">Burundi</option>
+										<option value="Cameroon">Cameroon</option>
+										<option value="Cape Verde">Cape Verde</option>
+										<option value="Central African Republic">Central African Republic</option>
+										<option value="Chad">Chad</option>
+										<option value="Comoros">Comoros</option>
+										<option value="Côte d'Ivoire">Côte d'Ivoire</option>
+										<option value="Democratic Republic of Congo">Democratic Republic of Congo</option>
+										<option value="Djibouti">Djibouti</option>
+										<option value="Egypt">Egypt</option>
+										<option value="Equatorial Guinea">Equatorial Guinea</option>
+										<option value="Eritrea">Eritrea</option>
+										<option value="Ethiopia">Ethiopia</option>
+										<option value="Gabon">Gabon</option>
+										<option value="Gambia">Gambia</option>
+										<option value="Ghana">Ghana</option>
+										<option value="Guinea">Guinea</option>
+										<option value="Guinea-Bissau">Guinea-Bissau</option>
+										<option value="Lesotho">Lesotho</option>
+										<option value="Liberia">Liberia</option>
+										<option value="Libya">Libya</option>
+										<option value="Madagascar">Madagascar</option>
+										<option value="Malawi">Malawi</option>
+										<option value="Mali">Mali</option>
+										<option value="Mauritania">Mauritania</option>
+										<option value="Mauritius">Mauritius</option>
+										<option value="Morocco">Morocco</option>
+										<option value="Mozambique">Mozambique</option>
+										<option value="Namibia">Namibia</option>
+										<option value="Niger">Niger</option>
+										<option value="Nigeria">Nigeria</option>
+										<option value="Republic of Congo">Republic of Congo</option>
+										<option value="Rwanda">Rwanda</option>
+										<option value="São Tomé and Príncipe">São Tomé and Príncipe</option>
+										<option value="Senegal">Senegal</option>
+										<option value="Seychelles">Seychelles</option>
+										<option value="Sierra Leone">Sierra Leone</option>
+										<option value="Somalia">Somalia</option>
+										<option value="South Africa">South Africa</option>
+										<option value="South Sudan">South Sudan</option>
+										<option value="Sudan">Sudan</option>
+										<option value="Swaziland">Swaziland</option>
+										<option value="Tanzania">Tanzania</option>
+										<option value="Togo">Togo</option>
+										<option value="Tunisia">Tunisia</option>
+										<option value="Uganda">Uganda</option>
+										<option value="Zambia">Zambia</option>
+										<option value="Zimbabwe">Zimbabwe</option>
 						</select></td>
 						</tr>
 
 				</table>
 			</td>
 		</tr>
+		
 		<tr>
 			<td class="cell"><b>Contact number</b></td>
 			<td class="cell"><input id="patientPhoneNumber"
 				name="person.attribute.16" style="width: 200px;" /></td>
+			</td>
+			<td></td>			
+		</tr>
+		
+		<tr>
+			<td><b> &nbsp;&nbsp; &nbsp;&nbsp;Email Address</b></td>
+			<td  class="cell" style="border-top: 0px solid lightgrey; padding: 20px;"><input id="patientEmail"
+				name="person.attribute.37" style="width: 200px;" /></td>
 		</tr>
 		
 		<tr>
@@ -1093,3 +1211,4 @@ td.border {
 		</tr>
 	</table>
 </form>
+	
