@@ -663,7 +663,7 @@ jQuery("#message").hide();
 				<tr id="temporaryCategories">
 					<td colspan="1" valign="top"><b>Temporary
 								Categories:</b></td>
-					<td colspan="5"><select id="mlcCat" name="patient.temporary.attribute"></td>			
+					<td colspan="5"><select id="mlcCat" name="patient.temporary"></td>			
 					<td>
 							<span><input id="mlcOtherVal" name="mlcOtherVal" />
 							</span>

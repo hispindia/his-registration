@@ -19,7 +19,7 @@
                   <require_module>org.openmrs.module.hospitalcore</require_module>
     </require_modules>
 	
-	<require_version>1.6.1</require_version>	
+	<require_version>1.9.7</require_version>	
 	
 	<globalProperty>
 		<property>@MODULE_ID@.identifier_prefix</property>

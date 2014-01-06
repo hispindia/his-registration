@@ -70,7 +70,7 @@ public class RegistrationConstants {
 	  changes tehsil to upazila */
 	public static final String FORM_FIELD_PATIENT_ADDRESS_UPAZILA = "patient.address.upazila";
 	
-	public static final String FORM_FIELD_PATIENT_TEMPORARY_ATTRIBUTE = "patient.temporary.attribute";
+	public static final String FORM_FIELD_PATIENT_TEMPORARY_ATTRIBUTE = "patient.temporary";
 	
 	public static final String FORM_FIELD_PATIENT_OPD_WARD = "patient.opdWard";
 	

@@ -84,7 +84,7 @@ public class RegistrationUtils {
 		
 		personName.setGivenName("");
 		personName.setMiddleName("");
-		personName.setFamilyName("");
+		personName.setFamilyName(".");
 		
 		@SuppressWarnings("deprecation")
 		String fullname = StringUtils.capitaliseAllWords(name).trim();

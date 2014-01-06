@@ -154,7 +154,7 @@ public class ShowPatientInfoController {
 			/**
 			 * June 7th 2012 - Supported #250 - Registration 2.2.14 (Mohali): Date on Reprint
 			 */
-			model.addAttribute("currentDateTime", sdf.format(hcs.getLastVisitTime(patientId)));
+			model.addAttribute("currentDateTime", sdf.format(hcs.getLastVisitTime(patient)));
 			
 			Encounter encounter = Context.getService(RegistrationService.class).getLastEncounter(patient);
 			if (encounter != null) {
@@ -165,7 +165,7 @@ public class ShowPatientInfoController {
 					        .equalsIgnoreCase(RegistrationConstants.CONCEPT_NAME_TEMPORARY_CATEGORY)) {
 						model.addAttribute("tempCategoryId", obs.getConcept().getConceptId());
 					} else if (obs.getConcept().getDisplayString()
-					        .equalsIgnoreCase(RegistrationConstants.CONCEPT_NAME_OPD_WARD)) {
+					        .equalsIgnoreCase(RegistrationConstants.CONCEPT_NAME_TRIAGE)) {
 						model.addAttribute("triageId", obs.getConcept().getConceptId());
 					}
 					observations.put(obs.getConcept().getConceptId(), ObsUtils.getValueAsString(obs));
