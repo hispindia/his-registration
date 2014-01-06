@@ -1015,7 +1015,7 @@ td.border {
 						<td><input id="mlcCase" type="checkbox"
 								name="mlcCase"/> MLC
 						</td>
-						<td><select id="tempCat" name="patient.temporary.attribute">	</select>
+						<td><select id="tempCat" name="patient.temporary">	</select>
 						</td>
 						
 					</tr>
