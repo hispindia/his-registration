@@ -227,13 +227,19 @@ public class FindCreatePatientController {
 
 		Concept tempCatConcept = Context.getConceptService().getConcept(RegistrationConstants.CONCEPT_NAME_TEMPORARY_CATEGORY);
 
+		Obs tempCatObs = new Obs();
+		if (!StringUtils.isBlank(parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_TEMPORARY_ATTRIBUTE))){
 		Concept selectedTempCatConcept = Context.getConceptService().getConcept(
 		    parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_TEMPORARY_ATTRIBUTE));
-		Obs tempCatObs = new Obs();
 		tempCatObs.setConcept(tempCatConcept);
 		tempCatObs.setValueCoded(selectedTempCatConcept);
 		encounter.addObs(tempCatObs);
-		
+		}
+		else{
+			tempCatObs.setConcept(tempCatConcept);
+			tempCatObs.setValueCoded(Context.getConceptService().getConcept("NO"));
+			encounter.addObs(tempCatObs);
+		}
 		/*
 		 * REFERRAL INFORMATION
 		 */

@@ -96,6 +96,7 @@ td.border {
 				jQuery("#exemptionField4").hide();
 				jQuery("#waverField").hide();
 				jQuery("#nhifCardField").hide();
+				jQuery("#catGen").hide();
 				jQuery("#patCatGeneral").attr("checked", "checked");
 				jQuery("#hide_show").hide();
 				jQuery("#tempCat").hide();
@@ -471,8 +472,9 @@ td.border {
 					&& jQuery("#patCatMother").attr('checked') == false
 					&& jQuery("#patCatFree").attr('checked') == false
 					&& jQuery("#patCatNHIF").attr('checked') == false) {
-				alert('You didn\'t choose any of the patient categories!');
-				return false;
+				jQuery("#patCatGeneral").attr("checked", "checked");	
+			//	alert('You didn\'t choose any of the patient categories!');
+				return true;
 			} else {
 				if (jQuery("#patCatChildLessThan5yr").attr('checked')) {
 					if (jQuery("#exemptionNumber1").val().length <= 0) {
@@ -559,7 +561,8 @@ td.border {
 					&& jQuery("#patCatMother").attr('checked') == false
 					&& jQuery("#patCatFree").attr('checked') == false
 					&& jQuery("#patCatNHIF").attr('checked') == false) {
-				alert('You didn\'t choose any of the patient categories!');
+				jQuery("#patCatGeneral").attr("checked", "checked");					
+				//alert('You didn\'t choose any of the patient categories!');
 				return false;
 			} else {
 				if (jQuery("#patCatChildLessThan5yr").attr('checked')) {
@@ -950,7 +953,7 @@ td.border {
 					<table cellspacing="5">
 					<tr>	
 						<tr>
-							<td><input id="patCatGeneral" type="checkbox"
+							<td id="catGen"><input id="patCatGeneral" type="checkbox"
 								name="person.attribute.14" value="General" /> General</td>
 							<td><input id="patCatChildLessThan5yr" type="checkbox"
 								name="person.attribute.14" value="Child Less Than 5 yr" /> Child less than 5 year old</td>
@@ -960,7 +963,6 @@ td.border {
 							</td>	
 						</tr>
 						<tr>
-						<td></td>
 						<td><input id="CCC" type="checkbox"
 								name="person.attribute.14" value="CCC" /> Comprehensive Care Clinic (CCC) Patient</td>
 							<td><span id="exemptionField2">Exemption Number <input
@@ -969,7 +971,6 @@ td.border {
 							</td>
 						</tr>
 						<tr>
-							<td></td>
 							<td><input id="patCatMother" type="checkbox"
 								name="person.attribute.14" value="Expectant Mother" /> Expectant Mothers </td>
 								<td><span id="exemptionField3">Exemption Number <input
@@ -979,7 +980,6 @@ td.border {
 						</tr>
 						
 						<tr>
-							<td></td>
 							<td><input id="patCatFree" type="checkbox"
 								name="person.attribute.14" value="Waver" /> Waiver</td>
 								<td><span id="waverField">Waiver Number&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input
@@ -988,7 +988,7 @@ td.border {
 							</td>
 						</tr>
 						<tr>
-							<td></td>
+							
 							<td><input id="patCatNHIF" type="checkbox"
 								name="person.attribute.14" value="NHIF" /> NHIF Card Holder</td>
 							<td><span id="exemptionField4">Exemption Number <input
@@ -997,7 +997,7 @@ td.border {
 							</td>
 						</tr>
 						<tr>
-							<td>&nbsp;</td>
+							
 							<td>&nbsp;</td>
 							<td><span id="nhifCardField">NHIF Card ID &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;<input
 									id="nhifCardNumber" name="person.attribute.33" />
