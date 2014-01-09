@@ -192,8 +192,9 @@
 				jQuery("#reprint").hide();
 				
 				// Convert OPDWard dropdown to printable format
-				jQuery("#triage").hide();
-				jQuery("#triage").after("<span>" + jQuery("#triage option:checked").html() +  "</span>");	
+				//jQuery("#triage").hide();
+				//jQuery("#triage").after("<span>" + jQuery("#triage option:checked").html() +  "</span>");	
+				jQuery("#opdWardLabel").hide();
 				
 				//ghanshyam  20-may-2013 #1648 capture Health ID and Registration Fee Type	
                  jQuery("#regFeeType input").each(function(index, value){				
@@ -560,6 +561,7 @@ jQuery("#message").hide();
 					<td colspan="1"><b>Name:</b></td>
 					<td><span id="othername1"></span></td>
 				</tr>
+				<!--
 				<tr>
 					<td colspan="1"><b>Age:</b></td>
 					<td colspan="5"><span id="age"></span></td>
@@ -574,6 +576,7 @@ jQuery("#message").hide();
 					<td id="exe_wav_number"> Exemption/Waiver Number</td>
 					<td id="nhif_number"> NHIF Card Id</td>
 				</tr>
+				-->
 				<tr>
 					<td colspan="1"><b>Patient Category:</b></td>
 					<td><select id="patientCategory" name="person.attribute.14">
@@ -614,14 +617,14 @@ jQuery("#message").hide();
 							</span>
 							
 					</td>		
-			
-					
-
 				</tr>
+				
+				<!--
 				<tr>
 					<td colspan="1" valign="top"><b>Phone number:</b></td>
 					<td colspan="5"><span id="phoneNumber"></span></td>
 				</tr>
+				-->
 				
 				<tr id="opdWardLabel">
 					<td colspan="1"><b>Triage to visit:</b></td>
@@ -640,10 +643,12 @@ jQuery("#message").hide();
 					<td><span id="FREE" /></td>
 				</tr>
 				--%>
+				<!--
 				<tr>
 					<td colspan="1"><b>National ID:</b></td>
 					<td colspan="2"><span id="nationalId"></span></td>
 				</tr>
+				-->
 				<%-- ghanshyam  20-may-2013 #1648 capture Health ID and Registration Fee Type 
 				
 				<tr id="regFeeType">
@@ -677,12 +682,14 @@ jQuery("#message").hide();
 					</td>
 				</tr> -->
 				<!-- Sagar Bele, 11-01-2013: Issue #663 Registration alignment -->
+				<!--
 				<tr id="tempCat">
 					<td colspan="1" valign="top"><b>Temporary Categories:</b></td>
 					<td colspan="5">
 						<div id="printableTemporaryCategories"></div>
 					</td>
 				</tr>
+				-->
 			</table>
 		</form>
 	</center>
