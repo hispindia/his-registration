@@ -242,6 +242,7 @@ public class ShowPatientInfoController {
 		}
 		
 		// create temporary attributes
+		/*
 		for (String name : parameters.keySet()) {
 			if ((name.contains(".attribute.")) && (!StringUtils.isBlank(parameters.get(name)))) {
 				String[] parts = name.split("\\.");
@@ -266,15 +267,18 @@ public class ShowPatientInfoController {
 					encounter.addObs(registrationFeeFreeReasonAttribute);
 				}
 				
-			/*	if(conname.equals("TEMPORARY CATEGORY")){
+				if(conname.equals("TEMPORARY CATEGORY")){
 					Obs temporaryAttribute = new Obs();
 					temporaryAttribute.setConcept(concept);
 					temporaryAttribute.setValueAsString(parameters.get(name));
 					encounter.addObs(temporaryAttribute);
-				}*/
+				}
+				
 				
 			}
+			
 		}
+		*/
 		
 		// save encounter
 		Context.getEncounterService().saveEncounter(encounter);
