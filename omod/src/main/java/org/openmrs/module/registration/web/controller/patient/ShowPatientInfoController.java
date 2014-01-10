@@ -201,6 +201,8 @@ public class ShowPatientInfoController {
 	@RequestMapping(method = RequestMethod.POST)
 	public void savePatientInfo(@RequestParam("patientId") Integer patientId,
 	                            @RequestParam(value = "encounterId", required = false) Integer encounterId,
+	                            @RequestParam(value = "abc", required = false) String patientVisit,
+	                            @RequestParam(value = "regFeeValue", required = false) Double regFeeValue,
 	                            HttpServletRequest request, HttpServletResponse response) throws ParseException, IOException {
 		
 		Map<String, String> parameters = RegistrationWebUtils.optimizeParameters(request);
@@ -214,6 +216,13 @@ public class ShowPatientInfoController {
 		Encounter encounter = null;
 		if (encounterId != null) {
 			encounter = Context.getEncounterService().getEncounter(encounterId);
+				Concept cnrf = Context.getConceptService().getConcept(RegistrationConstants.CONCEPT_NAME_REGISTRATION_FEE);
+				Concept cnp = Context.getConceptService().getConcept(RegistrationConstants.CONCEPT_NEW_PATIENT);
+				Obs obsn = new Obs();
+				obsn.setConcept(cnrf);
+				obsn.setValueCoded(cnp);
+				obsn.setValueNumeric(regFeeValue);
+				encounter.addObs(obsn);	
 		} else {
 			encounter = RegistrationWebUtils.createEncounter(patient, true);
 			
@@ -238,8 +247,15 @@ public class ShowPatientInfoController {
 			temp.setConcept(tempCatConcept);
 			temp.setValueCoded(selectedTempCatConcept);
 			encounter.addObs(temp);
-						
 			
+			Concept cnrffr = Context.getConceptService().getConcept(RegistrationConstants.CONCEPT_NAME_REGISTRATION_FEE);
+			Concept cr = Context.getConceptService().getConcept(RegistrationConstants.CONCEPT_REVISIT);
+			Obs obsr = new Obs();
+			obsr.setConcept(cnrffr);
+			obsr.setValueCoded(cr);
+			obsr.setValueNumeric(regFeeValue);
+			encounter.addObs(obsr);	
+						
 		}
 		
 		// create temporary attributes
