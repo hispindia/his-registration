@@ -89,7 +89,7 @@
 		}
 		
 		if(!StringUtils.isBlank(MODEL.tempCategory)){			
-			jQuery("#mlcCat").val(MODEL.tempCategory);
+			jQuery("#mlcCat").val(MODEL.tempCategory);	
 			jQuery("#mlcCat").attr("disabled", "disabled");
 		}
 
@@ -111,7 +111,28 @@
 		if(!StringUtils.isBlank(MODEL.selectedCategory)){			
 			jQuery("#patientCategory").val(MODEL.selectedCategory);
 			jQuery("#patientCategory").attr("disabled", "disabled");
-		}
+			
+			if(jQuery("#patientCategory").val() == "General"){
+						jQuery("#regFeeValue").val(${regFee});
+						jQuery("#regFeeValue").attr("disabled", "disabled");
+				}
+			if(jQuery("#patientCategory").val() == "Child Less Than 5 yr"){
+						jQuery("#regFeeValue").val(0);
+						jQuery("#regFeeValue").attr("disabled", "disabled");
+				}
+			if(jQuery("#patientCategory").val() == "CCC"){
+						jQuery("#regFeeValue").val(0);
+						jQuery("#regFeeValue").attr("disabled", "disabled");
+				}
+			if(jQuery("#patientCategory").val() == "Expectant Mother"){
+						jQuery("#regFeeValue").val(0);
+						jQuery("#regFeeValue").attr("disabled", "disabled");
+				}
+			if(jQuery("#patientCategory").val() == "NHIF"){
+						jQuery("#regFeeValue").val(0);
+						jQuery("#regFeeValue").attr("disabled", "disabled");
+				}
+			}
 		//ghanshyam,18-dec-2013,# 3457 Exemption number for selected category should show on registration receipt
 		if(!StringUtils.isBlank(MODEL.categoryValue1)){			
 			jQuery("#exemptionNumber1").val(MODEL.categoryValue1);
@@ -167,7 +188,7 @@
 			jQuery("#printSlip").hide();
 			jQuery("#save").hide();
 			//ghanshyam  20-may-2013 #1648 capture Health ID and Registration Fee Type
-			jQuery("#regFee").hide()
+		//	jQuery("#regFee").hide()
 			jQuery("#tempCat").hide();
 		} else {
 			jQuery("#reprint").hide();
@@ -193,7 +214,7 @@
 				
 				// Convert OPDWard dropdown to printable format
 				//jQuery("#triage").hide();
-				//jQuery("#triage").after("<span>" + jQuery("#triage option:checked").html() +  "</span>");	
+				//jQuery("#triage").after("<span>" + jQuery("#triage option:checked").html() +  "</span>");  
 				jQuery("#opdWardLabel").hide();
 				
 				//ghanshyam  20-may-2013 #1648 capture Health ID and Registration Fee Type	
@@ -393,6 +414,10 @@
 				jQuery("#exemptionField3").hide();
 				jQuery("#exemptionField4").hide();
 				jQuery("#nhifCardIdField").hide();
+				
+				jQuery("#regFeeValue").val(${reVisitFee});
+				jQuery("#regFeeValue").attr("disabled", "disabled");
+
 		
 			} else if(jQuery("#patientCategory").val() == "Child Less Than 5 yr"){
 				jQuery("#exe_wav_number").show();
@@ -408,7 +433,10 @@
 				jQuery("#exemptionField3").hide();
 				jQuery("#exemptionField4").hide();
 				jQuery("#nhifCardIdField").hide();
-		
+
+				jQuery("#regFeeValue").val(0);
+				jQuery("#regFeeValue").attr("disabled", "disabled");
+				
 			
 			}else if(jQuery("#patientCategory").val() == "CCC"){
 				
@@ -425,6 +453,9 @@
 				jQuery("#exemptionField3").hide();
 				jQuery("#exemptionField4").hide();
 				jQuery("#nhifCardIdField").hide();
+
+				jQuery("#regFeeValue").val(0);
+				jQuery("#regFeeValue").attr("disabled", "disabled");
 		
 			
 			}else if(jQuery("#patientCategory").val() == "Expectant Mother"){
@@ -442,6 +473,8 @@
 				jQuery("#exemptionField4").hide();
 				jQuery("#nhifCardIdField").hide();
 		
+				jQuery("#regFeeValue").val(0);
+				jQuery("#regFeeValue").attr("disabled", "disabled");
 			
 			}else if(jQuery("#patientCategory").val() == "Waver"){
 				jQuery("#exe_wav_number").show();
@@ -457,7 +490,9 @@
 				jQuery("#exemptionField3").hide();
 				jQuery("#exemptionField4").hide();
 				jQuery("#nhifCardIdField").hide();
-		
+
+				jQuery("#regFeeValue").removeAttr("disabled");
+				
 			
 			}else if(jQuery("#patientCategory").val() == "NHIF"){
 				jQuery("#exe_wav_number").show();
@@ -472,6 +507,11 @@
 				jQuery("#waiverField").hide();
 				jQuery("#exemptionField3").hide();
 				jQuery("#exemptionField1").hide();
+
+				jQuery("#regFeeValue").val(0);
+				jQuery("#regFeeValue").attr("disabled", "disabled");
+
+				
 			}
 		},
 
@@ -576,7 +616,7 @@ jQuery("#message").hide();
 					<td id="exe_wav_number"> Exemption/Waiver Number</td>
 					<td id="nhif_number"> NHIF Card Id</td>
 				</tr>
-				-->
+				 -->
 				<tr>
 					<td colspan="1"><b>Patient Category:</b></td>
 					<td><select id="patientCategory" name="person.attribute.14">
@@ -598,6 +638,7 @@ jQuery("#message").hide();
 							<span><input id="waiverNumber" name="person.attribute.32" />
 							</span>
 					</td>		
+
 					<td id="exemptionField2">
 							<span><input id="exemptionNumber2" name="person.attribute.34" />
 							</span>
@@ -619,13 +660,30 @@ jQuery("#message").hide();
 					</td>		
 				</tr>
 				
-				<!--
+				<tr>
+					<td colspan="1"><b>Registration Fee:</b></td>
+					<td><select id="regFeeValue" name="patient.registration.fee.attribute">
+										<option value=0>0</option>
+										<option value=10>10</option>
+										<option value=20>20</option>
+										<option value=30>30</option>
+										<option value=40>40</option>
+										<option value=50>50</option>
+										<option value=60>60</option>
+										<option value=70>70</option>
+										<option value=80>80</option>
+										<option value=90>90</option>
+										<option value=100>100</option>
+						</select>
+					</td>			
+
+				</tr>
+				<!--  
 				<tr>
 					<td colspan="1" valign="top"><b>Phone number:</b></td>
 					<td colspan="5"><span id="phoneNumber"></span></td>
 				</tr>
-				-->
-				
+				  -->
 				<tr id="opdWardLabel">
 					<td colspan="1"><b>Triage to visit:</b></td>
 					<td colspan="5"><select id="triage" name="patient.triage">
@@ -682,7 +740,7 @@ jQuery("#message").hide();
 					</td>
 				</tr> -->
 				<!-- Sagar Bele, 11-01-2013: Issue #663 Registration alignment -->
-				<!--
+			    <!--  
 				<tr id="tempCat">
 					<td colspan="1" valign="top"><b>Temporary Categories:</b></td>
 					<td colspan="5">

@@ -181,7 +181,8 @@ public class ShowPatientInfoController {
 		Concept conforregfreereason = Context.getConceptService().getConcept("REGISTRATION FEE FREE REASON");
 		Integer conforregfreereasonid=conforregfreereason.getConceptId();
 		model.addAttribute("regFeeReasonConId",conforregfreereasonid);
-		model.addAttribute("regFee", GlobalPropertyUtil.getString(RegistrationConstants.PROPERTY_REGISTRATION_FEE, ""));
+		model.addAttribute("regFee", GlobalPropertyUtil.getString(RegistrationConstants.PROPERTY_INITIAL_REGISTRATION_FEE, ""));
+		model.addAttribute("reVisitFee", GlobalPropertyUtil.getString(RegistrationConstants.PROPERTY_REVISIT_REGISTRATION_FEE, ""));
 		return "/module/registration/patient/showPatientInfo";
 	}
 	

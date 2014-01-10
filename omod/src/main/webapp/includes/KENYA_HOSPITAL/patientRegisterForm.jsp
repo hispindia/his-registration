@@ -362,14 +362,14 @@ td.border {
 			if (StringUtils.isBlank(jQuery("#patientRelativeName").val())) {
 				alert("Please enter relative name");
 				return false;
-			} else {
+			} /*else {
 				if (jQuery("#patientGender").val() == "M"||jQuery("#patientGender").val() == "F") {
 					if (jQuery("#patientRegistrationForm input[name=person.attribute.15]:checked").length == 0) {
 						alert("Please select relative name type");
 						return false;
 					}
 				}
-			}
+			}*/
 
 			if (StringUtils.isBlank(jQuery("#birthdate").val())) {
 				alert("Please enter birthdate or age");
@@ -1137,8 +1137,6 @@ td.border {
 			<td class="cell">
 				<table>
 					<tr>
-					<td>&nbsp;</td><td>
-					<div id="patientRelativeNameSection"></div> </td>
 					</tr>
 					<tr>
 						<td>Relative Name *</td>

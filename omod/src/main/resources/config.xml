@@ -8,7 +8,7 @@
 	<name>@MODULE_NAME@</name>
 	<version>@MODULE_VERSION@</version>
 	<package>@MODULE_PACKAGE@</package>
-	<author>Ghanshyam, Saptarshi, Truong Ha</author>
+	<author>Ghanshyam, Sagar, Truong Ha</author>
 	<description>
 			Registration
 	</description>
@@ -78,13 +78,21 @@
 	</globalProperty>
 	
 	<globalProperty>
-		<property>@MODULE_ID@.registrationFee</property>
+		<property>@MODULE_ID@.initialVisitRegistrationFee</property>
 		<defaultValue>0</defaultValue>
 		<description>
-			Registration Fee
+			Registration Fee for first visit 
 		</description>
 	</globalProperty>
 	
+	<globalProperty>
+		<property>@MODULE_ID@.reVisitRegistrationFee</property>
+		<defaultValue>0</defaultValue>
+		<description>
+			Registration Fee for revisit
+		</description>
+	</globalProperty>
+
 	<globalProperty>
 		<property>@MODULE_ID@.patientPerRSBY</property>
 		<defaultValue>5</defaultValue>

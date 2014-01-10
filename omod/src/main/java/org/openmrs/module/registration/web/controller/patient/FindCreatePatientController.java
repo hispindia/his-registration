@@ -102,7 +102,7 @@ public class FindCreatePatientController {
 					fee.setPatient(patient);
 					fee.setCreatedOn(new Date());
 					fee.setCreatedBy(Context.getAuthenticatedUser());
-					fee.setFee(new BigDecimal(GlobalPropertyUtil.getInteger(RegistrationConstants.PROPERTY_REGISTRATION_FEE,
+					fee.setFee(new BigDecimal(GlobalPropertyUtil.getInteger(RegistrationConstants.PROPERTY_INITIAL_REGISTRATION_FEE,
 					    0)));
 					Context.getService(RegistrationService.class).saveRegistrationFee(fee);
 				}

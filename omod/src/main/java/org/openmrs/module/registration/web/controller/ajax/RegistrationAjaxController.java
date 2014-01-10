@@ -153,7 +153,7 @@ public class RegistrationAjaxController {
 	
 	@RequestMapping(value = "/module/registration/ajax/buySlip.htm", method = RequestMethod.GET)
 	public void buySlip(@RequestParam("patientId") Integer patientId, Model model, HttpServletResponse response)
-	                                                                                                            throws IOException {
+	    throws IOException {
 		response.setContentType("text/html;charset=UTF-8");
 		PrintWriter out = response.getWriter();
 		RegistrationFee fee = new RegistrationFee();
@@ -161,7 +161,7 @@ public class RegistrationAjaxController {
 		fee.setPatient(patient);
 		fee.setCreatedOn(new Date());
 		fee.setCreatedBy(Context.getAuthenticatedUser());
-		fee.setFee(new BigDecimal(GlobalPropertyUtil.getInteger(RegistrationConstants.PROPERTY_REGISTRATION_FEE, 0)));
+		fee.setFee(new BigDecimal(GlobalPropertyUtil.getInteger(RegistrationConstants.PROPERTY_INITIAL_REGISTRATION_FEE, 0)));
 		Context.getService(RegistrationService.class).saveRegistrationFee(fee);
 		out.print("success");
 	}
