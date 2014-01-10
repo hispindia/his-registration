@@ -386,6 +386,16 @@ td.border {
 				return false;
 			} 
 			
+			
+			if (jQuery("#mlcCase").is(':checked')) {
+				if (StringUtils.isBlank(jQuery("#tempCat").val()))
+					{
+					alert("Please select temporary category");
+					return false;
+					}
+			}
+					
+			
 			if (StringUtils.isBlank(jQuery("#patientPostalAddress").val())) {
 				alert("Please enter physical address of Patient");
 				return false;
