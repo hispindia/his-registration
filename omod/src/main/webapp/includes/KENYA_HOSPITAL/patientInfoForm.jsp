@@ -114,23 +114,23 @@
 			
 			if(jQuery("#patientCategory").val() == "General"){
 						jQuery("#regFeeValue").val(${regFee});
-						jQuery("#regFeeValue").attr("disabled", "disabled");
+						//jQuery("#regFeeValue").attr("disabled", "disabled");
 				}
 			if(jQuery("#patientCategory").val() == "Child Less Than 5 yr"){
 						jQuery("#regFeeValue").val(0);
-						jQuery("#regFeeValue").attr("disabled", "disabled");
+						//jQuery("#regFeeValue").attr("disabled", "disabled");
 				}
 			if(jQuery("#patientCategory").val() == "CCC"){
 						jQuery("#regFeeValue").val(0);
-						jQuery("#regFeeValue").attr("disabled", "disabled");
+						//jQuery("#regFeeValue").attr("disabled", "disabled");
 				}
 			if(jQuery("#patientCategory").val() == "Expectant Mother"){
 						jQuery("#regFeeValue").val(0);
-						jQuery("#regFeeValue").attr("disabled", "disabled");
+						//jQuery("#regFeeValue").attr("disabled", "disabled");
 				}
 			if(jQuery("#patientCategory").val() == "NHIF"){
 						jQuery("#regFeeValue").val(0);
-						jQuery("#regFeeValue").attr("disabled", "disabled");
+						//jQuery("#regFeeValue").attr("disabled", "disabled");
 				}
 			}
 		//ghanshyam,18-dec-2013,# 3457 Exemption number for selected category should show on registration receipt
@@ -662,7 +662,7 @@ jQuery("#message").hide();
 				
 				<tr>
 					<td colspan="1"><b>Registration Fee:</b></td>
-					<td><select id="regFeeValue" name="patient.registration.fee.attribute">
+					<td><select id="regFeeValue" name="regFeeValue">
 										<option value=0>0</option>
 										<option value=10>10</option>
 										<option value=20>20</option>

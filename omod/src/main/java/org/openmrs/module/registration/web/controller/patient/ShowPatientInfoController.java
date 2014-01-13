@@ -201,7 +201,6 @@ public class ShowPatientInfoController {
 	@RequestMapping(method = RequestMethod.POST)
 	public void savePatientInfo(@RequestParam("patientId") Integer patientId,
 	                            @RequestParam(value = "encounterId", required = false) Integer encounterId,
-	                            @RequestParam(value = "abc", required = false) String patientVisit,
 	                            @RequestParam(value = "regFeeValue", required = false) Double regFeeValue,
 	                            HttpServletRequest request, HttpServletResponse response) throws ParseException, IOException {
 		

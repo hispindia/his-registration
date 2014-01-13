@@ -857,10 +857,13 @@ td.border {
 		checkPatientAgeForChildLessThan5yr : function() {
 			estAge = jQuery("#estimatedAge").html();
 			var rest=estAge.slice(1,-6); 
-			if (rest>5) {
-				if (jQuery("#patCatChildLessThan5yr").is(':checked')) {
-					alert("This category is only valid for patient under 5 years of age");
-					return false;
+			var check=estAge.slice(-5); 
+			if(check=="years"){
+				if (rest>5) {
+					if (jQuery("#patCatChildLessThan5yr").is(':checked')) {
+						alert("This category is only valid for patient under 5 years of age");
+						return false;
+					}
 				}
 			}
 			return true;
