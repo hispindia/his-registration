@@ -68,14 +68,14 @@
 		jQuery("#datetime").html(MODEL.currentDateTime);
 		jQuery("#othername1").html(MODEL.patientAttributes[25]+" "+MODEL.patientName);
 		
-		MODEL.TRIAGE = " ,Please select an Triage to visit|" + MODEL.TRIAGE;
+		MODEL.TRIAGE = " ,Please Select Triage to Visit|" + MODEL.TRIAGE;
 		PAGE.fillOptions("#triage", {
 			data:MODEL.TRIAGE,
 			delimiter: ",",
 			optionDelimiter: "|"
 		});
 		
-		MODEL.TEMPORARYCAT = " ,Please select an Temporary Category|" + MODEL.TEMPORARYCAT;
+		MODEL.TEMPORARYCAT = " ,Please Select Temporary Category|" + MODEL.TEMPORARYCAT;
 		PAGE.fillOptions("#mlcCat", {
 			data:MODEL.TEMPORARYCAT,
 			delimiter: ",",
@@ -106,6 +106,9 @@
 		jQuery("#exemptionField4").hide();
 		jQuery("#nhifCardIdField").hide();
 		jQuery("#mlcOtherVal").hide();
+		jQuery("#genderField").hide();
+		jQuery("#ageField").hide();
+
 		
 		//ghanshyam,11-dec-2013,#3327 Defining patient categories based on Kenyan requirements
 		if(!StringUtils.isBlank(MODEL.selectedCategory)){			
@@ -601,22 +604,24 @@ jQuery("#message").hide();
 					<td colspan="1"><b>Name:</b></td>
 					<td><span id="othername1"></span></td>
 				</tr>
-				<!--
-				<tr>
+				
+				<tr id="ageField">
 					<td colspan="1"><b>Age:</b></td>
 					<td colspan="5"><span id="age"></span></td>
 				</tr>
-				<tr>
+				<tr id="genderField">
 					<td colspan="1"><b>Gender:</b></td>
 					<td colspan="5"><span id="gender"></span></td>
 				</tr>
+				
 				<tr>
-					<td colspan="1"><b>Marital Status:</b></td>
-					<td colspan="1"><span id="maritalStatus"></span></td>
+<!--					<td colspan="1"><b>Marital Status:</b></td>
+					<td colspan="1"><span id="maritalStatus"></span></td> -->
+					<td></td><td></td>
 					<td id="exe_wav_number"> Exemption/Waiver Number</td>
 					<td id="nhif_number"> NHIF Card Id</td>
 				</tr>
-				 -->
+				
 				<tr>
 					<td colspan="1"><b>Patient Category:</b></td>
 					<td><select id="patientCategory" name="person.attribute.14">
@@ -685,7 +690,7 @@ jQuery("#message").hide();
 				</tr>
 				  -->
 				<tr id="opdWardLabel">
-					<td colspan="1"><b>Triage to visit:</b></td>
+					<td colspan="1"><b>Triage to Visit:</b></td>
 					<td colspan="5"><select id="triage" name="patient.triage">
 					</select></td>
 				</tr>

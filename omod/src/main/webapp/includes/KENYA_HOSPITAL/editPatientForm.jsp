@@ -76,6 +76,9 @@ td.bottom {
 			
 								
 				attributes = MODEL.patientAttributes[14];
+				jQuery("#catGen").hide();
+				jQuery("#healthIdField").hide();
+				
 				jQuery.each(attributes.split(","), function(index, value) {
 					jQuery("#patientRegistrationForm").fillForm(
 							"person.attribute.14==" + value + "||");
@@ -413,12 +416,12 @@ td.bottom {
 			if (StringUtils.isBlank(jQuery("#patientRelativeName").val())) {
 				alert("Please enter relative name");
 				return false;
-			} else {
+			}/* else {
 				if (jQuery("#patientRegistrationForm input[name=person.attribute.15]:checked").length == 0) {
 					alert("Please select relative name type");
 					return false;
 				}
-			}
+			}*/
 
 			if (StringUtils.isBlank(jQuery("#birthdate").val())) {
 				alert("Please enter birthdate or age");
@@ -456,6 +459,17 @@ td.bottom {
 					alert("Please enter contact number in correct format");
 					return false;
 				}
+			}
+			
+			if (!StringUtils.isBlank(jQuery("#patientEmail").val())) {
+				var x=jQuery("#patientEmail").val();
+				var atpos=x.indexOf("@");
+				var dotpos=x.lastIndexOf(".");
+				if (atpos<1 || dotpos<atpos+2 || dotpos+2>=x.length)
+				  {
+				  alert("Not a valid patients e-mail address");
+				  return false;
+				  }
 			}
 
 			if (!StringUtils.isBlank(jQuery("#relativePhoneNumber").val())) {
@@ -507,8 +521,9 @@ td.bottom {
 					&& jQuery("#patCatMother").attr('checked') == false
 					&& jQuery("#patCatFree").attr('checked') == false
 					&& jQuery("#patCatNHIF").attr('checked') == false) {
-				alert('You didn\'t choose any of the patient categories!');
-				return false;
+					jQuery("#patCatGeneral").attr("checked", "checked");					
+			//	alert('You didn\'t choose any of the patient categories!');
+			//	return false;
 			} else {
 				if (jQuery("#patCatChildLessThan5yr").attr('checked')) {
 					if (jQuery("#exemptionNumber1").val().length <= 0) {
@@ -545,7 +560,7 @@ td.bottom {
 				}
 			}		
 			
-		/*	        //ghanshya,3-july-2013 #1962 Create validation for length of Health ID and National ID
+			        //ghanshya,3-july-2013 #1962 Create validation for length of Health ID and National ID
 			       //Add Validation for checking duplicate National Id and Health Id
 			        PAGE.checkHealthNationalID();
 		            alert("click ok to proceed");
@@ -584,7 +599,7 @@ td.bottom {
 		            alert("please try again");
 		            return false;
 		            }
-*/
+
 			return true;
 		}
 	};
@@ -915,14 +930,22 @@ td.bottom {
 			</td>
 			</td>	
 		</tr>
-		
+		<tr id="healthIdField">
+						<td><b>Health ID:</b></td>
+						<td><input id="patientHealthId" name="patient.attribute.24" />
+						<!-- ghanshya,3-july-2013 #1962 Create validation for length of Health ID and National ID -->
+						<td><span style="color: red;" id="healthIdValidationMessage">
+						</span>
+						</td>
+						</td>
+		</tr>
 		<tr>
 			<td class="cell"><b>Demographics *</b></td>
 			<td class="cell">dd/mm/yyyy<br />
 				<table>
 					<tr>
 						<td>Age Or Date of Birth</td>
-						<td></td>
+						<td></td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
 						<td>Gender</td>
 					</tr>
 					<tr>
@@ -933,6 +956,7 @@ td.bottom {
 							id="birthdateEstimated" type="hidden"
 							name="patient.birthdateEstimate" value="true" /></td>
 						<td><span id="estimatedAge"></span></td>
+							<td></td>
 							<td><select id="patientGender" name="patient.gender">
 								<option value="Any"></option>
 								<option value="M">Male</option>
@@ -945,31 +969,32 @@ td.bottom {
 					</tr>
 					<tr>	
 						<td><select id="patientMaritalStatus" name="person.attribute.26">
-										<option value="Marital"></option>
+											<option value="Marital"></option>
 										<option value="Single">Single</option>
 										<option value="Married">Married</option>
 										<option value="Divorced">Divorced</option>
-										<option value="Spouse Dead">Spouse Dead</option>
+										<option value="Widow">Widow</option>
+										<option value="Widower">Widower</option>
+										<option value="Separated">Separated</option>
 								</select></td>
 					</tr>
 				</table>
 				</td>
 			
 				<td rowspan="3" class="border">
-					<b>&nbsp;&nbsp;Patient category</b><br />
+					<b>&nbsp;&nbsp;Patient Category</b><br />
 					<table cellspacing="5">
 						<tr>
-							<td><input id="patCatGeneral" type="checkbox"
+							<td id="catGen"><input id="patCatGeneral" type="checkbox"
 								name="person.attribute.14" value="General" /> General</td>
 							<td><input id="patCatChildLessThan5yr" type="checkbox"
-								name="person.attribute.14" value="Child Less Than 5 yr" />Child less than 5 year old</td>
+								name="person.attribute.14" value="Child Less Than 5 yr" />Child less than 5 years old</td>
 							<td><span id="exemptionField1">Exemption Number <input
 									id="exemptionNumber1" name="person.attribute.31" />
 							</span>
 							</td>	
 						</tr>
 						<tr>
-						<td></td>
 						<td><input id="CCC" type="checkbox"
 								name="person.attribute.14" value="CCC" /> Comprehensive Care Clinic (CCC) Patient</td>
 							<td><span id="exemptionField2">Exemption Number <input
@@ -978,9 +1003,8 @@ td.bottom {
 							</td>
 						</tr>
 						<tr>
-							<td></td>
 							<td><input id="patCatMother" type="checkbox"
-								name="person.attribute.14" value="Expectant Mother" /> Expectant Mothers </td>
+								name="person.attribute.14" value="Expectant Mother" /> Expectant Mother </td>
 								<td><span id="exemptionField3">Exemption Number <input
 									id="exemptionNumber3" name="person.attribute.35" />
 							</span>
@@ -988,7 +1012,6 @@ td.bottom {
 						</tr>
 						
 						<tr>
-							<td></td>
 							<td><input id="patCatFree" type="checkbox"
 								name="person.attribute.14" value="Waver" /> Waiver</td>
 								<td><span id="waverField">Waiver Number&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input
@@ -997,7 +1020,6 @@ td.bottom {
 							</td>
 						</tr>
 						<tr>
-							<td></td>
 							<td><input id="patCatNHIF" type="checkbox"
 								name="person.attribute.14" value="NHIF" /> NHIF Card Holder</td>
 							<td><span id="exemptionField4">Exemption Number <input
@@ -1006,7 +1028,6 @@ td.bottom {
 							</td>
 						</tr>
 						<tr>
-							<td>&nbsp;</td>
 							<td>&nbsp;</td>
 							<td><span id="nhifCardField">NHIF Card ID &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; <input
 									id="nhifCardNumber" name="person.attribute.33" />
@@ -1049,9 +1070,62 @@ td.bottom {
 						<td>Nationality:</td>
 						<td><select id="patientNation" name="person.attribute.27" style="width: 200px;">
 										<option value="Nation"></option>
-										<option value="S">East Africa Kenya</option>
-										<option value="M">East Africa</option>
-										<option value="D">Kenyan</option>
+										<option value="Kenya">Kenya</option>
+										<option value="East Africa">East Africa</option>
+										<option value="Kenyan">Africa</option>
+										<option value="Algeria">Algeria</option>
+										<option value="Angola">Angola</option>
+										<option value="Benin">Benin</option>
+										<option value="Botswana">Botswana</option>
+										<option value="Burkina Faso">Burkina Faso</option>
+										<option value="Burundi">Burundi</option>
+										<option value="Cameroon">Cameroon</option>
+										<option value="Cape Verde">Cape Verde</option>
+										<option value="Central African Republic">Central African Republic</option>
+										<option value="Chad">Chad</option>
+										<option value="Comoros">Comoros</option>
+										<option value="Côte d'Ivoire">Côte d'Ivoire</option>
+										<option value="Democratic Republic of Congo">Democratic Republic of Congo</option>
+										<option value="Djibouti">Djibouti</option>
+										<option value="Egypt">Egypt</option>
+										<option value="Equatorial Guinea">Equatorial Guinea</option>
+										<option value="Eritrea">Eritrea</option>
+										<option value="Ethiopia">Ethiopia</option>
+										<option value="Gabon">Gabon</option>
+										<option value="Gambia">Gambia</option>
+										<option value="Ghana">Ghana</option>
+										<option value="Guinea">Guinea</option>
+										<option value="Guinea-Bissau">Guinea-Bissau</option>
+										<option value="Lesotho">Lesotho</option>
+										<option value="Liberia">Liberia</option>
+										<option value="Libya">Libya</option>
+										<option value="Madagascar">Madagascar</option>
+										<option value="Malawi">Malawi</option>
+										<option value="Mali">Mali</option>
+										<option value="Mauritania">Mauritania</option>
+										<option value="Mauritius">Mauritius</option>
+										<option value="Morocco">Morocco</option>
+										<option value="Mozambique">Mozambique</option>
+										<option value="Namibia">Namibia</option>
+										<option value="Niger">Niger</option>
+										<option value="Nigeria">Nigeria</option>
+										<option value="Republic of Congo">Republic of Congo</option>
+										<option value="Rwanda">Rwanda</option>
+										<option value="São Tomé and Príncipe">São Tomé and Príncipe</option>
+										<option value="Senegal">Senegal</option>
+										<option value="Seychelles">Seychelles</option>
+										<option value="Sierra Leone">Sierra Leone</option>
+										<option value="Somalia">Somalia</option>
+										<option value="South Africa">South Africa</option>
+										<option value="South Sudan">South Sudan</option>
+										<option value="Sudan">Sudan</option>
+										<option value="Swaziland">Swaziland</option>
+										<option value="Tanzania">Tanzania</option>
+										<option value="Togo">Togo</option>
+										<option value="Tunisia">Tunisia</option>
+										<option value="Uganda">Uganda</option>
+										<option value="Zambia">Zambia</option>
+										<option value="Zimbabwe">Zimbabwe</option>
 						</select></td>
 						</tr>
 
@@ -1065,13 +1139,16 @@ td.bottom {
 		</tr>
 		
 		<tr>
+			<td><b> &nbsp;&nbsp; &nbsp;&nbsp;Email Address</b></td>
+			<td  class="cell" style="border-top: 0px solid lightgrey; padding: 20px;"><input id="patientEmail"
+				name="person.attribute.37" style="width: 200px;" /></td>
+		</tr>
+		
+		<tr>
 			<td class="cell"><b>Next of Kin (NOK) Information</b></td>
 			<td class="cell">
 				<table>
-					<tr>
-						<td>&nbsp;</td><td>
-						<div id="patientRelativeNameSection"></div> </td>
-					</tr>
+					
 					<tr>
 						<td>Relative Name *</td>
 						<td>

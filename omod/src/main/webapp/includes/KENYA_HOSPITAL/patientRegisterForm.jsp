@@ -51,7 +51,7 @@ td.border {
 				PAGE.fillOptions("#upazilas", {
 					data : MODEL.upazilas[0].split(',')
 				});
-				MODEL.TRIAGE = " ,Please select Triage room to visit|"
+				MODEL.TRIAGE = " ,Please Select Triage Room to Visit|"
 						+ MODEL.TRIAGE;
 				PAGE.fillOptions("#triage", {
 					data : MODEL.TRIAGE,
@@ -100,6 +100,7 @@ td.border {
 				jQuery("#patCatGeneral").attr("checked", "checked");
 				jQuery("#hide_show").hide();
 				jQuery("#tempCat").hide();
+				jQuery("#healthIdField").hide();
 				// binding
 				jQuery("#patCatChildLessThan5yr").click(function() {
 					VALIDATORS.childYearCheck();
@@ -196,11 +197,13 @@ td.border {
 		 //ghanshya,3-july-2013 #1962 Create validation for length of Health ID and National ID
 		//Add Validation for checking duplicate National Id and Health Id
 		checkHealthNationalID : function() {
+		        healthId=jQuery("#patientHealthId").val();
 				nationalId=jQuery("#patientNationalId").val();
 				jQuery.ajax({
 				type : "GET",
 				url : getContextPath() + "/module/registration/validatenationalidandhealthidreg.form",
 				data : ({
+					healthId			: healthId,
 					nationalId			: nationalId
 				}),
 				success : function(data) {	
@@ -208,8 +211,7 @@ td.border {
 					 
 		           } 
                });
-			},	
-
+			},
 		/** VALIDATE BIRTHDATE */
 		checkBirthDate : function() {
 			jQuery
@@ -521,23 +523,24 @@ td.border {
 				}
 			}
 
-			//Add Validation for checking duplicate National Id 
-			//        PAGE.checkHealthNationalID();
+			        //ghanshya,3-july-2013 #1962 Create validation for length of Health ID and National ID
+			       //Add Validation for checking duplicate National Id and Health Id
+			        PAGE.checkHealthNationalID();
 		            alert("click ok to proceed");
-		     /*       abc=jQuery("#abc").val();
+		            abc=jQuery("#abc").val();
 					def=jQuery("#def").val();
 					nd=jQuery("#nId").val();
-//					hd=jQuery("#hId").val();
+					hd=jQuery("#hId").val();
 					nId=jQuery("#nId").val();
-//					hId=jQuery("#hId").val();
+					hId=jQuery("#hId").val();
 				
-					if(typeof nId!="undefined"){
-					if(nId=="1"){
+					if(typeof nId!="undefined" || typeof hId!="undefined"){
+					if(nId=="1" && hId=="1"){
 					//document.getElementById("nationalIdValidationMessage").innerHTML="Patient already registered with this National id";
 					//document.getElementById("healthIdValidationMessage").innerHTML="Patient already registered with this Health id";
                     //jQuery("#nationalIdValidationMessage").show();
                     //jQuery("#healthIdValidationMessage").show();
-		            alert("Patient already registered with this National id");
+		            alert("Patient already registered with this National id and Health id");
 					return false
 		            }
 		            else if(nId=="1"){
@@ -547,12 +550,20 @@ td.border {
 		            alert("Patient already registered with this National id");
                     return false;					
 		            }
+		           /* else if(hId=="1"){
+		             //document.getElementById("healthIdValidationMessage").innerHTML="Patient already registered with this Health id";
+                     //jQuery("#healthIdValidationMessage").show();
+                     //jQuery("#nationalIdValidationMessage").hide();
+		             alert("Patient already registered with this Health id");	
+					 return false;
+		            }*/
 		            }
 		            else{
 		            alert("please try again");
 		            return false;
 		            }
-			*/
+			
+			
 			return true;
 		}
 	};
@@ -573,7 +584,7 @@ td.border {
 					&& jQuery("#patCatNHIF").attr('checked') == false) {
 				jQuery("#patCatGeneral").attr("checked", "checked");					
 				//alert('You didn\'t choose any of the patient categories!');
-				return false;
+			//	return false;
 			} else {
 				if (jQuery("#patCatChildLessThan5yr").attr('checked')) {
 					if (jQuery("#exemptionNumber1").val().length <= 0) {
@@ -914,14 +925,25 @@ td.border {
 			</td>
 			</td>	
 		</tr>
+		
+		<tr id="healthIdField">
+			<td><b>Health ID:</b></td>
+			<td><input id="patientHealthId" name="patient.attribute.24" />
+			<!-- ghanshya,3-july-2013 #1962 Create validation for length of Health ID and National ID -->
+			<td><span style="color: red;" id="healthIdValidationMessage">
+			</span>
+			</td>
+			</td>
 		</tr>
+		
+		
 		<tr>
 			<td class="cell"><b>Demographics *</b></td>
 			<td class="cell">dd/mm/yyyy<br />
 				<table>
 					<tr>
 						<td>Age Or Date of Birth</td>
-						<td></td>
+						<td></td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
 						<td>Gender</td>
 					</tr>
 					<tr>
@@ -933,6 +955,7 @@ td.border {
 							name="patient.birthdateEstimate" value="true" /></td>
 						<td><span id="estimatedAge"></span></td>
 							<td id="hide_show"></td>
+							<td></td>
 							<td><select id="patientGender" name="patient.gender">
 								<option value="Any"></option>
 								<option value="M">Male</option>
@@ -962,14 +985,14 @@ td.border {
 	border-bottom: 1px;
 	border-color: lightgrey;
 	border-style: solid;">
-					<b>&nbsp;&nbsp;Patient category</b><br />
+					<b>&nbsp;&nbsp;Patient Category</b><br />
 					<table cellspacing="5">
 					<tr>	
 						<tr>
 							<td id="catGen"><input id="patCatGeneral" type="checkbox"
 								name="person.attribute.14" value="General" /> General</td>
 							<td><input id="patCatChildLessThan5yr" type="checkbox"
-								name="person.attribute.14" value="Child Less Than 5 yr" /> Child less than 5 year old</td>
+								name="person.attribute.14" value="Child Less Than 5 yr" /> Child less than 5 years old</td>
 							<td><span id="exemptionField1">Exemption Number <input
 									id="exemptionNumber1" name="person.attribute.31" />
 							</span>
@@ -985,7 +1008,7 @@ td.border {
 						</tr>
 						<tr>
 							<td><input id="patCatMother" type="checkbox"
-								name="person.attribute.14" value="Expectant Mother" /> Expectant Mothers </td>
+								name="person.attribute.14" value="Expectant Mother" /> Expectant Mother </td>
 								<td><span id="exemptionField3">Exemption Number <input
 									id="exemptionNumber3" name="person.attribute.35" />
 							</span>
@@ -1131,7 +1154,7 @@ td.border {
 		</tr>
 		
 		<tr>
-			<td class="cell"><b>Contact number</b></td>
+			<td class="cell"><b>Contact Number</b></td>
 			<td class="cell"><input id="patientPhoneNumber"
 				name="person.attribute.16" style="width: 200px;" /></td>
 			</td>
