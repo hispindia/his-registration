@@ -416,7 +416,7 @@
 				jQuery("#nhifCardIdField").hide();
 				
 				jQuery("#regFeeValue").val(${reVisitFee});
-				jQuery("#regFeeValue").attr("disabled", "disabled");
+				//jQuery("#regFeeValue").attr("disabled", "disabled");
 
 		
 			} else if(jQuery("#patientCategory").val() == "Child Less Than 5 yr"){
@@ -435,7 +435,7 @@
 				jQuery("#nhifCardIdField").hide();
 
 				jQuery("#regFeeValue").val(0);
-				jQuery("#regFeeValue").attr("disabled", "disabled");
+				//jQuery("#regFeeValue").attr("disabled", "disabled");
 				
 			
 			}else if(jQuery("#patientCategory").val() == "CCC"){
@@ -455,7 +455,7 @@
 				jQuery("#nhifCardIdField").hide();
 
 				jQuery("#regFeeValue").val(0);
-				jQuery("#regFeeValue").attr("disabled", "disabled");
+				//jQuery("#regFeeValue").attr("disabled", "disabled");
 		
 			
 			}else if(jQuery("#patientCategory").val() == "Expectant Mother"){
@@ -474,7 +474,7 @@
 				jQuery("#nhifCardIdField").hide();
 		
 				jQuery("#regFeeValue").val(0);
-				jQuery("#regFeeValue").attr("disabled", "disabled");
+				//jQuery("#regFeeValue").attr("disabled", "disabled");
 			
 			}else if(jQuery("#patientCategory").val() == "Waver"){
 				jQuery("#exe_wav_number").show();
@@ -509,7 +509,7 @@
 				jQuery("#exemptionField1").hide();
 
 				jQuery("#regFeeValue").val(0);
-				jQuery("#regFeeValue").attr("disabled", "disabled");
+				//jQuery("#regFeeValue").attr("disabled", "disabled");
 
 				
 			}
