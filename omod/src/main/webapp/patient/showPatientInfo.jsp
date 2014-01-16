@@ -52,6 +52,7 @@
 		TEMPORARYCAT: "${TEMPORARYCAT}",
 		tempCategory:"${tempCategory}",
 		tempCategoryId: "${tempCategoryId}",
+		registrationFee: "${registrationFee}",
 		dueDate: "${dueDate}",
 		daysLeft: "${daysLeft}",
 		reprint: "${param.reprint eq 'true'}",

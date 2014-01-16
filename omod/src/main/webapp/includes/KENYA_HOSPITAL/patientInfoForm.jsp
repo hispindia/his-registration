@@ -179,14 +179,54 @@
 		// Set data for reprint page
 		if(MODEL.reprint=="true"){
 			var triageId=MODEL.triageId;
-		jQuery("#triage").val(MODEL.observations[triageId]);
+		    jQuery("#triage").val(MODEL.observations[triageId]);
+		    jQuery("#triage").attr("disabled", "disabled");
 		
 			var tempCategoryId=MODEL.tempCategoryId;
 			if(!StringUtils.isBlank(MODEL.observations[tempCategoryId])){
+			jQuery("#mlcCat").val(MODEL.observations[tempCategoryId]);
+			jQuery("#mlcCat").attr("disabled", "disabled");
+			}
 			
-				jQuery.each(MODEL.observations[tempCategoryId].split(","), function(index, value){
-					jQuery("input[name=temporary.attribute.11][value='" + value + "']").attr("checked", "checked");
-				});	}
+		    jQuery("#regFeeValue").val(MODEL.registrationFee);
+		    jQuery("#regFeeValue").attr("disabled", "disabled");
+		    
+		    if(!StringUtils.isBlank(MODEL.selectedCategory)){			
+			jQuery("#patientCategory").val(MODEL.selectedCategory);
+			jQuery("#patientCategory").show();
+			jQuery("#patientCategory").attr("disabled", "disabled");
+		    }
+		    if(!StringUtils.isBlank(MODEL.categoryValue1)){			
+			jQuery("#exemptionNumber1").val(MODEL.categoryValue1);
+			jQuery("#exemptionField1").show();
+			jQuery("#exemptionNumber1").attr("disabled", "disabled");
+		    }
+		    if(!StringUtils.isBlank(MODEL.categoryValue2)){			
+			jQuery("#waiverNumber").val(MODEL.categoryValue2);
+			jQuery("#waiverField").show();
+			jQuery("#waiverNumber").attr("disabled", "disabled");
+		    }
+		    if(!StringUtils.isBlank(MODEL.categoryValue3)){			
+			jQuery("#nhifCardIdNumber").val(MODEL.categoryValue3);
+			jQuery("#nhifCardIdField").show();
+			jQuery("#nhifCardIdNumber").attr("disabled", "disabled");
+		    }
+		    if(!StringUtils.isBlank(MODEL.categoryValue4)){			
+			jQuery("#exemptionNumber2").val(MODEL.categoryValue4);
+			jQuery("#exemptionField2").show();
+			jQuery("#exemptionNumber2").attr("disabled", "disabled");
+		    }
+		    if(!StringUtils.isBlank(MODEL.categoryValue5)){			
+			jQuery("#exemptionNumber3").val(MODEL.categoryValue5);
+			jQuery("#exemptionField3").show();
+			jQuery("exemptionNumber3").attr("disabled", "disabled");
+		    }
+		    if(!StringUtils.isBlank(MODEL.categoryValue6)){			
+			jQuery("#exemptionNumber4").val(MODEL.categoryValue6);
+			jQuery("#exemptionField4").show();
+			jQuery("#exemptionNumber4").attr("disabled", "disabled");
+		    }
+		    
 			jQuery("#printSlip").hide();
 			jQuery("#save").hide();
 			//ghanshyam  20-may-2013 #1648 capture Health ID and Registration Fee Type

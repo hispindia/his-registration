@@ -164,13 +164,46 @@ public class ShowPatientInfoController {
 					if (obs.getConcept().getDisplayString()
 					        .equalsIgnoreCase(RegistrationConstants.CONCEPT_NAME_TEMPORARY_CATEGORY)) {
 						model.addAttribute("tempCategoryId", obs.getConcept().getConceptId());
-					} else if (obs.getConcept().getDisplayString()
+					}
+					if (obs.getConcept().getDisplayString()
 					        .equalsIgnoreCase(RegistrationConstants.CONCEPT_NAME_TRIAGE)) {
 						model.addAttribute("triageId", obs.getConcept().getConceptId());
+					}
+					if (obs.getConcept().getDisplayString()
+					        .equalsIgnoreCase(RegistrationConstants.CONCEPT_NAME_REGISTRATION_FEE)) {
+						double regFee=obs.getValueNumeric();
+						int regFeeToInt = (int)regFee;
+						model.addAttribute("registrationFee", regFeeToInt);
 					}
 					observations.put(obs.getConcept().getConceptId(), ObsUtils.getValueAsString(obs));
 				}
 				model.addAttribute("observations", observations);
+				List<PersonAttribute> pas = hcs.getPersonAttributes(patientId);
+				 for (PersonAttribute pa : pas) {
+					 PersonAttributeType attributeType = pa.getAttributeType(); 
+					 if(attributeType.getPersonAttributeTypeId()==14){
+						 model.addAttribute("selectedCategory",pa.getValue()); 
+					 }
+					 //ghanshyam,18-dec-2013,# 3457 Exemption number for selected category should show on registration receipt
+					 if(attributeType.getPersonAttributeTypeId()==31){
+						 model.addAttribute("categoryValue1",pa.getValue()); 
+					 }
+					 if(attributeType.getPersonAttributeTypeId()==32){
+						 model.addAttribute("categoryValue2",pa.getValue()); 
+					 }
+					 if(attributeType.getPersonAttributeTypeId()==33){
+						 model.addAttribute("categoryValue3",pa.getValue()); 
+					 }
+					 if(attributeType.getPersonAttributeTypeId()==34){
+						 model.addAttribute("categoryValue4",pa.getValue()); 
+					 }
+					 if(attributeType.getPersonAttributeTypeId()==35){
+						 model.addAttribute("categoryValue5",pa.getValue()); 
+					 }
+					 if(attributeType.getPersonAttributeTypeId()==36){
+						 model.addAttribute("categoryValue6",pa.getValue()); 
+					 }
+				 }
 			}
 		}
 		
