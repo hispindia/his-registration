@@ -686,7 +686,7 @@ jQuery("#message").hide();
 					<td colspan="1"><span id="maritalStatus"></span></td> -->
 					<td></td><td></td>
 					<td id="exe_wav_number"> Exemption/Waiver Number</td>
-					<td id="nhif_number"> NHIF Card Id</td>
+					<td id="nhif_number"> NHIF Card ID</td>
 				</tr>
 				
 				<tr>
@@ -697,7 +697,7 @@ jQuery("#message").hide();
 										<option value="Child Less Than 5 yr">Child less than 5 year old</option>
 										<option value="CCC">Comprehensive Care Clinic Patient</option>
 										<option value="Expectant Mother">Expectant Mother</option>
-										<option value="Waver">Waiver</option>
+										<option value="Waver">Waiver Case</option>
 										<option value="NHIF">NHIF Card Holder</option>
 					</select></td>	
 					
@@ -797,7 +797,7 @@ jQuery("#message").hide();
 				
 				<tr id="temporaryCategories">
 					<td colspan="1" valign="top"><b>Temporary
-								Categories:</b></td>
+								Category:</b></td>
 					<td colspan="5"><select id="mlcCat" name="patient.temporary"></td>			
 		
 				</tr>

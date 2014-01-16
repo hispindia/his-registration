@@ -113,6 +113,11 @@ td.bottom {
 							+ MODEL.patientAttributes[30] + "||";
 				}
 
+				if (!StringUtils.isBlank(MODEL.patientAttributes[37])) {
+					formValues += "person.attribute.37=="
+							+ MODEL.patientAttributes[37] + "||";
+				}
+				
 				if (!StringUtils.isBlank(MODEL.patientAttributes[31])
 						&& jQuery("#patCatChildLessThan5yr").attr('checked')) {
 					jQuery("#patientRegistrationForm").fillForm(
@@ -1023,7 +1028,7 @@ td.bottom {
 						
 						<tr>
 							<td><input id="patCatFree" type="checkbox"
-								name="person.attribute.14" value="Waver" /> Waiver</td>
+								name="person.attribute.14" value="Waver" /> Waiver Case</td>
 								<td><span id="waverField">Waiver Number&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input
 									id="waverNumber" name="person.attribute.32" />
 							</span>
