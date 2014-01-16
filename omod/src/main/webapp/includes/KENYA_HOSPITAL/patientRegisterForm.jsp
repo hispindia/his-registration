@@ -401,7 +401,17 @@ td.border {
 			if (StringUtils.isBlank(jQuery("#patientPostalAddress").val())) {
 				alert("Please enter physical address of Patient");
 				return false;
-			} 
+			}
+
+			if (jQuery("#patientGender").val() == "M" &&  jQuery("#maritalStatus").val() == "Widow") {
+				alert("Widow marital status is only for Female");
+				return false;
+			}		
+
+			if (jQuery("#patientGender").val() == "F" &&  jQuery("#maritalStatus").val() == "Widower") {
+				alert("Widower marital status is only for Male");
+				return false;
+			}		
 
 			
 			if (StringUtils.isBlank(jQuery("#patientOtherName").val())) {
@@ -557,11 +567,11 @@ td.border {
 		             alert("Patient already registered with this Health id");	
 					 return false;
 		            }*/
-		            }
+		            }/*
 		            else{
 		            alert("please try again");
 		            return false;
-		            }
+		            }*/
 			
 			
 			return true;
@@ -1146,6 +1156,7 @@ td.border {
 										<option value="Uganda">Uganda</option>
 										<option value="Zambia">Zambia</option>
 										<option value="Zimbabwe">Zimbabwe</option>
+										<option value="Other">Other</option>
 						</select></td>
 						</tr>
 

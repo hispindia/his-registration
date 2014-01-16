@@ -433,6 +433,16 @@ td.bottom {
 				return false;
 			}
 			
+			if (jQuery("#patientGender").val() == "M" &&  jQuery("#patientMaritalStatus").val() == "Widow") {
+				alert("Widow marital status is only for Female");
+				return false;
+			}		
+
+			if (jQuery("#patientGender").val() == "F" &&  jQuery("#patientMaritalStatus").val() == "Widower") {
+				alert("Widower marital status is only for Male");
+				return false;
+			}
+			
 			if (jQuery("#patientMaritalStatus").val() == "Marital") {
 				alert("Please select Marital Status of Patient");
 				return false;
@@ -586,19 +596,19 @@ td.bottom {
                     //jQuery("#healthIdValidationMessage").hide();
 		            alert("Patient already registered with this National id");
                     return false;					
-		            }
+		            }/*
 		            else if(hId=="1"){
 		             //document.getElementById("healthIdValidationMessage").innerHTML="Patient already registered with this Health id";
                      //jQuery("#healthIdValidationMessage").show();
                      //jQuery("#nationalIdValidationMessage").hide();
 		             alert("Patient already registered with this Health id");	
 					 return false;
-		            }
-		            }
+		            }*/
+		            }/*
 		            else{
 		            alert("please try again");
 		            return false;
-		            }
+		            }*/
 
 			return true;
 		}
@@ -988,7 +998,7 @@ td.bottom {
 							<td id="catGen"><input id="patCatGeneral" type="checkbox"
 								name="person.attribute.14" value="General" /> General</td>
 							<td><input id="patCatChildLessThan5yr" type="checkbox"
-								name="person.attribute.14" value="Child Less Than 5 yr" />Child less than 5 years old</td>
+								name="person.attribute.14" value="Child Less Than 5 yr" /> Child less than 5 years old</td>
 							<td><span id="exemptionField1">Exemption Number <input
 									id="exemptionNumber1" name="person.attribute.31" />
 							</span>
@@ -1126,6 +1136,7 @@ td.bottom {
 										<option value="Uganda">Uganda</option>
 										<option value="Zambia">Zambia</option>
 										<option value="Zimbabwe">Zimbabwe</option>
+										<option value="Other">Other</option>
 						</select></td>
 						</tr>
 

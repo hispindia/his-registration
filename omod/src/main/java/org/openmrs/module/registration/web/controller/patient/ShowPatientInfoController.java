@@ -238,15 +238,22 @@ public class ShowPatientInfoController {
 			// send patient to opd room
 			RegistrationWebUtils.sendPatientToOPDQueue(patient, selectedTRIAGEConcept, true);
 			
-			
 			Concept tempCatConcept = Context.getConceptService().getConcept(RegistrationConstants.CONCEPT_NAME_TEMPORARY_CATEGORY);
+			
+			Obs temp = new Obs();
+			if (!StringUtils.isBlank(parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_TEMPORARY_ATTRIBUTE))){
 			Concept selectedTempCatConcept = Context.getConceptService().getConcept(
 			    Integer.parseInt(parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_TEMPORARY_ATTRIBUTE)));
-			Obs temp = new Obs();
+			
 			temp.setConcept(tempCatConcept);
 			temp.setValueCoded(selectedTempCatConcept);
 			encounter.addObs(temp);
-			
+			}
+			else {
+				temp.setConcept(tempCatConcept);
+				temp.setValueCoded(Context.getConceptService().getConcept("NO"));
+				encounter.addObs(temp);
+			}
 			Concept cnrffr = Context.getConceptService().getConcept(RegistrationConstants.CONCEPT_NAME_REGISTRATION_FEE);
 			Concept cr = Context.getConceptService().getConcept(RegistrationConstants.CONCEPT_REVISIT);
 			Obs obsr = new Obs();

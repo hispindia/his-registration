@@ -105,7 +105,6 @@
 		jQuery("#exemptionField3").hide();
 		jQuery("#exemptionField4").hide();
 		jQuery("#nhifCardIdField").hide();
-		jQuery("#mlcOtherVal").hide();
 		jQuery("#genderField").hide();
 		jQuery("#ageField").hide();
 
@@ -173,9 +172,9 @@
 			VALIDATORS.categoryCheck();
 		});
 
-		jQuery("#mlcCat").change(function() {
+	/*	jQuery("#mlcCat").change(function() {
 			VALIDATORS.tempCatCheck();
-		});
+		});*/
 		
 		// Set data for reprint page
 		if(MODEL.reprint=="true"){
@@ -390,7 +389,47 @@
 				}
 			};
 
-		
+			if(jQuery("#patientCategory").val()=="Child Less Than 5 yr"){
+				if(jQuery("#exemptionNumber1").val().length <= 0){
+					alert("Please fill Exemption number");
+					return false;
+				}
+			};
+
+			if(jQuery("#patientCategory").val()=="CCC"){
+				if(jQuery("#exemptionNumber2").val().length <= 0){
+					alert("Please fill Exemption number");
+					return false;
+				}
+			};
+
+			if(jQuery("#patientCategory").val()=="Expectant Mother"){
+				if(jQuery("#exemptionNumber3").val().length <= 0){
+					alert("Please fill Exemption number");
+					return false;
+				}
+			};
+
+			if(jQuery("#patientCategory").val()=="Waver"){
+				if(jQuery("#waiverNumber").val().length <= 0){
+					alert("Please fill Waver number");
+					return false;
+				}
+			};
+			
+			if(jQuery("#patientCategory").val()=="NHIF"){
+				if(jQuery("#exemptionNumber4").val().length <= 0 || jQuery("#nhifCardIdNumber").val().length <= 0){
+					alert("Please fill Both Exemption and NHIF Card number");
+					return false;
+				}
+			};
+			
+			if(jQuery("#patientCategory").val()=="Patient Category"){
+				alert("Please Select Patient Category");
+				return false;
+			};
+
+
 			return true;
 		}
 	};
@@ -519,18 +558,6 @@
 		},
 
 	
-		tempCatCheck : function () {
-			if(jQuery("#mlcCat").val() == "OPD TRIAGE" ){
-				//alert("hihi12");
-				jQuery("#mlcOtherVal").show();
-			}
-			else {
-				jQuery("#mlcOtherVal").hide();
-				jQuery("#mlcOtherVal").val("");
-				}
-		},
-	
-		
 		freeRegCheck : function() {
 			if (jQuery("#freeReg").is(':checked')) {
 				jQuery("#freeRegField").show();
@@ -629,7 +656,7 @@ jQuery("#message").hide();
 										<option value="General">General</option>
 										<option value="Child Less Than 5 yr">Child less than 5 year old</option>
 										<option value="CCC">Comprehensive Care Clinic Patient</option>
-										<option value="Expectant Mother">Expectant Mothers</option>
+										<option value="Expectant Mother">Expectant Mother</option>
 										<option value="Waver">Waiver</option>
 										<option value="NHIF">NHIF Card Holder</option>
 					</select></td>	
@@ -732,10 +759,7 @@ jQuery("#message").hide();
 					<td colspan="1" valign="top"><b>Temporary
 								Categories:</b></td>
 					<td colspan="5"><select id="mlcCat" name="patient.temporary"></td>			
-					<td>
-							<span><input id="mlcOtherVal" name="mlcOtherVal" />
-							</span>
-					</td>		
+		
 				</tr>
 				<!-- ghanshyam  20-may-2013 #1648 capture Health ID and Registration Fee Type 
 				<tr id="regFee">
