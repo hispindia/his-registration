@@ -1183,7 +1183,7 @@ td.bottom {
 						<td>Contact Number</td>
 						<td><input id="relativePhoneNumber"
 							name="person.attribute.29" style="width: 250px;" /></td>
-						</select></td>
+						</td>
 					</tr>
 					<tr>
 						<td>Email Address</td>

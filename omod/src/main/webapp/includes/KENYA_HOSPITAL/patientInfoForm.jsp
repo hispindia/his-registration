@@ -112,27 +112,33 @@
 		//ghanshyam,11-dec-2013,#3327 Defining patient categories based on Kenyan requirements
 		if(!StringUtils.isBlank(MODEL.selectedCategory)){			
 			jQuery("#patientCategory").val(MODEL.selectedCategory);
-			jQuery("#patientCategory").attr("disabled", "disabled");
+			jQuery("#patientCategory").hide();
+			jQuery("#patientCategory").after("<span>" + jQuery("#patientCategory option:checked").html() +  "</span>"); 
 			
 			if(jQuery("#patientCategory").val() == "General"){
 						jQuery("#regFeeValue").val(${regFee});
-						//jQuery("#regFeeValue").attr("disabled", "disabled");
+						jQuery("#regFeeValue").hide();
+						jQuery("#regFeeValue").after("<span>" + jQuery("#regFeeValue option:checked").html() +  "</span>");  
 				}
 			if(jQuery("#patientCategory").val() == "Child Less Than 5 yr"){
 						jQuery("#regFeeValue").val(0);
-						//jQuery("#regFeeValue").attr("disabled", "disabled");
+						jQuery("#regFeeValue").hide();
+						jQuery("#regFeeValue").after("<span>" + jQuery("#regFeeValue option:checked").html() +  "</span>"); 
 				}
 			if(jQuery("#patientCategory").val() == "CCC"){
 						jQuery("#regFeeValue").val(0);
-						//jQuery("#regFeeValue").attr("disabled", "disabled");
+						jQuery("#regFeeValue").hide();
+						jQuery("#regFeeValue").after("<span>" + jQuery("#regFeeValue option:checked").html() +  "</span>"); 
 				}
 			if(jQuery("#patientCategory").val() == "Expectant Mother"){
 						jQuery("#regFeeValue").val(0);
-						//jQuery("#regFeeValue").attr("disabled", "disabled");
+						jQuery("#regFeeValue").hide();
+						jQuery("#regFeeValue").after("<span>" + jQuery("#regFeeValue option:checked").html() +  "</span>"); 
 				}
 			if(jQuery("#patientCategory").val() == "NHIF"){
 						jQuery("#regFeeValue").val(0);
-						//jQuery("#regFeeValue").attr("disabled", "disabled");
+						jQuery("#regFeeValue").hide();
+						jQuery("#regFeeValue").after("<span>" + jQuery("#regFeeValue option:checked").html() +  "</span>"); 
 				}
 			}
 		//ghanshyam,18-dec-2013,# 3457 Exemption number for selected category should show on registration receipt
@@ -187,45 +193,6 @@
 			jQuery("#mlcCat").val(MODEL.observations[tempCategoryId]);
 			jQuery("#mlcCat").attr("disabled", "disabled");
 			}
-			
-		    jQuery("#regFeeValue").val(MODEL.registrationFee);
-		    jQuery("#regFeeValue").attr("disabled", "disabled");
-		    
-		    if(!StringUtils.isBlank(MODEL.selectedCategory)){			
-			jQuery("#patientCategory").val(MODEL.selectedCategory);
-			jQuery("#patientCategory").show();
-			jQuery("#patientCategory").attr("disabled", "disabled");
-		    }
-		    if(!StringUtils.isBlank(MODEL.categoryValue1)){			
-			jQuery("#exemptionNumber1").val(MODEL.categoryValue1);
-			jQuery("#exemptionField1").show();
-			jQuery("#exemptionNumber1").attr("disabled", "disabled");
-		    }
-		    if(!StringUtils.isBlank(MODEL.categoryValue2)){			
-			jQuery("#waiverNumber").val(MODEL.categoryValue2);
-			jQuery("#waiverField").show();
-			jQuery("#waiverNumber").attr("disabled", "disabled");
-		    }
-		    if(!StringUtils.isBlank(MODEL.categoryValue3)){			
-			jQuery("#nhifCardIdNumber").val(MODEL.categoryValue3);
-			jQuery("#nhifCardIdField").show();
-			jQuery("#nhifCardIdNumber").attr("disabled", "disabled");
-		    }
-		    if(!StringUtils.isBlank(MODEL.categoryValue4)){			
-			jQuery("#exemptionNumber2").val(MODEL.categoryValue4);
-			jQuery("#exemptionField2").show();
-			jQuery("#exemptionNumber2").attr("disabled", "disabled");
-		    }
-		    if(!StringUtils.isBlank(MODEL.categoryValue5)){			
-			jQuery("#exemptionNumber3").val(MODEL.categoryValue5);
-			jQuery("#exemptionField3").show();
-			jQuery("exemptionNumber3").attr("disabled", "disabled");
-		    }
-		    if(!StringUtils.isBlank(MODEL.categoryValue6)){			
-			jQuery("#exemptionNumber4").val(MODEL.categoryValue6);
-			jQuery("#exemptionField4").show();
-			jQuery("#exemptionNumber4").attr("disabled", "disabled");
-		    }
 		    
 			jQuery("#printSlip").hide();
 			jQuery("#save").hide();

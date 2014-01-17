@@ -53,9 +53,11 @@ import org.openmrs.module.hospitalcore.HospitalCoreService;
 import org.openmrs.module.hospitalcore.model.DmsOpdUnit;
 import org.openmrs.module.hospitalcore.util.GlobalPropertyUtil;
 import org.openmrs.module.hospitalcore.util.HospitalCoreConstants;
+import org.openmrs.module.hospitalcore.util.HospitalCoreUtils;
 import org.openmrs.module.hospitalcore.util.ObsUtils;
 import org.openmrs.module.hospitalcore.util.OrderUtil;
 import org.openmrs.module.registration.RegistrationService;
+import org.openmrs.module.registration.includable.validator.attribute.PatientAttributeValidatorService;
 import org.openmrs.module.registration.model.RegistrationFee;
 import org.openmrs.module.registration.util.RegistrationConstants;
 import org.openmrs.module.registration.util.RegistrationUtils;
@@ -297,6 +299,19 @@ public class ShowPatientInfoController {
 						
 		}
 		
+		try {
+			// update patient
+			Patient updatedPatient = generatePatient(patient, parameters);
+			patient = Context.getPatientService().savePatient(updatedPatient);
+			
+			// update patient attribute
+			updatedPatient = setAttributes(patient, parameters);
+			patient = Context.getPatientService().savePatient(updatedPatient);
+			RegistrationUtils.savePatientSearch(patient);
+		}
+		catch (Exception e) {
+		}
+		
 		// create temporary attributes
 		/*
 		for (String name : parameters.keySet()) {
@@ -344,6 +359,32 @@ public class ShowPatientInfoController {
 		response.setContentType("text/html;charset=UTF-8");
 		PrintWriter out = response.getWriter();
 		out.print("success");
+	}
+	
+private Patient generatePatient(Patient patient, Map<String, String> parameters) throws ParseException {	
+		return patient;
+	}
+	
+	private Patient setAttributes(Patient patient, Map<String, String> attributes) throws Exception {
+		PatientAttributeValidatorService validator = new PatientAttributeValidatorService();
+		Map<String, Object> parameters = HospitalCoreUtils.buildParameters("patient", patient, "attributes", attributes);
+		String validateResult = validator.validate(parameters);
+		logger.info("Attirubte validation: " + validateResult);
+		if (StringUtils.isBlank(validateResult)) {
+			for (String name : attributes.keySet()) {
+				if ((name.contains(".attribute.")) && (!StringUtils.isBlank(attributes.get(name)))) {
+					String[] parts = name.split("\\.");
+					String idText = parts[parts.length - 1];
+					Integer id = Integer.parseInt(idText);
+					PersonAttribute attribute = RegistrationUtils.getPersonAttribute(id, attributes.get(name));
+					patient.addAttribute(attribute);
+				}
+			}
+		} else {
+			throw new Exception(validateResult);
+		}
+		
+		return patient;
 	}
 	
 }
