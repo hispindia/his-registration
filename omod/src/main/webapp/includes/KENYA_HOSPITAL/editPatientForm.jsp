@@ -83,7 +83,8 @@ td.bottom {
 					jQuery("#patientRegistrationForm").fillForm(
 							"person.attribute.14==" + value + "||");
 				});				
-								
+					
+					
 				if (!StringUtils.isBlank(MODEL.patientAttributes[16])) {
 					formValues += "person.attribute.16=="
 							+ MODEL.patientAttributes[16] + "||";
@@ -408,7 +409,9 @@ td.bottom {
 			}
 			else {
 				value = jQuery("#patientName").val();
-				value = value.toUpperCase();
+				value1 = value.replace(".","");
+				
+				value = value1.toUpperCase();
 				pattern = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 -";
 				for (i = 0; i < value.length; i++) {
 					if (pattern.indexOf(value[i]) < 0) {
@@ -1183,7 +1186,7 @@ td.bottom {
 						<td>Contact Number</td>
 						<td><input id="relativePhoneNumber"
 							name="person.attribute.29" style="width: 250px;" /></td>
-						</td>
+						</select></td>
 					</tr>
 					<tr>
 						<td>Email Address</td>
