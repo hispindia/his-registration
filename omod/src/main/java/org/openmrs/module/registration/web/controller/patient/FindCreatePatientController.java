@@ -68,10 +68,16 @@ public class FindCreatePatientController {
 		RegistrationWebUtils.getAddressData(model);
 		//model.addAttribute("OPDs", RegistrationWebUtils.getSubConcepts(RegistrationConstants.CONCEPT_NAME_OPD_WARD));
 		//ghanshyam,16-dec-2013,3438 Remove the interdependency
-		model.addAttribute("TRIAGE", RegistrationWebUtils.getSubConcepts(RegistrationConstants.CONCEPT_NAME_TRIAGE));
 		model.addAttribute("TEMPORARYCAT", RegistrationWebUtils.getSubConcepts(RegistrationConstants.CONCEPT_NAME_TEMPORARY_CATEGORY));
-		
-		return "/module/registration/patient/findCreatePatient";
+		String triageEnabled = Context.getAdministrationService().getGlobalProperty("registration.triageEnabled");
+		if(triageEnabled.equalsIgnoreCase("true")){
+			model.addAttribute("TRIAGE", RegistrationWebUtils.getSubConcepts(RegistrationConstants.CONCEPT_NAME_TRIAGE));
+			return "/module/registration/patient/findCreatePatientForTriage";
+		}
+		else{
+			model.addAttribute("TRIAGE", RegistrationWebUtils.getSubConcepts(RegistrationConstants.CONCEPT_NAME_OPD_WARD));
+			return "/module/registration/patient/findCreatePatientForOPD";
+		}
 		
 	}
 	
@@ -213,16 +219,32 @@ public class FindCreatePatientController {
 		 * ADD OPD ROOM
 		 */
 		//ghanshyam,16-dec-2013,3438 Remove the interdependency
-		Concept triageConcept = Context.getConceptService().getConcept(RegistrationConstants.CONCEPT_NAME_TRIAGE);
+		String triageEnabled = Context.getAdministrationService().getGlobalProperty("registration.triageEnabled");
+		if(triageEnabled.equalsIgnoreCase("true")){
+			Concept triageConcept = Context.getConceptService().getConcept(RegistrationConstants.CONCEPT_NAME_TRIAGE);
 
-		Concept selectedTRIAGEConcept = Context.getConceptService().getConcept(
-		    parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_TRIAGE));
-		Obs triageObs = new Obs();
-		triageObs.setConcept(triageConcept);
-		triageObs.setValueCoded(selectedTRIAGEConcept);
-		encounter.addObs(triageObs);
+			Concept selectedTRIAGEConcept = Context.getConceptService().getConcept(
+			    parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_TRIAGE));
+			Obs triageObs = new Obs();
+			triageObs.setConcept(triageConcept);
+			triageObs.setValueCoded(selectedTRIAGEConcept);
+			encounter.addObs(triageObs);
+			
+			RegistrationWebUtils.sendPatientToTriageQueue(patient, selectedTRIAGEConcept, false);
+		}
+		else{
+			Concept opdConcept = Context.getConceptService().getConcept(RegistrationConstants.CONCEPT_NAME_OPD_WARD);
+
+			Concept selectedOPDConcept = Context.getConceptService().getConcept(
+			    parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_OPD_WARD));
+			Obs opdObs = new Obs();
+			opdObs.setConcept(opdConcept);
+			opdObs.setValueCoded(selectedOPDConcept);
+			encounter.addObs(opdObs);
+			
+			RegistrationWebUtils.sendPatientToOPDQueue(patient, selectedOPDConcept, false);
+		}
 		
-		RegistrationWebUtils.sendPatientToOPDQueue(patient, selectedTRIAGEConcept, false);
 		
 
 		Concept tempCatConcept = Context.getConceptService().getConcept(RegistrationConstants.CONCEPT_NAME_TEMPORARY_CATEGORY);

@@ -24,7 +24,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -39,23 +38,16 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openmrs.Concept;
-import org.openmrs.ConceptName;
 import org.openmrs.Encounter;
 import org.openmrs.Obs;
-import org.openmrs.Order;
-import org.openmrs.OrderType;
 import org.openmrs.Patient;
 import org.openmrs.PersonAttribute;
 import org.openmrs.PersonAttributeType;
 import org.openmrs.api.context.Context;
-import org.openmrs.module.hospitalcore.DmsCommonService;
 import org.openmrs.module.hospitalcore.HospitalCoreService;
-import org.openmrs.module.hospitalcore.model.DmsOpdUnit;
 import org.openmrs.module.hospitalcore.util.GlobalPropertyUtil;
-import org.openmrs.module.hospitalcore.util.HospitalCoreConstants;
 import org.openmrs.module.hospitalcore.util.HospitalCoreUtils;
 import org.openmrs.module.hospitalcore.util.ObsUtils;
-import org.openmrs.module.hospitalcore.util.OrderUtil;
 import org.openmrs.module.registration.RegistrationService;
 import org.openmrs.module.registration.includable.validator.attribute.PatientAttributeValidatorService;
 import org.openmrs.module.registration.model.RegistrationFee;
@@ -87,7 +79,6 @@ public class ShowPatientInfoController {
 		PatientModel patientModel = new PatientModel(patient);
 		model.addAttribute("patient", patientModel);
 		//ghanshyam,16-dec-2013,3438 Remove the interdependency
-		model.addAttribute("TRIAGE", RegistrationWebUtils.getSubConcepts(RegistrationConstants.CONCEPT_NAME_TRIAGE));
 		model.addAttribute("TEMPORARYCAT", RegistrationWebUtils.getSubConcepts(RegistrationConstants.CONCEPT_NAME_TEMPORARY_CATEGORY));
 		// Get current date
 		SimpleDateFormat sdf = new SimpleDateFormat("EEE dd/MM/yyyy kk:mm");
@@ -218,7 +209,15 @@ public class ShowPatientInfoController {
 		model.addAttribute("regFeeReasonConId",conforregfreereasonid);
 		model.addAttribute("regFee", GlobalPropertyUtil.getString(RegistrationConstants.PROPERTY_INITIAL_REGISTRATION_FEE, ""));
 		model.addAttribute("reVisitFee", GlobalPropertyUtil.getString(RegistrationConstants.PROPERTY_REVISIT_REGISTRATION_FEE, ""));
-		return "/module/registration/patient/showPatientInfo";
+		String triageEnabled = Context.getAdministrationService().getGlobalProperty("registration.triageEnabled");
+		if(triageEnabled.equalsIgnoreCase("true")){
+			model.addAttribute("TRIAGE", RegistrationWebUtils.getSubConcepts(RegistrationConstants.CONCEPT_NAME_TRIAGE));
+			return "/module/registration/patient/showPatientInfoForTriage";
+		}
+		else{
+			model.addAttribute("TRIAGE", RegistrationWebUtils.getSubConcepts(RegistrationConstants.CONCEPT_NAME_OPD_WARD));
+			return "/module/registration/patient/showPatientInfoForOPD";
+		}
 	}
 	
 	/**
@@ -262,16 +261,31 @@ public class ShowPatientInfoController {
 			
 			// create TRIAGE obs
 			//ghanshyam,16-dec-2013,3438 Remove the interdependency
-			Concept triageConcept = Context.getConceptService().getConcept(RegistrationConstants.CONCEPT_NAME_TRIAGE);
-			Concept selectedTRIAGEConcept = Context.getConceptService().getConcept(
-			    Integer.parseInt(parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_TRIAGE)));
-			Obs opd = new Obs();
-			opd.setConcept(triageConcept);
-			opd.setValueCoded(selectedTRIAGEConcept);
-			encounter.addObs(opd);
-			
-			// send patient to opd room
-			RegistrationWebUtils.sendPatientToOPDQueue(patient, selectedTRIAGEConcept, true);
+			String triageEnabled = Context.getAdministrationService().getGlobalProperty("registration.triageEnabled");
+			if(triageEnabled.equalsIgnoreCase("true")){
+				Concept triageConcept = Context.getConceptService().getConcept(RegistrationConstants.CONCEPT_NAME_TRIAGE);
+				Concept selectedTRIAGEConcept = Context.getConceptService().getConcept(
+				    Integer.parseInt(parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_TRIAGE)));
+				Obs triage = new Obs();
+				triage.setConcept(triageConcept);
+				triage.setValueCoded(selectedTRIAGEConcept);
+				encounter.addObs(triage);
+				
+				// send patient to triage room
+				RegistrationWebUtils.sendPatientToTriageQueue(patient, selectedTRIAGEConcept, true);
+			}
+			else{
+				Concept opdConcept = Context.getConceptService().getConcept(RegistrationConstants.CONCEPT_NAME_OPD_WARD);
+				Concept selectedOPDConcept = Context.getConceptService().getConcept(
+				    Integer.parseInt(parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_OPD_WARD)));
+				Obs opd = new Obs();
+				opd.setConcept(opdConcept);
+				opd.setValueCoded(selectedOPDConcept);
+				encounter.addObs(opd);
+				
+				// send patient to opd room
+				RegistrationWebUtils.sendPatientToOPDQueue(patient, selectedOPDConcept, true);
+			}
 			
 			Concept tempCatConcept = Context.getConceptService().getConcept(RegistrationConstants.CONCEPT_NAME_TEMPORARY_CATEGORY);
 			

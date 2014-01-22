@@ -47,6 +47,7 @@ import org.openmrs.Patient;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.hospitalcore.PatientQueueService;
 import org.openmrs.module.hospitalcore.model.OpdPatientQueue;
+import org.openmrs.module.hospitalcore.model.TriagePatientQueue;
 import org.openmrs.module.hospitalcore.util.GlobalPropertyUtil;
 import org.openmrs.module.registration.util.RegistrationConstants;
 import org.openmrs.util.OpenmrsUtil;
@@ -106,6 +107,7 @@ public class RegistrationWebUtils {
 		    patient.getPatientIdentifier().getIdentifier(), selectedOPDConcept.getConceptId());
 		if (queue == null) {
 			queue = new OpdPatientQueue();
+			queue.setUser(Context.getAuthenticatedUser());
 			queue.setPatient(patient);
 			queue.setCreatedOn(new Date());
 			queue.setBirthDate(patient.getBirthdate());
@@ -118,6 +120,36 @@ public class RegistrationWebUtils {
 			queue.setSex(patient.getGender());
 			PatientQueueService queueService = Context.getService(PatientQueueService.class);
 			queueService.saveOpdPatientQueue(queue);
+			
+		}
+		
+	}
+	
+	public static void sendPatientToTriageQueue(Patient patient, Concept selectedTriageConcept, boolean revisit) {
+		Concept referralConcept = null;
+		if (!revisit) {
+			referralConcept = Context.getConceptService().getConcept("New Patient");
+		} else {
+			referralConcept = Context.getConceptService().getConcept("Revisit");
+		}
+		
+		TriagePatientQueue queue = Context.getService(PatientQueueService.class).getTriagePatientQueue(
+		    patient.getPatientIdentifier().getIdentifier(), selectedTriageConcept.getConceptId());
+		if (queue == null) {
+			queue = new TriagePatientQueue();
+			queue.setUser(Context.getAuthenticatedUser());
+			queue.setPatient(patient);
+			queue.setCreatedOn(new Date());
+			queue.setBirthDate(patient.getBirthdate());
+			queue.setPatientIdentifier(patient.getPatientIdentifier().getIdentifier());
+			queue.setTriageConcept(selectedTriageConcept);
+			queue.setTriageConceptName(selectedTriageConcept.getName().getName());
+			queue.setPatientName(patient.getGivenName() + " " + patient.getMiddleName() + " " + patient.getFamilyName());
+			queue.setReferralConcept(referralConcept);
+			queue.setReferralConceptName(referralConcept.getName().getName());
+			queue.setSex(patient.getGender());
+			PatientQueueService queueService = Context.getService(PatientQueueService.class);
+			queueService.saveTriagePatientQueue(queue);
 			
 		}
 		
