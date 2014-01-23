@@ -47,7 +47,7 @@
 		patientAttributes: _attributes,
 		observations: _observations,
 		currentDateTime: "${currentDateTime}",	
-		selectedTRIAGE: "${selectedTRIAGE}",
+		selectedOPD: "${selectedOPD}",
 		TRIAGE: "${TRIAGE}",
 		TEMPORARYCAT: "${TEMPORARYCAT}",
 		tempCategory:"${tempCategory}",

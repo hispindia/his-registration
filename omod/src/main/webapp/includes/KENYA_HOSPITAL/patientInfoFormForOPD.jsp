@@ -83,8 +83,8 @@
 		});
 		
 		// Set the selected OPD
-		if(!StringUtils.isBlank(MODEL.selectedTRIAGE)){			
-			jQuery("#triage").val(MODEL.selectedTRIAGE);
+		if(!StringUtils.isBlank(MODEL.selectedOPD)){			
+			jQuery("#triage").val(MODEL.selectedOPD);
 			jQuery("#triage").attr("disabled", "disabled");
 		}
 		

@@ -134,6 +134,10 @@ public class ShowPatientInfoController {
 				if (obs.getConcept().getName().getName().equalsIgnoreCase(RegistrationConstants.CONCEPT_NAME_TRIAGE)) {
 					model.addAttribute("selectedTRIAGE", obs.getValueCoded().getConceptId());
 				}
+				if (obs.getConcept().getName().getName().equalsIgnoreCase(RegistrationConstants.CONCEPT_NAME_OPD_WARD)) {
+					model.addAttribute("selectedOPD", obs.getValueCoded().getConceptId());
+				}
+
 				if (obs.getConcept().getName().getName().equalsIgnoreCase(RegistrationConstants.CONCEPT_NAME_TEMPORARY_CATEGORY)) {
 					model.addAttribute("tempCategory", obs.getValueCoded().getConceptId());
 				}
