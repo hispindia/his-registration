@@ -114,7 +114,15 @@ public class RegistrationWebUtils {
 			queue.setPatientIdentifier(patient.getPatientIdentifier().getIdentifier());
 			queue.setOpdConcept(selectedOPDConcept);
 			queue.setOpdConceptName(selectedOPDConcept.getName().getName());
-			queue.setPatientName(patient.getGivenName() + " " + patient.getMiddleName() + " " + patient.getFamilyName());
+		
+			if( patient.getMiddleName() !=null){
+				queue.setPatientName(patient.getGivenName() + " " + patient.getMiddleName() + " " + patient.getFamilyName());
+				}
+				else{
+					queue.setPatientName(patient.getGivenName() + " " + patient.getFamilyName());
+				}
+					
+			
 			queue.setReferralConcept(referralConcept);
 			queue.setReferralConceptName(referralConcept.getName().getName());
 			queue.setSex(patient.getGender());
@@ -144,7 +152,12 @@ public class RegistrationWebUtils {
 			queue.setPatientIdentifier(patient.getPatientIdentifier().getIdentifier());
 			queue.setTriageConcept(selectedTriageConcept);
 			queue.setTriageConceptName(selectedTriageConcept.getName().getName());
+			if( patient.getMiddleName() !=null){
 			queue.setPatientName(patient.getGivenName() + " " + patient.getMiddleName() + " " + patient.getFamilyName());
+			}
+			else{
+				queue.setPatientName(patient.getGivenName() + " " + patient.getFamilyName());
+			}
 			queue.setReferralConcept(referralConcept);
 			queue.setReferralConceptName(referralConcept.getName().getName());
 			queue.setSex(patient.getGender());
