@@ -55,6 +55,8 @@ public class RegistrationConstants {
 	// field names
 	public static final String FORM_FIELD_PATIENT_NAME = "patient.name";
 	
+	public static final String FORM_FIELD_PATIENT_CATEGORY = "person.attribute.14";
+	
 	public static final String FORM_FIELD_PATIENT_IDENTIFIER = "patient.identifier";
 	
 	public static final String FORM_FIELD_PATIENT_BIRTHDATE = "patient.birthdate";
