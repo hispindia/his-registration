@@ -259,6 +259,7 @@ public class ShowPatientInfoController {
 				obsn.setConcept(cnrf);
 				obsn.setValueCoded(cnp);
 				obsn.setValueNumeric(regFeeValue);
+				obsn.setValueText(parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_CATEGORY));
 				encounter.addObs(obsn);	
 		} else {
 			encounter = RegistrationWebUtils.createEncounter(patient, true);
@@ -313,6 +314,7 @@ public class ShowPatientInfoController {
 			obsr.setConcept(cnrffr);
 			obsr.setValueCoded(cr);
 			obsr.setValueNumeric(regFeeValue);
+			obsr.setValueText(parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_CATEGORY));
 			encounter.addObs(obsr);	
 						
 		}
