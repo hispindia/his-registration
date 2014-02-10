@@ -404,8 +404,19 @@ td.bottom {
 		validateRegisterForm : function() {
 
 			if (StringUtils.isBlank(jQuery("#patientName").val())) {
-				alert("Please enter patient name");
+				alert("Please enter both patient's first name and surname");
 				return false;
+			}
+			if(!StringUtils.isBlank(jQuery("#patientName").val())){
+				var y=jQuery("#patientName").val();
+				var r = 0;
+				a=y.replace(/\s/g,' ');
+				a=a.split(' ');
+				for (z=0; z<a.length; z++) {if (a[z].length > 0) r++;}
+				if(r<2){
+				alert("Please enter both patient's first name and surname");
+				return false;
+				}
 			}
 			else {
 				value = jQuery("#patientName").val();
@@ -931,15 +942,18 @@ td.bottom {
 <div id="patientSearchResult"></div>
 <form id="patientRegistrationForm" method="POST">
 	<table cellspacing="0">
+		<tr><td></td>
+			<td><i>First name & Surname</i></td>
+		</tr>
 		<tr>
-			<td valign="top" class="cell"><b>Patient Surname *</b></td>
-			<td class="cell"><input id="patientName" name="patient.name" style="width: 300px;"/>
-			<td class="cell"><b>ID Number * &nbsp;&nbsp; <input readonly
+			<td valign="top"><b>Patient Surname *</b></td>
+			<td><input id="patientName" name="patient.name" style="width: 300px;"/>
+			<td><b>ID Number * &nbsp;&nbsp; <input readonly
 					name="patient.identifier" style="border: none; width: 250px;" /> </b>
 			</td>
 
 		</tr>
-		
+	<!--	
 		<tr>
 			<td valign="top" class="cell"><b>Other Name *</b></td>
 			<td class="cell"><input id="patientOtherName" name="patient.attribute.25"  style="width: 300px;"/>
@@ -947,7 +961,7 @@ td.bottom {
 			<td><span style="color: red;" id="nationalIdValidationMessage"> </span>
 			</td>
 			</td>	
-		</tr>
+		</tr>-->
 		<tr id="healthIdField">
 						<td><b>Health ID:</b></td>
 						<td><input id="patientHealthId" name="patient.attribute.24" />

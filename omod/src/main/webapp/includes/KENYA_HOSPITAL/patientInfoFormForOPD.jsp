@@ -66,8 +66,8 @@
 		jQuery("#othername").html(MODEL.patientAttributes[25]);
 		jQuery("#gender").html(MODEL.patientGender);
 		jQuery("#datetime").html(MODEL.currentDateTime);
-		jQuery("#othername1").html(MODEL.patientAttributes[25]+" "+MODEL.patientName);
-		
+//		jQuery("#othername1").html(MODEL.patientAttributes[25]+" "+MODEL.patientName);
+		jQuery("#othername1").html(MODEL.patientName);
 		MODEL.TRIAGE = " ,Please Select OPD to Visit|" + MODEL.TRIAGE;
 		PAGE.fillOptions("#triage", {
 			data:MODEL.TRIAGE,

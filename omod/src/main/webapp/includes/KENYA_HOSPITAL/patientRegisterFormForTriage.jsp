@@ -346,9 +346,20 @@ td.border {
 		validateRegisterForm : function() {
 
 			if (StringUtils.isBlank(jQuery("#patientName").val())) {
-				alert("Please enter patient name");
+				alert("Please enter both patient's first name and surname");
 				return false;
-			} 
+			}
+			if(!StringUtils.isBlank(jQuery("#patientName").val())){
+				var y=jQuery("#patientName").val();
+				var r = 0;
+				a=y.replace(/\s/g,' ');
+				a=a.split(' ');
+				for (z=0; z<a.length; z++) {if (a[z].length > 0) r++;}
+				if(r<2){
+				alert("Please enter both patient's first name and surname");
+				return false;
+				}
+			}
 			else {
 				value = jQuery("#patientName").val();
 				value = value.toUpperCase();
@@ -413,12 +424,12 @@ td.border {
 				return false;
 			}		
 
-			
+	/*		
 			if (StringUtils.isBlank(jQuery("#patientOtherName").val())) {
 				alert("Please select patients other name");
 				return false;
 			} 
-
+	*/
 			
 			if (StringUtils.isBlank(jQuery("#triage").val())) {
 				alert("Please select Triage");
@@ -914,10 +925,13 @@ td.border {
 <div id="patientSearchResult"></div>
 <form id="patientRegistrationForm" method="POST">
 	<table cellspacing="0">
-		<tr class="cell">
 		<tr>
-			<td valign="top" class="cell"><b>Patient Surname *</b></td>
-			<td ><input id="patientName" type="hidden"
+		<td></td>
+		<td><i>First name & Surname</i></td>
+		</tr>
+		<tr class="cell">
+			<td valign="top"><b>&nbsp;&nbsp; Patient name *</b></td>
+			<td style="border-left: 1px;" style="cell"><input id="patientName" type="hidden"
 				name="patient.name" />
 				<div id="searchbox"></div>
 				<div id="numberOfFoundPatients"></div></td>
@@ -926,7 +940,7 @@ td.border {
 			</td>
 
 		</tr>
-		
+		<!--
 		<tr>
 			<td valign="top" ><b>&nbsp;&nbsp; &nbsp; Other Name *</b></td>
 			<td ><input id="patientOtherName" name="patient.attribute.25" style="width: 300px;" />
@@ -935,7 +949,7 @@ td.border {
 			</td>
 			</td>	
 		</tr>
-		
+		-->
 		<tr id="healthIdField">
 			<td><b>Health ID:</b></td>
 			<td><input id="patientHealthId" name="patient.attribute.24" />
@@ -949,7 +963,7 @@ td.border {
 		
 		<tr>
 			<td class="cell"><b>Demographics *</b></td>
-			<td class="cell">dd/mm/yyyy<br />
+			<td class="cell"><i>dd/mm/yyyy</i><br />
 				<table>
 					<tr>
 						<td>Age Or Date of Birth</td>
