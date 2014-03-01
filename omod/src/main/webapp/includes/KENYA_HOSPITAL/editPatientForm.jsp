@@ -953,15 +953,17 @@ td.bottom {
 			</td>
 
 		</tr>
-	<!--	
+		
 		<tr>
-			<td valign="top" class="cell"><b>Other Name *</b></td>
-			<td class="cell"><input id="patientOtherName" name="patient.attribute.25"  style="width: 300px;"/>
-			<td><b>&nbsp;&nbsp; &nbsp;  National ID:</b><input id="patientNationalId" name="patient.attribute.20" />
+	<!--		<td valign="top" class="cell"><b>Other Name *</b></td>
+			<td class="cell"><input id="patientOtherName" name="patient.attribute.25"  style="width: 300px;"/>-->
+			<td></td>
+			<td></td>
+			<td><b> National ID:</b><input id="patientNationalId" name="patient.attribute.20" />
 			<td><span style="color: red;" id="nationalIdValidationMessage"> </span>
 			</td>
 			</td>	
-		</tr>-->
+		</tr>
 		<tr id="healthIdField">
 						<td><b>Health ID:</b></td>
 						<td><input id="patientHealthId" name="patient.attribute.24" />

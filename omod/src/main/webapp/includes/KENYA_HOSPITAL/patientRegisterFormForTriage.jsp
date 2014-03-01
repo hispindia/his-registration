@@ -940,16 +940,18 @@ td.border {
 			</td>
 
 		</tr>
-		<!--
+		
 		<tr>
-			<td valign="top" ><b>&nbsp;&nbsp; &nbsp; Other Name *</b></td>
-			<td ><input id="patientOtherName" name="patient.attribute.25" style="width: 300px;" />
+		<!--	<td valign="top" ><b>&nbsp;&nbsp; &nbsp; Other Name *</b></td>
+			<td ><input id="patientOtherName" name="patient.attribute.25" style="width: 300px;" />-->
+			<td></td>
+			<td></td>
 			<td><b>&nbsp;National ID:</b><input id="patientNationalId" name="patient.attribute.20" />
 			<td><span style="color: red;" id="nationalIdValidationMessage"> </span>
 			</td>
 			</td>	
 		</tr>
-		-->
+		
 		<tr id="healthIdField">
 			<td><b>Health ID:</b></td>
 			<td><input id="patientHealthId" name="patient.attribute.24" />
