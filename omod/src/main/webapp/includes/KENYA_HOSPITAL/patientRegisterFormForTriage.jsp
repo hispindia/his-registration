@@ -197,8 +197,10 @@ td.border {
 		 //ghanshya,3-july-2013 #1962 Create validation for length of Health ID and National ID
 		//Add Validation for checking duplicate National Id and Health Id
 		checkHealthNationalID : function() {
+				
 		        healthId=jQuery("#patientHealthId").val();
 				nationalId=jQuery("#patientNationalId").val();
+				
 				jQuery.ajax({
 				type : "GET",
 				url : getContextPath() + "/module/registration/validatenationalidandhealthidreg.form",
@@ -554,17 +556,17 @@ td.border {
 					hd=jQuery("#hId").val();
 					nId=jQuery("#nId").val();
 					hId=jQuery("#hId").val();
-				
-					if(typeof nId!="undefined" || typeof hId!="undefined"){
-					if(nId=="1" && hId=="1"){
+					
+					if(typeof nId!="undefined"){
+					/*if(nId=="1" && hId=="1"){
 					//document.getElementById("nationalIdValidationMessage").innerHTML="Patient already registered with this National id";
 					//document.getElementById("healthIdValidationMessage").innerHTML="Patient already registered with this Health id";
                     //jQuery("#nationalIdValidationMessage").show();
                     //jQuery("#healthIdValidationMessage").show();
 		            alert("Patient already registered with this National id and Health id");
 					return false
-		            }
-		            else if(nId=="1"){
+		            }*/
+		            if(nId=="1"){
                     //document.getElementById("nationalIdValidationMessage").innerHTML="Patient already registered with this National id";
                     //jQuery("#nationalIdValidationMessage").show();
                     //jQuery("#healthIdValidationMessage").hide();
@@ -578,11 +580,11 @@ td.border {
 		             alert("Patient already registered with this Health id");	
 					 return false;
 		            }*/
-		            }/*
+		            }
 		            else{
 		            alert("please try again");
 		            return false;
-		            }*/
+		            }
 			
 			
 			return true;
@@ -962,6 +964,7 @@ td.border {
 			</td>
 		</tr>
 		
+		<div id="validationMessage"></div>
 		
 		<tr>
 			<td class="cell"><b>Demographics *</b></td>
