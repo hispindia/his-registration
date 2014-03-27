@@ -1048,7 +1048,7 @@ td.bottom {
 						
 						<tr>
 							<td><input id="patCatFree" type="checkbox"
-								name="person.attribute.14" value="Waver" /> Waiver Case</td>
+								name="person.attribute.14" value="Waiver" /> Waiver Case</td>
 								<td><span id="waverField">Waiver Number&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input
 									id="waverNumber" name="person.attribute.32" />
 							</span>

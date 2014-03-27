@@ -417,7 +417,7 @@
 				}
 			};
 
-			if(jQuery("#patientCategory").val()=="Waver"){
+			if(jQuery("#patientCategory").val()=="Waiver"){
 				if(jQuery("#waiverNumber").val().length <= 0){
 					alert("Please fill Waver number");
 					return false;
@@ -525,7 +525,7 @@
 				jQuery("#regFeeValue").val(0);
 				//jQuery("#regFeeValue").attr("disabled", "disabled");
 			
-			}else if(jQuery("#patientCategory").val() == "Waver"){
+			}else if(jQuery("#patientCategory").val() == "Waiver"){
 				jQuery("#exe_wav_number").show();
 				jQuery("#waiverField").show();
 				jQuery("#exemptionNumber2").val("");
@@ -664,7 +664,7 @@ jQuery("#message").hide();
 										<option value="Child Less Than 5 yr">Child less than 5 year old</option>
 										<option value="CCC">Comprehensive Care Clinic Patient</option>
 										<option value="Expectant Mother">Expectant Mother</option>
-										<option value="Waver">Waiver Case</option>
+										<option value="Waiver">Waiver Case</option>
 										<option value="NHIF">NHIF Card Holder</option>
 					</select></td>	
 					
