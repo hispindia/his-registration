@@ -49,7 +49,7 @@ td.border {
 					data : MODEL.districts
 				});
 				PAGE.fillOptions("#upazilas", {
-					data : MODEL.upazilas[0].split(',')
+					data : typeof(MODEL.upazilas[0])=="undefined"?MODEL.upazilas:MODEL.upazilas[0].split(',')
 				});
 				MODEL.TRIAGE = " ,Please Select OPD Room to Visit|"
 						+ MODEL.TRIAGE;
@@ -1131,7 +1131,7 @@ td.border {
 										<option value="Central African Republic">Central African Republic</option>
 										<option value="Chad">Chad</option>
 										<option value="Comoros">Comoros</option>
-										<option value="Côte d'Ivoire">Côte d'Ivoire</option>
+										<option value="Cï¿½te d'Ivoire">Cï¿½te d'Ivoire</option>
 										<option value="Democratic Republic of Congo">Democratic Republic of Congo</option>
 										<option value="Djibouti">Djibouti</option>
 										<option value="Egypt">Egypt</option>
@@ -1158,7 +1158,7 @@ td.border {
 										<option value="Nigeria">Nigeria</option>
 										<option value="Republic of Congo">Republic of Congo</option>
 										<option value="Rwanda">Rwanda</option>
-										<option value="São Tomé and Príncipe">São Tomé and Príncipe</option>
+										<option value="Sï¿½o Tomï¿½ and Prï¿½ncipe">Sï¿½o Tomï¿½ and Prï¿½ncipe</option>
 										<option value="Senegal">Senegal</option>
 										<option value="Seychelles">Seychelles</option>
 										<option value="Sierra Leone">Sierra Leone</option>
