@@ -1244,35 +1244,48 @@ td.bottom {
 		generalCheck : function(obj) {
 			if (jQuery("#patCatGeneral").is(':checked')) {
 				
-					jQuery("#CCC").removeAttr("checked");
-					jQuery("#exemptionNumber2").val("");
-					jQuery("#exemptionField2").hide();
-				
-				
-				
-					jQuery("#patCatChildLessThan5yr").removeAttr("checked");
-					jQuery("#exemptionNumber1").val("");
+					jQuery("#patCatHIV").removeAttr("checked");
+				    jQuery("#exemptionNumber").val("");
 					jQuery("#exemptionField1").hide();
-				
-				
-					jQuery("#patCatMother").removeAttr("checked");
-					jQuery("#exemptionNumber3").val("");
-					jQuery("#exemptionField3").removeAttr("checked");
-				
-				
-					jQuery("#patCatFree").removeAttr("checked");
-					jQuery("#waverNumber").val("");
-					jQuery("#waverField").hide();
-				
-
-				
-					jQuery("#patCatNHIF").removeAttr("checked");
+				    jQuery("#exemptionField2").hide();
+					
+					jQuery("#patCatChildLessThan5yr").removeAttr("checked");
+					jQuery("#exemptionNumber").val("");
+					jQuery("#exemptionField1").hide();
+				    jQuery("#exemptionField2").hide();
+				    
+				    jQuery("#patCatNHIF").removeAttr("checked");
 					jQuery("#exemptionNumber").val("");
 					jQuery("#exemptionField1").hide();
 				    jQuery("#exemptionField2").hide();
 					jQuery("#nhifCardNumber").val("");
 					jQuery("#nhifCardField1").hide();
 				    jQuery("#nhifCardField2").hide();
+				    
+				    jQuery("#patCatTB").removeAttr("checked");
+				    jQuery("#exemptionNumber").val("");
+					jQuery("#exemptionField1").hide();
+				    jQuery("#exemptionField2").hide();
+					
+					jQuery("#patCatMother").removeAttr("checked");
+				    jQuery("#exemptionNumber").val("");
+					jQuery("#exemptionField1").hide();
+				    jQuery("#exemptionField2").hide();
+				    
+				    jQuery("#patCatOtherInsurance").removeAttr("checked");
+				    jQuery("#exemptionNumber").val("");
+					jQuery("#exemptionField1").hide();
+				    jQuery("#exemptionField2").hide();
+				    
+				    jQuery("#patCatMalaria").removeAttr("checked");
+				    jQuery("#exemptionNumber").val("");
+					jQuery("#exemptionField1").hide();
+				    jQuery("#exemptionField2").hide();
+				    
+				    jQuery("#patCatWaiver").removeAttr("checked");
+				    jQuery("#waiverNumber").val("");
+					jQuery("#waiverField1").hide();
+				    jQuery("#waiverField2").hide();
 			}
 		},
 
@@ -1322,25 +1335,25 @@ td.bottom {
 			<tr>
 				<td>Patient Name<label style="color:red">*</label>&nbsp;&nbsp;&nbsp;&nbsp;</td>
 				<td>Surname<label style="color:red">*</label>&nbsp;&nbsp;&nbsp;&nbsp;</td>
-				<td><input type="text" id="surName" name="patient.surName" size="15">
+				<td><input type="text" id="surName" name="patient.surName" style='width: 152px;'>
 				</td>
 			</tr>
 			<tr>
 				<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
 				<td>First Name<label style="color:red">*</label>&nbsp;&nbsp;&nbsp;&nbsp;</td>
-				<td><input type="text" id="firstName" name="patient.firstName" size="15">
+				<td><input type="text" id="firstName" name="patient.firstName" style='width: 152px;'>
 				</td>
 			</tr>
 			<tr>
 				<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
 				<td>Given Name&nbsp;&nbsp;&nbsp;&nbsp;</td>
-				<td><input type="text" id="givenName" name="patient.givenName" size="15">
+				<td><input type="text" id="givenName" name="patient.givenName" style='width: 152px;'>
 				</td>
 			</tr>
 			<tr>
 				<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
 				<td>Other Name&nbsp;&nbsp;&nbsp;&nbsp;</td>
-				<td><input type="text" id="otherName" name="patient.otherName" size="15">
+				<td><input type="text" id="otherName" name="patient.otherName" style='width: 152px;'>
 				</td>
 			</tr>
 			<tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr>
@@ -1348,7 +1361,7 @@ td.bottom {
 				<td>Demographics<label style="color:red">*</label>&nbsp;&nbsp;&nbsp;&nbsp;</td>
 				<td>Age or DOB<label style="color:red">*</label>&nbsp;&nbsp;&nbsp;&nbsp;</td>
 				<td><input type="hidden" id="calendar" /> <input
-							id="birthdate" name="patient.birthdate" size="15"/> <img
+							id="birthdate" name="patient.birthdate" style='width: 152px;'/> <img
 							id="calendarButton"
 							src="moduleResources/registration/calendar.gif" /> <input
 							id="birthdateEstimated" type="hidden"
@@ -1359,7 +1372,7 @@ td.bottom {
 			<tr>
 				<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
 				<td>Gender<label style="color:red">*</label>&nbsp;&nbsp;&nbsp;&nbsp;</td>
-				<td><select id="patientGender" name="patient.gender" style='width: 135px;'>
+				<td><select id="patientGender" name="patient.gender" style='width: 152px;'>
 								<option value="Any"></option>
 								<option value="M">Male</option>
 								<option value="F">Female</option>
@@ -1369,7 +1382,7 @@ td.bottom {
 			<tr>
 				<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
 				<td>Marital Status<label style="color:red">*</label>&nbsp;&nbsp;&nbsp;&nbsp;</td>
-				<td><select id="maritalStatus" name="person.attribute.26" style='width: 135px;'>
+				<td><select id="maritalStatus" name="person.attribute.26" style='width: 152px;'>
 										<option value="Marital"></option>
 										<option value="Single">Single</option>
 										<option value="Married">Married</option>
@@ -1391,7 +1404,7 @@ td.bottom {
 				<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
 				<td>County&nbsp;&nbsp;&nbsp;&nbsp;</td>
 				<td><select id="districts" name="patient.address.district"
-							onChange="PAGE.changeDistrict();" style="width: 135px;">
+							onChange="PAGE.changeDistrict();" style="width: 152px;">
 						</select>
 				</td>
 			</tr>
@@ -1408,7 +1421,7 @@ td.bottom {
 				<td>Contact Number&nbsp;&nbsp;&nbsp;&nbsp;</td>
 				<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
 				<td><input id="patientPhoneNumber"
-				name="person.attribute.16" size="15" />
+				name="person.attribute.16" style='width: 152px;' />
 				</td>
 			</tr>
 			<tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr>
@@ -1416,20 +1429,20 @@ td.bottom {
 				<td>E-mail Address&nbsp;&nbsp;&nbsp;&nbsp;</td>
 				<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
 				<td><input id="patientEmail"
-				name="person.attribute.37" size="15" />
+				name="person.attribute.37" style='width: 152px;' />
 				</td>
 			</tr>
 			<tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr>
 			<tr>
 				<td>Next of Kin(NOK)&nbsp;&nbsp;&nbsp;&nbsp;</td>
 				<td>Relative Name<label style="color:red">*</label>&nbsp;&nbsp;&nbsp;&nbsp;</td>
-				<td><input id="patientRelativeName" name="person.attribute.8" size="15" />
+				<td><input id="patientRelativeName" name="person.attribute.8" style='width: 152px;' />
 				</td>
 			</tr>
 			<tr>
 				<td>Information<label style="color:red">*</label>&nbsp;&nbsp;&nbsp;&nbsp;</td>
 				<td>Relationship Type<label style="color:red">*</label>&nbsp;&nbsp;&nbsp;&nbsp;</td>
-				<td><select id="relationshipType" name="person.attribute.15" style='width: 135px;'>
+				<td><select id="relationshipType" name="person.attribute.15" style='width: 152px;'>
 										<option value="Relationship"></option>
 										<option value="Parent">Parent</option>
 										<option value="Spouse">Single</option>
@@ -1442,20 +1455,20 @@ td.bottom {
 			<tr>
 				<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
 				<td>Physical Address&nbsp;&nbsp;&nbsp;&nbsp;</td>
-				<td><input type="text" id="relativePostalAddress" name="person.attribute.28" size="15"/>
+				<td><input type="text" id="relativePostalAddress" name="person.attribute.28" style='width: 152px;'/>
 				<input id="sameAddress" type="checkbox"/> Same as above
 				</td>
 			</tr>
 			<tr>
 				<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
 				<td>Contact Number&nbsp;&nbsp;&nbsp;&nbsp;</td>
-				<td><input id="relativePhoneNumber" name="person.attribute.29" size="15" />
+				<td><input id="relativePhoneNumber" name="person.attribute.29" style='width: 152px;' />
 				</td>
 			</tr>
 			<tr>
 				<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
 				<td>E-mail Address&nbsp;&nbsp;&nbsp;&nbsp;</td>
-				<td><input id="relativeEmail" name="person.attribute.30" size="15" />
+				<td><input id="relativeEmail" name="person.attribute.30" style='width: 152px;' />
 				</td>
 			</tr>
 			<tr></tr>
@@ -1485,7 +1498,7 @@ td.bottom {
 		<tr>
 				<td>Client Identification&nbsp;&nbsp;&nbsp;&nbsp;</td>
 				<td>Nationality</td>
-				<td><select id="patientNation" name="person.attribute.27" style="width: 135px;">
+				<td><select id="patientNation" name="person.attribute.27" style="width: 152px;">
 										<option value="Nation"></option>
 										<option value="Kenya">Kenya</option>
 										<option value="East Africa">East Africa</option>
@@ -1549,12 +1562,12 @@ td.bottom {
 		<tr>
 		<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
 		<td>National ID&nbsp;&nbsp;&nbsp;&nbsp;</td>
-		<td><input id="patientNationalId" name="patient.attribute.20" size="15"/></td>
+		<td><input id="patientNationalId" name="patient.attribute.20" style='width: 152px;'/></td>
 		</tr>
 		<tr>
 		<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
 		<td>Passport Number&nbsp;&nbsp;&nbsp;&nbsp;</td>
-		<td><input id="passportNumber" name="patient.attribute.38" size="15"/></td>
+		<td><input id="passportNumber" name="patient.attribute.38" style='width: 152px;'/></td>
 		</tr>
 		<tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr>
 		<tr>
@@ -1580,17 +1593,17 @@ td.bottom {
 		<tr>
 				<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
 				<td><span id="exemptionField1">Exemption Number</span></td>
-				<td><span id="exemptionField2"><input id="exemptionNumber" name="person.attribute.36" /></span></td>
+				<td><span id="exemptionField2"><input id="exemptionNumber" name="person.attribute.36" style="width: 152px;"/></span></td>
 		</tr>
 		<tr>
 				<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
 				<td><span id="nhifCardField1">NHIF Card Number</span></td>
-				<td><span id="nhifCardField2"><input id="nhifCardNumber" name="person.attribute.33" /></span></td>
+				<td><span id="nhifCardField2"><input id="nhifCardNumber" name="person.attribute.33" style="width: 152px;"/></span></td>
 		</tr>
 		<tr>
 				<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
 				<td><span id="waiverField1">Waiver Number</span></td>
-				<td><span id="waiverField2"><input id="waiverNumber" name="person.attribute.32" /></span></td>
+				<td><span id="waiverField2"><input id="waiverNumber" name="person.attribute.32" style="width: 152px;"/></span></td>
 		</tr>
 		<tr>
 		</tr>
