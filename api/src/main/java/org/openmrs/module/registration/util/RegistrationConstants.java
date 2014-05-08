@@ -53,7 +53,13 @@ public class RegistrationConstants {
 	public static final String PROPERTY_BLOODBANK_OPDWARD_NAME = "bloodbank.wardName";
 	
 	// field names
-	public static final String FORM_FIELD_PATIENT_NAME = "patient.name";
+	public static final String FORM_FIELD_PATIENT_SURNAME = "patient.surName";
+	
+	public static final String FORM_FIELD_PATIENT_FIRSTNAME = "patient.firstName";
+	
+	public static final String FORM_FIELD_PATIENT_GIVENNAME = "patient.givenName";
+	
+	public static final String FORM_FIELD_PATIENT_OTHERNAME = "patient.otherName";
 	
 	public static final String FORM_FIELD_PATIENT_CATEGORY = "person.attribute.14";
 	
@@ -86,6 +92,8 @@ public class RegistrationConstants {
 	public static final String FORM_FIELD_PATIENT_REFERRED_FROM = "patient.referred.from";
 	
 	public static final String FORM_FIELD_PATIENT_REFERRED_REASON = "patient.referred.reason";
+	
+	public static final String FORM_FIELD_PATIENT_REFERRED_DESCRIPTION= "patient.referred.description";
 	
 	// concept name
 	public static final String CONCEPT_NAME_OPD_WARD = "OPD WARD";

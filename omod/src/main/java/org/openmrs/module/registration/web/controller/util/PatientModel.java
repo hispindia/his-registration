@@ -37,6 +37,14 @@ public class PatientModel {
 	
 	private String fullname;
 	
+	private String surName;
+	
+	private String firstName;
+	
+	private String givenName;
+	
+	private String otherName;
+	
 	private String age;
 	
 	private String gender;
@@ -53,6 +61,13 @@ public class PatientModel {
 		setPatientId(patient.getPatientId().toString());
 		setIdentifier(patient.getPatientIdentifier().getIdentifier());
 		setFullname(PatientUtils.getFullName(patient));
+		setSurName(patient.getFamilyName());
+		setFirstName(patient.getGivenName());
+		setGivenName(patient.getMiddleName());
+		setOtherName(patient.getMiddleName());
+		//String[] str_array = patient.getMiddleName().split(" ");
+		//String stringa = str_array[0]; 
+		//String stringb = str_array[1];
 		
 		setAge(String.format("%s, %s", PatientUtils.estimateAge(patient.getBirthdate()),
 		    PatientUtils.getAgeCategory(patient)));
@@ -84,7 +99,39 @@ public class PatientModel {
 	public void setFullname(String fullname) {
 		this.fullname = fullname;
 	}
-	
+
+	public String getSurName() {
+		return surName;
+	}
+
+	public void setSurName(String surName) {
+		this.surName = surName;
+	}
+
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public String getGivenName() {
+		return givenName;
+	}
+
+	public void setGivenName(String givenName) {
+		this.givenName = givenName;
+	}
+
+	public String getOtherName() {
+		return otherName;
+	}
+
+	public void setOtherName(String otherName) {
+		this.otherName = otherName;
+	}
+
 	public String getAge() {
 		return age;
 	}

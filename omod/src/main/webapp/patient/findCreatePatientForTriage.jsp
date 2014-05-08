@@ -52,11 +52,12 @@
 		upazilas: _upazilas,
 		////ghanshyam,16-dec-2013,3438 Remove the interdependency
 		TRIAGE: "${TRIAGE}",
-		referralHospitals: "${referralHospitals}",
-		referralReasons: "${referralReasons}",
+		referredFrom: "${referralHospitals}",
+		referralType: "${referralReasons}",
 		TEMPORARYCAT: "${TEMPORARYCAT}"
 	}
 </script>
 <jsp:include page="../includes/${hospitalName}/patientRegisterFormForTriage.jsp"/>
-
+<!--  
 <%@ include file="/WEB-INF/template/footer.jsp" %>  
+-->

@@ -108,23 +108,14 @@ public class ShowPatientInfoController {
 					 model.addAttribute("selectedCategory",pa.getValue()); 
 				 }
 				 //ghanshyam,18-dec-2013,# 3457 Exemption number for selected category should show on registration receipt
-				 if(attributeType.getPersonAttributeTypeId()==31){
-					 model.addAttribute("categoryValue1",pa.getValue()); 
-				 }
-				 if(attributeType.getPersonAttributeTypeId()==32){
-					 model.addAttribute("categoryValue2",pa.getValue()); 
+				 if(attributeType.getPersonAttributeTypeId()==36){
+					 model.addAttribute("exemptionNumber",pa.getValue()); 
 				 }
 				 if(attributeType.getPersonAttributeTypeId()==33){
-					 model.addAttribute("categoryValue3",pa.getValue()); 
+					 model.addAttribute("nhifCardNumber",pa.getValue()); 
 				 }
-				 if(attributeType.getPersonAttributeTypeId()==34){
-					 model.addAttribute("categoryValue4",pa.getValue()); 
-				 }
-				 if(attributeType.getPersonAttributeTypeId()==35){
-					 model.addAttribute("categoryValue5",pa.getValue()); 
-				 }
-				 if(attributeType.getPersonAttributeTypeId()==36){
-					 model.addAttribute("categoryValue6",pa.getValue()); 
+				 if(attributeType.getPersonAttributeTypeId()==32){
+					 model.addAttribute("waiverNumber",pa.getValue()); 
 				 }
 			 }
 			 

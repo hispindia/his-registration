@@ -25,8 +25,6 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Random;
-
-import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openmrs.Location;
@@ -77,34 +75,17 @@ public class RegistrationUtils {
 	 * @param name
 	 * @return
 	 */
-	public static PersonName getPersonName(PersonName personName, String name) {
+	public static PersonName getPersonName(PersonName personName, String surName, String firstName, String givenName, String otherName) {
 		
 		if (personName == null)
 			personName = new PersonName();
 		
-		personName.setGivenName("");
-		personName.setMiddleName("");
-		personName.setFamilyName(".");
+		//personName.setFamilyNamePrefix(surName);
+		personName.setFamilyName(surName);
+		personName.setGivenName(firstName);
+		personName.setMiddleName(givenName+" "+otherName);
 		
-		@SuppressWarnings("deprecation")
-		String fullname = StringUtils.capitaliseAllWords(name).trim();
-		String[] parts = fullname.split(" ");
-		if (parts.length == 1) {
-			personName.setGivenName(parts[0]);
-		} else if (parts.length == 2) {
-			personName.setGivenName(parts[0]);
-			personName.setFamilyName(parts[1]);
-		} else if (parts.length > 2) {
-			personName.setGivenName(parts[0]);
-			personName.setMiddleName(parts[1]);
-			
-			String familyName = "";
-			for (int i = 2; i < parts.length; i++) {
-				familyName += parts[i] + " ";
-			}
-			familyName = familyName.trim();
-			personName.setFamilyName(familyName);
-		}
+		
 		personName.setPreferred(true);
 		return personName;
 	}
@@ -234,13 +215,13 @@ public class RegistrationUtils {
 	 */
 	public static void savePatientSearch(Patient patient) {
 		PatientSearch ps = new PatientSearch();
-		String fullname = PatientUtils.getFullName(patient).replace(" ", "");
+		String fullname = PatientUtils.getFullName(patient);
 		ps.setFullname(fullname);
 		ps.setPatientId(patient.getPatientId());
 		ps.setAge(patient.getAge());
 		ps.setBirthdate(patient.getBirthdate());
-		ps.setFamilyName(patient.getFamilyName());
 		ps.setGender(patient.getGender());
+		ps.setFamilyName(patient.getFamilyName());
 		ps.setGivenName(patient.getGivenName());
 		ps.setMiddleName(patient.getMiddleName());
 		ps.setIdentifier(patient.getPatientIdentifier().getIdentifier());

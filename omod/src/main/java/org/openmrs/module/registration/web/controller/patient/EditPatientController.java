@@ -49,51 +49,52 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller("RegistrationEditPatientController")
 @RequestMapping("/module/registration/editPatient.form")
 public class EditPatientController {
-	
+
 	private static Log logger = LogFactory.getLog(EditPatientController.class);
-	
+
 	@RequestMapping(method = RequestMethod.GET)
-	public String showForm(@RequestParam("patientId") Integer patientId, Model model) throws JaxenException,
-	                                                                                 DocumentException, IOException,
-	                                                                                 ParseException {
+	public String showForm(@RequestParam("patientId") Integer patientId,
+			Model model) throws JaxenException, DocumentException, IOException,
+			ParseException {
 		Patient patient = Context.getPatientService().getPatient(patientId);
 		PatientModel patientModel = new PatientModel(patient);
 		model.addAttribute("patient", patientModel);
 		RegistrationWebUtils.getAddressData(model);
 		return "/module/registration/patient/editPatient";
 	}
-	
+
 	@RequestMapping(method = RequestMethod.POST)
-	public String savePatient(@RequestParam("patientId") Integer patientId, HttpServletRequest request, Model model)
-	                                                                                                                throws ParseException {
-		
+	public String savePatient(@RequestParam("patientId") Integer patientId,
+			HttpServletRequest request, Model model) throws ParseException {
+
 		Patient patient = Context.getPatientService().getPatient(patientId);
-		
+
 		// list all parameter submitted
-		Map<String, String> parameters = RegistrationWebUtils.optimizeParameters(request);
+		Map<String, String> parameters = RegistrationWebUtils
+				.optimizeParameters(request);
 		logger.info("Submited parameters: " + parameters);
-		
+
 		try {
 			// update patient
 			Patient updatedPatient = generatePatient(patient, parameters);
 			patient = Context.getPatientService().savePatient(updatedPatient);
-			
+
 			// update patient attribute
 			updatedPatient = setAttributes(patient, parameters);
 			patient = Context.getPatientService().savePatient(updatedPatient);
 			RegistrationUtils.savePatientSearch(patient);
-			
+
 			model.addAttribute("status", "success");
-			logger.info(String.format("Updated patient [id=%s]", patient.getId()));
-		}
-		catch (Exception e) {
+			logger.info(String.format("Updated patient [id=%s]",
+					patient.getId()));
+		} catch (Exception e) {
 			model.addAttribute("status", "error");
 			model.addAttribute("message", e.getMessage());
 		}
-		
+
 		return "/module/registration/patient/savePatient";
 	}
-	
+
 	/**
 	 * Generate Patient From Parameters
 	 * 
@@ -101,60 +102,93 @@ public class EditPatientController {
 	 * @return
 	 * @throws ParseException
 	 */
-	private Patient generatePatient(Patient patient, Map<String, String> parameters) throws ParseException {
-		
+	private Patient generatePatient(Patient patient,
+			Map<String, String> parameters) throws ParseException {
+
 		// get person name
-		if (!StringUtils.isBlank(parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_NAME))) {
-			RegistrationUtils.getPersonName(patient.getPersonName(),
-			    parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_NAME));
+		if (!StringUtils.isBlank(parameters
+				.get(RegistrationConstants.FORM_FIELD_PATIENT_SURNAME))
+				&& !StringUtils
+						.isBlank(parameters
+								.get(RegistrationConstants.FORM_FIELD_PATIENT_FIRSTNAME))) {
+			RegistrationUtils
+					.getPersonName(
+							patient.getPersonName(),
+							parameters
+									.get(RegistrationConstants.FORM_FIELD_PATIENT_SURNAME),
+							parameters
+									.get(RegistrationConstants.FORM_FIELD_PATIENT_FIRSTNAME),
+							parameters
+									.get(RegistrationConstants.FORM_FIELD_PATIENT_GIVENNAME),
+							parameters
+									.get(RegistrationConstants.FORM_FIELD_PATIENT_OTHERNAME));
 		}
-		
+
 		// get birthdate
-		if (!StringUtils.isBlank(parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_BIRTHDATE))) {
+		if (!StringUtils.isBlank(parameters
+				.get(RegistrationConstants.FORM_FIELD_PATIENT_BIRTHDATE))) {
 			patient.setBirthdate(RegistrationUtils.parseDate(parameters
-			        .get(RegistrationConstants.FORM_FIELD_PATIENT_BIRTHDATE)));
-			if (parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_BIRTHDATE_ESTIMATED).contains("true")) {
+					.get(RegistrationConstants.FORM_FIELD_PATIENT_BIRTHDATE)));
+			if (parameters
+					.get(RegistrationConstants.FORM_FIELD_PATIENT_BIRTHDATE_ESTIMATED)
+					.contains("true")) {
 				patient.setBirthdateEstimated(true);
 			}
 		}
-		
+
 		// get gender
-		if (!StringUtils.isBlank(parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_GENDER))) {
-			patient.setGender(parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_GENDER));
+		if (!StringUtils.isBlank(parameters
+				.get(RegistrationConstants.FORM_FIELD_PATIENT_GENDER))) {
+			patient.setGender(parameters
+					.get(RegistrationConstants.FORM_FIELD_PATIENT_GENDER));
 		}
-		
+
 		// get address
-		if (!StringUtils.isBlank(parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_ADDRESS_DISTRICT))) {
-			RegistrationUtils.getPersonAddress(patient.getPersonAddress(),
-			    parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_ADDRESS_POSTALADDRESS),
-			    parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_ADDRESS_DISTRICT),
-			    /*Ghanshyam - Sagar :  date- 15 Dec, 2012. Redmine issue's for Bangladesh : #510 and #511 and #512
-			      changes tehsil to upazila */
-			    parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_ADDRESS_UPAZILA));
+		if (!StringUtils
+				.isBlank(parameters
+						.get(RegistrationConstants.FORM_FIELD_PATIENT_ADDRESS_DISTRICT))) {
+			RegistrationUtils
+					.getPersonAddress(
+							patient.getPersonAddress(),
+							parameters
+									.get(RegistrationConstants.FORM_FIELD_PATIENT_ADDRESS_POSTALADDRESS),
+							parameters
+									.get(RegistrationConstants.FORM_FIELD_PATIENT_ADDRESS_DISTRICT),
+							/*
+							 * Ghanshyam - Sagar : date- 15 Dec, 2012. Redmine
+							 * issue's for Bangladesh : #510 and #511 and #512
+							 * changes tehsil to upazila
+							 */
+							parameters
+									.get(RegistrationConstants.FORM_FIELD_PATIENT_ADDRESS_UPAZILA));
 		}
-		
+
 		return patient;
 	}
-	
-	private Patient setAttributes(Patient patient, Map<String, String> attributes) throws Exception {
+
+	private Patient setAttributes(Patient patient,
+			Map<String, String> attributes) throws Exception {
 		PatientAttributeValidatorService validator = new PatientAttributeValidatorService();
-		Map<String, Object> parameters = HospitalCoreUtils.buildParameters("patient", patient, "attributes", attributes);
+		Map<String, Object> parameters = HospitalCoreUtils.buildParameters(
+				"patient", patient, "attributes", attributes);
 		String validateResult = validator.validate(parameters);
 		logger.info("Attirubte validation: " + validateResult);
 		if (StringUtils.isBlank(validateResult)) {
 			for (String name : attributes.keySet()) {
-				if ((name.contains(".attribute.")) && (!StringUtils.isBlank(attributes.get(name)))) {
+				if ((name.contains(".attribute."))
+						&& (!StringUtils.isBlank(attributes.get(name)))) {
 					String[] parts = name.split("\\.");
 					String idText = parts[parts.length - 1];
 					Integer id = Integer.parseInt(idText);
-					PersonAttribute attribute = RegistrationUtils.getPersonAttribute(id, attributes.get(name));
+					PersonAttribute attribute = RegistrationUtils
+							.getPersonAttribute(id, attributes.get(name));
 					patient.addAttribute(attribute);
 				}
 			}
 		} else {
 			throw new Exception(validateResult);
 		}
-		
+
 		return patient;
 	}
 }

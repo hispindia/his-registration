@@ -55,7 +55,10 @@
 	MODEL = {
 		patientId: "${patient.patientId}",
 		patientIdentifier: "${patient.identifier}",
-		patientName: "${patient.fullname}",
+		surName: "${patient.surName}",
+		firstName: "${patient.firstName}",
+		givenName: "${patient.givenName}",
+		otherName: "${patient.otherName}",
 		patientAge: "${patient.age}",
 		patientGender: "${patient.gender}",
 		patientAddress: "${patient.address}",
