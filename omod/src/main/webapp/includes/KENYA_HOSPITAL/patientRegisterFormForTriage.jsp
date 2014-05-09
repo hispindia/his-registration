@@ -127,6 +127,7 @@ td.border {
 				//jQuery("#hide_show").hide();
 				jQuery("#tempCat").hide();
 				jQuery("#healthIdField").hide();
+				jQuery("#otherNationality").hide();
 				// binding
 				jQuery("#patCatGeneral").click(function() {
 					VALIDATORS.generalCheck();
@@ -1320,6 +1321,16 @@ td.border {
 		}
 		
 	};
+	
+	function showOtherNationality(){
+	var optionValue=jQuery("#patientNation option:selected" ).text();
+	if(optionValue=="Other"){
+	jQuery("#otherNationality").show();
+	  }
+	  else{
+	  jQuery("#otherNationality").hide();
+	  }
+	}
 </script>
 <h3 align="center" style="color:black">PATIENT REGISTRATION</h3>
 <div id="patientSearchResult"></div>
@@ -1494,7 +1505,7 @@ td.border {
 		<tr>
 				<td>Client Identification&nbsp;&nbsp;&nbsp;&nbsp;</td>
 				<td>Nationality</td>
-				<td><select id="patientNation" name="person.attribute.27" style="width: 152px;">
+				<td><select id="patientNation" name="person.attribute.27" style="width: 152px;" onchange="showOtherNationality();">
 										<option value="Nation"></option>
 										<option value="Kenya">Kenya</option>
 										<option value="East Africa">East Africa</option>
@@ -1554,6 +1565,11 @@ td.border {
 										<option value="Zimbabwe">Zimbabwe</option>
 										<option value="Other">Other</option>
 						</select></td>
+		</tr>
+		<tr>
+		<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+		<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+		<td><span id="otherNationality"><input id="otherNationalityId" name="person.attribute.39" placeholder="If others,please specify" style='width: 152px;'/></span></td>
 		</tr>
 		<tr>
 		<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>

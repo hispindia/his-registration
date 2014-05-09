@@ -63,11 +63,16 @@ public class PatientModel {
 		setFullname(PatientUtils.getFullName(patient));
 		setSurName(patient.getFamilyName());
 		setFirstName(patient.getGivenName());
-		setGivenName(patient.getMiddleName());
-		setOtherName(patient.getMiddleName());
-		//String[] str_array = patient.getMiddleName().split(" ");
-		//String stringa = str_array[0]; 
-		//String stringb = str_array[1];
+		String[] str_array = patient.getMiddleName().split(",");
+		if (str_array.length == 1) {
+			setGivenName(str_array[0]);
+		} else if (str_array.length == 2) {
+			setGivenName(str_array[0]);
+			setOtherName(str_array[1]);
+		} else {
+			setGivenName("");
+			setOtherName("");
+		}
 		
 		setAge(String.format("%s, %s", PatientUtils.estimateAge(patient.getBirthdate()),
 		    PatientUtils.getAgeCategory(patient)));

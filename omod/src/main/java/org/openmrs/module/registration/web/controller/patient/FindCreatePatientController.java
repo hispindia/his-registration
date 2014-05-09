@@ -347,7 +347,7 @@ public class FindCreatePatientController {
 		referralObs.setConcept(referralConcept);
 		encounter.addObs(referralObs);
 		if (!StringUtils.isBlank(parameters
-				.get(RegistrationConstants.FORM_FIELD_PATIENT_REFERRED))) {
+				.get(RegistrationConstants.FORM_FIELD_PATIENT_REFERRED_FROM))) {
 			referralObs.setValueCoded(Context.getConceptService().getConcept(
 					"YES"));
 
@@ -379,7 +379,7 @@ public class FindCreatePatientController {
 							.getConcept(
 									Integer.parseInt(parameters
 											.get(RegistrationConstants.FORM_FIELD_PATIENT_REFERRED_REASON))));
-			referredReasonObs.setValueText(RegistrationConstants.FORM_FIELD_PATIENT_REFERRED_DESCRIPTION);
+			referredReasonObs.setValueText(parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_REFERRED_DESCRIPTION));
 			encounter.addObs(referredReasonObs);
 		} else {
 			referralObs.setValueCoded(Context.getConceptService().getConcept(
