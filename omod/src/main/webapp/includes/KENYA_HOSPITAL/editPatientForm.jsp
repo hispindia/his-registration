@@ -309,9 +309,6 @@ td.bottom {
 			relativeNameInCaptital = StringUtils.capitalize(jQuery("#patientRelativeName").val());
 			jQuery("#patientRelativeName").val(relativeNameInCaptital);
 
-			otherNameInCaptital = StringUtils.capitalize(jQuery("#patientOtherName").val());
-			jQuery("#patientOtherName").val(otherNameInCaptital);
-
 			// Validate and submit
 			if (this.validateRegisterForm()) {
 				jQuery("#patientRegistrationForm")
@@ -458,7 +455,7 @@ td.bottom {
 		validateRegisterForm : function() {
 
 			if (StringUtils.isBlank(jQuery("#surName").val())) {
-				alert("Please enter patient's surname");
+				alert("Please enter the surname of the patient ");
 				return false;
 			}
 			else{
@@ -467,14 +464,14 @@ td.bottom {
 				pattern = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 -";
 				for (i = 0; i < value.length; i++) {
 					if (pattern.indexOf(value[i]) < 0) {
-						alert("Please enter surname/identifier in correct format.");
+						alert("Please enter surname/identifier in correct format");
 						return false;
 					}
 				}
 			}
 			
 			if (StringUtils.isBlank(jQuery("#firstName").val())) {
-				alert("Please enter patient's firstname");
+				alert("Please enter firstname in correct format");
 				return false;
 			}
 			else{
@@ -483,7 +480,7 @@ td.bottom {
 				pattern = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 -";
 				for (i = 0; i < value.length; i++) {
 					if (pattern.indexOf(value[i]) < 0) {
-						alert("Please enter firstname in correct format.");
+						alert("Please enter firstname in correct format");
 						return false;
 					}
 				}
@@ -495,7 +492,7 @@ td.bottom {
 				pattern = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 -";
 				for (i = 0; i < value.length; i++) {
 					if (pattern.indexOf(value[i]) < 0) {
-						alert("Please enter givenname in correct format.");
+						alert("Please enter givenname in correct format");
 						return false;
 					}
 				}
@@ -507,14 +504,14 @@ td.bottom {
 				pattern = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 -";
 				for (i = 0; i < value.length; i++) {
 					if (pattern.indexOf(value[i]) < 0) {
-						alert("Please enter othername in correct format.");
+						alert("Please enter othername in correct format");
 						return false;
 					}
 				}
 			}
 
 			if (StringUtils.isBlank(jQuery("#patientRelativeName").val())) {
-				alert("Please enter relative name");
+				alert("Please enter the patient's relative name");
 				return false;
 			}/* else {
 				if (jQuery("#patientRegistrationForm input[name=person.attribute.15]:checked").length == 0) {
@@ -522,14 +519,19 @@ td.bottom {
 					return false;
 				}
 			}*/
+			
+			if (jQuery("#relationshipType").val() == "Relationship") {
+				alert("Please enter the patient's relationship type with the NOK");
+				return false;
+			}
 
 			if (StringUtils.isBlank(jQuery("#birthdate").val())) {
-				alert("Please enter birthdate or age");
+				alert("Please enter age or DOB of the patient");
 				return false;
 			}
 
 			if (jQuery("#patientGender").val() == "Any") {
-				alert("Please select gender");
+				alert("Please select gender of the patient");
 				return false;
 			}
 			
@@ -544,19 +546,15 @@ td.bottom {
 			}
 			
 			if (jQuery("#patientMaritalStatus").val() == "Marital") {
-				alert("Please select Marital Status of Patient");
+				alert("Please select marital status of the patient");
 				return false;
 			} 
 			
 			if (StringUtils.isBlank(jQuery("#patientPostalAddress").val())) {
-				alert("Please enter physical address of Patient");
+				alert("Please enter the physical address of the patient");
 				return false;
 			} 
 			
-			if (jQuery("#patientOtherName").val() == "") {
-				alert("Please select patients other name");
-				return false;
-			} 
             //ghanshyam 25-feb-2013 New Requirement #966[Billing]Add Paid Bill/Add Free Bill for Bangladesh module(removed Patient Category)
             /*
 			if (!VALIDATORS.validatePatientCategory()) {
@@ -566,7 +564,7 @@ td.bottom {
 
 			if (!StringUtils.isBlank(jQuery("#patientPhoneNumber").val())) {
 				if (!StringUtils.isDigit(jQuery("#patientPhoneNumber").val())) {
-					alert("Please enter contact number in correct format");
+					alert("Please enter the patient's contact number in correct format");
 					return false;
 				}
 			}
@@ -577,14 +575,14 @@ td.bottom {
 				var dotpos=x.lastIndexOf(".");
 				if (atpos<1 || dotpos<atpos+2 || dotpos+2>=x.length)
 				  {
-				  alert("Not a valid patients e-mail address");
+				  alert("Please enter the patient's e-mail address in correct format");
 				  return false;
 				  }
 			}
 
 			if (!StringUtils.isBlank(jQuery("#relativePhoneNumber").val())) {
 				if (!StringUtils.isDigit(jQuery("#relativePhoneNumber").val())) {
-					alert("Please enter relative contact number in correct format");
+					alert("Please enter the NOK's contact number in correct format");
 					return false;
 				}
 			}
@@ -596,7 +594,7 @@ td.bottom {
 				var dotpos=x.lastIndexOf(".");
 				if (atpos<1 || dotpos<atpos+2 || dotpos+2>=x.length)
 				  {
-				  alert("Not a valid e-mail address");
+				  alert("Please enter the NOK's e-mail address in correct format");
 				  return false;
 				  }
 			}
@@ -641,56 +639,61 @@ td.bottom {
 			} else {
 			    if (jQuery("#patCatHIV").attr('checked')) {
 					if (jQuery("#exemptionNumber").val().length <= 0) {
-						alert('Please fill Exemption number');
+						alert('Please enter the Exemption Number');
 						return false;
 					}
 				}
 				
 				if (jQuery("#patCatChildLessThan5yr").attr('checked')) {
 					if (jQuery("#exemptionNumber").val().length <= 0) {
-						alert('Please fill Exemption number');
+						alert('Please enter the Exemption Number');
 						return false;
 					}
 				}
 				
 				if (jQuery("#patCatNHIF").attr('checked')) {
-					if (jQuery("#exemptionNumber").val().length <= 0 || jQuery("#nhifCardNumber").val().length <= 0) {
-						alert('Please fill Both Exemption number and NHIF Card Number');
+					if (jQuery("#exemptionNumber").val().length <= 0) {
+						alert('Please enter the Exemption Number');
+						return false;
+					}
+					
+					if (jQuery("#nhifCardNumber").val().length <= 0) {
+						alert('Please enter the NHIF Card Number');
 						return false;
 					}
 				}
 				
 				if (jQuery("#patCatTB").attr('checked')) {
 					if (jQuery("#exemptionNumber").val().length <= 0) {
-						alert('Please fill Exemption number');
+						alert('Please enter the Exemption Number');
 						return false;
 					}
 				}
 
 				if (jQuery("#patCatMother").attr('checked')) {
 					if (jQuery("#exemptionNumber").val().length <= 0) {
-						alert('Please fill Exemption number');
+						alert('Please enter the Exemption Number');
 						return false;
 					}
 				}
 				
 				if (jQuery("#patCatOtherInsurance").attr('checked')) {
 					if (jQuery("#exemptionNumber").val().length <= 0) {
-						alert('Please fill Exemption number');
+						alert('Please enter the Exemption Number');
 						return false;
 					}
 				}
 				
 				if (jQuery("#patCatMalaria").attr('checked')) {
 					if (jQuery("#exemptionNumber").val().length <= 0) {
-						alert('Please fill Exemption number');
+						alert('Please enter the Exemption Number');
 						return false;
 					}
 				}
 				
 				if (jQuery("#patCatWaiver").attr('checked')) {
 					if (jQuery("#waiverNumber").val().length <= 0) {
-						alert('Please fill Waiver number');
+						alert('Please enter the Waiver Number');
 						return false;
 					}
 				}
@@ -713,21 +716,21 @@ td.bottom {
 					//document.getElementById("healthIdValidationMessage").innerHTML="Patient already registered with this Health id";
                     //jQuery("#nationalIdValidationMessage").show();
                     //jQuery("#healthIdValidationMessage").show();
-		            alert("Patient already registered with this National id and Passport Number");
+		            alert("Patient already registered with the same National ID and Passport Number");
 					return false
 		            }
 		            else if(nId=="1"){
                     //document.getElementById("nationalIdValidationMessage").innerHTML="Patient already registered with this National id";
                     //jQuery("#nationalIdValidationMessage").show();
                     //jQuery("#healthIdValidationMessage").hide();
-		            alert("Patient already registered with this National id");
+		            alert("Patient already registered with the same National ID");
                     return false;					
 		            }
 		            else if(pNum=="1"){
 		             //document.getElementById("healthIdValidationMessage").innerHTML="Patient already registered with this Health id";
                      //jQuery("#healthIdValidationMessage").show();
                      //jQuery("#nationalIdValidationMessage").hide();
-		             alert("Patient already registered with this Passport Number");	
+		             alert("Patient already registered with the same Passport Number");	
 					 return false;
 		            }
 		            }
@@ -761,56 +764,61 @@ td.bottom {
 			} else {
 			    if (jQuery("#patCatHIV").attr('checked')) {
 					if (jQuery("#exemptionNumber").val().length <= 0) {
-						alert('Please fill Exemption number');
+						alert('Please enter the Exemption Number');
 						return false;
 					}
 				}
 				
 				if (jQuery("#patCatChildLessThan5yr").attr('checked')) {
 					if (jQuery("#exemptionNumber").val().length <= 0) {
-						alert('Please fill Exemption number');
+						alert('Please enter the Exemption Number');
 						return false;
 					}
 				}
 				
 				if (jQuery("#patCatNHIF").attr('checked')) {
-					if (jQuery("#exemptionNumber").val().length <= 0 || jQuery("#nhifCardNumber").val().length <= 0) {
-						alert('Please fill Both Exemption number and NHIF Card Number');
+					if (jQuery("#exemptionNumber").val().length <= 0) {
+						alert('Please enter the Exemption Number');
+						return false;
+					}
+					
+					if (jQuery("#nhifCardNumber").val().length <= 0) {
+						alert('Please enter the NHIF Card Number');
 						return false;
 					}
 				}
 				
 				if (jQuery("#patCatTB").attr('checked')) {
 					if (jQuery("#exemptionNumber").val().length <= 0) {
-						alert('Please fill Exemption number');
+						alert('Please enter the Exemption Number');
 						return false;
 					}
 				}
 
 				if (jQuery("#patCatMother").attr('checked')) {
 					if (jQuery("#exemptionNumber").val().length <= 0) {
-						alert('Please fill Exemption number');
+						alert('Please enter the Exemption Number');
 						return false;
 					}
 				}
 				
 				if (jQuery("#patCatOtherInsurance").attr('checked')) {
 					if (jQuery("#exemptionNumber").val().length <= 0) {
-						alert('Please fill Exemption number');
+						alert('Please enter the Exemption Number');
 						return false;
 					}
 				}
 				
 				if (jQuery("#patCatMalaria").attr('checked')) {
 					if (jQuery("#exemptionNumber").val().length <= 0) {
-						alert('Please fill Exemption number');
+						alert('Please enter the Exemption Number');
 						return false;
 					}
 				}
 				
 				if (jQuery("#patCatWaiver").attr('checked')) {
 					if (jQuery("#waiverNumber").val().length <= 0) {
-						alert('Please fill Waiver number');
+						alert('Please enter the Waiver Number');
 						return false;
 					}
 				}
