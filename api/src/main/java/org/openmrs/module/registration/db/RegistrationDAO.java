@@ -89,5 +89,7 @@ public interface RegistrationDAO {
 	public int getNationalId(Integer patientId,String nationalId);
 	public int getHealthId(String healthId);
 	public int getHealthId(Integer patientId,String healthId);
+	public int getPassportNumber(String passportNumber);
+	public int getPassportNumber(Integer patientId,String passportNumber);
 
 }

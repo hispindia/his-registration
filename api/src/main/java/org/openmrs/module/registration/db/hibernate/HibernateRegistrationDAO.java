@@ -183,5 +183,33 @@ public class HibernateRegistrationDAO implements RegistrationDAO {
 		{return 0;}
 		
 	}
+	
+	/*
+	 * Validate PassportNumber
+	 */
+	public int getPassportNumber(String passportNumber){
+		String hql = "from PersonAttribute pa where pa.attributeType=38 AND pa.value like '"+ passportNumber +"' ";
+		Session session = sessionFactory.getCurrentSession();
+		Query q = session.createQuery(hql);
+		List<PersonAttribute> list = q.list();
+		if (list.size()>0)
+			{return 1;}
+		else 
+			{return 0;}
+		}
+	
+	public int getPassportNumber(Integer patientId,String passportNumber) {
+		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(PersonAttribute.class);
+		criteria.add(Restrictions.eq("attributeType.id", 38));
+		criteria.add(Restrictions.eq("value", passportNumber));
+		criteria.add(Restrictions.eq("voided", false));
+		criteria.add(Restrictions.not(Restrictions.eq("person.id",patientId)));
+		List<PersonAttribute> list = criteria.list();
+		if (list.size()>0)
+		{return 1;}
+	    else 
+		{return 0;}
+		
+	}
 
 }

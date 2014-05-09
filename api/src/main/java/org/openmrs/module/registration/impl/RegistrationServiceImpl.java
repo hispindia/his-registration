@@ -93,4 +93,12 @@ public class RegistrationServiceImpl extends BaseOpenmrsService implements
 		return dao.getHealthId(patientId,healthId);
 	}
 	
+	public int getPassportNumber(String passportNumber){
+		return dao.getPassportNumber(passportNumber);
+	}
+	
+	public int getPassportNumber(Integer patientId,String passportNumber){
+		return dao.getPassportNumber(patientId,passportNumber);
+	}
+	
 }

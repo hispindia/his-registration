@@ -335,17 +335,17 @@ td.bottom {
 
 		 //ghanshya,3-july-2013 #1962 Create validation for length of Health ID and National ID
 		//Add Validation for checking duplicate National Id and Health Id
-		checkHealthNationalID : function() {
+		checkNationalIDPassportNumber : function() {
 		        patientId=MODEL.patientId;
-		        healthId=jQuery("#patientHealthId").val();
 				nationalId=jQuery("#patientNationalId").val();
+				passportNumber=jQuery("#passportNumber").val();
 				jQuery.ajax({
 				type : "GET",
-				url : getContextPath() + "/module/registration/validatenationalidandhealthidedit.form",
+				url : getContextPath() + "/module/registration/validatenationalidandpassportnumberedit.form",
 				data : ({
 					patientId			: patientId,
-					healthId			: healthId,
-					nationalId			: nationalId
+					nationalId			: nationalId,
+					passportNumber		: passportNumber
 				}),
 				success : function(data) {	
 				    jQuery("#validationMessage").html(data);	
@@ -698,38 +698,38 @@ td.bottom {
 			
 			        //ghanshya,3-july-2013 #1962 Create validation for length of Health ID and National ID
 			       //Add Validation for checking duplicate National Id and Health Id
-			        PAGE.checkHealthNationalID();
+			        PAGE.checkNationalIDPassportNumber();
 		            alert("click ok to proceed");
 		            abc=jQuery("#abc").val();
 					def=jQuery("#def").val();
 					nd=jQuery("#nId").val();
-					hd=jQuery("#hId").val();
+					pn=jQuery("#pNum").val();
 					nId=jQuery("#nId").val();
-					hId=jQuery("#hId").val();
+					pNum=jQuery("#pNum").val();
 				
-					if(typeof nId!="undefined"){
-			/*		if(nId=="1" && hId=="1"){
+					if(typeof nId!="undefined" || typeof pNum!="undefined"){
+					if(nId=="1" && pNum=="1"){
 					//document.getElementById("nationalIdValidationMessage").innerHTML="Patient already registered with this National id";
 					//document.getElementById("healthIdValidationMessage").innerHTML="Patient already registered with this Health id";
                     //jQuery("#nationalIdValidationMessage").show();
                     //jQuery("#healthIdValidationMessage").show();
-		            alert("Patient already registered with this National id and Health id");
+		            alert("Patient already registered with this National id and Passport Number");
 					return false
-		            }*/
-		            if(nId=="1"){
+		            }
+		            else if(nId=="1"){
                     //document.getElementById("nationalIdValidationMessage").innerHTML="Patient already registered with this National id";
                     //jQuery("#nationalIdValidationMessage").show();
                     //jQuery("#healthIdValidationMessage").hide();
 		            alert("Patient already registered with this National id");
                     return false;					
-		            }/*
-		            else if(hId=="1"){
+		            }
+		            else if(pNum=="1"){
 		             //document.getElementById("healthIdValidationMessage").innerHTML="Patient already registered with this Health id";
                      //jQuery("#healthIdValidationMessage").show();
                      //jQuery("#nationalIdValidationMessage").hide();
-		             alert("Patient already registered with this Health id");	
+		             alert("Patient already registered with this Passport Number");	
 					 return false;
-		            }*/
+		            }
 		            }
 		            else{
 		            alert("please try again");
