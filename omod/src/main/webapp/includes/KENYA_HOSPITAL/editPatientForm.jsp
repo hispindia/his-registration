@@ -1442,7 +1442,7 @@ function showOtherNationality(){
 			<tr>
 				<td>Address<label style="color:red">*</label>&nbsp;&nbsp;&nbsp;&nbsp;</td>
 				<td>Physical Address<label style="color:red">*</label>&nbsp;&nbsp;&nbsp;&nbsp;</td>
-				<td><input id="patientPostalAddress" name="patient.address.postalAddress" size="15" />
+				<td><input id="patientPostalAddress" name="patient.address.postalAddress" style="width: 152px;"/>
 				</td>
 			</tr>
 			<tr>
@@ -1457,7 +1457,7 @@ function showOtherNationality(){
 				<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
 				<td>Sub-county&nbsp;&nbsp;&nbsp;&nbsp;</td>
 				<td><select id="upazilas" name="patient.address.upazila"
-							style="width: 135px;">
+							style="width: 152px;">
 						</select>
 				</td>
 			</tr>
