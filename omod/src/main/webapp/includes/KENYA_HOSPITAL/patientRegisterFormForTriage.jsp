@@ -21,25 +21,28 @@
 
 <style>
 .cell {
-	border-top: 1px solid lightgrey;
+	border-top: 2px solid black;
 	padding: 20px;
 }
+
 
 td.border {
 	border-width: 1px;
 	border-right: 1px;
+	border-left: 1px;
+	border-top: 1px;
 	border-bottom: 1px;
-	border-color: lightgrey;
+	border-color: black	;
 	border-style: solid;
 }
 
 .floatLeft {
-	width: 45%;
+	width: 47%;
 	float: left;
 }
 
 .floatRight {
-	width: 55%;
+	width: 52%;
 	float: right;
 }
 
@@ -54,6 +57,19 @@ td.border {
 .container {
 	overflow: hidden;
 }
+
+input, select, textarea {
+background-color: #bde9ba;
+	border-width: 1px;
+	border-right: 1px;
+	border-left: 1px;
+	border-top: 1px;
+	border-bottom: 1px;
+	border-color: black;
+	border-style: solid;
+
+}
+
 </style>
 <script type="text/javascript">
 	jQuery(document).ready(
@@ -1317,6 +1333,8 @@ td.border {
 				jQuery("#relativePostalAddress").val(jQuery("#patientPostalAddress").val());
 				
 		}
+		else {		jQuery("#relativePostalAddress").val('');
+		}
 		},
 		
 		checkPatientAgeForChildLessThan5yr : function() {
@@ -1362,15 +1380,17 @@ td.border {
 	  jQuery("#otherNationality").hide();
 	  }
 	}
+	
 </script>
-<h3 align="center" style="color:black">PATIENT REGISTRATION</h3>
+<h3 align="center" style="color:black">PATIENT REGISTRATION<br><br></h3>
+
 <div id="patientSearchResult"></div>
 <form id="patientRegistrationForm" method="POST">
 		<div class="floatLeft">
 		<table>
 			<tr>
-				<td>Patient Name<label style="color:red">*</label>&nbsp;&nbsp;&nbsp;&nbsp;</td>
-				<td>Surname<label style="color:red">*</label>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+				<td valign="top"><b>Patient Name</b><label style="color:red">*</label>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+				<td valign="top">Surname<label style="color:red">*</label>&nbsp;&nbsp;&nbsp;&nbsp;</td>
 				<td><input type="hidden" id="surName" name="patient.surName" style='width: 152px;'>
 				<div id="searchbox"></div>
 				<div id="numberOfFoundPatients"></div>
@@ -1379,24 +1399,43 @@ td.border {
 			<tr>
 				<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
 				<td>First Name<label style="color:red">*</label>&nbsp;&nbsp;&nbsp;&nbsp;</td>
-				<td><input type="text" id="firstName" name="patient.firstName" style='width: 152px;'>
+				<td><input type="text" id="firstName" name="patient.firstName" style='width: 152px; 	border-width: 1px;
+	border-right: 1px;
+	border-left: 1px;
+	border-top: 1px;
+	border-bottom: 1px;
+	border-color: black;
+	border-style: solid;'>
 				</td>
 			</tr>
 			<tr>
 				<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
 				<td>Given Name&nbsp;&nbsp;&nbsp;&nbsp;</td>
-				<td><input type="text" id="givenName" name="patient.givenName" style='width: 152px;'>
+				<td><input type="text" id="givenName" name="patient.givenName" style='width: 152px;	border-width: 1px;
+	border-right: 1px;
+	border-left: 1px;
+	border-top: 1px;
+	border-bottom: 1px;
+	border-color: black;
+	border-style: solid;'>
 				</td>
 			</tr>
 			<tr>
 				<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
 				<td>Other Name&nbsp;&nbsp;&nbsp;&nbsp;</td>
-				<td><input type="text" id="otherName" name="patient.otherName" style='width: 152px;'>
+				<td><input type="text" id="otherName" name="patient.otherName" style='width: 152px;	border-width: 1px;
+	border-right: 1px;
+	border-left: 1px;
+	border-top: 1px;
+	border-bottom: 1px;
+	border-color: black;
+	border-style: solid;'>
 				</td>
 			</tr>
 			<tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr>
+			<tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr>
 			<tr>
-				<td>Demographics<label style="color:red">*</label>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+				<td><b>Demographics</b><label style="color:red">*</label>&nbsp;&nbsp;&nbsp;&nbsp;</td>
 				<td>Age or DOB<label style="color:red">*</label>&nbsp;&nbsp;&nbsp;&nbsp;</td>
 				<td><input type="hidden" id="calendar" /> <input
 							id="birthdate" name="patient.birthdate" style='width: 152px;'/> <img
@@ -1432,8 +1471,10 @@ td.border {
 				</td>
 			</tr>
 			<tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr>
+			<tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr>
+
 			<tr>
-				<td>Address<label style="color:red">*</label>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+				<td><b>Address</b><label style="color:red">*</label>&nbsp;&nbsp;&nbsp;&nbsp;</td>
 				<td>Physical Address<label style="color:red">*</label>&nbsp;&nbsp;&nbsp;&nbsp;</td>
 				<td><input id="patientPostalAddress" name="patient.address.postalAddress" style='width: 152px;' />
 				</td>
@@ -1456,7 +1497,7 @@ td.border {
 			</tr>
 			<tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr>
 			<tr>
-				<td>Contact Number&nbsp;&nbsp;&nbsp;&nbsp;</td>
+				<td><b>Contact Number&nbsp;&nbsp;&nbsp;&nbsp;</b></td>
 				<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
 				<td><input id="patientPhoneNumber"
 				name="person.attribute.16" style='width: 152px;' />
@@ -1464,26 +1505,28 @@ td.border {
 			</tr>
 			<tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr>
 			<tr>
-				<td>E-mail Address&nbsp;&nbsp;&nbsp;&nbsp;</td>
+				<td><b>E-mail Address&nbsp;&nbsp;&nbsp;&nbsp;</b></td>
 				<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
 				<td><input id="patientEmail"
 				name="person.attribute.37" style='width: 152px;' />
 				</td>
 			</tr>
 			<tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr>
+			<tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr>
+
 			<tr>
-				<td>Next of Kin(NOK)&nbsp;&nbsp;&nbsp;&nbsp;</td>
+				<td><b>Next of Kin(NOK)&nbsp;&nbsp;&nbsp;&nbsp;</b></td>
 				<td>Relative Name<label style="color:red">*</label>&nbsp;&nbsp;&nbsp;&nbsp;</td>
 				<td><input id="patientRelativeName" name="person.attribute.8" style='width: 152px;' />
 				</td>
 			</tr>
 			<tr>
-				<td>Information<label style="color:red">*</label>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+				<td><b>Information</b><label style="color:red">*</label>&nbsp;&nbsp;&nbsp;&nbsp;</td>
 				<td>Relationship Type<label style="color:red">*</label>&nbsp;&nbsp;&nbsp;&nbsp;</td>
 				<td><select id="relationshipType" name="person.attribute.15" style='width: 152px;'>
 										<option value="Relationship"></option>
 										<option value="Parent">Parent</option>
-										<option value="Spouse">Single</option>
+										<option value="Spouse">Spouse</option>
 										<option value="Guardian">Guardian</option>
 										<option value="Friend">Friend</option>
 										<option value="Other">Other</option>
@@ -1493,7 +1536,14 @@ td.border {
 			<tr>
 				<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
 				<td>Physical Address&nbsp;&nbsp;&nbsp;&nbsp;</td>
-				<td><input type="text" id="relativePostalAddress" name="person.attribute.28" style='width: 152px;'/>
+				<td><input type="text" id="relativePostalAddress" name="person.attribute.28" style='width: 152px; 	border-width: 1px;
+	border-right: 1px;
+	border-left: 1px;
+	border-top: 1px;
+	border-bottom: 1px;
+	border-color: black;
+	border-style: solid;
+'/>
 				<input id="sameAddress" type="checkbox"/> Same as above
 				</td>
 			</tr>
@@ -1518,23 +1568,18 @@ td.border {
 			</tr>
 			-->
 		</table>
-		<table align="right">
-		<tr>
-		<td><input type="button" value="Save" onclick="PAGE.submit();" />
-		    <input type="button" value="Reset" onclick="window.location.href=window.location.href" />
-		</td>
-		</tr>
-		</table>
 		</div>
 		<div class="floatRight">
 		<table>
 		<tr>
-				<td>Patient Identifier<label style="color:red">*</label>&nbsp;&nbsp;&nbsp;&nbsp;</td>
-				<td><input readonly name="patient.identifier" style="border: none; width: 250px;" /></td>
+				<td><b>Patient Identifier</b><label style="color:red">*</label>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+				<td><b><input readonly name="patient.identifier" style="border: none; width: 250px; background-color:white; font-weight:bold" /></b></td>
 		</tr>
-		<tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr>
+			<tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr>
+			<tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr>
+
 		<tr>
-				<td>Client Identification&nbsp;&nbsp;&nbsp;&nbsp;</td>
+				<td><b>Client Identification&nbsp;&nbsp;&nbsp;&nbsp;</b></td>
 				<td>Nationality</td>
 				<td><select id="patientNation" name="person.attribute.27" style="width: 152px;" onchange="showOtherNationality();">
 										<option value="Nation"></option>
@@ -1596,11 +1641,7 @@ td.border {
 										<option value="Zimbabwe">Zimbabwe</option>
 										<option value="Other">Other</option>
 						</select></td>
-		</tr>
-		<tr>
-		<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
-		<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
-		<td><span id="otherNationality"><input id="otherNationalityId" name="person.attribute.39" placeholder="If others,please specify" style='width: 152px;'/></span></td>
+								<td><span id="otherNationality"><input id="otherNationalityId" name="person.attribute.39" placeholder="Please specify" style='width: 152px;'/></span></td>
 		</tr>
 		<tr>
 		<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
@@ -1613,9 +1654,10 @@ td.border {
 		<td><input id="passportNumber" name="patient.attribute.38" style='width: 152px;'/></td>
 		</tr>
 		<tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr>
+		<tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr>		
 		<tr>
 				<td id="catGen"><input id="patCatGeneral" type="checkbox" name="person.attribute.14" value="General" /> General</td>
-				<td>Patient Category&nbsp;&nbsp;&nbsp;&nbsp;</td>
+				<td><b>Patient Category&nbsp;&nbsp;&nbsp;&nbsp;</b></td>
 				<td><input id="patCatHIV" type="checkbox" name="person.attribute.14" value="HIV" /> HIV</td>
 				<td><input id="patCatChildLessThan5yr" type="checkbox" name="person.attribute.14" value="Child Less Than 5 yr" /> Child less than 5 years old&nbsp;&nbsp;&nbsp;&nbsp;</td>
 				<td><input id="patCatNHIF" type="checkbox" name="person.attribute.14" value="NHIF" /> NHIF</td>
@@ -1650,19 +1692,19 @@ td.border {
 		</tr>
 		<tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr>
 		<tr>
-				<td>Temporary Category&nbsp;&nbsp;&nbsp;&nbsp;</td>
+				<td><b>Temporary Category&nbsp;&nbsp;&nbsp;&nbsp;</b></td>
 				<td><input id="mlcCase" type="checkbox" name="mlcCase"/> MLC</td>
 				<td><select id="tempCat" name="patient.temporary" style='width: 152px;'>	</select></td>
 		</tr>
 		<tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr>
 		<tr>
-				<td>Visit Information<label style="color:red">*</label>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+				<td><b>Visit Information</b><label style="color:red">*</label>&nbsp;&nbsp;&nbsp;&nbsp;</td>
 				<td>Triage Room to Visit</td>
 				<td><select id="triage" name="patient.triage" style='width: 152px;'>	</select></td>
 		</tr>
 		<tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr>
 		<tr>
-				<td>Referral Information&nbsp;&nbsp;&nbsp;&nbsp;</td>
+				<td><b>Referral Information&nbsp;&nbsp;&nbsp;&nbsp;</b></td>
 				<td>Referred From&nbsp;&nbsp;&nbsp;&nbsp;</td>
 				<td><select id="referredFrom" name="patient.referred.from" style="width: 152px;"></select></td>
 		</tr>
@@ -1681,4 +1723,17 @@ td.border {
 		</table>
 		</div>
 		<div id="validationMessage"></div>
+		<table align="left">
+		<tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr>
+		<tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr>
+		<tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr>
+		<tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr>
+
+		<tr>
+		<td><input type="button" value="Save" onclick="PAGE.submit();" style="font-weight:bold"/>
+		    <input type="button" value="Reset" onclick="window.location.href=window.location.href" style="font-weight:bold"/>
+		</td>
+		</tr>
+		</table>
+
 	</form>
