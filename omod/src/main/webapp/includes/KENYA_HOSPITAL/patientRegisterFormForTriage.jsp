@@ -510,7 +510,7 @@ td.border {
 				}
 			}
 			
-			if (!StringUtils.isBlank(jQuery("#patientEmail").val())) {
+			/*if (!StringUtils.isBlank(jQuery("#patientEmail").val())) {
 				var x=jQuery("#patientEmail").val();
 				var atpos=x.indexOf("@");
 				var dotpos=x.lastIndexOf(".");
@@ -531,6 +531,31 @@ td.border {
 				  alert("Please enter the NOK's e-mail address in correct format");
 				  return false;
 				  }
+			}*/
+			
+			if (!StringUtils.isBlank(jQuery("#patientEmail").val())) {
+			var x=jQuery("#patientEmail").val();
+			var regExpForEmail = /^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+			if (regExpForEmail.test(x)) {
+			return true;
+			}
+			else {
+			alert("Please enter the patient's e-mail address in correct format");
+			return false;
+			}
+			
+			}
+			
+			if (!StringUtils.isBlank(jQuery("#relativeEmail").val())) {
+			var x=jQuery("#relativeEmail").val();
+			var regExpForEmail = /^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+			if (regExpForEmail.test(x)) {
+			return true;
+			}
+			else {
+			alert("Please enter the NOK's e-mail address in correct format");
+			return false;
+			}
 			}
 			
 			if (!StringUtils.isBlank(jQuery("#relativePhoneNumber").val())) {
