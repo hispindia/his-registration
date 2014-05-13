@@ -96,6 +96,8 @@
 
 		jQuery("#buySlip").hide();
 		
+		jQuery("#exe_wav_number").hide();
+		jQuery("#nhif_number").hide();
 		jQuery("#exemptionField").hide();
 		jQuery("#nhifCardIdField").hide();
 		jQuery("#waiverField").hide();

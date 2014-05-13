@@ -581,7 +581,16 @@ background-color: #bde9ba;
 					return false;
 				}
 			}
+
+			if (!StringUtils.isBlank(jQuery("#relativePhoneNumber").val())) {
+				if (!StringUtils.isDigit(jQuery("#relativePhoneNumber").val())) {
+					alert("Please enter the NOK's contact number in correct format");
+					return false;
+				}
+			}
 			
+			
+			/*
 			if (!StringUtils.isBlank(jQuery("#patientEmail").val())) {
 				var x=jQuery("#patientEmail").val();
 				var atpos=x.indexOf("@");
@@ -592,14 +601,6 @@ background-color: #bde9ba;
 				  return false;
 				  }
 			}
-
-			if (!StringUtils.isBlank(jQuery("#relativePhoneNumber").val())) {
-				if (!StringUtils.isDigit(jQuery("#relativePhoneNumber").val())) {
-					alert("Please enter the NOK's contact number in correct format");
-					return false;
-				}
-			}
-			
 			
 			if (!StringUtils.isBlank(jQuery("#relativeEmail").val())) {
 				var x=jQuery("#relativeEmail").val();
@@ -610,6 +611,32 @@ background-color: #bde9ba;
 				  alert("Please enter the NOK's e-mail address in correct format");
 				  return false;
 				  }
+			}
+			*/
+			
+			if (!StringUtils.isBlank(jQuery("#patientEmail").val())) {
+			var x=jQuery("#patientEmail").val();
+			var regExpForEmail = /^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+			if (regExpForEmail.test(x)) {
+			return true;
+			}
+			else {
+			alert("Please enter the patient's e-mail address in correct format");
+			return false;
+			}
+			
+			}
+			
+			if (!StringUtils.isBlank(jQuery("#relativeEmail").val())) {
+			var x=jQuery("#relativeEmail").val();
+			var regExpForEmail = /^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+			if (regExpForEmail.test(x)) {
+			return true;
+			}
+			else {
+			alert("Please enter the NOK's e-mail address in correct format");
+			return false;
+			}
 			}
 			
 			if (!StringUtils.isBlank(jQuery("#estimatedAge").html())) {
