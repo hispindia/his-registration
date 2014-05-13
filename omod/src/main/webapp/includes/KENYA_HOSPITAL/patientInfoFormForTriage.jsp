@@ -93,6 +93,27 @@
 			jQuery("#mlcCat").val(MODEL.tempCategory);	
 			jQuery("#mlcCat").attr("disabled", "disabled");
 		}
+		
+		if(!StringUtils.isBlank(MODEL.exemptionNumber)){	
+		    jQuery("#exe_wav_number").show();	
+		    jQuery("#exemptionField").show();	
+			jQuery("#exemptionNumber").val(MODEL.exemptionNumber);	
+			jQuery("#exemptionNumber").attr("disabled", "disabled");
+		}
+		
+		if(!StringUtils.isBlank(MODEL.nhifCardNumber)){	
+		    jQuery("#nhif_number").show();	
+		    jQuery("#nhifCardIdField").show();	
+			jQuery("#nhifCardIdNumber").val(MODEL.nhifCardNumber);	
+			jQuery("#nhifCardIdNumber").attr("disabled", "disabled");
+		}
+		
+		if(!StringUtils.isBlank(MODEL.waiverNumber)){	
+		    jQuery("#exe_wav_number").show();
+		    jQuery("#waiverField").show();			
+			jQuery("#waiverNumber").val(MODEL.waiverNumber);	
+			jQuery("#waiverNumber").attr("disabled", "disabled");
+		}
 
 		jQuery("#buySlip").hide();
 		
@@ -162,18 +183,19 @@
 			jQuery("#exemptionNumber").val(MODEL.exemptionNumber);
 			jQuery("#exemptionField").show();
 			jQuery("#exemptionNumber").attr("disabled", "disabled");
-			jQuery("#nhif_number").hide();
+			jQuery("#exe_wav_number").show();
 		}
 		if(!StringUtils.isBlank(MODEL.nhifCardNumber)){			
 			jQuery("#nhifCardIdNumber").val(MODEL.nhifCardNumber);
 			jQuery("#nhifCardIdField").show();
 			jQuery("#nhifCardIdNumber").attr("disabled", "disabled");
+			jQuery("#nhif_number").show();
 		}
 		if(!StringUtils.isBlank(MODEL.waiverNumber)){			
 			jQuery("#waiverNumber").val(MODEL.waiverNumber);
 			jQuery("#waiverField").show();
 			jQuery("#waiverNumber").attr("disabled", "disabled");
-			jQuery("#nhif_number").hide();
+			jQuery("#exe_wav_number").show();
 		}
 		
 		//Category Check
@@ -691,7 +713,7 @@ jQuery("#message").hide();
 					</select></td>	
 					
 					<td id="exemptionField">
-							<span><input id="exemptionNumber" name="person.attribute.31" />
+							<span><input id="exemptionNumber" name="person.attribute.36" />
 							</span>
 							
 					</td>		
