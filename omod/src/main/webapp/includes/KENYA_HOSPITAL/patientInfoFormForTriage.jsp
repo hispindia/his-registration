@@ -93,32 +93,12 @@
 			jQuery("#mlcCat").val(MODEL.tempCategory);	
 			jQuery("#mlcCat").attr("disabled", "disabled");
 		}
-		
-		if(!StringUtils.isBlank(MODEL.exemptionNumber)){	
-		    jQuery("#exe_wav_number").show();	
-		    jQuery("#exemptionField").show();	
-			jQuery("#exemptionNumber").val(MODEL.exemptionNumber);	
-			jQuery("#exemptionNumber").attr("disabled", "disabled");
-		}
-		
-		if(!StringUtils.isBlank(MODEL.nhifCardNumber)){	
-		    jQuery("#nhif_number").show();	
-		    jQuery("#nhifCardIdField").show();	
-			jQuery("#nhifCardIdNumber").val(MODEL.nhifCardNumber);	
-			jQuery("#nhifCardIdNumber").attr("disabled", "disabled");
-		}
-		
-		if(!StringUtils.isBlank(MODEL.waiverNumber)){	
-		    jQuery("#exe_wav_number").show();
-		    jQuery("#waiverField").show();			
-			jQuery("#waiverNumber").val(MODEL.waiverNumber);	
-			jQuery("#waiverNumber").attr("disabled", "disabled");
-		}
 
 		jQuery("#buySlip").hide();
 		
-		jQuery("#exe_wav_number").hide();
+		jQuery("#exemption_number").hide();
 		jQuery("#nhif_number").hide();
+		jQuery("#waiver_number").hide();
 		jQuery("#exemptionField").hide();
 		jQuery("#nhifCardIdField").hide();
 		jQuery("#waiverField").hide();
@@ -180,22 +160,22 @@
 			}
 		//ghanshyam,18-dec-2013,# 3457 Exemption number for selected category should show on registration receipt
 		if(!StringUtils.isBlank(MODEL.exemptionNumber)){			
-			jQuery("#exemptionNumber").val(MODEL.exemptionNumber);
-			jQuery("#exemptionField").show();
+			jQuery("#exemption_number").show();	
+		    jQuery("#exemptionField").show();	
+			jQuery("#exemptionNumber").val(MODEL.exemptionNumber);	
 			jQuery("#exemptionNumber").attr("disabled", "disabled");
-			jQuery("#exe_wav_number").show();
 		}
 		if(!StringUtils.isBlank(MODEL.nhifCardNumber)){			
-			jQuery("#nhifCardIdNumber").val(MODEL.nhifCardNumber);
-			jQuery("#nhifCardIdField").show();
+			jQuery("#nhif_number").show();	
+		    jQuery("#nhifCardIdField").show();	
+			jQuery("#nhifCardIdNumber").val(MODEL.nhifCardNumber);	
 			jQuery("#nhifCardIdNumber").attr("disabled", "disabled");
-			jQuery("#nhif_number").show();
 		}
 		if(!StringUtils.isBlank(MODEL.waiverNumber)){			
-			jQuery("#waiverNumber").val(MODEL.waiverNumber);
-			jQuery("#waiverField").show();
+			jQuery("#waiver_number").show();
+		    jQuery("#waiverField").show();			
+			jQuery("#waiverNumber").val(MODEL.waiverNumber);	
 			jQuery("#waiverNumber").attr("disabled", "disabled");
-			jQuery("#exe_wav_number").show();
 		}
 		
 		//Category Check
@@ -218,6 +198,8 @@
 			jQuery("#mlcCat").val(MODEL.observations[tempCategoryId]);
 			jQuery("#mlcCat").attr("disabled", "disabled");
 			}
+			
+			jQuery("#patientCategory").attr("disabled", "disabled");
 		    
 			jQuery("#printSlip").hide();
 			jQuery("#save").hide();
@@ -498,20 +480,22 @@
 				jQuery("#exemptionField").hide();
 				jQuery("#nhifCardIdField").hide();
 				jQuery("#waiverField").hide();
-				jQuery("#exe_wav_number").hide();
+				jQuery("#exemption_number").hide();
 				jQuery("#nhif_number").hide();
+				jQuery("#waiver_number").hide();
 				
 				jQuery("#regFeeValue").val(${reVisitFee});
 				//jQuery("#regFeeValue").attr("disabled", "disabled");
 				
 			} else if(jQuery("#patientCategory").val() == "HIV"){
 				jQuery("#exemptionField").show();
-				jQuery("#exe_wav_number").show();
+				jQuery("#exemption_number").show();
 				jQuery("#nhifCardIdNumber").val("");
 				jQuery("#waiverNumber").val("");
 				jQuery("#nhifCardIdField").hide();
 				jQuery("#waiverField").hide();
 				jQuery("#nhif_number").hide();
+				jQuery("#waiver_number").hide();
 
 				jQuery("#regFeeValue").val(0);
 				//jQuery("#regFeeValue").attr("disabled", "disabled");
@@ -519,12 +503,13 @@
 		
 			} else if(jQuery("#patientCategory").val() == "Child Less Than 5 yr"){
 				jQuery("#exemptionField").show();
-				jQuery("#exe_wav_number").show();
+				jQuery("#exemption_number").show();
 				jQuery("#nhifCardIdNumber").val("");
 				jQuery("#waiverNumber").val("");
 				jQuery("#nhifCardIdField").hide();
 				jQuery("#waiverField").hide();
 				jQuery("#nhif_number").hide();
+				jQuery("#waiver_number").hide();
 
 				jQuery("#regFeeValue").val(0);
 				//jQuery("#regFeeValue").attr("disabled", "disabled");
@@ -532,10 +517,11 @@
 			}else if(jQuery("#patientCategory").val() == "NHIF"){
 				jQuery("#exemptionField").show();
 				jQuery("#nhifCardIdField").show();
-				jQuery("#exe_wav_number").show();
+				jQuery("#exemption_number").show();
 				jQuery("#nhif_number").show();
 				jQuery("#waiverNumber").val("");
 				jQuery("#waiverField").hide();
+				jQuery("#waiver_number").hide();
 
 				jQuery("#regFeeValue").val(0);
 				//jQuery("#regFeeValue").attr("disabled", "disabled");
@@ -543,12 +529,13 @@
 			
 			}else if(jQuery("#patientCategory").val() == "TB"){
 				jQuery("#exemptionField").show();
-				jQuery("#exe_wav_number").show();
+				jQuery("#exemption_number").show();
 				jQuery("#nhifCardIdNumber").val("");
 				jQuery("#waiverNumber").val("");
 				jQuery("#nhifCardIdField").hide();
 				jQuery("#waiverField").hide();
 				jQuery("#nhif_number").hide();
+				jQuery("#waiver_number").hide();
 
 				jQuery("#regFeeValue").val(0);
 				//jQuery("#regFeeValue").attr("disabled", "disabled");
@@ -556,47 +543,51 @@
 			
 			}else if(jQuery("#patientCategory").val() == "Expectant Mother"){
 				jQuery("#exemptionField").show();
-				jQuery("#exe_wav_number").show();
+				jQuery("#exemption_number").show();
 				jQuery("#nhifCardIdNumber").val("");
 				jQuery("#waiverNumber").val("");
 				jQuery("#nhifCardIdField").hide();
 				jQuery("#waiverField").hide();
 				jQuery("#nhif_number").hide();
+				jQuery("#waiver_number").hide();
 		
 				jQuery("#regFeeValue").val(0);
 				//jQuery("#regFeeValue").attr("disabled", "disabled");
 				
 			}else if(jQuery("#patientCategory").val() == "Other Insurance"){
 				jQuery("#exemptionField").show();
-				jQuery("#exe_wav_number").show();
+				jQuery("#exemption_number").show();
 				jQuery("#nhifCardIdNumber").val("");
 				jQuery("#waiverNumber").val("");
 				jQuery("#nhifCardIdField").hide();
 				jQuery("#waiverField").hide();
 				jQuery("#nhif_number").hide();
+				jQuery("#waiver_number").hide();
 
 				jQuery("#regFeeValue").val(0);
 				//jQuery("#regFeeValue").attr("disabled", "disabled");
 				
 			}else if(jQuery("#patientCategory").val() == "Malaria"){
 				jQuery("#exemptionField").show();
-				jQuery("#exe_wav_number").show();
+				jQuery("#exemption_number").show();
 				jQuery("#nhifCardIdNumber").val("");
 				jQuery("#waiverNumber").val("");
 				jQuery("#nhifCardIdField").hide();
 				jQuery("#waiverField").hide();
 				jQuery("#nhif_number").hide();
+				jQuery("#waiver_number").hide();
 
 				jQuery("#regFeeValue").val(0);
 				//jQuery("#regFeeValue").attr("disabled", "disabled");
 			
 			}else if(jQuery("#patientCategory").val() == "Waiver"){
 				jQuery("#waiverField").show();
-				jQuery("#exe_wav_number").show();
+				jQuery("#waiver_number").show();
 				jQuery("#exemptionNumber").val("");
 				jQuery("#nhifCardIdNumber").val("");
 				jQuery("#exemptionField").hide();
 				jQuery("#nhifCardIdField").hide();
+				jQuery("#exemption_number").hide();
 				jQuery("#nhif_number").hide();
 
 				jQuery("#regFeeValue").removeAttr("disabled");
@@ -693,8 +684,9 @@ jQuery("#message").hide();
 <!--					<td colspan="1"><b>Marital Status:</b></td>
 					<td colspan="1"><span id="maritalStatus"></span></td> -->
 					<td></td><td></td>
-					<td id="exe_wav_number"> Exemption/Waiver Number</td>
-					<td id="nhif_number"> NHIF Card ID</td>
+					<td id="exemption_number">Exemption Number</td>
+					<td id="nhif_number">NHIF Card ID</td>
+					<td id="waiver_number">Waiver Number</td>
 				</tr>
 				
 				<tr>

@@ -25,6 +25,8 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Random;
+
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openmrs.Location;
@@ -83,11 +85,11 @@ public class RegistrationUtils {
 		//personName.setFamilyNamePrefix(surName);
 		personName.setFamilyName(surName);
 		personName.setGivenName(firstName);
-		if(otherName!=""){
+		if (!StringUtils.isBlank(otherName)){
 		personName.setMiddleName(givenName+","+otherName);
 		}
 		else{
-			personName.setMiddleName(givenName);	
+		personName.setMiddleName(givenName);	
 		}
 		
 		
