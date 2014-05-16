@@ -153,9 +153,9 @@
 						jQuery("#regFeeValue").after("<span>" + jQuery("#regFeeValue option:checked").html() +  "</span>"); 
 				}
 			if(jQuery("#patientCategory").val() == "Waiver"){
-						jQuery("#regFeeValue").val(0);
-						jQuery("#regFeeValue").hide();
-						jQuery("#regFeeValue").after("<span>" + jQuery("#regFeeValue option:checked").html() +  "</span>"); 
+						//jQuery("#regFeeValue").val(0);
+						//jQuery("#regFeeValue").hide();
+						//jQuery("#regFeeValue").after("<span>" + jQuery("#regFeeValue option:checked").html() +  "</span>"); 
 				}
 			}
 		//ghanshyam,18-dec-2013,# 3457 Exemption number for selected category should show on registration receipt
