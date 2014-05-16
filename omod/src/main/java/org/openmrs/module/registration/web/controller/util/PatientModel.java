@@ -63,6 +63,7 @@ public class PatientModel {
 		setFullname(PatientUtils.getFullName(patient));
 		setSurName(patient.getFamilyName());
 		setFirstName(patient.getGivenName());
+		if(patient.getMiddleName()!=null){
 		String[] str_array = patient.getMiddleName().split(",");
 		if (str_array.length == 1) {
 			setGivenName(str_array[0]);
@@ -72,6 +73,7 @@ public class PatientModel {
 		} else {
 			setGivenName("");
 			setOtherName("");
+		}
 		}
 		
 		setAge(String.format("%s, %s", PatientUtils.estimateAge(patient.getBirthdate()),

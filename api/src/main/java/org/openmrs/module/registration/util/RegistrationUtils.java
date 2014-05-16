@@ -85,13 +85,15 @@ public class RegistrationUtils {
 		//personName.setFamilyNamePrefix(surName);
 		personName.setFamilyName(surName);
 		personName.setGivenName(firstName);
-		if (!StringUtils.isBlank(otherName)){
+		if (!StringUtils.isBlank(givenName) && !StringUtils.isBlank(otherName)){
 		personName.setMiddleName(givenName+","+otherName);
 		}
-		else{
+		else if(!StringUtils.isBlank(givenName)){
 		personName.setMiddleName(givenName);	
 		}
-		
+		else if(!StringUtils.isBlank(otherName)){
+		personName.setMiddleName(otherName);
+		}
 		
 		personName.setPreferred(true);
 		return personName;
