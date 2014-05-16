@@ -90,7 +90,7 @@ public class FindCreatePatientController {
 			return "/module/registration/patient/findCreatePatientForTriage";
 		} else {
 			model.addAttribute(
-					"TRIAGE",
+					"OPDs",
 					RegistrationWebUtils
 							.getSubConcepts(RegistrationConstants.CONCEPT_NAME_OPD_WARD));
 			return "/module/registration/patient/findCreatePatientForOPD";

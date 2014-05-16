@@ -63,14 +63,15 @@
         jQuery("#healthId").html(MODEL.patientAttributes[24]);
 		jQuery("#phoneNumber").html(MODEL.patientAttributes[16]);
 		jQuery("#maritalStatus").html(MODEL.patientAttributes[26]);
-		jQuery("#othername").html(MODEL.patientAttributes[25]);
+		//jQuery("#othername").html(MODEL.patientAttributes[25]);
 		jQuery("#gender").html(MODEL.patientGender);
 		jQuery("#datetime").html(MODEL.currentDateTime);
-//		jQuery("#othername1").html(MODEL.patientAttributes[25]+" "+MODEL.patientName);
-		jQuery("#othername1").html(MODEL.patientName);
-		MODEL.TRIAGE = " ,Please Select OPD to Visit|" + MODEL.TRIAGE;
-		PAGE.fillOptions("#triage", {
-			data:MODEL.TRIAGE,
+		//jQuery("#othername1").html(MODEL.patientAttributes[25]+" "+MODEL.patientName);
+		jQuery("#patientName").html(MODEL.patientName);
+		
+		MODEL.OPDs = " ,Please Select OPD Ward to Visit|" + MODEL.OPDs;
+		PAGE.fillOptions("#opdWard", {
+			data:MODEL.OPDs,
 			delimiter: ",",
 			optionDelimiter: "|"
 		});
@@ -84,8 +85,8 @@
 		
 		// Set the selected OPD
 		if(!StringUtils.isBlank(MODEL.selectedOPD)){			
-			jQuery("#triage").val(MODEL.selectedOPD);
-			jQuery("#triage").attr("disabled", "disabled");
+			jQuery("#opdWard").val(MODEL.selectedOPD);
+			jQuery("#opdWard").attr("disabled", "disabled");
 		}
 		
 		if(!StringUtils.isBlank(MODEL.tempCategory)){			
@@ -95,16 +96,12 @@
 
 		jQuery("#buySlip").hide();
 		
-
-		
-		jQuery("#exe_wav_number").hide();
+		jQuery("#exemption_number").hide();
 		jQuery("#nhif_number").hide();
-		jQuery("#exemptionField2").hide();
-		jQuery("#waiverField").hide();
-		jQuery("#exemptionField1").hide();
-		jQuery("#exemptionField3").hide();
-		jQuery("#exemptionField4").hide();
+		jQuery("#waiver_number").hide();
+		jQuery("#exemptionField").hide();
 		jQuery("#nhifCardIdField").hide();
+		jQuery("#waiverField").hide();
 		jQuery("#genderField").hide();
 		jQuery("#ageField").hide();
 
@@ -120,17 +117,12 @@
 						jQuery("#regFeeValue").hide();
 						jQuery("#regFeeValue").after("<span>" + jQuery("#regFeeValue option:checked").html() +  "</span>");  
 				}
+			if(jQuery("#patientCategory").val() == "HIV"){
+						jQuery("#regFeeValue").val(0);
+						jQuery("#regFeeValue").hide();
+						jQuery("#regFeeValue").after("<span>" + jQuery("#regFeeValue option:checked").html() +  "</span>"); 
+				}
 			if(jQuery("#patientCategory").val() == "Child Less Than 5 yr"){
-						jQuery("#regFeeValue").val(0);
-						jQuery("#regFeeValue").hide();
-						jQuery("#regFeeValue").after("<span>" + jQuery("#regFeeValue option:checked").html() +  "</span>"); 
-				}
-			if(jQuery("#patientCategory").val() == "CCC"){
-						jQuery("#regFeeValue").val(0);
-						jQuery("#regFeeValue").hide();
-						jQuery("#regFeeValue").after("<span>" + jQuery("#regFeeValue option:checked").html() +  "</span>"); 
-				}
-			if(jQuery("#patientCategory").val() == "Expectant Mother"){
 						jQuery("#regFeeValue").val(0);
 						jQuery("#regFeeValue").hide();
 						jQuery("#regFeeValue").after("<span>" + jQuery("#regFeeValue option:checked").html() +  "</span>"); 
@@ -140,37 +132,50 @@
 						jQuery("#regFeeValue").hide();
 						jQuery("#regFeeValue").after("<span>" + jQuery("#regFeeValue option:checked").html() +  "</span>"); 
 				}
+			if(jQuery("#patientCategory").val() == "TB"){
+						jQuery("#regFeeValue").val(0);
+						jQuery("#regFeeValue").hide();
+						jQuery("#regFeeValue").after("<span>" + jQuery("#regFeeValue option:checked").html() +  "</span>"); 
+				}
+			if(jQuery("#patientCategory").val() == "Expectant Mother"){
+						jQuery("#regFeeValue").val(0);
+						jQuery("#regFeeValue").hide();
+						jQuery("#regFeeValue").after("<span>" + jQuery("#regFeeValue option:checked").html() +  "</span>"); 
+				}
+			if(jQuery("#patientCategory").val() == "Other Insurance"){
+						jQuery("#regFeeValue").val(0);
+						jQuery("#regFeeValue").hide();
+						jQuery("#regFeeValue").after("<span>" + jQuery("#regFeeValue option:checked").html() +  "</span>"); 
+				}
+			if(jQuery("#patientCategory").val() == "Malaria"){
+						jQuery("#regFeeValue").val(0);
+						jQuery("#regFeeValue").hide();
+						jQuery("#regFeeValue").after("<span>" + jQuery("#regFeeValue option:checked").html() +  "</span>"); 
+				}
+			if(jQuery("#patientCategory").val() == "Waiver"){
+						//jQuery("#regFeeValue").val(0);
+						//jQuery("#regFeeValue").hide();
+						//jQuery("#regFeeValue").after("<span>" + jQuery("#regFeeValue option:checked").html() +  "</span>"); 
+				}
 			}
 		//ghanshyam,18-dec-2013,# 3457 Exemption number for selected category should show on registration receipt
-		if(!StringUtils.isBlank(MODEL.categoryValue1)){			
-			jQuery("#exemptionNumber1").val(MODEL.categoryValue1);
-			jQuery("#exemptionField1").show();
-			jQuery("#exemptionNumber1").attr("disabled", "disabled");
+		if(!StringUtils.isBlank(MODEL.exemptionNumber)){			
+			jQuery("#exemption_number").show();	
+		    jQuery("#exemptionField").show();	
+			jQuery("#exemptionNumber").val(MODEL.exemptionNumber);	
+			jQuery("#exemptionNumber").attr("disabled", "disabled");
 		}
-		if(!StringUtils.isBlank(MODEL.categoryValue2)){			
-			jQuery("#waiverNumber").val(MODEL.categoryValue2);
-			jQuery("#waiverField").show();
-			jQuery("#waiverNumber").attr("disabled", "disabled");
-		}
-		if(!StringUtils.isBlank(MODEL.categoryValue3)){			
-			jQuery("#nhifCardIdNumber").val(MODEL.categoryValue3);
-			jQuery("#nhifCardIdField").show();
+		if(!StringUtils.isBlank(MODEL.nhifCardNumber)){			
+			jQuery("#nhif_number").show();	
+		    jQuery("#nhifCardIdField").show();	
+			jQuery("#nhifCardIdNumber").val(MODEL.nhifCardNumber);	
 			jQuery("#nhifCardIdNumber").attr("disabled", "disabled");
 		}
-		if(!StringUtils.isBlank(MODEL.categoryValue4)){			
-			jQuery("#exemptionNumber2").val(MODEL.categoryValue4);
-			jQuery("#exemptionField2").show();
-			jQuery("#exemptionNumber2").attr("disabled", "disabled");
-		}
-		if(!StringUtils.isBlank(MODEL.categoryValue5)){			
-			jQuery("#exemptionNumber3").val(MODEL.categoryValue5);
-			jQuery("#exemptionField3").show();
-			jQuery("exemptionNumber3").attr("disabled", "disabled");
-		}
-		if(!StringUtils.isBlank(MODEL.categoryValue6)){			
-			jQuery("#exemptionNumber4").val(MODEL.categoryValue6);
-			jQuery("#exemptionField4").show();
-			jQuery("#exemptionNumber4").attr("disabled", "disabled");
+		if(!StringUtils.isBlank(MODEL.waiverNumber)){			
+			jQuery("#waiver_number").show();
+		    jQuery("#waiverField").show();			
+			jQuery("#waiverNumber").val(MODEL.waiverNumber);	
+			jQuery("#waiverNumber").attr("disabled", "disabled");
 		}
 		
 		//Category Check
@@ -184,15 +189,17 @@
 		
 		// Set data for reprint page
 		if(MODEL.reprint=="true"){
-			var triageId=MODEL.triageId;
-		    jQuery("#triage").val(MODEL.observations[triageId]);
-		    jQuery("#triage").attr("disabled", "disabled");
+			var opdWardId=MODEL.opdWardId;
+		    jQuery("#opdWard").val(MODEL.observations[opdWardId]);
+		    jQuery("#opdWard").attr("disabled", "disabled");
 		
 			var tempCategoryId=MODEL.tempCategoryId;
 			if(!StringUtils.isBlank(MODEL.observations[tempCategoryId])){
 			jQuery("#mlcCat").val(MODEL.observations[tempCategoryId]);
 			jQuery("#mlcCat").attr("disabled", "disabled");
 			}
+			
+			jQuery("#patientCategory").attr("disabled", "disabled");
 		    
 			jQuery("#printSlip").hide();
 			jQuery("#save").hide();
@@ -222,8 +229,8 @@
 				jQuery("#reprint").hide();
 				
 				// Convert OPDWard dropdown to printable format
-				//jQuery("#triage").hide();
-				//jQuery("#triage").after("<span>" + jQuery("#triage option:checked").html() +  "</span>");  
+				//jQuery("#opdWard").hide();
+				//jQuery("#opdWard").after("<span>" + jQuery("#opdWard option:checked").html() +  "</span>");  
 				jQuery("#opdWardLabel").hide();
 				
 				//ghanshyam  20-may-2013 #1648 capture Health ID and Registration Fee Type	
@@ -355,8 +362,8 @@
 		
 		/** Validate Form */
 		validate: function(){
-			if(StringUtils.isBlank(jQuery("#triage").val())){
-				alert("Please select OPD");
+			if(StringUtils.isBlank(jQuery("#opdWard").val())){
+				alert("Please select OPD Ward");
 				return false;
 			};
 			
@@ -377,9 +384,8 @@
 		   	if(jQuery("#gender").html() =="Male" && jQuery("#patientCategory").val()=="Expectant Mother"){
 				alert("This category is only valid for female patient");
 				jQuery("#patientCategory").val("");
-				jQuery("#exemptionNumber3").val("");
-				jQuery("#exemptionField3").hide();
-				jQuery("#exe_wav_number").hide();
+				jQuery("#exemptionNumber").val("");
+				jQuery("#exemptionField").hide();
 				return false;
 			};
 
@@ -389,29 +395,56 @@
 				if(check2=="ADULT"){
 					alert("This category is only valid for patient under 5 years");
 					jQuery("#patientCategory").val("");
-					jQuery("#exemptionNumber1").val("");
-					jQuery("#exemptionField1").hide();
-					jQuery("#exe_wav_number").hide();
+					jQuery("#exemptionNumber").val("");
+					jQuery("#exemptionField").hide();
 					return false;
 				}
 			};
-
-			if(jQuery("#patientCategory").val()=="Child Less Than 5 yr"){
-				if(jQuery("#exemptionNumber1").val().length <= 0){
+			
+			if(jQuery("#patientCategory").val()=="HIV"){
+				if(jQuery("#exemptionNumber").val().length <= 0){
 					alert("Please fill Exemption number");
 					return false;
 				}
 			};
 
-			if(jQuery("#patientCategory").val()=="CCC"){
-				if(jQuery("#exemptionNumber2").val().length <= 0){
+			if(jQuery("#patientCategory").val()=="Child Less Than 5 yr"){
+				if(jQuery("#exemptionNumber").val().length <= 0){
+					alert("Please fill Exemption number");
+					return false;
+				}
+			};
+			
+			if(jQuery("#patientCategory").val()=="NHIF"){
+				if(jQuery("#exemptionNumber").val().length <= 0 || jQuery("#nhifCardIdNumber").val().length <= 0){
+					alert("Please fill Both Exemption and NHIF Card number");
+					return false;
+				}
+			};
+			
+			if(jQuery("#patientCategory").val()=="TB"){
+				if(jQuery("#exemptionNumber").val().length <= 0){
 					alert("Please fill Exemption number");
 					return false;
 				}
 			};
 
 			if(jQuery("#patientCategory").val()=="Expectant Mother"){
-				if(jQuery("#exemptionNumber3").val().length <= 0){
+				if(jQuery("#exemptionNumber").val().length <= 0){
+					alert("Please fill Exemption number");
+					return false;
+				}
+			};
+			
+			if(jQuery("#patientCategory").val()=="Other Insurance"){
+				if(jQuery("#exemptionNumber").val().length <= 0){
+					alert("Please fill Exemption number");
+					return false;
+				}
+			};
+			
+			if(jQuery("#patientCategory").val()=="Malaria"){
+				if(jQuery("#exemptionNumber").val().length <= 0){
 					alert("Please fill Exemption number");
 					return false;
 				}
@@ -420,13 +453,6 @@
 			if(jQuery("#patientCategory").val()=="Waiver"){
 				if(jQuery("#waiverNumber").val().length <= 0){
 					alert("Please fill Waver number");
-					return false;
-				}
-			};
-			
-			if(jQuery("#patientCategory").val()=="NHIF"){
-				if(jQuery("#exemptionNumber4").val().length <= 0 || jQuery("#nhifCardIdNumber").val().length <= 0){
-					alert("Please fill Both Exemption and NHIF Card number");
 					return false;
 				}
 			};
@@ -448,117 +474,123 @@
 			
 			if (jQuery("#patientCategory").val() == "General") {
 				
-				jQuery("#exemptionNumber2").val("");
-				jQuery("#waiverNumber").val("");
-				jQuery("#exemptionNumber1").val("");
-				jQuery("#exemptionNumber3").val("");
-				jQuery("#exemptionNumber4").val("");
+				jQuery("#exemptionNumber").val("");
 				jQuery("#nhifCardIdNumber").val("");
-				
-				jQuery("#exe_wav_number").hide();
-				jQuery("#nhif_number").hide();
-				jQuery("#exemptionField2").hide();
-				jQuery("#waiverField").hide();
-				jQuery("#exemptionField1").hide();
-				jQuery("#exemptionField3").hide();
-				jQuery("#exemptionField4").hide();
+				jQuery("#waiverNumber").val("");
+				jQuery("#exemptionField").hide();
 				jQuery("#nhifCardIdField").hide();
+				jQuery("#waiverField").hide();
+				jQuery("#exemption_number").hide();
+				jQuery("#nhif_number").hide();
+				jQuery("#waiver_number").hide();
 				
 				jQuery("#regFeeValue").val(${reVisitFee});
+				//jQuery("#regFeeValue").attr("disabled", "disabled");
+				
+			} else if(jQuery("#patientCategory").val() == "HIV"){
+				jQuery("#exemptionField").show();
+				jQuery("#exemption_number").show();
+				jQuery("#nhifCardIdNumber").val("");
+				jQuery("#waiverNumber").val("");
+				jQuery("#nhifCardIdField").hide();
+				jQuery("#waiverField").hide();
+				jQuery("#nhif_number").hide();
+				jQuery("#waiver_number").hide();
+
+				jQuery("#regFeeValue").val(0);
 				//jQuery("#regFeeValue").attr("disabled", "disabled");
 
 		
 			} else if(jQuery("#patientCategory").val() == "Child Less Than 5 yr"){
-				jQuery("#exe_wav_number").show();
-				jQuery("#exemptionField1").show();
-				jQuery("#exemptionNumber2").val("");
-				jQuery("#waiverNumber").val("");
-				jQuery("#exemptionNumber3").val("");
-				jQuery("#exemptionNumber4").val("");
+				jQuery("#exemptionField").show();
+				jQuery("#exemption_number").show();
 				jQuery("#nhifCardIdNumber").val("");
-				jQuery("#nhif_number").hide();
-				jQuery("#exemptionField2").hide();
-				jQuery("#waiverField").hide();
-				jQuery("#exemptionField3").hide();
-				jQuery("#exemptionField4").hide();
+				jQuery("#waiverNumber").val("");
 				jQuery("#nhifCardIdField").hide();
+				jQuery("#waiverField").hide();
+				jQuery("#nhif_number").hide();
+				jQuery("#waiver_number").hide();
+
+				jQuery("#regFeeValue").val(0);
+				//jQuery("#regFeeValue").attr("disabled", "disabled");
+				
+			}else if(jQuery("#patientCategory").val() == "NHIF"){
+				jQuery("#exemptionField").show();
+				jQuery("#nhifCardIdField").show();
+				jQuery("#exemption_number").show();
+				jQuery("#nhif_number").show();
+				jQuery("#waiverNumber").val("");
+				jQuery("#waiverField").hide();
+				jQuery("#waiver_number").hide();
 
 				jQuery("#regFeeValue").val(0);
 				//jQuery("#regFeeValue").attr("disabled", "disabled");
 				
 			
-			}else if(jQuery("#patientCategory").val() == "CCC"){
-				
-				jQuery("#exe_wav_number").show();
-				jQuery("#exemptionNumber1").val("");
-				jQuery("#exemptionField1").hide();
-				jQuery("#exemptionField2").show();
-				jQuery("#waiverNumber").val("");
-				jQuery("#exemptionNumber3").val("");
-				jQuery("#exemptionNumber4").val("");
+			}else if(jQuery("#patientCategory").val() == "TB"){
+				jQuery("#exemptionField").show();
+				jQuery("#exemption_number").show();
 				jQuery("#nhifCardIdNumber").val("");
-				jQuery("#nhif_number").hide();
-				jQuery("#waiverField").hide();
-				jQuery("#exemptionField3").hide();
-				jQuery("#exemptionField4").hide();
+				jQuery("#waiverNumber").val("");
 				jQuery("#nhifCardIdField").hide();
+				jQuery("#waiverField").hide();
+				jQuery("#nhif_number").hide();
+				jQuery("#waiver_number").hide();
 
 				jQuery("#regFeeValue").val(0);
 				//jQuery("#regFeeValue").attr("disabled", "disabled");
 		
 			
 			}else if(jQuery("#patientCategory").val() == "Expectant Mother"){
-				jQuery("#exe_wav_number").show();
-				jQuery("#exemptionField3").show();
-				jQuery("#exemptionNumber2").val("");
-				jQuery("#waiverNumber").val("");
-				jQuery("#exemptionNumber1").val("");
-				jQuery("#exemptionNumber4").val("");
+				jQuery("#exemptionField").show();
+				jQuery("#exemption_number").show();
 				jQuery("#nhifCardIdNumber").val("");
-				jQuery("#nhif_number").hide();
-				jQuery("#exemptionField2").hide();
-				jQuery("#waiverField").hide();
-				jQuery("#exemptionField1").hide();
-				jQuery("#exemptionField4").hide();
+				jQuery("#waiverNumber").val("");
 				jQuery("#nhifCardIdField").hide();
+				jQuery("#waiverField").hide();
+				jQuery("#nhif_number").hide();
+				jQuery("#waiver_number").hide();
 		
+				jQuery("#regFeeValue").val(0);
+				//jQuery("#regFeeValue").attr("disabled", "disabled");
+				
+			}else if(jQuery("#patientCategory").val() == "Other Insurance"){
+				jQuery("#exemptionField").show();
+				jQuery("#exemption_number").show();
+				jQuery("#nhifCardIdNumber").val("");
+				jQuery("#waiverNumber").val("");
+				jQuery("#nhifCardIdField").hide();
+				jQuery("#waiverField").hide();
+				jQuery("#nhif_number").hide();
+				jQuery("#waiver_number").hide();
+
+				jQuery("#regFeeValue").val(0);
+				//jQuery("#regFeeValue").attr("disabled", "disabled");
+				
+			}else if(jQuery("#patientCategory").val() == "Malaria"){
+				jQuery("#exemptionField").show();
+				jQuery("#exemption_number").show();
+				jQuery("#nhifCardIdNumber").val("");
+				jQuery("#waiverNumber").val("");
+				jQuery("#nhifCardIdField").hide();
+				jQuery("#waiverField").hide();
+				jQuery("#nhif_number").hide();
+				jQuery("#waiver_number").hide();
+
 				jQuery("#regFeeValue").val(0);
 				//jQuery("#regFeeValue").attr("disabled", "disabled");
 			
 			}else if(jQuery("#patientCategory").val() == "Waiver"){
-				jQuery("#exe_wav_number").show();
 				jQuery("#waiverField").show();
-				jQuery("#exemptionNumber2").val("");
-				jQuery("#exemptionNumber1").val("");
-				jQuery("#exemptionNumber3").val("");
-				jQuery("#exemptionNumber4").val("");
+				jQuery("#waiver_number").show();
+				jQuery("#exemptionNumber").val("");
 				jQuery("#nhifCardIdNumber").val("");
-				jQuery("#nhif_number").hide();
-				jQuery("#exemptionField2").hide();
-				jQuery("#exemptionField1").hide();
-				jQuery("#exemptionField3").hide();
-				jQuery("#exemptionField4").hide();
+				jQuery("#exemptionField").hide();
 				jQuery("#nhifCardIdField").hide();
+				jQuery("#exemption_number").hide();
+				jQuery("#nhif_number").hide();
 
 				jQuery("#regFeeValue").removeAttr("disabled");
-				
-			
-			}else if(jQuery("#patientCategory").val() == "NHIF"){
-				jQuery("#exe_wav_number").show();
-				jQuery("#exemptionField4").show();
-				jQuery("#exemptionNumber2").val("");
-				jQuery("#waiverNumber").val("");
-				jQuery("#exemptionNumber3").val("");
-				jQuery("#exemptionNumber1").val("");
-				jQuery("#nhif_number").show();
-				jQuery("#nhifCardIdField").show();
-				jQuery("#exemptionField2").hide();
-				jQuery("#waiverField").hide();
-				jQuery("#exemptionField3").hide();
-				jQuery("#exemptionField1").hide();
-
-				jQuery("#regFeeValue").val(0);
-				//jQuery("#regFeeValue").attr("disabled", "disabled");
 
 				
 			}
@@ -636,7 +668,7 @@ jQuery("#message").hide();
 				</tr>
 				<tr>
 					<td colspan="1"><b>Name:</b></td>
-					<td><span id="othername1"></span></td>
+					<td><span id="patientName"></span></td>
 				</tr>
 				
 				<tr id="ageField">
@@ -652,8 +684,9 @@ jQuery("#message").hide();
 <!--					<td colspan="1"><b>Marital Status:</b></td>
 					<td colspan="1"><span id="maritalStatus"></span></td> -->
 					<td></td><td></td>
-					<td id="exe_wav_number"> Exemption/Waiver Number</td>
-					<td id="nhif_number"> NHIF Card ID</td>
+					<td id="exemption_number">Exemption Number</td>
+					<td id="nhif_number">NHIF Card ID</td>
+					<td id="waiver_number">Waiver Number</td>
 				</tr>
 				
 				<tr>
@@ -661,42 +694,32 @@ jQuery("#message").hide();
 					<td><select id="patientCategory" name="person.attribute.14">
 										<option value="Patient Category"></option>
 										<option value="General">General</option>
+										<option value="HIV">HIV</option>
 										<option value="Child Less Than 5 yr">Child less than 5 year old</option>
-										<option value="CCC">Comprehensive Care Clinic Patient</option>
-										<option value="Expectant Mother">Expectant Mother</option>
-										<option value="Waiver">Waiver Case</option>
 										<option value="NHIF">NHIF Card Holder</option>
+										<option value="TB">TB</option>
+										<option value="Expectant Mother">Expectant Mother</option>
+										<option value="Other Insurance">Other Insurance</option>
+										<option value="Malaria">Malaria</option>
+										<option value="Waiver">Waiver Case</option>
 					</select></td>	
 					
-					<td id="exemptionField1">
-							<span><input id="exemptionNumber1" name="person.attribute.31" />
+					<td id="exemptionField">
+							<span><input id="exemptionNumber" name="person.attribute.36" />
 							</span>
 							
-					</td>		
-					<td id="waiverField">
-							<span><input id="waiverNumber" name="person.attribute.32" />
-							</span>
-					</td>		
-
-					<td id="exemptionField2">
-							<span><input id="exemptionNumber2" name="person.attribute.34" />
-							</span>
-					</td>		
-					<td id="exemptionField3">
-							<span><input id="exemptionNumber3" name="person.attribute.35" />
-							</span>
-					</td>		
-					
-					<td id="exemptionField4">
-							<span><input id="exemptionNumber4" name="person.attribute.36" />
-							</span>
 					</td>		
 					
 					<td id="nhifCardIdField">
 							<span><input id="nhifCardIdNumber" name="person.attribute.33" />
 							</span>
 							
-					</td>		
+					</td>	
+					
+					<td id="waiverField">
+							<span><input id="waiverNumber" name="person.attribute.32" />
+							</span>
+					</td>			
 				</tr>
 				
 				<tr>
@@ -724,8 +747,8 @@ jQuery("#message").hide();
 				</tr>
 				  -->
 				<tr id="opdWardLabel">
-					<td colspan="1"><b>OPD to Visit:</b></td>
-					<td colspan="5"><select id="triage" name="patient.opdWard">
+					<td colspan="1"><b>OPD Ward to Visit:</b></td>
+					<td colspan="5"><select id="opdWard" name="patient.opdWard">
 					</select></td>
 				</tr>
 				<tr>

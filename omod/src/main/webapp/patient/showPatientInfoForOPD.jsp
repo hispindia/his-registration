@@ -17,6 +17,7 @@
  *  along with Registration module.  If not, see <http://www.gnu.org/licenses/>.
  *
 --%> 
+
 <%@ include file="/WEB-INF/template/include.jsp" %>
 <%@ include file="/WEB-INF/template/header.jsp" %>
 <%@ include file="../includes/js_css.jsp" %>
@@ -48,7 +49,7 @@
 		observations: _observations,
 		currentDateTime: "${currentDateTime}",	
 		selectedOPD: "${selectedOPD}",
-		TRIAGE: "${TRIAGE}",
+		OPDs: "${OPDs}",
 		TEMPORARYCAT: "${TEMPORARYCAT}",
 		tempCategory:"${tempCategory}",
 		tempCategoryId: "${tempCategoryId}",
@@ -56,16 +57,13 @@
 		dueDate: "${dueDate}",
 		daysLeft: "${daysLeft}",
 		reprint: "${param.reprint eq 'true'}",
-		triageId: "${triageId}",
+		opdWardId: "${opdWardId}",
 		//ghanshyam,11-dec-2013,#3327 Defining patient categories based on Kenyan requirements
 		selectedCategory: "${selectedCategory}",
 		//ghanshyam,18-dec-2013,# 3457 Exemption number for selected category should show on registration receipt
-		categoryValue1: "${categoryValue1}",
-		categoryValue2: "${categoryValue2}",
-		categoryValue3: "${categoryValue3}",
-		categoryValue4: "${categoryValue4}",
-		categoryValue5: "${categoryValue5}",
-		categoryValue6: "${categoryValue6}"
+		exemptionNumber: "${exemptionNumber}",
+		nhifCardNumber: "${nhifCardNumber}",
+		waiverNumber: "${waiverNumber}"
 	};
 </script>
 

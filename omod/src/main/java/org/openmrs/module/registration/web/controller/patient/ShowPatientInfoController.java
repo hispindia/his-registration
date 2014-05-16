@@ -158,6 +158,10 @@ public class ShowPatientInfoController {
 						model.addAttribute("triageId", obs.getConcept().getConceptId());
 					}
 					if (obs.getConcept().getDisplayString()
+					        .equalsIgnoreCase(RegistrationConstants.CONCEPT_NAME_OPD_WARD)) {
+						model.addAttribute("opdWardId", obs.getConcept().getConceptId());
+					}
+					if (obs.getConcept().getDisplayString()
 					        .equalsIgnoreCase(RegistrationConstants.CONCEPT_NAME_REGISTRATION_FEE)) {
 						double regFee=obs.getValueNumeric();
 						int regFeeToInt = (int)regFee;
@@ -205,7 +209,7 @@ public class ShowPatientInfoController {
 			return "/module/registration/patient/showPatientInfoForTriage";
 		}
 		else{
-			model.addAttribute("TRIAGE", RegistrationWebUtils.getSubConcepts(RegistrationConstants.CONCEPT_NAME_OPD_WARD));
+			model.addAttribute("OPDs", RegistrationWebUtils.getSubConcepts(RegistrationConstants.CONCEPT_NAME_OPD_WARD));
 			return "/module/registration/patient/showPatientInfoForOPD";
 		}
 	}

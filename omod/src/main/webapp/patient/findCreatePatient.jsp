@@ -51,7 +51,7 @@
 		districts: _districts,
 		upazilas: _upazilas,
 		////ghanshyam,16-dec-2013,3438 Remove the interdependency
-		TRIAGE: "${TRIAGE}",
+		OPDs: "${OPDs}",
 		referralHospitals: "${referralHospitals}",
 		referralReasons: "${referralReasons}",
 		TEMPORARYCAT: "${TEMPORARYCAT}"

@@ -68,9 +68,9 @@
 		jQuery("#datetime").html(MODEL.currentDateTime);
 		jQuery("#othername1").html(MODEL.patientAttributes[25]+" "+MODEL.patientName);
 		
-		MODEL.TRIAGE = " ,Please Select Triage to Visit|" + MODEL.TRIAGE;
-		PAGE.fillOptions("#triage", {
-			data:MODEL.TRIAGE,
+		MODEL.OPDs = " ,Please Select OPD Ward to Visit|" + MODEL.OPDs;
+		PAGE.fillOptions("#opdWard", {
+			data:MODEL.OPDs,
 			delimiter: ",",
 			optionDelimiter: "|"
 		});
@@ -83,9 +83,9 @@
 		});
 		
 		// Set the selected OPD
-		if(!StringUtils.isBlank(MODEL.selectedTRIAGE)){			
-			jQuery("#triage").val(MODEL.selectedTRIAGE);
-			jQuery("#triage").attr("disabled", "disabled");
+		if(!StringUtils.isBlank(MODEL.selectedOPD)){			
+			jQuery("#opdWard").val(MODEL.selectedOPD);
+			jQuery("#opdWard").attr("disabled", "disabled");
 		}
 		
 		if(!StringUtils.isBlank(MODEL.tempCategory)){			
@@ -184,9 +184,9 @@
 		
 		// Set data for reprint page
 		if(MODEL.reprint=="true"){
-			var triageId=MODEL.triageId;
-		    jQuery("#triage").val(MODEL.observations[triageId]);
-		    jQuery("#triage").attr("disabled", "disabled");
+			var opdWardId=MODEL.opdWardId;
+		    jQuery("#opdWard").val(MODEL.observations[opdWardId]);
+		    jQuery("#opdWard").attr("disabled", "disabled");
 		
 			var tempCategoryId=MODEL.tempCategoryId;
 			if(!StringUtils.isBlank(MODEL.observations[tempCategoryId])){
@@ -222,8 +222,8 @@
 				jQuery("#reprint").hide();
 				
 				// Convert OPDWard dropdown to printable format
-				//jQuery("#triage").hide();
-				//jQuery("#triage").after("<span>" + jQuery("#triage option:checked").html() +  "</span>");  
+				//jQuery("#opdWard").hide();
+				//jQuery("#opdWard").after("<span>" + jQuery("#opdWard option:checked").html() +  "</span>");  
 				jQuery("#opdWardLabel").hide();
 				
 				//ghanshyam  20-may-2013 #1648 capture Health ID and Registration Fee Type	
@@ -355,8 +355,8 @@
 		
 		/** Validate Form */
 		validate: function(){
-			if(StringUtils.isBlank(jQuery("#triage").val())){
-				alert("Please select Triage");
+			if(StringUtils.isBlank(jQuery("#opdWard").val())){
+				alert("Please select OPD Ward");
 				return false;
 			};
 			
@@ -724,8 +724,8 @@ jQuery("#message").hide();
 				</tr>
 				  -->
 				<tr id="opdWardLabel">
-					<td colspan="1"><b>Triage to Visit:</b></td>
-					<td colspan="5"><select id="triage" name="patient.triage">
+					<td colspan="1"><b>OPD Ward to Visit:</b></td>
+					<td colspan="5"><select id="opdWard" name="patient.opdWard">
 					</select></td>
 				</tr>
 				<tr>

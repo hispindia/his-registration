@@ -51,10 +51,10 @@ td.border {
 				PAGE.fillOptions("#upazilas", {
 					data : MODEL.upazilas[0].split(',')
 				});
-				MODEL.TRIAGE = " ,Please Select Triage Room to Visit|"
-						+ MODEL.TRIAGE;
-				PAGE.fillOptions("#triage", {
-					data : MODEL.TRIAGE,
+				MODEL.OPDs = " ,Please Select OPD Room to Visit|"
+						+ MODEL.OPDs;
+				PAGE.fillOptions("#opdWard", {
+					data : MODEL.OPDs,
 					delimiter : ",",
 					optionDelimiter : "|"
 				});
@@ -420,8 +420,8 @@ td.border {
 			} 
 
 			
-			if (StringUtils.isBlank(jQuery("#triage").val())) {
-				alert("Please select Triage");
+			if (StringUtils.isBlank(jQuery("#opdWard").val())) {
+				alert("Please select OPD ward");
 				return false;
 			}
 			
@@ -1240,7 +1240,7 @@ td.border {
 							</div> </td>
 					</tr>
 					<tr>
-						<b>Triage Room to Visit: *</b> <select id="triage" name="patient.triage">	</select>
+						<b>OPD Ward to Visit: *</b> <select id="opdWard" name="patient.opdWard">	</select>
 					</tr>
 				</table>
 			</td>
