@@ -972,6 +972,7 @@ background-color: #bde9ba;
 					jQuery("#exemptionNumber").val("");
 					jQuery("#exemptionField1").hide();
 					jQuery("#exemptionField2").hide();
+					return false;
 				}
 				    jQuery("#exemptionField1").show();
 				    jQuery("#exemptionField2").show();
@@ -1146,6 +1147,7 @@ background-color: #bde9ba;
 					jQuery("#exemptionField1").hide();
 					jQuery("#exemptionField2").hide();
 					alert("This category is only valid for female patient");
+					return false;
 				}
 					jQuery("#exemptionField1").show();
 				    jQuery("#exemptionField2").show();

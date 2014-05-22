@@ -94,6 +94,9 @@ public class RegistrationUtils {
 		else if(!StringUtils.isBlank(otherName)){
 		personName.setMiddleName(otherName);
 		}
+		else{
+		personName.setMiddleName("");	
+		}
 		
 		personName.setPreferred(true);
 		return personName;
