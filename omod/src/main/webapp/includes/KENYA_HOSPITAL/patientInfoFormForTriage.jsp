@@ -200,6 +200,12 @@
 			}
 			
 			jQuery("#patientCategory").attr("disabled", "disabled");
+			
+			if(jQuery("#patientCategory").val() == "Waiver"){
+						jQuery("#regFeeValue").val(${registrationFee});
+						jQuery("#regFeeValue").hide();
+						jQuery("#regFeeValue").after("<span>" + jQuery("#regFeeValue option:checked").html() +  "</span>"); 
+				}
 		    
 			jQuery("#printSlip").hide();
 			jQuery("#save").hide();
