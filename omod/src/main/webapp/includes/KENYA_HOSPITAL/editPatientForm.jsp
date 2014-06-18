@@ -67,7 +67,7 @@ td.bottom {
 
 
 input, select, textarea {
-background-color: #bde9ba;
+
 	border-width: 1px;
 	border-right: 1px;
 	border-left: 1px;
