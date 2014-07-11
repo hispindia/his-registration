@@ -419,37 +419,28 @@ input, select, textarea {
 			}
 			else{
 			    value = jQuery("#firstName").val();
-				value = value.toUpperCase();
-				pattern = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 -";
-				for (i = 0; i < value.length; i++) {
-					if (pattern.indexOf(value[i]) < 0) {
-						alert("Please enter firstname in correct format");
-						return false;
-					}
+				value = value.substr(0, 1).toUpperCase() + value.substr(1);
+				jQuery("#firstName").val(value);
+				if(/^[a-zA-Z0-9- ]*$/.test(value) == false) {
+					alert('Please enter firstname in correct format');
 				}
+				
 			}
 			
 			if (!StringUtils.isBlank(jQuery("#givenName").val())) {
-			 value = jQuery("#givenName").val();
-				value = value.toUpperCase();
-				pattern = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 -";
-				for (i = 0; i < value.length; i++) {
-					if (pattern.indexOf(value[i]) < 0) {
-						alert("Please enter givenname in correct format");
-						return false;
-					}
+				value = jQuery("#givenName").val();
+				value = value.substr(0, 1).toUpperCase() + value.substr(1);
+				jQuery("#givenName").val(value);
+				if(/^[a-zA-Z0-9- ]*$/.test(value) == false) {
+					alert('Please enter givenname in correct format');
 				}
 			}
-			
 			if (!StringUtils.isBlank(jQuery("#otherName").val())) {
-			 value = jQuery("#otherName").val();
-				value = value.toUpperCase();
-				pattern = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 -";
-				for (i = 0; i < value.length; i++) {
-					if (pattern.indexOf(value[i]) < 0) {
-						alert("Please enter othername in correct format");
-						return false;
-					}
+				value = jQuery("#otherName").val();
+				value = value.substr(0, 1).toUpperCase() + value.substr(1);
+				jQuery("#otherName").val(value);
+				if(/^[a-zA-Z0-9- ]*$/.test(value) == false) {
+					alert('Please enter othername in correct format');
 				}
 			}
 	

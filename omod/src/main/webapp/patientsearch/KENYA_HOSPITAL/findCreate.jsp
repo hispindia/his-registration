@@ -112,7 +112,7 @@
 				<td onclick="PATIENTSEARCHRESULT.visit(${patient.patientId},'${patient.dead}');">
 					${patient.patientIdentifier.identifier}
 				</td>
-				<td onclick="PATIENTSEARCHRESULT.visit(${patient.patientId},'${patient.dead}');">${patient.familyName} ${patient.givenName} ${fn:replace(patient.middleName,',',' ')}</td>
+				<td onclick="PATIENTSEARCHRESULT.visit(${patient.patientId},'${patient.dead}');">${patient.givenName} ${patient.familyName}  ${fn:replace(patient.middleName,',',' ')}</td>
 				<td onclick="PATIENTSEARCHRESULT.visit(${patient.patientId},'${patient.dead}');"> 
                 	<c:choose>
                 		<c:when test="${patient.age == 0}"> &lt 1 </c:when>
