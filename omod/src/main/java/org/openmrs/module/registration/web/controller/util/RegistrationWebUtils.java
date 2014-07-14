@@ -114,7 +114,7 @@ public class RegistrationWebUtils {
 			queue.setPatientIdentifier(patient.getPatientIdentifier().getIdentifier());
 			queue.setOpdConcept(selectedOPDConcept);
 			queue.setOpdConceptName(selectedOPDConcept.getName().getName());
-			queue.setPatientName(patient.getFamilyName() + " " + patient.getGivenName() + " " + patient.getMiddleName());
+			queue.setPatientName( patient.getGivenName() + " " + patient.getFamilyName() + " " + patient.getMiddleName());
 			queue.setReferralConcept(referralConcept);
 			queue.setReferralConceptName(referralConcept.getName().getName());
 			queue.setSex(patient.getGender());
@@ -144,7 +144,7 @@ public class RegistrationWebUtils {
 			queue.setPatientIdentifier(patient.getPatientIdentifier().getIdentifier());
 			queue.setTriageConcept(selectedTriageConcept);
 			queue.setTriageConceptName(selectedTriageConcept.getName().getName());
-			queue.setPatientName(patient.getFamilyName() + " " + patient.getGivenName() + " " + patient.getMiddleName());
+			queue.setPatientName(patient.getGivenName() + " "+ patient.getFamilyName() + " " + patient.getMiddleName());
 			queue.setReferralConcept(referralConcept);
 			queue.setReferralConceptName(referralConcept.getName().getName());
 			queue.setSex(patient.getGender());
