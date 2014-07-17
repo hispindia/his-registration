@@ -18,6 +18,8 @@
  *  author: Ghanshyam
  *  date:   20-02-2013
 --%>
+<%@ include file="/WEB-INF/template/include.jsp" %>
+<openmrs:globalProperty var="userLocation" key="hospital.location_user" defaultValue="false"/>
 
 <script type="text/javascript">
 	jQuery(document).ready(function(){		
@@ -251,7 +253,7 @@
 				// Convert temporary categories to printable format
 				jQuery("#temporaryCategories input").each(function(index, value){				
 					if(jQuery(value).is(":checked")){
-						jQuery("#printableTemporaryCategories").append("<span style='margin:5px;'>" + jQuery(value).val() + "</span>");
+						jQuery("#printableTemporaryCategories").append("<span style='margin:10px;'>" + jQuery(value).val() + "</span>");
 						jQuery("#tempCat").show();		
 					}
 				});
@@ -661,22 +663,42 @@ jQuery("#message").hide();
 	onClick="PAGE.buySlip();" />
 <input id="save" type="button" value="Save" onClick="PAGE.save();" />
 <span id="validationDate"></span>
-<div id="patientInfoPrintArea">
-	<center>
-		<form id="patientInfoForm" method="POST">
-			<table border=0 width="1000">
-				<tr>
+<div id="patientInfoPrintArea" style="width: 1280px; font-size: 0.8em">
+<style>
+	.donotprint {
+		display: none;
+	}
+	.spacer {
+		
+		font-family: "Dot Matrix Normal", Arial, Helvetica, sans-serif;
+		font-style: normal;
+		font-size: 14px;
+	}
+	.printfont {
+		font-family: "Dot Matrix Normal", Arial, Helvetica, sans-serif;
+		font-style: normal;
+		font-size: 14px;
+	}
 
-				</tr>
+</style>
+	<center>
+	<center><img width="100" height="100" align="center" title="OpenMRS" alt="OpenMRS" src="/kenya_openmrs/images/kenya_logo.bmp"><center>
+		<form id="patientInfoForm" method="POST" class="spacer" style="margin-left: 20px;">
+			<table class="spacer" style="margin-left: 20px;">
+			<tr><h3><center><u><b>${userLocation} </b></u></center></h3></tr>
+						<tr><h4><center><b>Registration Receipt</b></center></h4></tr>
 				<tr>
-					<td colspan="1""><b>ID.No:</b></td>
-					<td colspan="5""><span id="identifier"></span></td>
+					<td colspan="1"><b>Date/Time:</b></td>
+					<td colspan="5"><span id="datetime"></span></td>
 				</tr>
 				<tr>
 					<td colspan="1"><b>Name:</b></td>
 					<td><span id="patientName"></span></td>
 				</tr>
-				
+				<tr>
+					<td colspan="1"><b>Identifier:</b></td>
+					<td colspan="5"><span id="identifier"></span></td>
+				</tr>				
 				<tr id="ageField">
 					<td colspan="1"><b>Age:</b></td>
 					<td colspan="5"><span id="age"></span></td>
@@ -690,9 +712,7 @@ jQuery("#message").hide();
 <!--					<td colspan="1"><b>Marital Status:</b></td>
 					<td colspan="1"><span id="maritalStatus"></span></td> -->
 					<td></td><td></td>
-					<td id="exemption_number">Exemption Number</td>
-					<td id="nhif_number">NHIF Card ID</td>
-					<td id="waiver_number">Waiver Number</td>
+					
 				</tr>
 				
 				<tr>
@@ -709,43 +729,30 @@ jQuery("#message").hide();
 										<option value="Malaria">Malaria</option>
 										<option value="Waiver">Waiver Case</option>
 					</select></td>	
+					</tr>
+					<tr>
+					<td id="exemption_number"><b>Exemption Number:</b></td>
 					
+					<td id="waiver_number"><b>Waiver Number:</b></td>					
 					<td id="exemptionField">
 							<span><input id="exemptionNumber" name="person.attribute.36" />
 							</span>
 							
 					</td>		
-					
-					<td id="nhifCardIdField">
-							<span><input id="nhifCardIdNumber" name="person.attribute.33" />
-							</span>
-							
-					</td>	
-					
 					<td id="waiverField">
 							<span><input id="waiverNumber" name="person.attribute.32" />
 							</span>
 					</td>			
 				</tr>
-				
 				<tr>
-					<td colspan="1"><b>Registration Fee:</b></td>
-					<td><select id="regFeeValue" name="regFeeValue">
-										<option value=0>0</option>
-										<option value=10>10</option>
-										<option value=20>20</option>
-										<option value=30>30</option>
-										<option value=40>40</option>
-										<option value=50>50</option>
-										<option value=60>60</option>
-										<option value=70>70</option>
-										<option value=80>80</option>
-										<option value=90>90</option>
-										<option value=100>100</option>
-						</select>
-					</td>			
-
+				<td id="nhif_number"><b>NHIF Card ID:</b></td>
+				<td id="nhifCardIdField">
+							<span><input id="nhifCardIdNumber" name="person.attribute.33" />
+							</span>
+							
+					</td>	
 				</tr>
+	
 				<!--  
 				<tr>
 					<td colspan="1" valign="top"><b>Phone number:</b></td>
@@ -757,22 +764,19 @@ jQuery("#message").hide();
 					<td colspan="5"><select id="triage" name="patient.triage">
 					</select></td>
 				</tr>
-				<tr>
-					<td colspan="1"><b>Date/Time:</b></td>
-					<td colspan="5"><span id="datetime"></span></td>
-				</tr>
+				
 				<%-- ghanshyam 27-02-2013 Feedback #966[Billing]Add Paid Bill/Add Free Bill for Bangladesh module(remove category from registration,OPD,IPD,Inventory)--%>
 				<%--
 				<tr>
 					<td colspan="1"><b>Category:</b></td>
-					<td colspan="2"><span id="category" /></td>
+					<td colspan="1"><span id="category" /></td>
 					<td><span id="FREE" /></td>
 				</tr>
 				--%>
 				<!--
 				<tr>
 					<td colspan="1"><b>National ID:</b></td>
-					<td colspan="2"><span id="nationalId"></span></td>
+					<td colspan="1"><span id="nationalId"></span></td>
 				</tr>
 				-->
 				<%-- ghanshyam  20-may-2013 #1648 capture Health ID and Registration Fee Type 
@@ -796,6 +800,24 @@ jQuery("#message").hide();
 								Category:</b></td>
 					<td colspan="5"><select id="mlcCat" name="patient.temporary"></td>			
 		
+				</tr>
+				<tr>
+					<td colspan="1"><b>Registration Fee:</b></td>
+					<td><select id="regFeeValue" name="regFeeValue">
+										<option value=0>0</option>
+										<option value=10>10</option>
+										<option value=20>20</option>
+										<option value=30>30</option>
+										<option value=40>40</option>
+										<option value=50>50</option>
+										<option value=60>60</option>
+										<option value=70>70</option>
+										<option value=80>80</option>
+										<option value=90>90</option>
+										<option value=100>100</option>
+						</select>
+					</td>			
+
 				</tr>
 				<!-- ghanshyam  20-may-2013 #1648 capture Health ID and Registration Fee Type 
 				<tr id="regFee">
