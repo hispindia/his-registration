@@ -92,13 +92,13 @@
 		<openmrs:hasPrivilege privilege="Edit Patients">
             <td><b>Edit</b></td>
         </openmrs:hasPrivilege>			
-			<td><b>Identifier</b></td>
+			<td><b>Patient ID</b></td>
 			<td><b>Name</b></td>
 			<td><b>Age</b></td>
 			<td><b>Gender</b></td>			
 			<td><b>Relative Name</b></td>
-			<td><b>Last day of visit</b></td>
-			<td><b>Reprint slip</b></td>
+			<td><b>Date of Previous Visit</b></td>
+			<td><b>Reprint Slip</b></td>
 		</tr>
 		<c:forEach items="${patients}" var="patient" varStatus="varStatus">
 			<tr class='${varStatus.index % 2 == 0 ? "oddRow" : "evenRow" } patientSearchRow'>

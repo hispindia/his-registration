@@ -326,7 +326,7 @@ td.border {
 					.html(
 							"Similar patients: "
 									+ data.totalRow
-									+ "(<a href='javascript:PAGE.togglePatientResult();'>show/hide</a>)");
+									+ "(<a href='javascript:PAGE.togglePatientResult();'>Show/Hide</a>)");
 		},
 
 		/** CALLBACK WHEN BEFORE SEARCHING PATIENT */

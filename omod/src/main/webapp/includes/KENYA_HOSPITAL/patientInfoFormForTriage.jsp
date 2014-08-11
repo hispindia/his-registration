@@ -696,7 +696,7 @@ jQuery("#message").hide();
 					<td><span id="patientName"></span></td>
 				</tr>
 				<tr>
-					<td colspan="1"><b>Identifier:</b></td>
+					<td colspan="1"><b>Patient ID:</b></td>
 					<td colspan="5"><span id="identifier"></span></td>
 				</tr>				
 				<tr id="ageField">
@@ -717,8 +717,9 @@ jQuery("#message").hide();
 				
 				<tr>
 					<td colspan="1"><b>Patient Category:</b></td>
-					<td><select id="patientCategory" name="person.attribute.14">
-										<option value="Patient Category"></option>
+					<td>
+					<select id="patientCategory" name="person.attribute.14">
+
 										<option value="General">General</option>
 										<option value="HIV">HIV</option>
 										<option value="Child Less Than 5 yr">Child less than 5 year old</option>
@@ -728,7 +729,8 @@ jQuery("#message").hide();
 										<option value="Other Insurance">Other Insurance</option>
 										<option value="Malaria">Malaria</option>
 										<option value="Waiver">Waiver Case</option>
-					</select></td>	
+					</select>
+					</td>	
 					</tr>
 					<tr>
 					<td id="exemption_number"><b>Exemption Number:</b></td>
@@ -746,7 +748,7 @@ jQuery("#message").hide();
 				</tr>
 				<tr>
 				<td id="nhif_number"><b>NHIF Card ID:</b></td>
-				<td id="nhifCardIdField">
+				<td id="nhifCardIdField"  >
 							<span><input id="nhifCardIdNumber" name="person.attribute.33" />
 							</span>
 							
@@ -761,7 +763,7 @@ jQuery("#message").hide();
 				  -->
 				<tr id="opdWardLabel">
 					<td colspan="1"><b>Triage to Visit:</b></td>
-					<td colspan="5"><select id="triage" name="patient.triage">
+					<td colspan="5" ><select id="triage" name="patient.triage">
 					</select></td>
 				</tr>
 				
@@ -769,7 +771,7 @@ jQuery("#message").hide();
 				<%--
 				<tr>
 					<td colspan="1"><b>Category:</b></td>
-					<td colspan="1"><span id="category" /></td>
+					<td colspan="1"  ><span id="category" /></td>
 					<td><span id="FREE" /></td>
 				</tr>
 				--%>
