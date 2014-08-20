@@ -165,6 +165,7 @@ public class ShowPatientInfoController {
 					        .equalsIgnoreCase(RegistrationConstants.CONCEPT_NAME_REGISTRATION_FEE)) {
 						double regFee=obs.getValueNumeric();
 						int regFeeToInt = (int)regFee;
+
 						model.addAttribute("registrationFee", regFeeToInt);
 					}
 					observations.put(obs.getConcept().getConceptId(), ObsUtils.getValueAsString(obs));

@@ -376,7 +376,7 @@ input, select, textarea {
 		searchPatientSuccess : function(data) {
 			jQuery("#numberOfFoundPatients")
 					.html(
-							"Similar patients: "
+							"Similar Patients: "
 									+ data.totalRow
 									+ "(<a href='javascript:PAGE.togglePatientResult();'>Show/Hide</a>)");
 		},

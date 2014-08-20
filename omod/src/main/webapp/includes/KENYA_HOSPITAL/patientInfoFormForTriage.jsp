@@ -104,60 +104,61 @@
 		jQuery("#exemptionField").hide();
 		jQuery("#nhifCardIdField").hide();
 		jQuery("#waiverField").hide();
-		jQuery("#genderField").hide();
-		jQuery("#ageField").hide();
+//		jQuery("#genderField").hide();
+//		jQuery("#ageField").hide();
 
 		
 		//ghanshyam,11-dec-2013,#3327 Defining patient categories based on Kenyan requirements
 		if(!StringUtils.isBlank(MODEL.selectedCategory)){			
 			jQuery("#patientCategory").val(MODEL.selectedCategory);
-			jQuery("#patientCategory").hide();
-			jQuery("#patientCategory").after("<span>" + jQuery("#patientCategory option:checked").html() +  "</span>"); 
-			
+	//		jQuery("#patientCategory").hide();
+	//		jQuery("#patientCategory").after("<span>" + jQuery("#patientCategory option:checked").html() +  "</span>"); 
+			if(${registrationFee==''} || ${registrationFee==null}){
 			if(jQuery("#patientCategory").val() == "General"){
 						jQuery("#regFeeValue").val(${regFee});
-						jQuery("#regFeeValue").hide();
-						jQuery("#regFeeValue").after("<span>" + jQuery("#regFeeValue option:checked").html() +  "</span>");  
+					//	jQuery("#regFeeValue").hide();
+					//	jQuery("#regFeeValue").after("<span>" + jQuery("#regFeeValue option:checked").html() +  "</span>");  
 				}
 			if(jQuery("#patientCategory").val() == "HIV"){
 						jQuery("#regFeeValue").val(0);
-						jQuery("#regFeeValue").hide();
-						jQuery("#regFeeValue").after("<span>" + jQuery("#regFeeValue option:checked").html() +  "</span>"); 
+					//	jQuery("#regFeeValue").hide();
+					//	jQuery("#regFeeValue").after("<span>" + jQuery("#regFeeValue option:checked").html() +  "</span>"); 
 				}
 			if(jQuery("#patientCategory").val() == "Child Less Than 5 yr"){
 						jQuery("#regFeeValue").val(0);
-						jQuery("#regFeeValue").hide();
-						jQuery("#regFeeValue").after("<span>" + jQuery("#regFeeValue option:checked").html() +  "</span>"); 
+					//	jQuery("#regFeeValue").hide();
+					//	jQuery("#regFeeValue").after("<span>" + jQuery("#regFeeValue option:checked").html() +  "</span>"); 
 				}
 			if(jQuery("#patientCategory").val() == "NHIF"){
 						jQuery("#regFeeValue").val(0);
-						jQuery("#regFeeValue").hide();
-						jQuery("#regFeeValue").after("<span>" + jQuery("#regFeeValue option:checked").html() +  "</span>"); 
+					//	jQuery("#regFeeValue").hide();
+					//	jQuery("#regFeeValue").after("<span>" + jQuery("#regFeeValue option:checked").html() +  "</span>"); 
 				}
 			if(jQuery("#patientCategory").val() == "TB"){
 						jQuery("#regFeeValue").val(0);
-						jQuery("#regFeeValue").hide();
-						jQuery("#regFeeValue").after("<span>" + jQuery("#regFeeValue option:checked").html() +  "</span>"); 
+					//	jQuery("#regFeeValue").hide();
+					//	jQuery("#regFeeValue").after("<span>" + jQuery("#regFeeValue option:checked").html() +  "</span>"); 
 				}
 			if(jQuery("#patientCategory").val() == "Expectant Mother"){
 						jQuery("#regFeeValue").val(0);
-						jQuery("#regFeeValue").hide();
-						jQuery("#regFeeValue").after("<span>" + jQuery("#regFeeValue option:checked").html() +  "</span>"); 
+					//	jQuery("#regFeeValue").hide();
+					//	jQuery("#regFeeValue").after("<span>" + jQuery("#regFeeValue option:checked").html() +  "</span>"); 
 				}
 			if(jQuery("#patientCategory").val() == "Other Insurance"){
 						jQuery("#regFeeValue").val(0);
-						jQuery("#regFeeValue").hide();
-						jQuery("#regFeeValue").after("<span>" + jQuery("#regFeeValue option:checked").html() +  "</span>"); 
+					//	jQuery("#regFeeValue").hide();
+					//	jQuery("#regFeeValue").after("<span>" + jQuery("#regFeeValue option:checked").html() +  "</span>"); 
 				}
 			if(jQuery("#patientCategory").val() == "Malaria"){
 						jQuery("#regFeeValue").val(0);
-						jQuery("#regFeeValue").hide();
-						jQuery("#regFeeValue").after("<span>" + jQuery("#regFeeValue option:checked").html() +  "</span>"); 
+					//	jQuery("#regFeeValue").hide();
+					//	jQuery("#regFeeValue").after("<span>" + jQuery("#regFeeValue option:checked").html() +  "</span>"); 
 				}
 			if(jQuery("#patientCategory").val() == "Waiver"){
 						//jQuery("#regFeeValue").val(0);
 						//jQuery("#regFeeValue").hide();
 						//jQuery("#regFeeValue").after("<span>" + jQuery("#regFeeValue option:checked").html() +  "</span>"); 
+				}
 				}
 			}
 		//ghanshyam,18-dec-2013,# 3457 Exemption number for selected category should show on registration receipt
@@ -203,11 +204,27 @@
 			
 			jQuery("#patientCategory").attr("disabled", "disabled");
 			
-			if(jQuery("#patientCategory").val() == "Waiver"){
+			
+			if(jQuery("#patientCategory").val()=="Waiver"){
+				jQuery("#exemption_number").hide();
+				jQuery("#exemptionField").hide();
+			}
+			if(jQuery("#patientCategory").val()!="Waiver" && jQuery("#patientCategory").val()!="General"){
+				jQuery("#waiver_number").hide();
+				jQuery("#waiverField").hide();
+			}
+			if(jQuery("#patientCategory").val()=="General"){
+				jQuery("#exemption_number").hide();
+				jQuery("#exemptionField").hide();
+				jQuery("#waiver_number").hide();
+				jQuery("#waiverField").hide();
+			}
+			
 						jQuery("#regFeeValue").val(${registrationFee});
-						jQuery("#regFeeValue").hide();
-						jQuery("#regFeeValue").after("<span>" + jQuery("#regFeeValue option:checked").html() +  "</span>"); 
-				}
+						jQuery("#regFeeValue").attr("disabled", "disabled");
+				//		jQuery("#regFeeValue").hide();
+				//		jQuery("#regFeeValue").after("<span>" + jQuery("#regFeeValue option:checked").html() +  "</span>"); 
+			
 		    
 			jQuery("#printSlip").hide();
 			jQuery("#save").hide();
@@ -240,6 +257,28 @@
 				//jQuery("#triage").hide();
 				//jQuery("#triage").after("<span>" + jQuery("#triage option:checked").html() +  "</span>");  
 				jQuery("#opdWardLabel").hide();
+				
+				jQuery("#patientCategory").hide();
+				jQuery("#patientCategory").after("<span style='border:0px'>" + jQuery("#patientCategory  option:checked").html() + "</span>"); 
+				
+				jQuery("#regFeeValue").hide();
+				jQuery("#regFeeValue").after("<span style='border:0px'>" + jQuery("#regFeeValue  option:checked").html() + "</span>"); 
+				
+
+			if(jQuery("#patientCategory").val()=="Waiver"){
+				jQuery("#waiverNumber").hide();
+				jQuery("#waiverNumber").after("<span style='border:0px'>" + jQuery("#waiverNumber").val() + "</span>"); 
+				}
+				
+			if(jQuery("#patientCategory").val()=="NHIF"){	
+				jQuery("#nhifCardIdNumber").hide();
+				jQuery("#nhifCardIdNumber").after("<span style='border:0px'>" + jQuery("#nhifCardIdNumber").val() + "</span>"); 
+				}
+				
+			if(jQuery("#patientCategory").val()!="Waiver" && jQuery("#patientCategory").val()!="General"){
+				jQuery("#exemptionNumber").hide();
+				jQuery("#exemptionNumber").after("<span style='border:0px'>" + jQuery("#exemptionNumber").val() + "</span>"); 
+				}
 				
 				//ghanshyam  20-may-2013 #1648 capture Health ID and Registration Fee Type	
                  jQuery("#regFeeType input").each(function(index, value){				
@@ -719,7 +758,7 @@ jQuery("#message").hide();
 					<td colspan="1"><b>Patient Category:</b></td>
 					<td>
 					<select id="patientCategory" name="person.attribute.14">
-
+										<option value="Patient Category">Please Select Patient Category</option>
 										<option value="General">General</option>
 										<option value="HIV">HIV</option>
 										<option value="Child Less Than 5 yr">Child less than 5 year old</option>
