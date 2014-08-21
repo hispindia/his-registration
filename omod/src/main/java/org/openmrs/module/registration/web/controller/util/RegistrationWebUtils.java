@@ -44,7 +44,10 @@ import org.openmrs.Encounter;
 import org.openmrs.EncounterType;
 import org.openmrs.Location;
 import org.openmrs.Patient;
+import org.openmrs.PersonAttribute;
+import org.openmrs.PersonAttributeType;
 import org.openmrs.api.context.Context;
+import org.openmrs.module.hospitalcore.HospitalCoreService;
 import org.openmrs.module.hospitalcore.PatientQueueService;
 import org.openmrs.module.hospitalcore.model.OpdPatientQueue;
 import org.openmrs.module.hospitalcore.model.TriagePatientQueue;
@@ -95,7 +98,7 @@ public class RegistrationWebUtils {
 	 * @param selectedOPDConcept
 	 * @param revisit
 	 */
-	public static void sendPatientToOPDQueue(Patient patient, Concept selectedOPDConcept, boolean revisit) {
+	public static void sendPatientToOPDQueue(Patient patient, Concept selectedOPDConcept, boolean revisit, String selectedCategory) {
 		Concept referralConcept = null;
 		if (!revisit) {
 			referralConcept = Context.getConceptService().getConcept("New Patient");
@@ -118,6 +121,7 @@ public class RegistrationWebUtils {
 			queue.setReferralConcept(referralConcept);
 			queue.setReferralConceptName(referralConcept.getName().getName());
 			queue.setSex(patient.getGender());
+			queue.setCategory(selectedCategory);
 			PatientQueueService queueService = Context.getService(PatientQueueService.class);
 			queueService.saveOpdPatientQueue(queue);
 			
@@ -125,7 +129,7 @@ public class RegistrationWebUtils {
 		
 	}
 	
-	public static void sendPatientToTriageQueue(Patient patient, Concept selectedTriageConcept, boolean revisit) {
+	public static void sendPatientToTriageQueue(Patient patient, Concept selectedTriageConcept, boolean revisit, String selectedCategory) {
 		Concept referralConcept = null;
 		if (!revisit) {
 			referralConcept = Context.getConceptService().getConcept("New Patient");
@@ -148,6 +152,7 @@ public class RegistrationWebUtils {
 			queue.setReferralConcept(referralConcept);
 			queue.setReferralConceptName(referralConcept.getName().getName());
 			queue.setSex(patient.getGender());
+			queue.setCategory(selectedCategory);
 			PatientQueueService queueService = Context.getService(PatientQueueService.class);
 			queueService.saveTriagePatientQueue(queue);
 			

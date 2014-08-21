@@ -262,25 +262,27 @@ public class ShowPatientInfoController {
 				Concept triageConcept = Context.getConceptService().getConcept(RegistrationConstants.CONCEPT_NAME_TRIAGE);
 				Concept selectedTRIAGEConcept = Context.getConceptService().getConcept(
 				    Integer.parseInt(parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_TRIAGE)));
+				String selectedCategory=parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_CATEGORY);
 				Obs triage = new Obs();
 				triage.setConcept(triageConcept);
 				triage.setValueCoded(selectedTRIAGEConcept);
 				encounter.addObs(triage);
 				
 				// send patient to triage room
-				RegistrationWebUtils.sendPatientToTriageQueue(patient, selectedTRIAGEConcept, true);
+				RegistrationWebUtils.sendPatientToTriageQueue(patient, selectedTRIAGEConcept, true ,selectedCategory);
 			}
 			else{
 				Concept opdConcept = Context.getConceptService().getConcept(RegistrationConstants.CONCEPT_NAME_OPD_WARD);
 				Concept selectedOPDConcept = Context.getConceptService().getConcept(
 				    Integer.parseInt(parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_OPD_WARD)));
+				String selectedCategory=parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_CATEGORY);
 				Obs opd = new Obs();
 				opd.setConcept(opdConcept);
 				opd.setValueCoded(selectedOPDConcept);
 				encounter.addObs(opd);
 				
 				// send patient to opd room
-				RegistrationWebUtils.sendPatientToOPDQueue(patient, selectedOPDConcept, true);
+				RegistrationWebUtils.sendPatientToOPDQueue(patient, selectedOPDConcept, true ,selectedCategory);
 			}
 			
 			Concept tempCatConcept = Context.getConceptService().getConcept(RegistrationConstants.CONCEPT_NAME_TEMPORARY_CATEGORY);

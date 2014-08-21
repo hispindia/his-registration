@@ -290,13 +290,14 @@ public class FindCreatePatientController {
 					.getConcept(
 							parameters
 									.get(RegistrationConstants.FORM_FIELD_PATIENT_TRIAGE));
+			String selectedCategory=parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_CATEGORY);
 			Obs triageObs = new Obs();
 			triageObs.setConcept(triageConcept);
 			triageObs.setValueCoded(selectedTRIAGEConcept);
 			encounter.addObs(triageObs);
 
 			RegistrationWebUtils.sendPatientToTriageQueue(patient,
-					selectedTRIAGEConcept, false);
+					selectedTRIAGEConcept, false, selectedCategory);
 		} else {
 			Concept opdConcept = Context.getConceptService().getConcept(
 					RegistrationConstants.CONCEPT_NAME_OPD_WARD);
@@ -306,13 +307,14 @@ public class FindCreatePatientController {
 					.getConcept(
 							parameters
 									.get(RegistrationConstants.FORM_FIELD_PATIENT_OPD_WARD));
+			String selectedCategory=parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_CATEGORY);
 			Obs opdObs = new Obs();
 			opdObs.setConcept(opdConcept);
 			opdObs.setValueCoded(selectedOPDConcept);
 			encounter.addObs(opdObs);
 
 			RegistrationWebUtils.sendPatientToOPDQueue(patient,
-					selectedOPDConcept, false);
+					selectedOPDConcept, false, selectedCategory);
 		}
 
 		Concept tempCatConcept = Context.getConceptService().getConcept(
