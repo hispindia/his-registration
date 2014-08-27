@@ -721,7 +721,7 @@ jQuery("#message").hide();
 
 </style>
 	<center>
-	<center><img width="100" height="100" align="center" title="OpenMRS" alt="OpenMRS" src="/kenya_openmrs/images/kenya_logo.bmp"><center>
+	<center><img width="100" height="100" align="center" title="OpenMRS" alt="OpenMRS" src="${pageContext.request.contextPath}/moduleResources/registration/kenya_logo.bmp"><center>
 		<form id="patientInfoForm" method="POST" class="spacer" style="margin-left: 20px;">
 			<table class="spacer" style="margin-left: 20px;">
 			<tr><h3><center><u><b>${userLocation} </b></u></center></h3></tr>
