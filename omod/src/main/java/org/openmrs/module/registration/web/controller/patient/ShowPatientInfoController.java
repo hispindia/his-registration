@@ -230,7 +230,8 @@ public class ShowPatientInfoController {
 	@RequestMapping(method = RequestMethod.POST)
 	public void savePatientInfo(@RequestParam("patientId") Integer patientId,
 	                            @RequestParam(value = "encounterId", required = false) Integer encounterId,
-	                            @RequestParam(value = "regFeeValue", required = false) Double regFeeValue,
+	                            @RequestParam(value = "feeHideVal", required = false) Double regFeeValue,
+	                            @RequestParam(value = "catHideVal", required = false) String catHideVal,
 	                            HttpServletRequest request, HttpServletResponse response) throws ParseException, IOException {
 		
 		Map<String, String> parameters = RegistrationWebUtils.optimizeParameters(request);
@@ -250,7 +251,8 @@ public class ShowPatientInfoController {
 				obsn.setConcept(cnrf);
 				obsn.setValueCoded(cnp);
 				obsn.setValueNumeric(regFeeValue);
-				obsn.setValueText(parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_CATEGORY));
+				
+				obsn.setValueText(catHideVal);
 				encounter.addObs(obsn);	
 		} else {
 			encounter = RegistrationWebUtils.createEncounter(patient, true);
@@ -306,6 +308,9 @@ public class ShowPatientInfoController {
 			Obs obsr = new Obs();
 			obsr.setConcept(cnrffr);
 			obsr.setValueCoded(cr);
+			
+			obsr.setValueNumeric(regFeeValue);
+			
 			obsr.setValueNumeric(regFeeValue);
 			obsr.setValueText(parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_CATEGORY));
 			encounter.addObs(obsr);	
