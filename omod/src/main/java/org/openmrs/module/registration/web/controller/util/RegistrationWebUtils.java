@@ -99,11 +99,11 @@ public class RegistrationWebUtils {
 	 * @param revisit
 	 */
 	public static void sendPatientToOPDQueue(Patient patient, Concept selectedOPDConcept, boolean revisit, String selectedCategory) {
-		Concept referralConcept = null;
+		Concept visitStatus = null;
 		if (!revisit) {
-			referralConcept = Context.getConceptService().getConcept("New Patient");
+			visitStatus = Context.getConceptService().getConcept("NEW PATIENT");
 		} else {
-			referralConcept = Context.getConceptService().getConcept("Revisit");
+			visitStatus = Context.getConceptService().getConcept("REVISIT");
 		}
 		
 		OpdPatientQueue queue = Context.getService(PatientQueueService.class).getOpdPatientQueue(
@@ -118,10 +118,11 @@ public class RegistrationWebUtils {
 			queue.setOpdConcept(selectedOPDConcept);
 			queue.setOpdConceptName(selectedOPDConcept.getName().getName());
 			queue.setPatientName( patient.getGivenName() + " " + patient.getFamilyName() + " " + patient.getMiddleName());
-			queue.setReferralConcept(referralConcept);
-			queue.setReferralConceptName(referralConcept.getName().getName());
+			//queue.setReferralConcept(referralConcept);
+			//queue.setReferralConceptName(referralConcept.getName().getName());
 			queue.setSex(patient.getGender());
 			queue.setCategory(selectedCategory);
+			queue.setVisitStatus(visitStatus.getName().getName());
 			PatientQueueService queueService = Context.getService(PatientQueueService.class);
 			queueService.saveOpdPatientQueue(queue);
 			
@@ -130,11 +131,11 @@ public class RegistrationWebUtils {
 	}
 	
 	public static void sendPatientToTriageQueue(Patient patient, Concept selectedTriageConcept, boolean revisit, String selectedCategory) {
-		Concept referralConcept = null;
+		Concept visitStatus = null;
 		if (!revisit) {
-			referralConcept = Context.getConceptService().getConcept("New Patient");
+			visitStatus = Context.getConceptService().getConcept("NEW PATIENT");
 		} else {
-			referralConcept = Context.getConceptService().getConcept("Revisit");
+			visitStatus = Context.getConceptService().getConcept("REVISIT");
 		}
 		
 		TriagePatientQueue queue = Context.getService(PatientQueueService.class).getTriagePatientQueue(
@@ -149,10 +150,11 @@ public class RegistrationWebUtils {
 			queue.setTriageConcept(selectedTriageConcept);
 			queue.setTriageConceptName(selectedTriageConcept.getName().getName());
 			queue.setPatientName(patient.getGivenName() + " "+ patient.getFamilyName() + " " + patient.getMiddleName());
-			queue.setReferralConcept(referralConcept);
-			queue.setReferralConceptName(referralConcept.getName().getName());
+			//queue.setReferralConcept(referralConcept);
+			//queue.setReferralConceptName(referralConcept.getName().getName());
 			queue.setSex(patient.getGender());
 			queue.setCategory(selectedCategory);
+			queue.setVisitStatus(visitStatus.getName().getName());
 			PatientQueueService queueService = Context.getService(PatientQueueService.class);
 			queueService.saveTriagePatientQueue(queue);
 			
