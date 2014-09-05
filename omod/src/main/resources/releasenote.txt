@@ -1,3 +1,12 @@
+2.3.0
+- #Multiple Patient Category
+- #Client Information
+- #NOK Information
+- #Queue to triage
+- #Print out of the registration receipt
+- #user interface change
+- #module upgradation
+
 2.2.18
 - #2510              Validation on National ID and Health ID
 - #1962              Create validation for length of Health ID and National ID
