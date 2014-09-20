@@ -40,6 +40,8 @@ public class RegistrationConstants {
 	
 	public static final String PROPERTY_INITIAL_REGISTRATION_FEE = MODULE_ID + ".initialVisitRegistrationFee";
 	
+	public static final String PROPERTY_MCH_INITIAL_REGISTRATION_FEE = MODULE_ID + ".mchRegistrationFee";
+	
 	public static final String PROPERTY_REVISIT_REGISTRATION_FEE = MODULE_ID + ".reVisitRegistrationFee";
 	
 	public static final String PROPERTY_RSBY_NO_OF_PATIENT = MODULE_ID + ".patientPerRSBY";
