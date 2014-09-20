@@ -1575,7 +1575,6 @@ input, select, textarea {
 				<td><b>Client Identification&nbsp;&nbsp;&nbsp;&nbsp;</b></td>
 				<td>Nationality</td>
 				<td><select id="patientNation" name="person.attribute.27" style="width: 152px;" onchange="showOtherNationality();">
-										<option value="Nation"></option>
 										<option value="Kenya">Kenya</option>
 										<option value="East Africa">East Africa</option>
 										<option value="Kenyan">Africa</option>
@@ -1651,7 +1650,7 @@ input, select, textarea {
 		<tr>
 				<td id="catGen"><input id="patCatGeneral" type="checkbox" name="person.attribute.14" value="General" /> General</td>
 				<td><b>Patient Category&nbsp;&nbsp;&nbsp;&nbsp;</b></td>
-				<td><input id="patCatHIV" type="checkbox" name="person.attribute.14" value="HIV" /> HIV</td>
+				<td><input id="patCatHIV" type="checkbox" name="person.attribute.14" value="CCC" /> CCC</td>
 				<td><input id="patCatChildLessThan5yr" type="checkbox" name="person.attribute.14" value="Child Less Than 5 yr" /> Child less than 5 years old&nbsp;&nbsp;&nbsp;&nbsp;</td>
 				<td><input id="patCatNHIF" type="checkbox" name="person.attribute.14" value="NHIF" /> NHIF</td>
 		</tr>

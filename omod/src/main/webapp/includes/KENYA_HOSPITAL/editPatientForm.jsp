@@ -205,7 +205,7 @@ input, select, textarea {
 				jQuery("#waiverField2").hide();
 				}
 				
-				if (MODEL.patientAttributes[14]=="HIV" || MODEL.patientAttributes[14]=="Child Less Than 5 yr"
+				if (MODEL.patientAttributes[14]=="CCC" || MODEL.patientAttributes[14]=="Child Less Than 5 yr"
 				|| MODEL.patientAttributes[14]=="TB" || MODEL.patientAttributes[14]=="Expectant Mother"
 				|| MODEL.patientAttributes[14]=="Other Insurance" || MODEL.patientAttributes[14]=="Malaria") {
 				jQuery("#nhifCardField1").hide();
@@ -1703,7 +1703,7 @@ function showOtherNationality(){
 		<tr>
 				<td id="catGen"><input id="patCatGeneral" type="checkbox" name="person.attribute.14" value="General" /> General</td>
 				<td><b>Patient Category&nbsp;&nbsp;&nbsp;&nbsp;</b></td>
-				<td><input id="patCatHIV" type="checkbox" name="person.attribute.14" value="HIV" /> HIV</td>
+				<td><input id="patCatHIV" type="checkbox" name="person.attribute.14" value="CCC" /> CCC</td>
 				<td><input id="patCatChildLessThan5yr" type="checkbox" name="person.attribute.14" value="Child Less Than 5 yr" /> Child less than 5 years old&nbsp;&nbsp;&nbsp;&nbsp;</td>
 				<td><input id="patCatNHIF" type="checkbox" name="person.attribute.14" value="NHIF" /> NHIF</td>
 		</tr>

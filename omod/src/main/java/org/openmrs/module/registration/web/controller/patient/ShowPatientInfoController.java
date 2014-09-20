@@ -203,6 +203,7 @@ public class ShowPatientInfoController {
 		Integer conforregfreereasonid=conforregfreereason.getConceptId();
 		model.addAttribute("regFeeReasonConId",conforregfreereasonid);
 		model.addAttribute("regFee", GlobalPropertyUtil.getString(RegistrationConstants.PROPERTY_INITIAL_REGISTRATION_FEE, ""));
+		model.addAttribute("regMchFee", GlobalPropertyUtil.getString(RegistrationConstants.PROPERTY_MCH_INITIAL_REGISTRATION_FEE, ""));
 		model.addAttribute("reVisitFee", GlobalPropertyUtil.getString(RegistrationConstants.PROPERTY_REVISIT_REGISTRATION_FEE, ""));
 		String triageEnabled = Context.getAdministrationService().getGlobalProperty("registration.triageEnabled");
 		if(triageEnabled.equalsIgnoreCase("true")){

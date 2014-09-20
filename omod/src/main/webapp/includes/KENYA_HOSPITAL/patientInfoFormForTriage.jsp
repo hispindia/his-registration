@@ -120,14 +120,16 @@
 	//		jQuery("#patientCategory").after("<span>" + jQuery("#patientCategory option:checked").html() +  "</span>"); 
 			if(${registrationFee==''} || ${registrationFee==null}){
 			if(jQuery("#patientCategory").val() == "General"){
-						jQuery("#regFeeValue").val(${regFee});
-						jQuery("#regFeeValue").attr("disabled", "disabled");
-						jQuery("#feeHideVal").val(${regFee});
+						jQuery("#regFeeValue").removeAttr("disabled");
+						jQuery("#feeHideVal").val(jQuery("#regFeeValue").val());
+					//	jQuery("#regFeeValue").val(${regFee});
+					//	jQuery("#regFeeValue").attr("disabled", "disabled");
+					//	jQuery("#feeHideVal").val(${regFee});
 						jQuery("#feeHideVal").hide();
 					//	jQuery("#regFeeValue").hide();
 					//	jQuery("#regFeeValue").after("<span>" + jQuery("#regFeeValue option:checked").html() +  "</span>");  
 				}
-			if(jQuery("#patientCategory").val() == "HIV"){
+			if(jQuery("#patientCategory").val() == "CCC"){
 						jQuery("#regFeeValue").val(0);
 						jQuery("#regFeeValue").attr("disabled", "disabled");
 						jQuery("#feeHideVal").val(0);
@@ -136,9 +138,9 @@
 					//	jQuery("#regFeeValue").after("<span>" + jQuery("#regFeeValue option:checked").html() +  "</span>"); 
 				}
 			if(jQuery("#patientCategory").val() == "Child Less Than 5 yr"){
-						jQuery("#regFeeValue").val(0);
+						jQuery("#regFeeValue").val(${regMchFee});
 						jQuery("#regFeeValue").attr("disabled", "disabled");
-						jQuery("#feeHideVal").val(0);
+						jQuery("#feeHideVal").val(${regMchFee});
 						jQuery("#feeHideVal").hide();
 					//	jQuery("#regFeeValue").hide();
 					//	jQuery("#regFeeValue").after("<span>" + jQuery("#regFeeValue option:checked").html() +  "</span>"); 
@@ -160,9 +162,9 @@
 					//	jQuery("#regFeeValue").after("<span>" + jQuery("#regFeeValue option:checked").html() +  "</span>"); 
 				}
 			if(jQuery("#patientCategory").val() == "Expectant Mother"){
-						jQuery("#regFeeValue").val(0);
+						jQuery("#regFeeValue").val(${regMchFee});
 						jQuery("#regFeeValue").attr("disabled", "disabled");
-						jQuery("#feeHideVal").val(0);
+						jQuery("#feeHideVal").val(${regMchFee});
 						jQuery("#feeHideVal").hide();
 					//	jQuery("#regFeeValue").hide();
 					//	jQuery("#regFeeValue").after("<span>" + jQuery("#regFeeValue option:checked").html() +  "</span>"); 
@@ -479,7 +481,7 @@
 				}
 			};
 			
-			if(jQuery("#patientCategory").val()=="HIV"){
+			if(jQuery("#patientCategory").val()=="CCC"){
 				if(jQuery("#exemptionNumber").val().length <= 0){
 					alert("Please fill Exemption number");
 					return false;
@@ -540,7 +542,7 @@
 				return false;
 			};
 
-			if(jQuery("#patientCategory").val()=="Waiver"){
+			if(jQuery("#patientCategory").val()=="Waiver" || jQuery("#patientCategory").val()=="General"){
 			jQuery("#feeHideVal").val(jQuery("#regFeeValue").val());
 			}
 			
@@ -569,7 +571,7 @@
 				jQuery("#feeHideVal").val(${reVisitFee});
 				//jQuery("#regFeeValue").attr("disabled", "disabled");
 				
-			} else if(jQuery("#patientCategory").val() == "HIV"){
+			} else if(jQuery("#patientCategory").val() == "CCC"){
 				jQuery("#exemptionField").show();
 				jQuery("#exemption_number").show();
 				jQuery("#nhifCardIdNumber").val("");
@@ -594,8 +596,8 @@
 				jQuery("#nhif_number").hide();
 				jQuery("#waiver_number").hide();
 
-				jQuery("#regFeeValue").val(0);
-				jQuery("#feeHideVal").val(0);
+				jQuery("#regFeeValue").val(${regMchFee});
+				jQuery("#feeHideVal").val(${regMchFee});
 				//jQuery("#regFeeValue").attr("disabled", "disabled");
 				
 			}else if(jQuery("#patientCategory").val() == "NHIF"){
@@ -637,8 +639,8 @@
 				jQuery("#nhif_number").hide();
 				jQuery("#waiver_number").hide();
 		
-				jQuery("#regFeeValue").val(0);
-				jQuery("#feeHideVal").val(0);
+				jQuery("#regFeeValue").val(${regMchFee});
+				jQuery("#feeHideVal").val(${regMchFee});
 				//jQuery("#regFeeValue").attr("disabled", "disabled");
 				
 			}else if(jQuery("#patientCategory").val() == "Other Insurance"){
@@ -801,7 +803,7 @@ jQuery("#message").hide();
 					<select id="patientCategory" name="person.attribute.14">
 										<option value="Patient Category">Please Select Patient Category</option>
 										<option value="General">General</option>
-										<option value="HIV">HIV</option>
+										<option value="CCC">CCC</option>
 										<option value="Child Less Than 5 yr">Child less than 5 year old</option>
 										<option value="NHIF">NHIF Card Holder</option>
 										<option value="TB">TB</option>

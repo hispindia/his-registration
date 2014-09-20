@@ -117,7 +117,7 @@
 						jQuery("#regFeeValue").hide();
 						jQuery("#regFeeValue").after("<span>" + jQuery("#regFeeValue option:checked").html() +  "</span>");  
 				}
-			if(jQuery("#patientCategory").val() == "HIV"){
+			if(jQuery("#patientCategory").val() == "CCC"){
 						jQuery("#regFeeValue").val(0);
 						jQuery("#regFeeValue").hide();
 						jQuery("#regFeeValue").after("<span>" + jQuery("#regFeeValue option:checked").html() +  "</span>"); 
@@ -401,7 +401,7 @@
 				}
 			};
 			
-			if(jQuery("#patientCategory").val()=="HIV"){
+			if(jQuery("#patientCategory").val()=="CCC"){
 				if(jQuery("#exemptionNumber").val().length <= 0){
 					alert("Please fill Exemption number");
 					return false;
@@ -487,7 +487,7 @@
 				jQuery("#regFeeValue").val(${reVisitFee});
 				//jQuery("#regFeeValue").attr("disabled", "disabled");
 				
-			} else if(jQuery("#patientCategory").val() == "HIV"){
+			} else if(jQuery("#patientCategory").val() == "CCC"){
 				jQuery("#exemptionField").show();
 				jQuery("#exemption_number").show();
 				jQuery("#nhifCardIdNumber").val("");
@@ -694,7 +694,7 @@ jQuery("#message").hide();
 					<td><select id="patientCategory" name="person.attribute.14">
 										<option value="Patient Category"></option>
 										<option value="General">General</option>
-										<option value="HIV">HIV</option>
+										<option value="CCC">CCC</option>
 										<option value="Child Less Than 5 yr">Child less than 5 year old</option>
 										<option value="NHIF">NHIF Card Holder</option>
 										<option value="TB">TB</option>
