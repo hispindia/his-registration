@@ -120,11 +120,9 @@
 	//		jQuery("#patientCategory").after("<span>" + jQuery("#patientCategory option:checked").html() +  "</span>"); 
 			if(${registrationFee==''} || ${registrationFee==null}){
 			if(jQuery("#patientCategory").val() == "General"){
-						jQuery("#regFeeValue").removeAttr("disabled");
-						jQuery("#feeHideVal").val(jQuery("#regFeeValue").val());
-					//	jQuery("#regFeeValue").val(${regFee});
-					//	jQuery("#regFeeValue").attr("disabled", "disabled");
-					//	jQuery("#feeHideVal").val(${regFee});
+					jQuery("#regFeeValue").val(${regFee});
+					jQuery("#regFeeValue").attr("disabled", "disabled");
+					jQuery("#feeHideVal").val(${regFee});
 						jQuery("#feeHideVal").hide();
 					//	jQuery("#regFeeValue").hide();
 					//	jQuery("#regFeeValue").after("<span>" + jQuery("#regFeeValue option:checked").html() +  "</span>");  
@@ -542,7 +540,7 @@
 				return false;
 			};
 
-			if(jQuery("#patientCategory").val()=="Waiver" || jQuery("#patientCategory").val()=="General"){
+			if(jQuery("#patientCategory").val()=="Waiver"){
 			jQuery("#feeHideVal").val(jQuery("#regFeeValue").val());
 			}
 			
