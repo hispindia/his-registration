@@ -468,6 +468,13 @@ input, select, textarea {
 				return false;
 			} 
 
+			if (!StringUtils.isBlank(jQuery("#referredFrom").val())) {
+				if (StringUtils.isBlank(jQuery("#referralType").val())) {
+					alert("Please enter referral type of the patient");
+					return false;
+				} 
+			}	
+			
 			if (jQuery("#patientGender").val() == "Any") {
 				alert("Please select gender of the patient");
 				return false;
@@ -797,6 +804,8 @@ input, select, textarea {
 						return false;
 					}
 				}
+				
+				
 				return true;
 			  }
 			},
