@@ -59,8 +59,6 @@ public class RegistrationConstants {
 	
 	public static final String FORM_FIELD_PATIENT_FIRSTNAME = "patient.firstName";
 	
-	public static final String FORM_FIELD_PATIENT_GIVENNAME = "patient.givenName";
-	
 	public static final String FORM_FIELD_PATIENT_OTHERNAME = "patient.otherName";
 	
 	public static final String FORM_FIELD_PATIENT_CATEGORY = "person.attribute.14";
@@ -72,6 +70,8 @@ public class RegistrationConstants {
 	public static final String FORM_FIELD_PATIENT_BIRTHDATE_ESTIMATED = "patient.birthdateEstimate";
 	
 	public static final String FORM_FIELD_PATIENT_GENDER = "patient.gender";
+	
+	public static final String FORM_FIELD_PATIENT_RELIGION = "patient.religion";
 	
 	//26-6-2012 - Marta add constant to store the addres in the openmrs person_address table
 	public static final String FORM_FIELD_PATIENT_ADDRESS_POSTALADDRESS = "patient.address.postalAddress";

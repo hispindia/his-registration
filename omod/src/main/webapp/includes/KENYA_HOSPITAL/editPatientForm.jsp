@@ -89,11 +89,18 @@ input, select, textarea {
 				PAGE.fillOptions("#upazilas", {
 					data : MODEL.upazilas[0].split(',')
 				});
+				
+				MODEL.religions = "Religion,Please select religion|"
+						+ MODEL.religions;
+				PAGE.fillOptions("#patientReligion", {
+					data : MODEL.religions,
+					delimiter : ",",
+					optionDelimiter : "|"
+				});
 
 				// Set value for patient information
 				formValues = "patient.surName==" + MODEL.surName + "||";
 				formValues += "patient.firstName==" + MODEL.firstName + "||";
-				formValues += "patient.givenName==" + MODEL.givenName + "||";
 				formValues += "patient.otherName==" + MODEL.otherName + "||";
 				formValues += "patient.birthdate==" + MODEL.patientBirthdate
 						+ "||";
@@ -107,6 +114,14 @@ input, select, textarea {
 
 						formValues += "person.attribute.26=="
 						+ MODEL.patientAttributes[26] + "||";
+						
+				formValues += "person.attribute.${personAttributeReligion.id}=="
+						+ MODEL.patientAttributes[${personAttributeReligion.id}] + "||";
+						
+				if (!StringUtils.isBlank(MODEL.patientAttributes[${personAttributeChiefdom.id}])) {
+					formValues += "person.attribute.${personAttributeChiefdom.id}=="
+							+ MODEL.patientAttributes[${personAttributeChiefdom.id}] + "||";
+				}
 						
 				formValues += "person.attribute.27=="
 						+ MODEL.patientAttributes[27] + "||";
@@ -499,18 +514,6 @@ input, select, textarea {
 				}
 			}
 			
-			if (!StringUtils.isBlank(jQuery("#givenName").val())) {
-			 value = jQuery("#givenName").val();
-				value = value.toUpperCase();
-				pattern = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 -";
-				for (i = 0; i < value.length; i++) {
-					if (pattern.indexOf(value[i]) < 0) {
-						alert("Please enter givenname in correct format");
-						return false;
-					}
-				}
-			}
-			
 			if (!StringUtils.isBlank(jQuery("#otherName").val())) {
 			 value = jQuery("#otherName").val();
 				value = value.toUpperCase();
@@ -560,6 +563,11 @@ input, select, textarea {
 			
 			if (jQuery("#patientMaritalStatus").val() == "Marital") {
 				alert("Please select marital status of the patient");
+				return false;
+			} 
+			
+			if (jQuery("#patientReligion").val() == "Religion") {
+				alert("Please select religion of the patient");
 				return false;
 			} 
 			
@@ -1456,19 +1464,6 @@ function showOtherNationality(){
 			</tr>
 			<tr>
 				<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
-				<td>Given Name&nbsp;&nbsp;&nbsp;&nbsp;</td>
-				<td><input type="text" id="givenName" name="patient.givenName" style='width: 152px; 	border-width: 1px;
-	border-right: 1px;
-	border-left: 1px;
-	border-top: 1px;
-	border-bottom: 1px;
-	border-color: black;
-	border-style: solid;
-'>
-				</td>
-			</tr>
-			<tr>
-				<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
 				<td>Other Name&nbsp;&nbsp;&nbsp;&nbsp;</td>
 				<td><input type="text" id="otherName" name="patient.otherName" style='width: 152px; 	border-width: 1px;
 	border-right: 1px;
@@ -1518,6 +1513,13 @@ function showOtherNationality(){
 					</select>
 				</td>
 			</tr>
+			<tr>
+				<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+				<td>Religion<label style="color:red">*</label>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+				<td><select id="patientReligion" name="person.attribute.${personAttributeReligion.id}" style='width: 152px;'>	
+					</select>
+				</td>
+			</tr>
 			<tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr>
 			<tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr>
 			<tr>
@@ -1541,6 +1543,20 @@ function showOtherNationality(){
 							style="width: 152px;">
 						</select>
 				</td>
+			</tr>
+			<tr>
+				<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+				<td>Location&nbsp;&nbsp;&nbsp;&nbsp;</td>
+				<td><select id="locations" name="patient.address.location"
+							style="width: 152px;">
+						</select>
+				</td>
+			</tr>
+			<tr>
+				<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+				<td>Chiefdom&nbsp;&nbsp;&nbsp;&nbsp;</td>
+				<td><input id="chiefdom" name="person.attribute.${personAttributeChiefdom.id}"
+				           style='width: 152px;' />
 			</tr>
 			<tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr>
 			<tr>

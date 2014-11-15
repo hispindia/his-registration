@@ -1,5 +1,5 @@
 /**
- *  Copyright 2008 Society for Health Information Systems Programmes, India (HISP India)
+ *  Copyright 2014 Society for Health Information Systems Programmes, India (HISP India)
  *
  *  This file is part of Registration module.
  *
@@ -38,8 +38,10 @@ import org.openmrs.Obs;
 import org.openmrs.Patient;
 import org.openmrs.PatientIdentifier;
 import org.openmrs.PersonAttribute;
+import org.openmrs.PersonAttributeType;
 import org.openmrs.PersonName;
 import org.openmrs.api.context.Context;
+import org.openmrs.module.hospitalcore.HospitalCoreService;
 import org.openmrs.module.hospitalcore.util.GlobalPropertyUtil;
 import org.openmrs.module.hospitalcore.util.HospitalCoreConstants;
 import org.openmrs.module.hospitalcore.util.HospitalCoreUtils;
@@ -54,16 +56,17 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-@Controller("RegistrationFindCreatePatientController")
-@RequestMapping("/findPatient.htm")
-public class FindCreatePatientController {
+@Controller("NewPatientRegistrationController")
+@RequestMapping("/newPatientRegistration.htm")
+public class NewPatientRegistrationController {
 
 	private static Log logger = LogFactory
-			.getLog(FindCreatePatientController.class);
+			.getLog(NewPatientRegistrationController.class);
 
 	@RequestMapping(method = RequestMethod.GET)
 	public String showForm(HttpServletRequest request, Model model)
 			throws JaxenException, DocumentException, IOException {
+		HospitalCoreService hospitalCoreService = (HospitalCoreService) Context.getService(HospitalCoreService.class);
 		model.addAttribute("patientIdentifier",
 				RegistrationUtils.getNewIdentifier());
 		model.addAttribute(
@@ -84,16 +87,21 @@ public class FindCreatePatientController {
 						.getSubConcepts(RegistrationConstants.CONCEPT_NAME_TEMPORARY_CATEGORY));
 		String triageEnabled = Context.getAdministrationService()
 				.getGlobalProperty("registration.triageEnabled");
+		model.addAttribute("religionList", RegistrationWebUtils.getReligionConcept());
+		PersonAttributeType personAttributeReligion=hospitalCoreService.getPersonAttributeTypeByName("Religion");
+		model.addAttribute("personAttributeReligion", personAttributeReligion);
+		PersonAttributeType personAttributeChiefdom=hospitalCoreService.getPersonAttributeTypeByName("Chiefdom");
+		model.addAttribute("personAttributeChiefdom", personAttributeChiefdom);
 		if (triageEnabled.equalsIgnoreCase("true")) {
 			model.addAttribute("TRIAGE", RegistrationWebUtils
 					.getSubConcepts(RegistrationConstants.CONCEPT_NAME_TRIAGE));
-			return "/module/registration/patient/findCreatePatientForTriage";
+			return "/module/registration/patient/newPatientRegistrationtForTriage";
 		} else {
 			model.addAttribute(
 					"OPDs",
 					RegistrationWebUtils
 							.getSubConcepts(RegistrationConstants.CONCEPT_NAME_OPD_WARD));
-			return "/module/registration/patient/findCreatePatientForOPD";
+			return "/module/registration/patient/newPatientRegistrationtForOPD";
 		}
 
 	}
@@ -183,8 +191,6 @@ public class FindCreatePatientController {
 									.get(RegistrationConstants.FORM_FIELD_PATIENT_SURNAME),
 							parameters
 									.get(RegistrationConstants.FORM_FIELD_PATIENT_FIRSTNAME),
-							parameters
-									.get(RegistrationConstants.FORM_FIELD_PATIENT_GIVENNAME),
 							parameters
 									.get(RegistrationConstants.FORM_FIELD_PATIENT_OTHERNAME));
 			patient.addName(personName);

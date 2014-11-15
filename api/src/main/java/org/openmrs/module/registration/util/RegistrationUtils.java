@@ -77,7 +77,7 @@ public class RegistrationUtils {
 	 * @param name
 	 * @return
 	 */
-	public static PersonName getPersonName(PersonName personName, String surName, String firstName, String givenName, String otherName) {
+	public static PersonName getPersonName(PersonName personName, String surName, String firstName, String otherName) {
 		
 		if (personName == null)
 			personName = new PersonName();
@@ -85,13 +85,7 @@ public class RegistrationUtils {
 		//personName.setFamilyNamePrefix(surName);
 		personName.setFamilyName(surName);
 		personName.setGivenName(firstName);
-		if (!StringUtils.isBlank(givenName) && !StringUtils.isBlank(otherName)){
-		personName.setMiddleName(givenName+","+otherName);
-		}
-		else if(!StringUtils.isBlank(givenName)){
-		personName.setMiddleName(givenName);	
-		}
-		else if(!StringUtils.isBlank(otherName)){
+		if (!StringUtils.isBlank(otherName)){
 		personName.setMiddleName(otherName);
 		}
 		else{

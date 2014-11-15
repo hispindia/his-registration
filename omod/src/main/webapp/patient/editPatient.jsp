@@ -57,7 +57,6 @@
 		patientIdentifier: "${patient.identifier}",
 		surName: "${patient.surName}",
 		firstName: "${patient.firstName}",
-		givenName: "${patient.givenName}",
 		otherName: "${patient.otherName}",
 		patientAge: "${patient.age}",
 		patientGender: "${patient.gender}",
@@ -65,10 +64,12 @@
 		patientBirthdate: "${patient.birthdate}",
 		patientAttributes: _attributes,
 		districts: _districts,
-		upazilas: _upazilas
+		upazilas: _upazilas,
+		religions: "${religionList}"
 	};
 </script>
 
 <jsp:include page="../includes/${hospitalName}/editPatientForm.jsp" />
-
+<!--  
 <%@ include file="/WEB-INF/template/footer.jsp"%>
+-->

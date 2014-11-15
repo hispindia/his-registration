@@ -33,7 +33,9 @@ import org.dom4j.DocumentException;
 import org.jaxen.JaxenException;
 import org.openmrs.Patient;
 import org.openmrs.PersonAttribute;
+import org.openmrs.PersonAttributeType;
 import org.openmrs.api.context.Context;
+import org.openmrs.module.hospitalcore.HospitalCoreService;
 import org.openmrs.module.hospitalcore.util.HospitalCoreUtils;
 import org.openmrs.module.registration.includable.validator.attribute.PatientAttributeValidatorService;
 import org.openmrs.module.registration.util.RegistrationConstants;
@@ -56,10 +58,16 @@ public class EditPatientController {
 	public String showForm(@RequestParam("patientId") Integer patientId,
 			Model model) throws JaxenException, DocumentException, IOException,
 			ParseException {
+		HospitalCoreService hospitalCoreService = (HospitalCoreService) Context.getService(HospitalCoreService.class);
 		Patient patient = Context.getPatientService().getPatient(patientId);
 		PatientModel patientModel = new PatientModel(patient);
 		model.addAttribute("patient", patientModel);
 		RegistrationWebUtils.getAddressData(model);
+		model.addAttribute("religionList", RegistrationWebUtils.getReligionConcept());
+		PersonAttributeType personAttributeReligion=hospitalCoreService.getPersonAttributeTypeByName("Religion");
+		model.addAttribute("personAttributeReligion", personAttributeReligion);
+		PersonAttributeType personAttributeChiefdom=hospitalCoreService.getPersonAttributeTypeByName("Chiefdom");
+		model.addAttribute("personAttributeChiefdom", personAttributeChiefdom);
 		return "/module/registration/patient/editPatient";
 	}
 
@@ -118,8 +126,6 @@ public class EditPatientController {
 									.get(RegistrationConstants.FORM_FIELD_PATIENT_SURNAME),
 							parameters
 									.get(RegistrationConstants.FORM_FIELD_PATIENT_FIRSTNAME),
-							parameters
-									.get(RegistrationConstants.FORM_FIELD_PATIENT_GIVENNAME),
 							parameters
 									.get(RegistrationConstants.FORM_FIELD_PATIENT_OTHERNAME));
 		}

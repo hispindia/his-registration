@@ -40,7 +40,7 @@
 	MODEL = {
 		patientId: "${patient.patientId}",
 		patientIdentifier: "${patient.identifier}",
-		patientName: "${fn:replace(patient.fullname,',',' ')}",
+		patientName: "${patient.fullname}",
 		patientAge: "${patient.age}",
 		patientGender: "${patient.gender}",
 		patientAddress: "${patient.address}",

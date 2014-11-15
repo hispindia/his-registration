@@ -44,8 +44,6 @@ import org.openmrs.Encounter;
 import org.openmrs.EncounterType;
 import org.openmrs.Location;
 import org.openmrs.Patient;
-import org.openmrs.PersonAttribute;
-import org.openmrs.PersonAttributeType;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.hospitalcore.HospitalCoreService;
 import org.openmrs.module.hospitalcore.PatientQueueService;
@@ -87,6 +85,15 @@ public class RegistrationWebUtils {
 		StringBuilder sb = new StringBuilder();
 		for (ConceptAnswer ca : opdward.getAnswers()) {
 			sb.append(ca.getAnswerConcept().getConceptId() + "," + ca.getAnswerConcept().getName().getName() + "|");
+		}
+		return sb.toString();
+	}
+	
+	public static String getReligionConcept() {
+		Concept religion = Context.getConceptService().getConcept("RELIGION");
+		StringBuilder sb = new StringBuilder();
+		for (ConceptAnswer ca : religion.getAnswers()) {
+			sb.append(ca.getAnswerConcept().getName().getName() + "," + ca.getAnswerConcept().getName().getName() + "|");
 		}
 		return sb.toString();
 	}

@@ -41,8 +41,6 @@ public class PatientModel {
 	
 	private String firstName;
 	
-	private String givenName;
-	
 	private String otherName;
 	
 	private String age;
@@ -64,16 +62,10 @@ public class PatientModel {
 		setSurName(patient.getFamilyName());
 		setFirstName(patient.getGivenName());
 		if(patient.getMiddleName()!=null){
-		String[] str_array = patient.getMiddleName().split(",");
-		if (str_array.length == 1) {
-			setGivenName(str_array[0]);
-		} else if (str_array.length == 2) {
-			setGivenName(str_array[0]);
-			setOtherName(str_array[1]);
-		} else {
-			setGivenName("");
-			setOtherName("");
+		setOtherName(patient.getMiddleName());
 		}
+		 else {
+			setOtherName("");
 		}
 		
 		setAge(String.format("%s, %s", PatientUtils.estimateAge(patient.getBirthdate()),
@@ -121,14 +113,6 @@ public class PatientModel {
 
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
-	}
-
-	public String getGivenName() {
-		return givenName;
-	}
-
-	public void setGivenName(String givenName) {
-		this.givenName = givenName;
 	}
 
 	public String getOtherName() {

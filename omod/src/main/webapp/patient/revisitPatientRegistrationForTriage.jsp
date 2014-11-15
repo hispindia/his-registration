@@ -1,5 +1,5 @@
  <%--
- *  Copyright 2009 Society for Health Information Systems Programmes, India (HISP India)
+ *  Copyright 2014 Society for Health Information Systems Programmes, India (HISP India)
  *
  *  This file is part of Registration module.
  *
@@ -51,13 +51,13 @@
 		districts: _districts,
 		upazilas: _upazilas,
 		////ghanshyam,16-dec-2013,3438 Remove the interdependency
-		OPDs: "${OPDs}",
+		TRIAGE: "${TRIAGE}",
 		referredFrom: "${referralHospitals}",
 		referralType: "${referralReasons}",
 		TEMPORARYCAT: "${TEMPORARYCAT}"
 	}
 </script>
-<jsp:include page="../includes/${hospitalName}/patientRegisterFormForOPD.jsp"/>
+<jsp:include page="../includes/${hospitalName}/revisitPatientRegistrationFormForTriage.jsp"/>
 <!--  
 <%@ include file="/WEB-INF/template/footer.jsp" %>  
 -->

@@ -1,5 +1,5 @@
 <%--
- *  Copyright 2013 Society for Health Information Systems Programmes, India (HISP India)
+ *  Copyright 2014 Society for Health Information Systems Programmes, India (HISP India)
  *
  *  This file is part of Registration module.
  *
@@ -15,8 +15,8 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with Registration module.  If not, see <http://www.gnu.org/licenses/>.
- *  author: Ghanshyam
- *  date:   20-02-2013
+ *  
+ *  
 --%>
 
 <style>
@@ -59,7 +59,7 @@ td.border {
 }
 
 input, select, textarea {
-
+background-color: #bde9ba;
 	border-width: 1px;
 	border-right: 1px;
 	border-left: 1px;
@@ -83,16 +83,23 @@ input, select, textarea {
 					changeYear : true
 				});
 				jQuery('#birthdate').change(PAGE.checkBirthDate);
+				MODEL.religions = "Religion,Please select religion|"
+						+ MODEL.religions;
+				PAGE.fillOptions("#patientReligion", {
+					data : MODEL.religions,
+					delimiter : ",",
+					optionDelimiter : "|"
+				});
 				PAGE.fillOptions("#districts", {
 					data : MODEL.districts
 				});
 				PAGE.fillOptions("#upazilas", {
 					data : typeof(MODEL.upazilas[0])=="undefined"?MODEL.upazilas:MODEL.upazilas[0].split(',')
 				});
-				MODEL.TRIAGE = " ,Please Select Triage Room to Visit|"
-						+ MODEL.TRIAGE;
-				PAGE.fillOptions("#triage", {
-					data : MODEL.TRIAGE,
+				MODEL.OPDs = " ,Please Select OPD Room to Visit|"
+						+ MODEL.OPDs;
+				PAGE.fillOptions("#opdWard", {
+					data : MODEL.OPDs,
 					delimiter : ",",
 					optionDelimiter : "|"
 				});
@@ -208,13 +215,6 @@ input, select, textarea {
 		submit : function() {
 
 			// Capitalize fullname and relative name
-			fullNameInCapital = StringUtils.capitalize(jQuery("#nameOrIdentifier", jQuery("#patientSearchForm")).val());
-			jQuery("#surName", jQuery("#patientRegistrationForm")).val(fullNameInCapital);
-			//jQuery("#firstName", jQuery("#patientRegistrationForm")).val(fullNameInCapital);
-			//jQuery("#givenName", jQuery("#patientRegistrationForm")).val(fullNameInCapital);
-			//jQuery("#otherName", jQuery("#patientRegistrationForm")).val(fullNameInCapital);
-			jQuery("#nameOrIdentifier", jQuery("#patientSearchForm")).val(fullNameInCapital);
-			
 			relativeNameInCaptital = StringUtils.capitalize(jQuery("#patientRelativeName").val());
 			jQuery("#patientRelativeName").val(relativeNameInCaptital);
 
@@ -403,14 +403,12 @@ input, select, textarea {
 			}
 			else{
 			    value = jQuery("#surName").val();
-				value = value.toUpperCase();
-				pattern = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 -";
-				for (i = 0; i < value.length; i++) {
-					if (pattern.indexOf(value[i]) < 0) {
-						alert("Please enter surname/identifier in correct format");
-						return false;
-					}
+				value = value.substr(0, 1).toUpperCase() + value.substr(1);
+				jQuery("#surName").val(value);
+				if(/^[a-zA-Z0-9- ]*$/.test(value) == false) {
+					alert("Please enter surname in correct format");
 				}
+				
 			}
 			
 			if (StringUtils.isBlank(jQuery("#firstName").val())) {
@@ -419,28 +417,25 @@ input, select, textarea {
 			}
 			else{
 			    value = jQuery("#firstName").val();
-				value = value.substr(0, 1).toUpperCase() + value.substr(1);
-				jQuery("#firstName").val(value);
-				if(/^[a-zA-Z0-9- ]*$/.test(value) == false) {
-					alert('Please enter firstname in correct format');
+				value = value.toUpperCase();
+				pattern = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 -";
+				for (i = 0; i < value.length; i++) {
+					if (pattern.indexOf(value[i]) < 0) {
+						alert("Please enter firstname in correct format");
+						return false;
+					}
 				}
-				
 			}
 			
-			if (!StringUtils.isBlank(jQuery("#givenName").val())) {
-				value = jQuery("#givenName").val();
-				value = value.substr(0, 1).toUpperCase() + value.substr(1);
-				jQuery("#givenName").val(value);
-				if(/^[a-zA-Z0-9- ]*$/.test(value) == false) {
-					alert('Please enter givenname in correct format');
-				}
-			}
 			if (!StringUtils.isBlank(jQuery("#otherName").val())) {
-				value = jQuery("#otherName").val();
-				value = value.substr(0, 1).toUpperCase() + value.substr(1);
-				jQuery("#otherName").val(value);
-				if(/^[a-zA-Z0-9- ]*$/.test(value) == false) {
-					alert('Please enter othername in correct format');
+			 value = jQuery("#otherName").val();
+				value = value.toUpperCase();
+				pattern = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 -";
+				for (i = 0; i < value.length; i++) {
+					if (pattern.indexOf(value[i]) < 0) {
+						alert("Please enter othername in correct format");
+						return false;
+					}
 				}
 			}
 	
@@ -468,13 +463,6 @@ input, select, textarea {
 				return false;
 			} 
 
-			if (!StringUtils.isBlank(jQuery("#referredFrom").val())) {
-				if (StringUtils.isBlank(jQuery("#referralType").val())) {
-					alert("Please enter referral type of the patient");
-					return false;
-				} 
-			}	
-			
 			if (jQuery("#patientGender").val() == "Any") {
 				alert("Please select gender of the patient");
 				return false;
@@ -485,6 +473,10 @@ input, select, textarea {
 				return false;
 			} 
 			
+			if (jQuery("#patientReligion").val() == "Religion") {
+				alert("Please select religion of the patient");
+				return false;
+			} 
 			
 			if (jQuery("#mlcCase").is(':checked')) {
 				if (StringUtils.isBlank(jQuery("#tempCat").val()))
@@ -510,8 +502,8 @@ input, select, textarea {
 				return false;
 			}		
 			
-			if (StringUtils.isBlank(jQuery("#triage").val())) {
-				alert("Please select the triage room to visit");
+			if (StringUtils.isBlank(jQuery("#opdWard").val())) {
+				alert("Please select the OPD ward to visit");
 				return false;
 			}
 			
@@ -804,8 +796,6 @@ input, select, textarea {
 						return false;
 					}
 				}
-				
-				
 				return true;
 			  }
 			},
@@ -1393,27 +1383,13 @@ input, select, textarea {
 			<tr>
 				<td valign="top"><b>Patient Name</b><label style="color:red">*</label>&nbsp;&nbsp;&nbsp;&nbsp;</td>
 				<td valign="top">Surname<label style="color:red">*</label>&nbsp;&nbsp;&nbsp;&nbsp;</td>
-				<td><input type="hidden" id="surName" name="patient.surName" style='width: 152px;'>
-				<div id="searchbox"></div>
-				<div id="numberOfFoundPatients"></div>
+				<td><input type="text" id="surName" name="patient.surName" style='width: 152px;'>
 				</td>
 			</tr>
 			<tr>
 				<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
 				<td>First Name<label style="color:red">*</label>&nbsp;&nbsp;&nbsp;&nbsp;</td>
 				<td><input type="text" id="firstName" name="patient.firstName" style='width: 152px; 	border-width: 1px;
-	border-right: 1px;
-	border-left: 1px;
-	border-top: 1px;
-	border-bottom: 1px;
-	border-color: black;
-	border-style: solid;'>
-				</td>
-			</tr>
-			<tr>
-				<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
-				<td>Given Name&nbsp;&nbsp;&nbsp;&nbsp;</td>
-				<td><input type="text" id="givenName" name="patient.givenName" style='width: 152px;	border-width: 1px;
 	border-right: 1px;
 	border-left: 1px;
 	border-top: 1px;
@@ -1472,6 +1448,13 @@ input, select, textarea {
 					</select>
 				</td>
 			</tr>
+			<tr>
+				<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+				<td>Religion<label style="color:red">*</label>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+				<td><select id="patientReligion" name="person.attribute.${personAttributeReligion.id}" style='width: 152px;'>	
+					</select>
+				</td>
+			</tr>
 			<tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr>
 			<tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr>
 
@@ -1496,6 +1479,20 @@ input, select, textarea {
 							style="width: 152px;">
 						</select>
 				</td>
+			</tr>
+			<tr>
+				<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+				<td>Location&nbsp;&nbsp;&nbsp;&nbsp;</td>
+				<td><select id="locations" name="patient.address.location"
+							style="width: 152px;">
+						</select>
+				</td>
+			</tr>
+			<tr>
+				<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+				<td>Chiefdom&nbsp;&nbsp;&nbsp;&nbsp;</td>
+				<td><input id="chiefdom" name="person.attribute.${personAttributeChiefdom.id}"
+				           style='width: 152px;' />
 			</tr>
 			<tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr>
 			<tr>
@@ -1584,6 +1581,7 @@ input, select, textarea {
 				<td><b>Client Identification&nbsp;&nbsp;&nbsp;&nbsp;</b></td>
 				<td>Nationality</td>
 				<td><select id="patientNation" name="person.attribute.27" style="width: 152px;" onchange="showOtherNationality();">
+										<option value="Nation"></option>
 										<option value="Kenya">Kenya</option>
 										<option value="East Africa">East Africa</option>
 										<option value="Kenyan">Africa</option>
@@ -1659,7 +1657,7 @@ input, select, textarea {
 		<tr>
 				<td id="catGen"><input id="patCatGeneral" type="checkbox" name="person.attribute.14" value="General" /> General</td>
 				<td><b>Patient Category&nbsp;&nbsp;&nbsp;&nbsp;</b></td>
-				<td><input id="patCatHIV" type="checkbox" name="person.attribute.14" value="CCC" /> CCC</td>
+				<td><input id="patCatHIV" type="checkbox" name="person.attribute.14" value="HIV" /> HIV</td>
 				<td><input id="patCatChildLessThan5yr" type="checkbox" name="person.attribute.14" value="Child Less Than 5 yr" /> Child less than 5 years old&nbsp;&nbsp;&nbsp;&nbsp;</td>
 				<td><input id="patCatNHIF" type="checkbox" name="person.attribute.14" value="NHIF" /> NHIF</td>
 		</tr>
@@ -1700,8 +1698,8 @@ input, select, textarea {
 		<tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr>
 		<tr>
 				<td><b>Visit Information</b><label style="color:red">*</label>&nbsp;&nbsp;&nbsp;&nbsp;</td>
-				<td>Triage Room to Visit</td>
-				<td><select id="triage" name="patient.triage" style='width: 152px;'>	</select></td>
+				<td>OPD Ward to Visit</td>
+				<td><select id="opdWard" name="patient.opdWard" style='width: 152px;'>	</select></td>
 		</tr>
 		<tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr>
 		<tr>
@@ -1737,4 +1735,4 @@ input, select, textarea {
 		</tr>
 		</table>
 
-	</form>
+	</form>	
