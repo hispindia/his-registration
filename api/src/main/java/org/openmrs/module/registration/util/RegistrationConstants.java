@@ -61,7 +61,7 @@ public class RegistrationConstants {
 	
 	public static final String FORM_FIELD_PATIENT_OTHERNAME = "patient.otherName";
 	
-	public static final String FORM_FIELD_PATIENT_CATEGORY = "person.attribute.14";
+	public static final String FORM_FIELD_PAYMENT_CATEGORY = "person.attribute.14";
 	
 	public static final String FORM_FIELD_PATIENT_IDENTIFIER = "patient.identifier";
 	
@@ -82,7 +82,7 @@ public class RegistrationConstants {
 	  changes tehsil to upazila */
 	public static final String FORM_FIELD_PATIENT_ADDRESS_UPAZILA = "patient.address.upazila";
 	
-	public static final String FORM_FIELD_PATIENT_TEMPORARY_ATTRIBUTE = "patient.temporary";
+	public static final String FORM_FIELD_PATIENT_MLC= "patient.mlc";
 	
 	public static final String FORM_FIELD_PATIENT_OPD_WARD = "patient.opdWard";
 	
@@ -113,7 +113,7 @@ public class RegistrationConstants {
 	public static final String CONCEPT_REVISIT = "Revisit";
 	
 	// harsh 2/7/2012 adding property for temp category
-	public static final String CONCEPT_NAME_TEMPORARY_CATEGORY = "TEMPORARY CATEGORY";
+	public static final String CONCEPT_NAME_MEDICO_LEGAL_CASE = "MEDICO LEGAL CASE";
 	
 	//ghanshyam  20-may-2013 #1648 capture Health ID and Registration Fee Type
 	public static final String FORM_FIELD_PATIENT_REGISTRATION_FEE_ATTRIBUTE = "patient.registration.fee.attribute";

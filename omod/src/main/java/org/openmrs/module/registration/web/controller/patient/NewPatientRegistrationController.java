@@ -84,7 +84,7 @@ public class NewPatientRegistrationController {
 		model.addAttribute(
 				"TEMPORARYCAT",
 				RegistrationWebUtils
-						.getSubConcepts(RegistrationConstants.CONCEPT_NAME_TEMPORARY_CATEGORY));
+						.getSubConcepts(RegistrationConstants.CONCEPT_NAME_MEDICO_LEGAL_CASE));
 		String triageEnabled = Context.getAdministrationService()
 				.getGlobalProperty("registration.triageEnabled");
 		model.addAttribute("religionList", RegistrationWebUtils.getReligionConcept());
@@ -92,17 +92,14 @@ public class NewPatientRegistrationController {
 		model.addAttribute("personAttributeReligion", personAttributeReligion);
 		PersonAttributeType personAttributeChiefdom=hospitalCoreService.getPersonAttributeTypeByName("Chiefdom");
 		model.addAttribute("personAttributeChiefdom", personAttributeChiefdom);
-		if (triageEnabled.equalsIgnoreCase("true")) {
-			model.addAttribute("TRIAGE", RegistrationWebUtils
-					.getSubConcepts(RegistrationConstants.CONCEPT_NAME_TRIAGE));
-			return "/module/registration/patient/newPatientRegistrationtForTriage";
-		} else {
-			model.addAttribute(
-					"OPDs",
-					RegistrationWebUtils
-							.getSubConcepts(RegistrationConstants.CONCEPT_NAME_OPD_WARD));
-			return "/module/registration/patient/newPatientRegistrationtForOPD";
-		}
+		model.addAttribute("TRIAGE", RegistrationWebUtils
+				.getSubConcepts(RegistrationConstants.CONCEPT_NAME_TRIAGE));
+		model.addAttribute(
+				"OPDs",
+				RegistrationWebUtils
+						.getSubConcepts(RegistrationConstants.CONCEPT_NAME_OPD_WARD));
+		
+			return "/module/registration/patient/newPatientRegistrationt";
 
 	}
 
@@ -281,13 +278,8 @@ public class NewPatientRegistrationController {
 		Encounter encounter = RegistrationWebUtils.createEncounter(patient,
 				false);
 
-		/*
-		 * ADD OPD ROOM
-		 */
-		// ghanshyam,16-dec-2013,3438 Remove the interdependency
-		String triageEnabled = Context.getAdministrationService()
-				.getGlobalProperty("registration.triageEnabled");
-		if (triageEnabled.equalsIgnoreCase("true")) {
+		if (!StringUtils.isBlank(parameters
+				.get(RegistrationConstants.FORM_FIELD_PATIENT_TRIAGE))) {
 			Concept triageConcept = Context.getConceptService().getConcept(
 					RegistrationConstants.CONCEPT_NAME_TRIAGE);
 
@@ -296,7 +288,7 @@ public class NewPatientRegistrationController {
 					.getConcept(
 							parameters
 									.get(RegistrationConstants.FORM_FIELD_PATIENT_TRIAGE));
-			String selectedCategory=parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_CATEGORY);
+			String selectedCategory=parameters.get(RegistrationConstants.FORM_FIELD_PAYMENT_CATEGORY);
 			Obs triageObs = new Obs();
 			triageObs.setConcept(triageConcept);
 			triageObs.setValueCoded(selectedTRIAGEConcept);
@@ -313,7 +305,7 @@ public class NewPatientRegistrationController {
 					.getConcept(
 							parameters
 									.get(RegistrationConstants.FORM_FIELD_PATIENT_OPD_WARD));
-			String selectedCategory=parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_CATEGORY);
+			String selectedCategory=parameters.get(RegistrationConstants.FORM_FIELD_PAYMENT_CATEGORY);
 			Obs opdObs = new Obs();
 			opdObs.setConcept(opdConcept);
 			opdObs.setValueCoded(selectedOPDConcept);
@@ -323,26 +315,26 @@ public class NewPatientRegistrationController {
 					selectedOPDConcept, false, selectedCategory);
 		}
 
-		Concept tempCatConcept = Context.getConceptService().getConcept(
-				RegistrationConstants.CONCEPT_NAME_TEMPORARY_CATEGORY);
+		Concept mlcConcept = Context.getConceptService().getConcept(
+				RegistrationConstants.CONCEPT_NAME_MEDICO_LEGAL_CASE);
 
-		Obs tempCatObs = new Obs();
+		Obs mlcObs = new Obs();
 		if (!StringUtils
 				.isBlank(parameters
-						.get(RegistrationConstants.FORM_FIELD_PATIENT_TEMPORARY_ATTRIBUTE))) {
-			Concept selectedTempCatConcept = Context
+						.get(RegistrationConstants.FORM_FIELD_PATIENT_MLC))) {
+			Concept selectedMlcConcept = Context
 					.getConceptService()
 					.getConcept(
 							parameters
-									.get(RegistrationConstants.FORM_FIELD_PATIENT_TEMPORARY_ATTRIBUTE));
-			tempCatObs.setConcept(tempCatConcept);
-			tempCatObs.setValueCoded(selectedTempCatConcept);
-			encounter.addObs(tempCatObs);
+									.get(RegistrationConstants.FORM_FIELD_PATIENT_MLC));
+			mlcObs.setConcept(mlcConcept);
+			mlcObs.setValueCoded(selectedMlcConcept);
+			encounter.addObs(mlcObs);
 		} else {
-			tempCatObs.setConcept(tempCatConcept);
-			tempCatObs.setValueCoded(Context.getConceptService().getConcept(
+			mlcObs.setConcept(mlcConcept);
+			mlcObs.setValueCoded(Context.getConceptService().getConcept(
 					"NO"));
-			encounter.addObs(tempCatObs);
+			encounter.addObs(mlcObs);
 		}
 		/*
 		 * REFERRAL INFORMATION

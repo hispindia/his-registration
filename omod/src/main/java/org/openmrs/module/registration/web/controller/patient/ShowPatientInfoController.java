@@ -79,7 +79,7 @@ public class ShowPatientInfoController {
 		PatientModel patientModel = new PatientModel(patient);
 		model.addAttribute("patient", patientModel);
 		//ghanshyam,16-dec-2013,3438 Remove the interdependency
-		model.addAttribute("TEMPORARYCAT", RegistrationWebUtils.getSubConcepts(RegistrationConstants.CONCEPT_NAME_TEMPORARY_CATEGORY));
+		model.addAttribute("TEMPORARYCAT", RegistrationWebUtils.getSubConcepts(RegistrationConstants.CONCEPT_NAME_MEDICO_LEGAL_CASE));
 		// Get current date
 		SimpleDateFormat sdf = new SimpleDateFormat("EEE dd/MM/yyyy kk:mm");
 		model.addAttribute("currentDateTime", sdf.format(new Date()));
@@ -129,7 +129,7 @@ public class ShowPatientInfoController {
 					model.addAttribute("selectedOPD", obs.getValueCoded().getConceptId());
 				}
 
-				if (obs.getConcept().getName().getName().equalsIgnoreCase(RegistrationConstants.CONCEPT_NAME_TEMPORARY_CATEGORY)) {
+				if (obs.getConcept().getName().getName().equalsIgnoreCase(RegistrationConstants.CONCEPT_NAME_MEDICO_LEGAL_CASE)) {
 					model.addAttribute("tempCategory", obs.getValueCoded().getConceptId());
 				}
 
@@ -150,7 +150,7 @@ public class ShowPatientInfoController {
 				
 				for (Obs obs : encounter.getAllObs()) {
 					if (obs.getConcept().getDisplayString()
-					        .equalsIgnoreCase(RegistrationConstants.CONCEPT_NAME_TEMPORARY_CATEGORY)) {
+					        .equalsIgnoreCase(RegistrationConstants.CONCEPT_NAME_MEDICO_LEGAL_CASE)) {
 						model.addAttribute("tempCategoryId", obs.getConcept().getConceptId());
 					}
 					if (obs.getConcept().getDisplayString()
@@ -265,7 +265,7 @@ public class ShowPatientInfoController {
 				Concept triageConcept = Context.getConceptService().getConcept(RegistrationConstants.CONCEPT_NAME_TRIAGE);
 				Concept selectedTRIAGEConcept = Context.getConceptService().getConcept(
 				    Integer.parseInt(parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_TRIAGE)));
-				String selectedCategory=parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_CATEGORY);
+				String selectedCategory=parameters.get(RegistrationConstants.FORM_FIELD_PAYMENT_CATEGORY);
 				Obs triage = new Obs();
 				triage.setConcept(triageConcept);
 				triage.setValueCoded(selectedTRIAGEConcept);
@@ -278,7 +278,7 @@ public class ShowPatientInfoController {
 				Concept opdConcept = Context.getConceptService().getConcept(RegistrationConstants.CONCEPT_NAME_OPD_WARD);
 				Concept selectedOPDConcept = Context.getConceptService().getConcept(
 				    Integer.parseInt(parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_OPD_WARD)));
-				String selectedCategory=parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_CATEGORY);
+				String selectedCategory=parameters.get(RegistrationConstants.FORM_FIELD_PAYMENT_CATEGORY);
 				Obs opd = new Obs();
 				opd.setConcept(opdConcept);
 				opd.setValueCoded(selectedOPDConcept);
@@ -288,21 +288,21 @@ public class ShowPatientInfoController {
 				RegistrationWebUtils.sendPatientToOPDQueue(patient, selectedOPDConcept, true ,selectedCategory);
 			}
 			
-			Concept tempCatConcept = Context.getConceptService().getConcept(RegistrationConstants.CONCEPT_NAME_TEMPORARY_CATEGORY);
+			Concept mlcConcept = Context.getConceptService().getConcept(RegistrationConstants.CONCEPT_NAME_MEDICO_LEGAL_CASE);
 			
-			Obs temp = new Obs();
-			if (!StringUtils.isBlank(parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_TEMPORARY_ATTRIBUTE))){
-			Concept selectedTempCatConcept = Context.getConceptService().getConcept(
-			    Integer.parseInt(parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_TEMPORARY_ATTRIBUTE)));
+			Obs mlc = new Obs();
+			if (!StringUtils.isBlank(parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_MLC))){
+			Concept selectedMlcConcept = Context.getConceptService().getConcept(
+			    Integer.parseInt(parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_MLC)));
 			
-			temp.setConcept(tempCatConcept);
-			temp.setValueCoded(selectedTempCatConcept);
-			encounter.addObs(temp);
+			mlc.setConcept(mlcConcept);
+			mlc.setValueCoded(selectedMlcConcept);
+			encounter.addObs(mlc);
 			}
 			else {
-				temp.setConcept(tempCatConcept);
-				temp.setValueCoded(Context.getConceptService().getConcept("NO"));
-				encounter.addObs(temp);
+				mlc.setConcept(mlcConcept);
+				mlc.setValueCoded(Context.getConceptService().getConcept("NO"));
+				encounter.addObs(mlc);
 			}
 			Concept cnrffr = Context.getConceptService().getConcept(RegistrationConstants.CONCEPT_NAME_REGISTRATION_FEE);
 			Concept cr = Context.getConceptService().getConcept(RegistrationConstants.CONCEPT_REVISIT);
@@ -313,7 +313,7 @@ public class ShowPatientInfoController {
 			obsr.setValueNumeric(regFeeValue);
 			
 			obsr.setValueNumeric(regFeeValue);
-			obsr.setValueText(parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_CATEGORY));
+			obsr.setValueText(parameters.get(RegistrationConstants.FORM_FIELD_PAYMENT_CATEGORY));
 			encounter.addObs(obsr);	
 						
 		}
@@ -357,7 +357,7 @@ public class ShowPatientInfoController {
 					encounter.addObs(registrationFeeFreeReasonAttribute);
 				}
 				
-				if(conname.equals("TEMPORARY CATEGORY")){
+				if(conname.equals("MEDICO LEGAL CASE")){
 					Obs temporaryAttribute = new Obs();
 					temporaryAttribute.setConcept(concept);
 					temporaryAttribute.setValueAsString(parameters.get(name));

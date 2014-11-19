@@ -90,7 +90,7 @@ input, select, textarea {
 					data : MODEL.upazilas[0].split(',')
 				});
 				
-				MODEL.religions = "Religion,Please select religion|"
+				MODEL.religions = "Religion, |"
 						+ MODEL.religions;
 				PAGE.fillOptions("#patientReligion", {
 					data : MODEL.religions,
@@ -135,13 +135,11 @@ input, select, textarea {
 				}
 								
 				attributes = MODEL.patientAttributes[14];
-				jQuery("#catGen").hide();
-				jQuery("#healthIdField").hide();
 				
 				jQuery.each(attributes.split(","), function(index, value) {
-					jQuery("#patientRegistrationForm").fillForm(
+					jQuery("#editPatientForm").fillForm(
 							"person.attribute.14==" + value + "||");
-				});				
+				});			
 					
 					
 				if (!StringUtils.isBlank(MODEL.patientAttributes[16])) {
@@ -159,24 +157,9 @@ input, select, textarea {
 							+ MODEL.patientAttributes[38] + "||";
 				}
 				
-				if (!StringUtils.isBlank(MODEL.patientAttributes[25])) {
-					formValues += "patient.attribute.25=="
-							+ MODEL.patientAttributes[25] + "||";
-				}
-				
 				if (!StringUtils.isBlank(MODEL.patientAttributes[28])) {
 					formValues += "person.attribute.28=="
 							+ MODEL.patientAttributes[28] + "||";
-				}
-				
-				if (!StringUtils.isBlank(MODEL.patientAttributes[29])) {
-					formValues += "person.attribute.29=="
-							+ MODEL.patientAttributes[29] + "||";
-				}
-				
-				if (!StringUtils.isBlank(MODEL.patientAttributes[30])) {
-					formValues += "person.attribute.30=="
-							+ MODEL.patientAttributes[30] + "||";
 				}
 
 				if (!StringUtils.isBlank(MODEL.patientAttributes[37])) {
@@ -184,61 +167,18 @@ input, select, textarea {
 							+ MODEL.patientAttributes[37] + "||";
 				}
 				
-				if (!StringUtils.isBlank(MODEL.patientAttributes[36])) {
-					jQuery("#patientRegistrationForm").fillForm(
-							"person.attribute.36=="
-									+ MODEL.patientAttributes[36] + "||");
-				} else {
-					jQuery("#exemptionField1").hide();
-					jQuery("#exemptionField2").hide();
+				if (MODEL.patientAttributes[14]=="Paying") {
+				jQuery("#specialSchemeField").hide();
 				}
 				
-				if (!StringUtils.isBlank(MODEL.patientAttributes[33])) {
-					jQuery("#patientRegistrationForm").fillForm(
-							"person.attribute.33=="
-									+ MODEL.patientAttributes[33] + "||");
-				} else {
-					jQuery("#nhifCardField1").hide();
-					jQuery("#nhifCardField2").hide();
+				if (MODEL.patientAttributes[14]=="Non-Paying") {
+				jQuery("#specialSchemeField").hide();
 				}
 				
-				if (!StringUtils.isBlank(MODEL.patientAttributes[32])) {
-					jQuery("#patientRegistrationForm").fillForm(
-							"person.attribute.32=="
-									+ MODEL.patientAttributes[32] + "||");
-				} else {
-					jQuery("#waiverField1").hide();
-					jQuery("#waiverField2").hide();
-				}
-				
-				if (MODEL.patientAttributes[14]=="General") {
-				jQuery("#exemptionField1").hide();
-				jQuery("#exemptionField2").hide();
-				jQuery("#nhifCardField1").hide();
-				jQuery("#nhifCardField2").hide();
-				jQuery("#waiverField1").hide();
-				jQuery("#waiverField2").hide();
-				}
-				
-				if (MODEL.patientAttributes[14]=="CCC" || MODEL.patientAttributes[14]=="Child Less Than 5 yr"
-				|| MODEL.patientAttributes[14]=="TB" || MODEL.patientAttributes[14]=="Expectant Mother"
-				|| MODEL.patientAttributes[14]=="Other Insurance" || MODEL.patientAttributes[14]=="Malaria") {
-				jQuery("#nhifCardField1").hide();
-				jQuery("#nhifCardField2").hide();
-				jQuery("#waiverField1").hide();
-				jQuery("#waiverField2").hide();
-				}
-				
-				if (MODEL.patientAttributes[14]=="NHIF") {
-				jQuery("#waiverField1").hide();
-				jQuery("#waiverField2").hide();
-				}
-				
-				if (MODEL.patientAttributes[14]=="Waiver") {
-				jQuery("#exemptionField1").hide();
-				jQuery("#exemptionField2").hide();
-				jQuery("#nhifCardField1").hide();
-				jQuery("#nhifCardField2").hide();
+				if (MODEL.patientAttributes[14]=="Special Schemes") {
+				jQuery("#specialSchemeField").show();
+				formValues += "person.attribute.42=="
+							+ MODEL.patientAttributes[42] + "||";
 				}
 				
 				// Set value for address 
@@ -248,43 +188,24 @@ input, select, textarea {
 				PAGE.changeDistrict();
 				jQuery("#upazilas").val(StringUtils.trim(addressParts[1]));
 				
-				jQuery("#patientRegistrationForm").fillForm(formValues);
+				jQuery("#editPatientForm").fillForm(formValues);
 				PAGE.checkBirthDate();
 				VALIDATORS.genderCheck();
-				jQuery("#patientRegistrationForm").fillForm(
+				jQuery("#editPatientForm").fillForm(
 						"person.attribute.15==" + MODEL.patientAttributes[15]
 								+ "||");
 
 
 				// binding
-				jQuery("#patCatGeneral").click(function() {
-					VALIDATORS.generalCheck();
+				jQuery("#paying").click(function() {
+					VALIDATORS.payingCheck();
 				});
-				jQuery("#patCatHIV").click(function() {
-					VALIDATORS.hivCheck();
+				jQuery("#nonPaying").click(function() {
+					VALIDATORS.nonPayingCheck();
 				});
-				jQuery("#patCatChildLessThan5yr").click(function() {
-					VALIDATORS.childYearCheck();
+				jQuery("#specialSchemes").click(function() {
+					VALIDATORS.specialSchemeCheck();
 				});
-				jQuery("#patCatNHIF").click(function() {
-					VALIDATORS.nhifCheck();
-				});
-				jQuery("#patCatTB").click(function() {
-					VALIDATORS.tvCheck();
-				});
-				jQuery("#patCatMother").click(function() {
-					VALIDATORS.motherCheck();
-				});
-				jQuery("#patCatOtherInsurance").click(function() {
-					VALIDATORS.otherInsuranceCheck();
-				});
-				jQuery("#patCatMalaria").click(function() {
-					VALIDATORS.malariaCheck();
-				});
-				jQuery("#patCatWaiver").click(function() {
-					VALIDATORS.waiverCheck();
-				});
-
 				jQuery("#sameAddress").click(function() {
 					VALIDATORS.copyaddress();
 				});
@@ -297,15 +218,6 @@ input, select, textarea {
 				});
 				jQuery('#birthdate').change(PAGE.checkBirthDate);
 				
-				//ghanshyam 25-feb-2013 New Requirement #966[Billing]Add Paid Bill/Add Free Bill for Bangladesh module(removed Patient Category)
-				/*
-				jQuery("#free").click(function() {
-					VALIDATORS.freeCheck();
-				});
-				jQuery("#patCatGeneral").click(function() {
-					VALIDATORS.generalCheck();
-				});
-				*/
 				jQuery("#calendarButton").click(function() {
 					jQuery("#calendar").datepicker("show");
 				});
@@ -331,18 +243,18 @@ input, select, textarea {
 
 			// Capitalize fullname and relative name
 			fullNameInCapital = StringUtils.capitalize(jQuery("#patientName",
-					jQuery("#patientRegistrationForm")).val());
-			jQuery("#patientName", jQuery("#patientRegistrationForm")).val(
+					jQuery("#editPatientForm")).val());
+			jQuery("#patientName", jQuery("#editPatientForm")).val(
 					fullNameInCapital);
 			relativeNameInCaptital = StringUtils.capitalize(jQuery("#patientRelativeName").val());
 			jQuery("#patientRelativeName").val(relativeNameInCaptital);
 
 			// Validate and submit
 			if (this.validateRegisterForm()) {
-				jQuery("#patientRegistrationForm")
+				jQuery("#editPatientForm")
 						.mask(
 								"<img src='" + openmrsContextPath + "/moduleResources/hospitalcore/ajax-loader.gif" + "'/>&nbsp;");
-				jQuery("#patientRegistrationForm").ajaxSubmit(
+				jQuery("#editPatientForm").ajaxSubmit(
 						{
 							success : function(responseText, statusText, xhr) {
 								json = jQuery.parseJSON(responseText);
@@ -352,7 +264,7 @@ input, select, textarea {
 								} else {
 									alert(json.message);
 								}
-								jQuery("#patientRegistrationForm").unmask();
+								jQuery("#editPatientForm").unmask();
 							}
 						});
 			}
@@ -530,7 +442,7 @@ input, select, textarea {
 				alert("Please enter the patient's relative name");
 				return false;
 			}/* else {
-				if (jQuery("#patientRegistrationForm input[name=person.attribute.15]:checked").length == 0) {
+				if (jQuery("#editPatientForm input[name=person.attribute.15]:checked").length == 0) {
 					alert("Please select relative name type");
 					return false;
 				}
@@ -575,13 +487,6 @@ input, select, textarea {
 				alert("Please enter the physical address of the patient");
 				return false;
 			} 
-			
-            //ghanshyam 25-feb-2013 New Requirement #966[Billing]Add Paid Bill/Add Free Bill for Bangladesh module(removed Patient Category)
-            /*
-			if (!VALIDATORS.validatePatientCategory()) {
-				return false;
-			}
-			*/
 
 			if (!StringUtils.isBlank(jQuery("#patientPhoneNumber").val())) {
 				if (!StringUtils.isDigit(jQuery("#patientPhoneNumber").val())) {
@@ -589,38 +494,6 @@ input, select, textarea {
 					return false;
 				}
 			}
-
-			if (!StringUtils.isBlank(jQuery("#relativePhoneNumber").val())) {
-				if (!StringUtils.isDigit(jQuery("#relativePhoneNumber").val())) {
-					alert("Please enter the NOK's contact number in correct format");
-					return false;
-				}
-			}
-			
-			
-			/*
-			if (!StringUtils.isBlank(jQuery("#patientEmail").val())) {
-				var x=jQuery("#patientEmail").val();
-				var atpos=x.indexOf("@");
-				var dotpos=x.lastIndexOf(".");
-				if (atpos<1 || dotpos<atpos+2 || dotpos+2>=x.length)
-				  {
-				  alert("Please enter the patient's e-mail address in correct format");
-				  return false;
-				  }
-			}
-			
-			if (!StringUtils.isBlank(jQuery("#relativeEmail").val())) {
-				var x=jQuery("#relativeEmail").val();
-				var atpos=x.indexOf("@");
-				var dotpos=x.lastIndexOf(".");
-				if (atpos<1 || dotpos<atpos+2 || dotpos+2>=x.length)
-				  {
-				  alert("Please enter the NOK's e-mail address in correct format");
-				  return false;
-				  }
-			}
-			*/
 			
 			if (!StringUtils.isBlank(jQuery("#patientEmail").val())) {
 			var x=jQuery("#patientEmail").val();
@@ -634,114 +507,16 @@ input, select, textarea {
 			}
 			
 			}
-			
-			if (!StringUtils.isBlank(jQuery("#relativeEmail").val())) {
-			var x=jQuery("#relativeEmail").val();
-			var regExpForEmail = /^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
-			if (regExpForEmail.test(x)) {
-			return true;
-			}
-			else {
-			alert("Please enter the NOK's e-mail address in correct format");
-			return false;
-			}
-			}
-			
-			if (!StringUtils.isBlank(jQuery("#estimatedAge").html())) {
-				estAge = jQuery("#estimatedAge").html();
-				var rest=estAge.slice(1,-6); 
-				if (rest>5) {
-					if (jQuery("#patCatChildLessThan5yr").is(':checked')) {
-						alert("This category is only valid for patient under 5 years of age");
-						jQuery("#patCatChildLessThan5yr").removeAttr("checked");
-						jQuery("#exemptionNumber1").val("");
-						jQuery("#exemptionField1").hide();
-						jQuery("#exemptionField2").hide();
-						//jQuery("#bdate").show();
-						return false;
-					}
-				}
-			}
-
-			if (jQuery("#patientGender").val() == "M" && jQuery("#patCatMother").is(':checked') ) {
-					jQuery("#patCatMother").removeAttr("checked");
-					jQuery("#exemptionNumber1").val("");
-					jQuery("#exemptionField1").hide();
-					jQuery("#exemptionField2").hide();
-					alert("This category is only valid for female patient");
-					return false;
-				}		
-			
-
-			if (jQuery("#patCatGeneral").attr('checked') == false
-					&& jQuery("#patCatHIV").attr('checked') == false
-					&& jQuery("#patCatChildLessThan5yr").attr('checked') == false
-					&& jQuery("#patCatNHIF").attr('checked') == false
-					&& jQuery("#patCatTB").attr('checked') == false
-					&& jQuery("#patCatMother").attr('checked') == false
-					&& jQuery("#patCatOtherInsurance").attr('checked') == false
-					&& jQuery("#patCatMalaria").attr('checked') == false
-					&& jQuery("#patCatWaiver").attr('checked') == false) {
-				jQuery("#patCatGeneral").attr("checked", "checked");				
-				return true;
+		
+			if (jQuery("#paying").attr('checked') == false
+					&& jQuery("#nonPaying").attr('checked') == false
+					&& jQuery("#specialSchemes").attr('checked') == false) {			
+			    alert("You did not choose any of the payment categories");
+				return false;
 			} else {
-			    if (jQuery("#patCatHIV").attr('checked')) {
-					if (jQuery("#exemptionNumber").val().length <= 0) {
-						alert('Please enter the Exemption Number');
-						return false;
-					}
-				}
-				
-				if (jQuery("#patCatChildLessThan5yr").attr('checked')) {
-					if (jQuery("#exemptionNumber").val().length <= 0) {
-						alert('Please enter the Exemption Number');
-						return false;
-					}
-				}
-				
-				if (jQuery("#patCatNHIF").attr('checked')) {
-					if (jQuery("#exemptionNumber").val().length <= 0) {
-						alert('Please enter the Exemption Number');
-						return false;
-					}
-					
-					if (jQuery("#nhifCardNumber").val().length <= 0) {
-						alert('Please enter the NHIF Card Number');
-						return false;
-					}
-				}
-				
-				if (jQuery("#patCatTB").attr('checked')) {
-					if (jQuery("#exemptionNumber").val().length <= 0) {
-						alert('Please enter the Exemption Number');
-						return false;
-					}
-				}
-
-				if (jQuery("#patCatMother").attr('checked')) {
-					if (jQuery("#exemptionNumber").val().length <= 0) {
-						alert('Please enter the Exemption Number');
-						return false;
-					}
-				}
-				
-				if (jQuery("#patCatOtherInsurance").attr('checked')) {
-					if (jQuery("#exemptionNumber").val().length <= 0) {
-						alert('Please enter the Exemption Number');
-						return false;
-					}
-				}
-				
-				if (jQuery("#patCatMalaria").attr('checked')) {
-					if (jQuery("#exemptionNumber").val().length <= 0) {
-						alert('Please enter the Exemption Number');
-						return false;
-					}
-				}
-				
-				if (jQuery("#patCatWaiver").attr('checked')) {
-					if (jQuery("#waiverNumber").val().length <= 0) {
-						alert('Please enter the Waiver Number');
+			    if (jQuery("#specialSchemes").attr('checked')) {
+					if (jQuery("#specialSchemeName").val().length <= 0) {
+						alert("Please enter the Special Scheme Name");
 						return false;
 					}
 				}
@@ -796,592 +571,48 @@ input, select, textarea {
 	 **/
 	 VALIDATORS = {
 
-	/** VALIDATE PATIENT CATEGORY */
-		
-		validatePatientCategory : function() {
-			if (jQuery("#patCatGeneral").attr('checked') == false
-					&& jQuery("#patCatHIV").attr('checked') == false
-					&& jQuery("#patCatChildLessThan5yr").attr('checked') == false
-					&& jQuery("#patCatNHIF").attr('checked') == false
-					&& jQuery("#patCatTB").attr('checked') == false
-					&& jQuery("#patCatMother").attr('checked') == false
-					&& jQuery("#patCatOtherInsurance").attr('checked') == false
-					&& jQuery("#patCatMalaria").attr('checked') == false
-					&& jQuery("#patCatWaiver").attr('checked') == false) {
-				jQuery("#patCatGeneral").attr("checked", "checked");					
-			} else {
-			    if (jQuery("#patCatHIV").attr('checked')) {
-					if (jQuery("#exemptionNumber").val().length <= 0) {
-						alert('Please enter the Exemption Number');
-						return false;
-					}
-				}
-				
-				if (jQuery("#patCatChildLessThan5yr").attr('checked')) {
-					if (jQuery("#exemptionNumber").val().length <= 0) {
-						alert('Please enter the Exemption Number');
-						return false;
-					}
-				}
-				
-				if (jQuery("#patCatNHIF").attr('checked')) {
-					if (jQuery("#exemptionNumber").val().length <= 0) {
-						alert('Please enter the Exemption Number');
-						return false;
-					}
-					
-					if (jQuery("#nhifCardNumber").val().length <= 0) {
-						alert('Please enter the NHIF Card Number');
-						return false;
-					}
-				}
-				
-				if (jQuery("#patCatTB").attr('checked')) {
-					if (jQuery("#exemptionNumber").val().length <= 0) {
-						alert('Please enter the Exemption Number');
-						return false;
-					}
-				}
-
-				if (jQuery("#patCatMother").attr('checked')) {
-					if (jQuery("#exemptionNumber").val().length <= 0) {
-						alert('Please enter the Exemption Number');
-						return false;
-					}
-				}
-				
-				if (jQuery("#patCatOtherInsurance").attr('checked')) {
-					if (jQuery("#exemptionNumber").val().length <= 0) {
-						alert('Please enter the Exemption Number');
-						return false;
-					}
-				}
-				
-				if (jQuery("#patCatMalaria").attr('checked')) {
-					if (jQuery("#exemptionNumber").val().length <= 0) {
-						alert('Please enter the Exemption Number');
-						return false;
-					}
-				}
-				
-				if (jQuery("#patCatWaiver").attr('checked')) {
-					if (jQuery("#waiverNumber").val().length <= 0) {
-						alert('Please enter the Waiver Number');
-						return false;
-					}
-				}
-				return true;
-			  }
-			},
-		
-		/** CHECK WHEN HIV CATEGORY IS SELECTED */
-		hivCheck : function() {
-			if (jQuery("#patCatHIV").is(':checked')) {
-				if (jQuery("#patCatGeneral").is(":checked")) {
-					jQuery("#patCatGeneral").removeAttr("checked");
-				}
-				
-					jQuery("#patCatChildLessThan5yr").removeAttr("checked");
-					jQuery("#exemptionNumber").val("");
-					jQuery("#exemptionField1").hide();
-				    jQuery("#exemptionField2").hide();
+	/** CHECK WHEN PAYING CATEGORY IS SELECTED */
+        payingCheck : function() {
+			if (jQuery("#paying").is(':checked')) {
+					jQuery("#nonPaying").removeAttr("checked");
 				    
-				    jQuery("#patCatNHIF").removeAttr("checked");
-					jQuery("#exemptionNumber").val("");
-					jQuery("#exemptionField1").hide();
-				    jQuery("#exemptionField2").hide();
-					jQuery("#nhifCardNumber").val("");
-					jQuery("#nhifCardField1").hide();
-				    jQuery("#nhifCardField2").hide();
-				
-					jQuery("#patCatTB").removeAttr("checked");
-				    jQuery("#exemptionNumber").val("");
-					jQuery("#exemptionField1").hide();
-				    jQuery("#exemptionField2").hide();
-					
-					jQuery("#patCatMother").removeAttr("checked");
-				    jQuery("#exemptionNumber").val("");
-					jQuery("#exemptionField1").hide();
-				    jQuery("#exemptionField2").hide();
-				    
-				    jQuery("#patCatOtherInsurance").removeAttr("checked");
-				    jQuery("#exemptionNumber").val("");
-					jQuery("#exemptionField1").hide();
-				    jQuery("#exemptionField2").hide();
-				    
-				    jQuery("#patCatMalaria").removeAttr("checked");
-				    jQuery("#exemptionNumber").val("");
-					jQuery("#exemptionField1").hide();
-				    jQuery("#exemptionField2").hide();
-				    
-				    jQuery("#patCatWaiver").removeAttr("checked");
-				    jQuery("#waiverNumber").val("");
-					jQuery("#waiverField1").hide();
-				    jQuery("#waiverField2").hide();
-				    
-				    jQuery("#exemptionField1").show();
-				    jQuery("#exemptionField2").show();
-
-			}
-			else {
-			jQuery("#exemptionNumber").val("");
-			jQuery("#exemptionField1").hide();
-			jQuery("#exemptionField2").hide();
-			}
-		},
-
-		/** CHECK WHEN child < 5 yr CATEGORY IS SELECTED */
-		childYearCheck : function() {
-			if (jQuery("#patCatChildLessThan5yr").is(':checked')) {
-				if (jQuery("#patCatGeneral").is(":checked")) {
-					jQuery("#patCatGeneral").removeAttr("checked");
-				}
-
-					jQuery("#patCatHIV").removeAttr("checked");
-				    jQuery("#exemptionNumber").val("");
-					jQuery("#exemptionField1").hide();
-				    jQuery("#exemptionField2").hide();
-					
-					jQuery("#patCatNHIF").removeAttr("checked");
-					jQuery("#exemptionNumber").val("");
-					jQuery("#exemptionField1").hide();
-				    jQuery("#exemptionField2").hide();
-					jQuery("#nhifCardNumber").val("");
-					jQuery("#nhifCardField1").hide();
-				    jQuery("#nhifCardField2").hide();
-				
-					jQuery("#patCatTB").removeAttr("checked");
-				    jQuery("#exemptionNumber").val("");
-					jQuery("#exemptionField1").hide();
-				    jQuery("#exemptionField2").hide();
-					
-					jQuery("#patCatMother").removeAttr("checked");
-				    jQuery("#exemptionNumber").val("");
-					jQuery("#exemptionField1").hide();
-				    jQuery("#exemptionField2").hide();
-				    
-				    jQuery("#patCatOtherInsurance").removeAttr("checked");
-				    jQuery("#exemptionNumber").val("");
-					jQuery("#exemptionField1").hide();
-				    jQuery("#exemptionField2").hide();
-				    
-				    jQuery("#patCatMalaria").removeAttr("checked");
-				    jQuery("#exemptionNumber").val("");
-					jQuery("#exemptionField1").hide();
-				    jQuery("#exemptionField2").hide();
-				    
-				    jQuery("#patCatWaiver").removeAttr("checked");
-				    jQuery("#waiverNumber").val("");
-					jQuery("#waiverField1").hide();
-				    jQuery("#waiverField2").hide();
-
-					if (!VALIDATORS.checkPatientAgeForChildLessThan5yr()) {
-					jQuery("#patCatChildLessThan5yr").removeAttr("checked");
-					jQuery("#exemptionNumber").val("");
-					jQuery("#exemptionField1").hide();
-					jQuery("#exemptionField2").hide();
-					return false;
-				}
-				    jQuery("#exemptionField1").show();
-				    jQuery("#exemptionField2").show();
+				    jQuery("#specialSchemes").removeAttr("checked");
+					jQuery("#specialSchemeName").val("");
+					jQuery("#specialSchemeField").hide();
 			}
 			else{
-			jQuery("#exemptionNumber").val("");
-			jQuery("#exemptionField1").hide();
-			jQuery("#exemptionField2").hide();
+			     jQuery("#paying").removeAttr("checked");
 			}
 		},
 		
-		/** CHECK WHEN NHIF CATEGORY IS SELECTED */
-		nhifCheck : function() {
-			if (jQuery("#patCatNHIF").is(':checked')) {
-				if (jQuery("#patCatGeneral").is(":checked")) {
-					jQuery("#patCatGeneral").removeAttr("checked");
-				}
-				
-					jQuery("#patCatHIV").removeAttr("checked");
-				    jQuery("#exemptionNumber").val("");
-					jQuery("#exemptionField1").hide();
-				    jQuery("#exemptionField2").hide();
+		/** CHECK WHEN NONPAYING CATEGORY IS SELECTED */
+		nonPayingCheck : function() {
+			if (jQuery("#nonPaying").is(':checked')) {
+					jQuery("#paying").removeAttr("checked");
 				    
-				    jQuery("#patCatChildLessThan5yr").removeAttr("checked");
-				    jQuery("#exemptionNumber").val("");
-					jQuery("#exemptionField1").hide();
-				    jQuery("#exemptionField2").hide();
-				
-					jQuery("#patCatTB").removeAttr("checked");
-				    jQuery("#exemptionNumber").val("");
-					jQuery("#exemptionField1").hide();
-				    jQuery("#exemptionField2").hide();
-					
-					jQuery("#patCatMother").removeAttr("checked");
-				    jQuery("#exemptionNumber").val("");
-					jQuery("#exemptionField1").hide();
-				    jQuery("#exemptionField2").hide();
-				    
-				    jQuery("#patCatOtherInsurance").removeAttr("checked");
-				    jQuery("#exemptionNumber").val("");
-					jQuery("#exemptionField1").hide();
-				    jQuery("#exemptionField2").hide();
-				    
-				    jQuery("#patCatMalaria").removeAttr("checked");
-				    jQuery("#exemptionNumber").val("");
-					jQuery("#exemptionField1").hide();
-				    jQuery("#exemptionField2").hide();
-				    
-				    jQuery("#patCatWaiver").removeAttr("checked");
-				    jQuery("#waiverNumber").val("");
-					jQuery("#waiverField1").hide();
-				    jQuery("#waiverField2").hide();
-				    
-				    jQuery("#exemptionField1").show();
-				    jQuery("#exemptionField2").show();
-				    jQuery("#nhifCardField1").show();
-				    jQuery("#nhifCardField2").show();
+				    jQuery("#specialSchemes").removeAttr("checked");
+					jQuery("#specialSchemeName").val("");
+					jQuery("#specialSchemeField").hide();
 			}
-			else {
-			jQuery("#exemptionNumber").val("");
-			jQuery("#nhifCardNumber").val("");
-			jQuery("#exemptionField1").hide();
-			jQuery("#exemptionField2").hide();
-			jQuery("#nhifCardField1").hide();
-			jQuery("#nhifCardField2").hide();
-			}
-		},
-
-		/** CHECK WHEN TV CATEGORY IS SELECTED */
-		tvCheck : function() {
-			if (jQuery("#patCatTB").is(':checked')) {
-				if (jQuery("#patCatGeneral").is(":checked")) {
-					jQuery("#patCatGeneral").removeAttr("checked");
-				}
-				
-					jQuery("#patCatHIV").removeAttr("checked");
-				    jQuery("#exemptionNumber").val("");
-					jQuery("#exemptionField1").hide();
-				    jQuery("#exemptionField2").hide();
-					
-					jQuery("#patCatChildLessThan5yr").removeAttr("checked");
-					jQuery("#exemptionNumber").val("");
-					jQuery("#exemptionField1").hide();
-				    jQuery("#exemptionField2").hide();
-				    
-				    jQuery("#patCatNHIF").removeAttr("checked");
-					jQuery("#exemptionNumber").val("");
-					jQuery("#exemptionField1").hide();
-				    jQuery("#exemptionField2").hide();
-					jQuery("#nhifCardNumber").val("");
-					jQuery("#nhifCardField1").hide();
-				    jQuery("#nhifCardField2").hide();
-					
-					jQuery("#patCatMother").removeAttr("checked");
-				    jQuery("#exemptionNumber").val("");
-					jQuery("#exemptionField1").hide();
-				    jQuery("#exemptionField2").hide();
-				    
-				    jQuery("#patCatOtherInsurance").removeAttr("checked");
-				    jQuery("#exemptionNumber").val("");
-					jQuery("#exemptionField1").hide();
-				    jQuery("#exemptionField2").hide();
-				    
-				    jQuery("#patCatMalaria").removeAttr("checked");
-				    jQuery("#exemptionNumber").val("");
-					jQuery("#exemptionField1").hide();
-				    jQuery("#exemptionField2").hide();
-				    
-				    jQuery("#patCatWaiver").removeAttr("checked");
-				    jQuery("#waiverNumber").val("");
-					jQuery("#waiverField1").hide();
-				    jQuery("#waiverField2").hide();
-				    
-				    jQuery("#exemptionField1").show();
-				    jQuery("#exemptionField2").show();
-			}
-			else {
-			jQuery("#exemptionNumber").val("");
-			jQuery("#exemptionField1").hide();
-			jQuery("#exemptionField2").hide();
+			else{
+			     jQuery("#nonPaying").removeAttr("checked");
 			}
 		},
 		
-		/** CHECK WHEN Expectant mother CATEGORY IS SELECTED */
-		motherCheck : function() {
-			if (jQuery("#patCatMother").is(':checked')) {
-				if (jQuery("#patCatGeneral").is(":checked")) {
-					jQuery("#patCatGeneral").removeAttr("checked");
-				}
-				
-					jQuery("#patCatHIV").removeAttr("checked");
-				    jQuery("#exemptionNumber").val("");
-					jQuery("#exemptionField1").hide();
-				    jQuery("#exemptionField2").hide();
+		/** CHECK WHEN SPECIAL SCHEME CATEGORY IS SELECTED */
+		specialSchemeCheck : function() {
+			if (jQuery("#specialSchemes").is(':checked')) {
+					jQuery("#paying").removeAttr("checked");
 					
-					jQuery("#patCatChildLessThan5yr").removeAttr("checked");
-					jQuery("#exemptionNumber").val("");
-					jQuery("#exemptionField1").hide();
-				    jQuery("#exemptionField2").hide();
-				    
-				    jQuery("#patCatNHIF").removeAttr("checked");
-					jQuery("#exemptionNumber").val("");
-					jQuery("#exemptionField1").hide();
-				    jQuery("#exemptionField2").hide();
-					jQuery("#nhifCardNumber").val("");
-					jQuery("#nhifCardField1").hide();
-				    jQuery("#nhifCardField2").hide();
-				    
-				    jQuery("#patCatTB").removeAttr("checked");
-					jQuery("#exemptionNumber").val("");
-					jQuery("#exemptionField1").hide();
-				    jQuery("#exemptionField2").hide();
-				    
-				    jQuery("#patCatOtherInsurance").removeAttr("checked");
-				    jQuery("#exemptionNumber").val("");
-					jQuery("#exemptionField1").hide();
-				    jQuery("#exemptionField2").hide();
-				    
-				    jQuery("#patCatMalaria").removeAttr("checked");
-				    jQuery("#exemptionNumber").val("");
-					jQuery("#exemptionField1").hide();
-				    jQuery("#exemptionField2").hide();
-				    
-				    jQuery("#patCatWaiver").removeAttr("checked");
-				    jQuery("#waiverNumber").val("");
-					jQuery("#waiverField1").hide();
-				    jQuery("#waiverField2").hide();
-				    
-				if (jQuery("#patientGender").val() == "M") {
-					jQuery("#patCatMother").removeAttr("checked");
-					jQuery("#exemptionNumber").val("");
-					jQuery("#exemptionField1").hide();
-					jQuery("#exemptionField2").hide();
-					alert("This category is only valid for female patient");
-					return false;
-				}
-					jQuery("#exemptionField1").show();
-				    jQuery("#exemptionField2").show();
+					jQuery("#nonPaying").removeAttr("checked");
+					jQuery("#specialSchemeField").show();
 			}
-			else {
-			jQuery("#exemptionNumber").val("");
-			jQuery("#exemptionField1").hide();
-			jQuery("#exemptionField2").hide();
-			}
-
-		},
-		
-		/** CHECK WHEN OTHER INSURANCE CATEGORY IS SELECTED */
-		otherInsuranceCheck : function() {
-			if (jQuery("#patCatOtherInsurance").is(':checked')) {
-				if (jQuery("#patCatGeneral").is(":checked")) {
-					jQuery("#patCatGeneral").removeAttr("checked");
-				}
-				
-					jQuery("#patCatHIV").removeAttr("checked");
-				    jQuery("#exemptionNumber").val("");
-					jQuery("#exemptionField1").hide();
-				    jQuery("#exemptionField2").hide();
-					
-					jQuery("#patCatChildLessThan5yr").removeAttr("checked");
-					jQuery("#exemptionNumber").val("");
-					jQuery("#exemptionField1").hide();
-				    jQuery("#exemptionField2").hide();
-				    
-				    jQuery("#patCatNHIF").removeAttr("checked");
-					jQuery("#exemptionNumber").val("");
-					jQuery("#exemptionField1").hide();
-				    jQuery("#exemptionField2").hide();
-					jQuery("#nhifCardNumber").val("");
-					jQuery("#nhifCardField1").hide();
-				    jQuery("#nhifCardField2").hide();
-				    
-				    jQuery("#patCatTB").removeAttr("checked");
-				    jQuery("#exemptionNumber").val("");
-					jQuery("#exemptionField1").hide();
-				    jQuery("#exemptionField2").hide();
-					
-					jQuery("#patCatMother").removeAttr("checked");
-				    jQuery("#exemptionNumber").val("");
-					jQuery("#exemptionField1").hide();
-				    jQuery("#exemptionField2").hide();
-				    
-				    jQuery("#patCatMalaria").removeAttr("checked");
-				    jQuery("#exemptionNumber").val("");
-					jQuery("#exemptionField1").hide();
-				    jQuery("#exemptionField2").hide();
-				    
-				    jQuery("#patCatWaiver").removeAttr("checked");
-				    jQuery("#waiverNumber").val("");
-					jQuery("#waiverField1").hide();
-				    jQuery("#waiverField2").hide();
-				    
-				    jQuery("#exemptionField1").show();
-				    jQuery("#exemptionField2").show();
-			}
-			else {
-			jQuery("#exemptionNumber").val("");
-			jQuery("#exemptionField1").hide();
-			jQuery("#exemptionField2").hide();
+			else{
+			 jQuery("#specialSchemeName").val("");
+			jQuery("#specialSchemeField").hide();
+			jQuery("#specialSchemes").removeAttr("checked");
 			}
 		},
-		
-		/** CHECK WHEN MALARIA CATEGORY IS SELECTED */
-		malariaCheck : function() {
-			if (jQuery("#patCatMalaria").is(':checked')) {
-				if (jQuery("#patCatGeneral").is(":checked")) {
-					jQuery("#patCatGeneral").removeAttr("checked");
-				}
-				
-					jQuery("#patCatHIV").removeAttr("checked");
-				    jQuery("#exemptionNumber").val("");
-					jQuery("#exemptionField1").hide();
-				    jQuery("#exemptionField2").hide();
-					
-					jQuery("#patCatChildLessThan5yr").removeAttr("checked");
-					jQuery("#exemptionNumber").val("");
-					jQuery("#exemptionField1").hide();
-				    jQuery("#exemptionField2").hide();
-				    
-				    jQuery("#patCatNHIF").removeAttr("checked");
-					jQuery("#exemptionNumber").val("");
-					jQuery("#exemptionField1").hide();
-				    jQuery("#exemptionField2").hide();
-					jQuery("#nhifCardNumber").val("");
-					jQuery("#nhifCardField1").hide();
-				    jQuery("#nhifCardField2").hide();
-				    
-				    jQuery("#patCatTB").removeAttr("checked");
-				    jQuery("#exemptionNumber").val("");
-					jQuery("#exemptionField1").hide();
-				    jQuery("#exemptionField2").hide();
-					
-					jQuery("#patCatMother").removeAttr("checked");
-				    jQuery("#exemptionNumber").val("");
-					jQuery("#exemptionField1").hide();
-				    jQuery("#exemptionField2").hide();
-				    
-				    jQuery("#patCatOtherInsurance").removeAttr("checked");
-				    jQuery("#exemptionNumber").val("");
-					jQuery("#exemptionField1").hide();
-				    jQuery("#exemptionField2").hide();
-				    
-				    jQuery("#patCatWaiver").removeAttr("checked");
-				    jQuery("#waiverNumber").val("");
-					jQuery("#waiverField1").hide();
-				    jQuery("#waiverField2").hide();
-				    
-				    jQuery("#exemptionField1").show();
-				    jQuery("#exemptionField2").show();
-			}
-			else {
-			jQuery("#exemptionNumber").val("");
-			jQuery("#exemptionField1").hide();
-			jQuery("#exemptionField2").hide();
-			}
-		},
-		
-		/** CHECK WHEN WAIVER CASE CATEGORY IS SELECTED */
-		waiverCheck : function() {
-			if (jQuery("#patCatWaiver").is(':checked')) {
-				if (jQuery("#patCatGeneral").is(":checked")) {
-					jQuery("#patCatGeneral").removeAttr("checked");
-				}
-				
-					jQuery("#patCatHIV").removeAttr("checked");
-				    jQuery("#exemptionNumber").val("");
-					jQuery("#exemptionField1").hide();
-				    jQuery("#exemptionField2").hide();
-					
-					jQuery("#patCatChildLessThan5yr").removeAttr("checked");
-					jQuery("#exemptionNumber").val("");
-					jQuery("#exemptionField1").hide();
-				    jQuery("#exemptionField2").hide();
-				    
-				    jQuery("#patCatNHIF").removeAttr("checked");
-					jQuery("#exemptionNumber").val("");
-					jQuery("#exemptionField1").hide();
-				    jQuery("#exemptionField2").hide();
-					jQuery("#nhifCardNumber").val("");
-					jQuery("#nhifCardField1").hide();
-				    jQuery("#nhifCardField2").hide();
-				    
-				    jQuery("#patCatTB").removeAttr("checked");
-				    jQuery("#exemptionNumber").val("");
-					jQuery("#exemptionField1").hide();
-				    jQuery("#exemptionField2").hide();
-					
-					jQuery("#patCatMother").removeAttr("checked");
-				    jQuery("#exemptionNumber").val("");
-					jQuery("#exemptionField1").hide();
-				    jQuery("#exemptionField2").hide();
-				    
-				    jQuery("#patCatOtherInsurance").removeAttr("checked");
-				    jQuery("#exemptionNumber").val("");
-					jQuery("#exemptionField1").hide();
-				    jQuery("#exemptionField2").hide();
-				    
-				    jQuery("#patCatMalaria").removeAttr("checked");
-				    jQuery("#exemptionNumber").val("");
-					jQuery("#exemptionField1").hide();
-				    jQuery("#exemptionField2").hide();
-				    
-					jQuery("#waiverField1").show();
-				    jQuery("#waiverField2").show();
-			}
-			else {
-			jQuery("#waiverNumber").val("");
-			jQuery("#waiverField1").hide();
-		    jQuery("#waiverField2").hide();
-			}
-		},
-		
-		/** CHECK WHEN GENERAL CATEGORY IS SELECTED */
-		generalCheck : function(obj) {
-			if (jQuery("#patCatGeneral").is(':checked')) {
-				
-					jQuery("#patCatHIV").removeAttr("checked");
-				    jQuery("#exemptionNumber").val("");
-					jQuery("#exemptionField1").hide();
-				    jQuery("#exemptionField2").hide();
-					
-					jQuery("#patCatChildLessThan5yr").removeAttr("checked");
-					jQuery("#exemptionNumber").val("");
-					jQuery("#exemptionField1").hide();
-				    jQuery("#exemptionField2").hide();
-				    
-				    jQuery("#patCatNHIF").removeAttr("checked");
-					jQuery("#exemptionNumber").val("");
-					jQuery("#exemptionField1").hide();
-				    jQuery("#exemptionField2").hide();
-					jQuery("#nhifCardNumber").val("");
-					jQuery("#nhifCardField1").hide();
-				    jQuery("#nhifCardField2").hide();
-				    
-				    jQuery("#patCatTB").removeAttr("checked");
-				    jQuery("#exemptionNumber").val("");
-					jQuery("#exemptionField1").hide();
-				    jQuery("#exemptionField2").hide();
-					
-					jQuery("#patCatMother").removeAttr("checked");
-				    jQuery("#exemptionNumber").val("");
-					jQuery("#exemptionField1").hide();
-				    jQuery("#exemptionField2").hide();
-				    
-				    jQuery("#patCatOtherInsurance").removeAttr("checked");
-				    jQuery("#exemptionNumber").val("");
-					jQuery("#exemptionField1").hide();
-				    jQuery("#exemptionField2").hide();
-				    
-				    jQuery("#patCatMalaria").removeAttr("checked");
-				    jQuery("#exemptionNumber").val("");
-					jQuery("#exemptionField1").hide();
-				    jQuery("#exemptionField2").hide();
-				    
-				    jQuery("#patCatWaiver").removeAttr("checked");
-				    jQuery("#waiverNumber").val("");
-					jQuery("#waiverField1").hide();
-				    jQuery("#waiverField2").hide();
-			}
-		},
-
 		
 		copyaddress : function () {
 			if (jQuery("#sameAddress").is(':checked')) {
@@ -1389,18 +620,6 @@ input, select, textarea {
 		}
 		else {	jQuery("#relativePostalAddress").val('');
 		}
-		},
-		
-		checkPatientAgeForChildLessThan5yr : function() {
-			estAge = jQuery("#estimatedAge").html();
-			var rest=estAge.slice(1,-6); 
-			if (rest>5) {
-				if (jQuery("#patCatChildLessThan5yr").is(':checked')) {
-					alert("This category is only valid for patient under 5 years of age");
-					return false;
-				}
-			}
-			return true;
 		},
 
 				/*
@@ -1431,22 +650,28 @@ function showOtherNationality(){
 	  }
 	}
 </script>
-<h3 align="center" style="color:black">EDIT PATIENT INFORMATION</h3>
-<br><br>
-<form id="patientRegistrationForm" method="POST">
+<h3 align="center" style="color:black">EDIT PATIENT INFORMATION<br></h3>
+<form id="editPatientForm" method="POST">
+		<table width="100%">
+		<tr>
+		<td width="48%" align="right"><b>Patient Identifier</b><label style="color:red">*</label>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+		<td><b><input readonly name="patient.identifier" style="border: none; width: 250px; background-color:white; font-weight:bold" /></b></td>
+		</tr>
+		<tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr>
+		</table>
+		
 		<div class="floatLeft">
 		<table>
 			<tr>
-				<td><b>Patient Name</b><label style="color:red">*</label>&nbsp;&nbsp;&nbsp;&nbsp;</td>
-				<td>Surname<label style="color:red">*</label>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+				<td valign="top"><b>Patient Name</b><label style="color:red">*</label>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+				<td valign="top">Surname<label style="color:red">*</label>&nbsp;&nbsp;&nbsp;&nbsp;</td>
 				<td><input type="text" id="surName" name="patient.surName" style='width: 152px; 	border-width: 1px;
 	border-right: 1px;
 	border-left: 1px;
 	border-top: 1px;
 	border-bottom: 1px;
 	border-color: black;
-	border-style: solid;
-'>
+	border-style: solid;'>
 				</td>
 			</tr>
 			<tr>
@@ -1458,21 +683,19 @@ function showOtherNationality(){
 	border-top: 1px;
 	border-bottom: 1px;
 	border-color: black;
-	border-style: solid;
-'>
+	border-style: solid;'>
 				</td>
 			</tr>
 			<tr>
 				<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
 				<td>Other Name&nbsp;&nbsp;&nbsp;&nbsp;</td>
-				<td><input type="text" id="otherName" name="patient.otherName" style='width: 152px; 	border-width: 1px;
+				<td><input type="text" id="otherName" name="patient.otherName" style='width: 152px;	border-width: 1px;
 	border-right: 1px;
 	border-left: 1px;
 	border-top: 1px;
 	border-bottom: 1px;
 	border-color: black;
-	border-style: solid;
-'>
+	border-style: solid;'>
 				</td>
 			</tr>
 			<tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr>
@@ -1522,10 +745,11 @@ function showOtherNationality(){
 			</tr>
 			<tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr>
 			<tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr>
+
 			<tr>
 				<td><b>Address</b><label style="color:red">*</label>&nbsp;&nbsp;&nbsp;&nbsp;</td>
 				<td>Physical Address<label style="color:red">*</label>&nbsp;&nbsp;&nbsp;&nbsp;</td>
-				<td><input id="patientPostalAddress" name="patient.address.postalAddress" style="width: 152px;"/>
+				<td><input id="patientPostalAddress" name="patient.address.postalAddress" style='width: 152px;' />
 				</td>
 			</tr>
 			<tr>
@@ -1557,6 +781,7 @@ function showOtherNationality(){
 				<td>Chiefdom&nbsp;&nbsp;&nbsp;&nbsp;</td>
 				<td><input id="chiefdom" name="person.attribute.${personAttributeChiefdom.id}"
 				           style='width: 152px;' />
+				</td>
 			</tr>
 			<tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr>
 			<tr>
@@ -1566,7 +791,7 @@ function showOtherNationality(){
 				name="person.attribute.16" style='width: 152px;' />
 				</td>
 			</tr>
-			<tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr>
+			<tr></tr><tr></tr><tr></tr><tr></tr><tr></tr>
 			<tr>
 				<td><b>E-mail Address&nbsp;&nbsp;&nbsp;&nbsp;</b></td>
 				<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
@@ -1575,75 +800,11 @@ function showOtherNationality(){
 				</td>
 			</tr>
 			<tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr>
-			<tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr>
+			
 			<tr>
-				<td><b>Next of Kin(NOK)&nbsp;&nbsp;&nbsp;&nbsp;</b></td>
-				<td>Relative Name<label style="color:red">*</label>&nbsp;&nbsp;&nbsp;&nbsp;</td>
-				<td><input id="patientRelativeName" name="person.attribute.8" style='width: 152px;' />
-				</td>
-			</tr>
-			<tr>
-				<td><b>Information</b><label style="color:red">*</label>&nbsp;&nbsp;&nbsp;&nbsp;</td>
-				<td>Relationship Type<label style="color:red">*</label>&nbsp;&nbsp;&nbsp;&nbsp;</td>
-				<td><select id="relationshipType" name="person.attribute.15" style='width: 152px;'>
-										<option value="Relationship"></option>
-										<option value="Parent">Parent</option>
-										<option value="Spouse">Spouse</option>
-										<option value="Guardian">Guardian</option>
-										<option value="Friend">Friend</option>
-										<option value="Other">Other</option>
-					</select>
-				</td>
-			</tr>
-			<tr>
+				<td><b>Nationality&nbsp;&nbsp;&nbsp;&nbsp;</b></td>
 				<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
-				<td>Physical Address&nbsp;&nbsp;&nbsp;&nbsp;</td>
-				<td><input type="text" id="relativePostalAddress" name="person.attribute.28" style='width: 152px; 	border-width: 1px;
-	border-right: 1px;
-	border-left: 1px;
-	border-top: 1px;
-	border-bottom: 1px;
-	border-color: black;
-	border-style: solid;
-'/>
-				<input id="sameAddress" type="checkbox"/> Same as above
-				</td>
-			</tr>
-			<tr>
-				<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
-				<td>Contact Number&nbsp;&nbsp;&nbsp;&nbsp;</td>
-				<td><input id="relativePhoneNumber" name="person.attribute.29" style='width: 152px;' />
-				</td>
-			</tr>
-			<tr>
-				<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
-				<td>E-mail Address&nbsp;&nbsp;&nbsp;&nbsp;</td>
-				<td><input id="relativeEmail" name="person.attribute.30" style='width: 152px;' />
-				</td>
-			</tr>
-			<tr></tr>
-			<!--  
-			<tr>
-				<td><input type="submit" value="Save"></td>
-				<td><input type="button" value="Reset"
-					onclick="window.location.href=window.location.href"></td>
-			</tr>
-			-->
-		</table>
-		</div>
-		<div class="floatRight">
-		<table>
-		<tr>
-				<td><b>Patient Identifier</b><label style="color:red">*</label>&nbsp;&nbsp;&nbsp;&nbsp;</td>
-				<td><input readonly name="patient.identifier" style="border: none; width: 250px; background-color:white; font-weight:bold" /></td>
-		</tr>
-		<tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr>
-		<tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr>
-		<tr>
-				<td><b>Client Identification&nbsp;&nbsp;&nbsp;&nbsp;</b></td>
-				<td>Nationality</td>
 				<td><select id="patientNation" name="person.attribute.27" style="width: 152px;" onchange="showOtherNationality();">
-										<option value="Nation"></option>
 										<option value="Kenya">Kenya</option>
 										<option value="East Africa">East Africa</option>
 										<option value="Kenyan">Africa</option>
@@ -1701,81 +862,93 @@ function showOtherNationality(){
 										<option value="Zambia">Zambia</option>
 										<option value="Zimbabwe">Zimbabwe</option>
 										<option value="Other">Other</option>
-						</select></td>
-		<td><span id="otherNationality"><input id="otherNationalityId" name="person.attribute.39" placeholder="Please specify" style='width: 152px;'/></span></td>
+						</select>&nbsp;&nbsp;&nbsp;&nbsp;<span id="otherNationality"><input id="otherNationalityId" name="person.attribute.39" placeholder="If others,please specify" style='width: 152px;'/></span></td>
 		</tr>
+		
+		<tr></tr> <tr></tr><tr></tr><tr></tr><tr></tr>
+		
 		<tr>
-		<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
-		<td>National ID&nbsp;&nbsp;&nbsp;&nbsp;</td>
-		<td><input id="patientNationalId" name="patient.attribute.20" style='width: 152px;'/></td>
-		</tr>
-		<tr>
-		<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
-		<td>Passport Number&nbsp;&nbsp;&nbsp;&nbsp;</td>
-		<td><input id="passportNumber" name="patient.attribute.38" style='width: 152px;'/></td>
-		</tr>
-		<tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr>
-		<tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr>
-		<tr>
-				<td id="catGen"><input id="patCatGeneral" type="checkbox" name="person.attribute.14" value="General" /> General</td>
-				<td><b>Patient Category&nbsp;&nbsp;&nbsp;&nbsp;</b></td>
-				<td><input id="patCatHIV" type="checkbox" name="person.attribute.14" value="CCC" /> CCC</td>
-				<td><input id="patCatChildLessThan5yr" type="checkbox" name="person.attribute.14" value="Child Less Than 5 yr" /> Child less than 5 years old&nbsp;&nbsp;&nbsp;&nbsp;</td>
-				<td><input id="patCatNHIF" type="checkbox" name="person.attribute.14" value="NHIF" /> NHIF</td>
+				<td><b>ID proof details&nbsp;&nbsp;&nbsp;&nbsp;</b></td>
+				<td>National ID&nbsp;&nbsp;&nbsp;&nbsp;</td>
+				<td><input id="patientNationalId" name="patient.attribute.20" style='width: 152px;'/></td>
 		</tr>
 		<tr>
 				<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
-				<td><input id="patCatTB" type="checkbox" name="person.attribute.14" value="TB" /> TB</td>
-				<td><input id="patCatMother" type="checkbox" name="person.attribute.14" value="Expectant Mother" /> Expectant Mother&nbsp;&nbsp;&nbsp;&nbsp;</td>
-				<td><input id="patCatOtherInsurance" type="checkbox" name="person.attribute.14" value="Other Insurance" /> Other Insurance</td>
-		</tr>
-		<tr>
-				<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
-				<td><input id="patCatMalaria" type="checkbox" name="person.attribute.14" value="Malaria" /> Malaria</td>
-				<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
-				<td><input id="patCatWaiver" type="checkbox" name="person.attribute.14" value="Waiver" /> Waiver Case</td>
-		</tr>
-		<tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr>
-		<tr>
-				<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
-				<td><span id="exemptionField1">Exemption Number</span></td>
-				<td><span id="exemptionField2"><input id="exemptionNumber" name="person.attribute.36" style="width: 152px;"/></span></td>
-		</tr>
-		<tr>
-				<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
-				<td><span id="nhifCardField1">NHIF Card Number</span></td>
-				<td><span id="nhifCardField2"><input id="nhifCardNumber" name="person.attribute.33" style="width: 152px;"/></span></td>
-		</tr>
-		<tr>
-				<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
-				<td><span id="waiverField1">Waiver Number</span></td>
-				<td><span id="waiverField2"><input id="waiverNumber" name="person.attribute.32" style="width: 152px;"/></span></td>
-		</tr>
-		<tr>
+				<td>Passport Number&nbsp;&nbsp;&nbsp;&nbsp;</td>
+		        <td><input id="passportNumber" name="patient.attribute.38" style='width: 152px;'/></td>
 		</tr>
 		</table>
 		</div>
-		<div id="validationMessage"></div>
 		
-		<table align="left">
-		<tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr>
-		<tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr>
-		<tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr>
-		<tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr>
-		<tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr>
-		<tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr>
-		<tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr>
-		<tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr>
-		<tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr>
-		<tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr>
-		<tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr>
+		<div class="floatRight">
+		<table>
+		<tr>
+				<td><b>Payment Category<label style="color:red">*</label>&nbsp;&nbsp;&nbsp;&nbsp;</b></td>
+				<td><input id="paying" type="checkbox" name="person.attribute.14" value="Paying" /> Paying</td>
+				<td><input id="nonPaying" type="checkbox" name="person.attribute.14" value="Non-Paying" /> Non-Paying</td>
+		</tr>
+		<tr>
+				<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+				<td><input id="specialSchemes" type="checkbox" name="person.attribute.14" value="Special Schemes" /> Special Schemes</td>
+		</tr>
+		<tr>
+				<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+				<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+				<td><span id="specialSchemeField"><input id="specialSchemeName" name="person.attribute.42" placeholder="Please specify" style='width: 152px;'/></span></td>
+		</tr>
 		<tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr>
 		
 		<tr>
-		<td><input type="button" value="Save" onclick="PAGE.submit();" style="font-weight:bold"/>
-		    <input type="button" value="Reset" onclick="window.location.href=window.location.href" style="font-weight:bold"/>
+				<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+				<td><b>Next of Kin Details&nbsp;&nbsp;&nbsp;&nbsp;</b></td>
+		</tr>
+		<tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr>
+		<tr>
+				<td><b>Next of Kin&nbsp;&nbsp;&nbsp;&nbsp;</b></td>
+				<td>Relative Name<label style="color:red">*</label>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+				<td><input id="patientRelativeName" name="person.attribute.8" style='width: 152px;' />
+				</td>
+			</tr>
+			<tr>
+				<td><b>Information</b><label style="color:red">*</label>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+				<td>Relationship<label style="color:red">*</label>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+				<td><select id="relationshipType" name="person.attribute.15" style='width: 152px;'>
+										<option value="Relationship"></option>
+										<option value="Parent">Parent</option>
+										<option value="Spouse">Spouse</option>
+										<option value="Guardian">Guardian</option>
+										<option value="Friend">Friend</option>
+										<option value="Other">Other</option>
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+				<td>Physical Address&nbsp;&nbsp;&nbsp;&nbsp;</td>
+				<td><input type="text" id="relativePostalAddress" name="person.attribute.28" style='width: 152px; 	border-width: 1px;
+	border-right: 1px;
+	border-left: 1px;
+	border-top: 1px;
+	border-bottom: 1px;
+	border-color: black;
+	border-style: solid;
+'/>
+				<input id="sameAddress" type="checkbox"/> Same as above
+				</td>
+			</tr>
+		</table>
+		</div>
+		
+		<div id="validationMessage"></div>
+		
+		<div class="floatBottom">
+		<table width="100%" height="100%">
+		<tr valign="bottom">
+		<td valign="bottom"><input type="button" value="Save" onclick="PAGE.submit();" style="font-weight:bold"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		                    <input type="button" value="Reset" onclick="window.location.href=window.location.href" style="font-weight:bold"/>
 		</td>
 		</tr>
 		</table>
+		</div>
 
 	</form>

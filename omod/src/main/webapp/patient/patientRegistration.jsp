@@ -29,14 +29,7 @@
 </style>
 
 <script type="text/javascript">
-function abc(){
-alert("new patient");
 
-}
-
-function def(){
-alert("revisit patient");
-}
 </script>
 
 <h3 align="center" style="color:black">PATIENT REGISTRATION<br><br></h3>

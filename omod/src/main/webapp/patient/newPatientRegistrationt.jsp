@@ -41,7 +41,7 @@
 	var _upazilas = new Array();
 	<c:forEach var="upazila" items="${upazilas}" varStatus="status">
 		_upazilas[${status.index}] = "${upazila}";
-	</c:forEach>	
+	</c:forEach>
 	
 	/**
 	 ** MODEL FROM CONTROLLER
@@ -51,6 +51,7 @@
 		districts: _districts,
 		upazilas: _upazilas,
 		////ghanshyam,16-dec-2013,3438 Remove the interdependency
+		TRIAGE: "${TRIAGE}",
 		OPDs: "${OPDs}",
 		referredFrom: "${referralHospitals}",
 		referralType: "${referralReasons}",
@@ -58,7 +59,7 @@
 		religions: "${religionList}"
 	}
 </script>
-<jsp:include page="../includes/${hospitalName}/newPatientRegistrationFormForOPD.jsp"/>
+<jsp:include page="../includes/${hospitalName}/newPatientRegistrationtForm.jsp"/>
 <!--  
 <%@ include file="/WEB-INF/template/footer.jsp" %>  
 -->

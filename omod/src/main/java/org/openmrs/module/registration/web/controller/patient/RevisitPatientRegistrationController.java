@@ -64,20 +64,14 @@ public class RevisitPatientRegistrationController {
 		model.addAttribute(
 				"TEMPORARYCAT",
 				RegistrationWebUtils
-						.getSubConcepts(RegistrationConstants.CONCEPT_NAME_TEMPORARY_CATEGORY));
-		String triageEnabled = Context.getAdministrationService()
-				.getGlobalProperty("registration.triageEnabled");
-		if (triageEnabled.equalsIgnoreCase("true")) {
-			model.addAttribute("TRIAGE", RegistrationWebUtils
-					.getSubConcepts(RegistrationConstants.CONCEPT_NAME_TRIAGE));
+						.getSubConcepts(RegistrationConstants.CONCEPT_NAME_MEDICO_LEGAL_CASE));
+		model.addAttribute("TRIAGE", RegistrationWebUtils
+				.getSubConcepts(RegistrationConstants.CONCEPT_NAME_TRIAGE));
+		model.addAttribute(
+				"OPDs",
+				RegistrationWebUtils
+						.getSubConcepts(RegistrationConstants.CONCEPT_NAME_OPD_WARD));
 			return "/module/registration/patient/revisitPatientRegistrationForTriage";
-		} else {
-			model.addAttribute(
-					"OPDs",
-					RegistrationWebUtils
-							.getSubConcepts(RegistrationConstants.CONCEPT_NAME_OPD_WARD));
-			return "/module/registration/patient/revisitPatientRegistrationForOPD";
-		}
 
 	}
 }
