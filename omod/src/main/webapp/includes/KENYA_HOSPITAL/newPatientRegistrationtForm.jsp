@@ -1045,7 +1045,7 @@ input, select, textarea {
 		<tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr>
         <tr>
 				<td><b>Room to Visit</b><label style="color:red">*</label>&nbsp;&nbsp;&nbsp;&nbsp;</td>
-				<td><input id="triageRoom" type="checkbox" name="mlcCaseYes"/> Triage Room &nbsp;&nbsp;&nbsp;&nbsp;
+				<td><input id="triageRoom" type="checkbox" name="triageRoom"/> Triage Room &nbsp;&nbsp;&nbsp;&nbsp;
 				<input id="opdRoom" type="checkbox" name="opdRoom"/> OPD Room
 				</td>
 		</tr>

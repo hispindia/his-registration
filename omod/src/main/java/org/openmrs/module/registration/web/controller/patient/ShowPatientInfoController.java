@@ -73,13 +73,11 @@ public class ShowPatientInfoController {
 	                              @RequestParam(value = "reprint", required = false) Boolean reprint, Model model)
 	                                                                                                              throws IOException,
 	                                                                                                              ParseException {
-		
 		Patient patient = Context.getPatientService().getPatient(patientId);
 		HospitalCoreService hcs = Context.getService(HospitalCoreService.class);
 		PatientModel patientModel = new PatientModel(patient);
 		model.addAttribute("patient", patientModel);
-		//ghanshyam,16-dec-2013,3438 Remove the interdependency
-		model.addAttribute("TEMPORARYCAT", RegistrationWebUtils.getSubConcepts(RegistrationConstants.CONCEPT_NAME_MEDICO_LEGAL_CASE));
+		model.addAttribute("MEDICOLEGALCASE", RegistrationWebUtils.getSubConcepts(RegistrationConstants.CONCEPT_NAME_MEDICO_LEGAL_CASE));
 		// Get current date
 		SimpleDateFormat sdf = new SimpleDateFormat("EEE dd/MM/yyyy kk:mm");
 		model.addAttribute("currentDateTime", sdf.format(new Date()));
@@ -104,24 +102,18 @@ public class ShowPatientInfoController {
 			List<PersonAttribute> pas = hcs.getPersonAttributes(patientId);
 			 for (PersonAttribute pa : pas) {
 				 PersonAttributeType attributeType = pa.getAttributeType(); 
-				 if(attributeType.getPersonAttributeTypeId()==14){
+				 PersonAttributeType personAttributePaymentCategory=hcs.getPersonAttributeTypeByName("Payment Category");
+				 PersonAttributeType personAttributeSpecialSchemeName=hcs.getPersonAttributeTypeByName("Special Scheme Name");
+				 if(attributeType.getPersonAttributeTypeId()==personAttributePaymentCategory.getPersonAttributeTypeId()){
 					 model.addAttribute("selectedCategory",pa.getValue()); 
 				 }
-				 //ghanshyam,18-dec-2013,# 3457 Exemption number for selected category should show on registration receipt
-				 if(attributeType.getPersonAttributeTypeId()==36){
-					 model.addAttribute("exemptionNumber",pa.getValue()); 
-				 }
-				 if(attributeType.getPersonAttributeTypeId()==33){
-					 model.addAttribute("nhifCardNumber",pa.getValue()); 
-				 }
-				 if(attributeType.getPersonAttributeTypeId()==32){
-					 model.addAttribute("waiverNumber",pa.getValue()); 
+				 if(attributeType.equals(personAttributeSpecialSchemeName)){
+					 model.addAttribute("specialSchemeName",pa.getValue()); 
 				 }
 			 }
 			 
 			Encounter encounter = Context.getEncounterService().getEncounter(encounterId);
 			for (Obs obs : encounter.getObs()) {
-				//ghanshyam,16-dec-2013,3438 Remove the interdependency
 				if (obs.getConcept().getName().getName().equalsIgnoreCase(RegistrationConstants.CONCEPT_NAME_TRIAGE)) {
 					model.addAttribute("selectedTRIAGE", obs.getValueCoded().getConceptId());
 				}
@@ -130,7 +122,7 @@ public class ShowPatientInfoController {
 				}
 
 				if (obs.getConcept().getName().getName().equalsIgnoreCase(RegistrationConstants.CONCEPT_NAME_MEDICO_LEGAL_CASE)) {
-					model.addAttribute("tempCategory", obs.getValueCoded().getConceptId());
+					model.addAttribute("selectedMLC", obs.getValueCoded().getConceptId());
 				}
 
 			}
@@ -151,7 +143,7 @@ public class ShowPatientInfoController {
 				for (Obs obs : encounter.getAllObs()) {
 					if (obs.getConcept().getDisplayString()
 					        .equalsIgnoreCase(RegistrationConstants.CONCEPT_NAME_MEDICO_LEGAL_CASE)) {
-						model.addAttribute("tempCategoryId", obs.getConcept().getConceptId());
+						model.addAttribute("mlcId", obs.getConcept().getConceptId());
 					}
 					if (obs.getConcept().getDisplayString()
 					        .equalsIgnoreCase(RegistrationConstants.CONCEPT_NAME_TRIAGE)) {
@@ -174,46 +166,23 @@ public class ShowPatientInfoController {
 				List<PersonAttribute> pas = hcs.getPersonAttributes(patientId);
 				 for (PersonAttribute pa : pas) {
 					 PersonAttributeType attributeType = pa.getAttributeType(); 
-					 if(attributeType.getPersonAttributeTypeId()==14){
+					 PersonAttributeType personAttributePaymentCategory=hcs.getPersonAttributeTypeByName("Payment Category");
+					 PersonAttributeType personAttributeSpecialSchemeName=hcs.getPersonAttributeTypeByName("Special Scheme Name");
+					 if(attributeType.equals(personAttributePaymentCategory)){
 						 model.addAttribute("selectedCategory",pa.getValue()); 
 					 }
-					 //ghanshyam,18-dec-2013,# 3457 Exemption number for selected category should show on registration receipt
-					 if(attributeType.getPersonAttributeTypeId()==14){
-						 model.addAttribute("selectedCategory",pa.getValue()); 
-					 }
-					 //ghanshyam,18-dec-2013,# 3457 Exemption number for selected category should show on registration receipt
-					 if(attributeType.getPersonAttributeTypeId()==36){
-						 model.addAttribute("exemptionNumber",pa.getValue()); 
-					 }
-					 if(attributeType.getPersonAttributeTypeId()==33){
-						 model.addAttribute("nhifCardNumber",pa.getValue()); 
-					 }
-					 if(attributeType.getPersonAttributeTypeId()==32){
-						 model.addAttribute("waiverNumber",pa.getValue()); 
+					 if(attributeType.equals(personAttributeSpecialSchemeName)){
+						 model.addAttribute("specialSchemeName",pa.getValue()); 
 					 }
 				 }
 			}
 		}
 		
-		//ghanshyam  20-may-2013 #1648 capture Health ID and Registration Fee Type
-		Concept conforregfee = Context.getConceptService().getConcept("REGISTRATION FEE");
-		Integer conforregfeeid=conforregfee.getConceptId();
-		model.addAttribute("regFeeConId",conforregfeeid);
-		Concept conforregfreereason = Context.getConceptService().getConcept("REGISTRATION FEE FREE REASON");
-		Integer conforregfreereasonid=conforregfreereason.getConceptId();
-		model.addAttribute("regFeeReasonConId",conforregfreereasonid);
-		model.addAttribute("regFee", GlobalPropertyUtil.getString(RegistrationConstants.PROPERTY_INITIAL_REGISTRATION_FEE, ""));
-		model.addAttribute("regMchFee", GlobalPropertyUtil.getString(RegistrationConstants.PROPERTY_MCH_INITIAL_REGISTRATION_FEE, ""));
+		model.addAttribute("initialRegFee", GlobalPropertyUtil.getString(RegistrationConstants.PROPERTY_INITIAL_REGISTRATION_FEE, ""));
 		model.addAttribute("reVisitFee", GlobalPropertyUtil.getString(RegistrationConstants.PROPERTY_REVISIT_REGISTRATION_FEE, ""));
-		String triageEnabled = Context.getAdministrationService().getGlobalProperty("registration.triageEnabled");
-		if(triageEnabled.equalsIgnoreCase("true")){
-			model.addAttribute("TRIAGE", RegistrationWebUtils.getSubConcepts(RegistrationConstants.CONCEPT_NAME_TRIAGE));
+		model.addAttribute("TRIAGE", RegistrationWebUtils.getSubConcepts(RegistrationConstants.CONCEPT_NAME_TRIAGE));
+		model.addAttribute("OPDs", RegistrationWebUtils.getSubConcepts(RegistrationConstants.CONCEPT_NAME_OPD_WARD));
 			return "/module/registration/patient/showPatientInfoForTriage";
-		}
-		else{
-			model.addAttribute("OPDs", RegistrationWebUtils.getSubConcepts(RegistrationConstants.CONCEPT_NAME_OPD_WARD));
-			return "/module/registration/patient/showPatientInfoForOPD";
-		}
 	}
 	
 	/**
