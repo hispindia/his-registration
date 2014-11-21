@@ -105,9 +105,9 @@ public class ShowPatientInfoController {
 				 PersonAttributeType personAttributePaymentCategory=hcs.getPersonAttributeTypeByName("Payment Category");
 				 PersonAttributeType personAttributeSpecialSchemeName=hcs.getPersonAttributeTypeByName("Special Scheme Name");
 				 if(attributeType.getPersonAttributeTypeId()==personAttributePaymentCategory.getPersonAttributeTypeId()){
-					 model.addAttribute("selectedCategory",pa.getValue()); 
+					 model.addAttribute("selectedPaymentCategory",pa.getValue()); 
 				 }
-				 if(attributeType.equals(personAttributeSpecialSchemeName)){
+				 if(attributeType.getPersonAttributeTypeId()==personAttributeSpecialSchemeName.getPersonAttributeTypeId()){
 					 model.addAttribute("specialSchemeName",pa.getValue()); 
 				 }
 			 }
@@ -168,10 +168,10 @@ public class ShowPatientInfoController {
 					 PersonAttributeType attributeType = pa.getAttributeType(); 
 					 PersonAttributeType personAttributePaymentCategory=hcs.getPersonAttributeTypeByName("Payment Category");
 					 PersonAttributeType personAttributeSpecialSchemeName=hcs.getPersonAttributeTypeByName("Special Scheme Name");
-					 if(attributeType.equals(personAttributePaymentCategory)){
-						 model.addAttribute("selectedCategory",pa.getValue()); 
+					 if(attributeType.getPersonAttributeTypeId()==personAttributePaymentCategory.getPersonAttributeTypeId()){
+						 model.addAttribute("selectedPaymentCategory",pa.getValue()); 
 					 }
-					 if(attributeType.equals(personAttributeSpecialSchemeName)){
+					 if(attributeType.getPersonAttributeTypeId()==personAttributeSpecialSchemeName.getPersonAttributeTypeId()){
 						 model.addAttribute("specialSchemeName",pa.getValue()); 
 					 }
 				 }
@@ -182,7 +182,7 @@ public class ShowPatientInfoController {
 		model.addAttribute("reVisitFee", GlobalPropertyUtil.getString(RegistrationConstants.PROPERTY_REVISIT_REGISTRATION_FEE, ""));
 		model.addAttribute("TRIAGE", RegistrationWebUtils.getSubConcepts(RegistrationConstants.CONCEPT_NAME_TRIAGE));
 		model.addAttribute("OPDs", RegistrationWebUtils.getSubConcepts(RegistrationConstants.CONCEPT_NAME_OPD_WARD));
-			return "/module/registration/patient/showPatientInfoForTriage";
+			return "/module/registration/patient/showPatientInfo";
 	}
 	
 	/**
@@ -226,11 +226,9 @@ public class ShowPatientInfoController {
 				encounter.addObs(obsn);	
 		} else {
 			encounter = RegistrationWebUtils.createEncounter(patient, true);
-			
-			// create TRIAGE obs
-			//ghanshyam,16-dec-2013,3438 Remove the interdependency
-			String triageEnabled = Context.getAdministrationService().getGlobalProperty("registration.triageEnabled");
-			if(triageEnabled.equalsIgnoreCase("true")){
+		
+			if (!StringUtils.isBlank(parameters
+					.get(RegistrationConstants.FORM_FIELD_PATIENT_TRIAGE))) {
 				Concept triageConcept = Context.getConceptService().getConcept(RegistrationConstants.CONCEPT_NAME_TRIAGE);
 				Concept selectedTRIAGEConcept = Context.getConceptService().getConcept(
 				    Integer.parseInt(parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_TRIAGE)));

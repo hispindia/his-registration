@@ -85,8 +85,6 @@ public class NewPatientRegistrationController {
 				"TEMPORARYCAT",
 				RegistrationWebUtils
 						.getSubConcepts(RegistrationConstants.CONCEPT_NAME_MEDICO_LEGAL_CASE));
-		String triageEnabled = Context.getAdministrationService()
-				.getGlobalProperty("registration.triageEnabled");
 		model.addAttribute("religionList", RegistrationWebUtils.getReligionConcept());
 		PersonAttributeType personAttributeReligion=hospitalCoreService.getPersonAttributeTypeByName("Religion");
 		model.addAttribute("personAttributeReligion", personAttributeReligion);
@@ -99,7 +97,7 @@ public class NewPatientRegistrationController {
 				RegistrationWebUtils
 						.getSubConcepts(RegistrationConstants.CONCEPT_NAME_OPD_WARD));
 		
-			return "/module/registration/patient/newPatientRegistrationt";
+			return "/module/registration/patient/newPatientRegistration";
 
 	}
 

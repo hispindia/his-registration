@@ -31,6 +31,15 @@
 		jQuery("#feeHideVal").hide();
 		jQuery("#catHideVal").hide();
 		
+		jQuery("#mlc").hide();
+		
+		jQuery("#buySlip").hide();
+		
+		jQuery("#specialSchemeNameField").hide();
+		
+		jQuery("#triageField").hide();
+		jQuery("#opdWardField").hide();
+		
 		jQuery("#freeRegField").hide();
 	    jQuery("#freeReg").click(function() {
 		VALIDATORS.freeRegCheck();
@@ -53,40 +62,81 @@
 			optionDelimiter: "|"
 		});
 		
+		MODEL.OPDs = " ,Please Select OPD to Visit|" + MODEL.OPDs;
+		PAGE.fillOptions("#opdWard", {
+			data:MODEL.OPDs,
+			delimiter: ",",
+			optionDelimiter: "|"
+		});
+		
 		MODEL.MEDICOLEGALCASE = " ,Please Select MEDICO LEGAL CASE|" + MODEL.MEDICOLEGALCASE;
-		PAGE.fillOptions("#mlcCat", {
+		PAGE.fillOptions("#mlc", {
 			data:MODEL.MEDICOLEGALCASE,
 			delimiter: ",",
 			optionDelimiter: "|"
 		});
 		
-		// Set the selected OPD
-		if(!StringUtils.isBlank(MODEL.selectedTRIAGE)){			
+		// Set the selected triage
+		if(!StringUtils.isBlank(MODEL.selectedTRIAGE)){	
+		    jQuery("#triageField").show();		
 			jQuery("#triage").val(MODEL.selectedTRIAGE);
 			jQuery("#triage").attr("disabled", "disabled");
 		}
 		
-		if(!StringUtils.isBlank(MODEL.selectedMLC)){			
-			jQuery("#mlcCat").val(MODEL.selectedMLC);	
-			jQuery("#mlcCat").attr("disabled", "disabled");
+		// Set the selected OPD
+		if(!StringUtils.isBlank(MODEL.selectedOPD)){
+		    jQuery("#opdWardField").show();
+			jQuery("#opdWard").val(MODEL.selectedOPD);
+			jQuery("#opdWard").attr("disabled", "disabled");
 		}
-
-		jQuery("#buySlip").hide();
 		
-		jQuery("#special_scheme_name").hide();
-		jQuery("#specialSchemeField").hide();
+		if(!StringUtils.isBlank(MODEL.selectedMLC)){	
+		    jQuery("#mlc").show();		
+			jQuery("#mlc").val(MODEL.selectedMLC);	
+			jQuery("#mlc").attr("disabled", "disabled");
+		}
+		
+		
+		
+		jQuery("#paying").click(function() {
+		VALIDATORS.payingCheck();
+		});
+		jQuery("#nonPaying").click(function() {
+		VALIDATORS.nonPayingCheck();
+		});
+		jQuery("#specialSchemes").click(function() {
+		VALIDATORS.specialSchemeCheck();
+		});
+		
+		jQuery("#mlcCaseYes").click(function() {
+		VALIDATORS.mlcYesCheck();
+		});		
+		jQuery("#mlcCaseNo").click(function() {
+		VALIDATORS.mlcNoCheck();
+		});
+		
+		jQuery("#triageRoom").click(function() {
+		VALIDATORS.triageRoomCheck();
+		});	
+		jQuery("#opdRoom").click(function() {
+		VALIDATORS.opdRoomCheck();
+		});
 
 		
 		//ghanshyam,11-dec-2013,#3327 Defining patient categories based on Kenyan requirements
-		if(!StringUtils.isBlank(MODEL.selectedCategory)){			
-			jQuery("#paymentCategory").val(MODEL.selectedCategory);
-			jQuery("#paymentCategory").attr("disabled", "disabled");
-			jQuery("#catHideVal").val(MODEL.selectedCategory);
+		if(!StringUtils.isBlank(MODEL.selectedPaymentCategory)){
+			
+			jQuery("#payingField").hide();
+			jQuery("#nonPayingField").hide();
+			jQuery("#specialSchemeField").hide();
+			
+			jQuery("#catHideVal").val(MODEL.selectedPaymentCategory);
 			jQuery("#catHideVal").hide();
 	//		jQuery("#paymentCategory").hide();
 	//		jQuery("#paymentCategory").after("<span>" + jQuery("#paymentCategory option:checked").html() +  "</span>"); 
 			if(${registrationFee==''} || ${registrationFee==null}){
-			if(jQuery("#paymentCategory").val() == "Paying"){
+			if(MODEL.selectedPaymentCategory == "Paying"){
+			        jQuery("#payingField").after("<span style='border:0px'>" + jQuery("#paying").val() + "</span>");
 					jQuery("#regFeeValue").val(${initialRegFee});
 					jQuery("#regFeeValue").attr("disabled", "disabled");
 					jQuery("#feeHideVal").val(${initialRegFee});
@@ -94,7 +144,8 @@
 					//	jQuery("#regFeeValue").hide();
 					//	jQuery("#regFeeValue").after("<span>" + jQuery("#regFeeValue option:checked").html() +  "</span>");  
 				}
-			if(jQuery("#paymentCategory").val() == "Non-Paying"){
+			if(MODEL.selectedPaymentCategory == "Non-Paying"){
+			            jQuery("#payingField").after("<span style='border:0px'>" + jQuery("#nonPaying").val() + "</span>");
 						jQuery("#regFeeValue").val(0);
 						jQuery("#regFeeValue").attr("disabled", "disabled");
 						jQuery("#feeHideVal").val(0);
@@ -102,25 +153,32 @@
 					//	jQuery("#regFeeValue").hide();
 					//	jQuery("#regFeeValue").after("<span>" + jQuery("#regFeeValue option:checked").html() +  "</span>"); 
 				}
-			if(jQuery("#paymentCategory").val() == "Special Schemes"){
+			if(MODEL.selectedPaymentCategory == "Special Schemes"){
+			            if(!StringUtils.isBlank(MODEL.specialSchemeName)){	
+			            jQuery("#payingField").after("<span style='border:0px'>" + MODEL.specialSchemeName + "&nbsp;&nbsp;" + "</span>");
+		                 }
+			            jQuery("#payingField").after("<span style='border:0px'>" + jQuery("#specialSchemes").val() + "</span>");
 						jQuery("#feeHideVal").val(jQuery("#regFeeValue").val());
 				}
 				}
 			}
-		//ghanshyam,18-dec-2013,# 3457 Exemption number for selected category should show on registration receipt
-		if(!StringUtils.isBlank(MODEL.specialSchemeName)){			
-			jQuery("#special_scheme_name").show();	
-		    jQuery("#exemptionField").show();	
-			jQuery("#specialSchemeName").val(MODEL.specialSchemeName);	
-			jQuery("#specialSchemeName").attr("disabled", "disabled");
-		}
+			
+			if(!StringUtils.isBlank(MODEL.selectedTRIAGE) || !StringUtils.isBlank(MODEL.selectedOPD)){	
+			jQuery("#mlcCaseYesField").hide();
+			jQuery("#mlcCaseNoField").hide();
+			
+			jQuery("#triageRoomField").hide();
+			jQuery("#opdRoomField").hide();
+			}
+			
+		
 		
 		//Category Check
 		jQuery("#paymentCategory").change(function() {
 			VALIDATORS.categoryCheck();
 		});
 
-	/*	jQuery("#mlcCat").change(function() {
+	/*	jQuery("#mlc").change(function() {
 			VALIDATORS.tempCatCheck();
 		});*/
 		
@@ -132,20 +190,18 @@
 		
 			var mlcId=MODEL.mlcId;
 			if(!StringUtils.isBlank(MODEL.observations[mlcId])){
-			jQuery("#mlcCat").val(MODEL.observations[mlcId]);
-			jQuery("#mlcCat").attr("disabled", "disabled");
+			jQuery("#mlc").val(MODEL.observations[mlcId]);
+			jQuery("#mlc").attr("disabled", "disabled");
 			}
 			
 			jQuery("#paymentCategory").attr("disabled", "disabled");
 			
 			
 			if(jQuery("#paymentCategory").val()=="Paying"){
-				jQuery("#special_scheme_name").hide();
-				jQuery("#specialSchemeField").hide();
+				jQuery("#specialSchemeNameField").hide();
 			}
 			if(jQuery("#paymentCategory").val()=="Non-Paying"){
-				jQuery("#special_scheme_name").hide();
-				jQuery("#specialSchemeField").hide();
+				jQuery("#specialSchemeNameField").hide();
 			}
 			
 						jQuery("#regFeeValue").val(${registrationFee});
@@ -360,8 +416,7 @@
 			};
 
 			if(jQuery("#paymentCategory").val()=="Special Schemes"){
-			//jQuery("#specialSchemeField").show();
-			//jQuery("#special_scheme_name").show();
+			//jQuery("#specialSchemeNameField").show();
 			jQuery("#feeHideVal").val(jQuery("#regFeeValue").val());
 			}
 			
@@ -372,13 +427,89 @@
 	//ghanshyam  20-may-2013 #1648 capture Health ID and Registration Fee Type
 	VALIDATORS = {
 	
+		/** CHECK WHEN PAYING CATEGORY IS SELECTED */
+		payingCheck : function() {
+			if (jQuery("#paying").is(':checked')) {
+					jQuery("#nonPaying").removeAttr("checked");
+				    
+				    jQuery("#specialSchemes").removeAttr("checked");
+					jQuery("#specialSchemeName").val("");
+					jQuery("#specialSchemeNameField").hide();
+			}
+		},
+		
+		/** CHECK WHEN NONPAYING CATEGORY IS SELECTED */
+		nonPayingCheck : function() {
+			if (jQuery("#nonPaying").is(':checked')) {
+					jQuery("#paying").removeAttr("checked");
+				    
+				    jQuery("#specialSchemes").removeAttr("checked");
+					jQuery("#specialSchemeName").val("");
+					jQuery("#specialSchemeNameField").hide();
+			}
+		},
+		
+		/** CHECK WHEN SPECIAL SCHEME CATEGORY IS SELECTED */
+		specialSchemeCheck : function() {
+			if (jQuery("#specialSchemes").is(':checked')) {
+					jQuery("#paying").removeAttr("checked");
+					
+					jQuery("#nonPaying").removeAttr("checked");
+					jQuery("#specialSchemeNameField").show();
+			}
+			else{
+			 jQuery("#specialSchemeName").val("");
+			jQuery("#specialSchemeNameField").hide();
+			}
+		},
+		
+		mlcYesCheck : function () {
+			if (jQuery("#mlcCaseYes").is(':checked')) {
+			        jQuery("#mlcCaseNo").removeAttr("checked");
+					jQuery("#mlc").show();	
+			}
+			else{
+			jQuery("#mlc").hide();	
+			}
+		},
+		
+		mlcNoCheck : function () {
+			if (jQuery("#mlcCaseNo").is(':checked')) {
+			    jQuery("#mlcCaseYes").removeAttr("checked");	
+				jQuery("#mlc").hide();	
+			}
+		},
+		
+		triageRoomCheck : function () {
+			if (jQuery("#triageRoom").is(':checked')) {
+			        jQuery("#opdRoom").removeAttr("checked");
+					jQuery("#triageField").show();	
+					jQuery("#opdWardField").hide();	
+			}
+			else{
+			jQuery("#triageField").hide();	
+			}
+		},
+		
+		opdRoomCheck : function () {
+			if (jQuery("#opdRoom").is(':checked')) {
+			        jQuery("#triageRoom").removeAttr("checked");
+			        jQuery("#triageField").hide();
+					jQuery("#opdWardField").show();	
+			}
+			else{
+			jQuery("#opdWardField").hide();	
+			}
+		},
+		
+		
+		
 		categoryCheck : function() {
 			
 			if (jQuery("#paymentCategory").val() == "Paying") {
 				
 				jQuery("#specialSchemeName").val("");
-				jQuery("#specialSchemeField").hide();
-				jQuery("#special_scheme_name").hide();
+				jQuery("#specialSchemeNameField").hide();
 				
 				jQuery("#regFeeValue").val(${reVisitFee});
 				jQuery("#feeHideVal").val(${reVisitFee});
@@ -386,8 +517,7 @@
 				
 			} else if(jQuery("#paymentCategory").val() == "Non-Paying"){
 				jQuery("#specialSchemeName").val("");
-				jQuery("#specialSchemeField").hide();
-				jQuery("#special_scheme_name").hide();
+				jQuery("#specialSchemeNameField").hide();
 
 				jQuery("#regFeeValue").val(0);
 				jQuery("#feeHideVal").val(0);
@@ -395,8 +525,7 @@
 
 		
 			} else if(jQuery("#paymentCategory").val() == "Special Schemes"){
-				jQuery("#specialSchemeField").show();
-				jQuery("#special_scheme_name").show();
+				jQuery("#specialSchemeNameField").show();
 				
 				jQuery("#regFeeValue").removeAttr("disabled");
 				jQuery("#feeHideVal").val(jQuery("#regFeeValue").val());
@@ -505,33 +634,19 @@ jQuery("#message").hide();
 				</tr>
 				
 				<tr>
-					<td colspan="1"><b>Payment Category:</b></td>
-					<td>
-					<select id="paymentCategory" name="person.attribute.14">
-										<option value="Payment Category">Please Select Payment Category</option>
-										<option value="Paying">Paying</option>
-										<option value="Non-Paying">Non-Paying</option>
-										<option value="Special Schemes">Special Schemes</option>
-					</select>
-					</td>
-					<td id="catHide">
-							<span><input id="catHideVal" name="catHideVal" />
-							</span>
-					</td>	
-					</tr>
-					<tr>
-					<td id="special_scheme_name"><b>Special Scheme Name:</b></td>		
-					<td id="specialSchemeField">
-							<span><input id="specialSchemeName" name="person.attribute.42" />
-							</span>
-							
-					</td>			
-				</tr>
-				<tr id="opdWardLabel">
-					<td colspan="1"><b>Triage to Visit:</b></td>
-					<td colspan="5" ><select id="triage" name="patient.triage">
-					</select></td>
-				</tr>
+				<td><b>Payment Category:&nbsp;&nbsp;&nbsp;&nbsp;</b></td>
+				<td id="payingField"><input id="paying" type="checkbox" name="person.attribute.14" value="Paying" /> Paying</td>
+		</tr>
+		<tr>
+				<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+				<td id="nonPayingField"><input id="nonPaying" type="checkbox" name="person.attribute.14" value="Non-Paying" /> Non-Paying</td>
+		</tr>
+		<tr>
+				<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+				<td id="specialSchemeField"><input id="specialSchemes" type="checkbox" name="person.attribute.14" value="Special Schemes" /> Special Schemes &nbsp;&nbsp;&nbsp;&nbsp;</td>
+				<td id="specialSchemeNameField"><input id="specialSchemeName" name="person.attribute.42" placeholder="Please specify" style='width: 152px;'/></td>
+		</tr>
+		
 				
 				<%-- ghanshyam 27-02-2013 Feedback #966[Billing]Add Paid Bill/Add Free Bill for Bangladesh module(remove category from registration,OPD,IPD,Inventory)--%>
 				<%--
@@ -564,10 +679,28 @@ jQuery("#message").hide();
 				</tr> --%>
 				
 				<tr id="temporaryCategories">
-					<td colspan="1" valign="top"><b>Medico Legal Case:</b></td>
-					<td colspan="5"><select id="mlcCat" name="patient.mlc"></td>			
+				<td><b>Medico Legal Case:&nbsp;&nbsp;&nbsp;&nbsp;</b></td>
+				<td id="mlcCaseYesField"><input id="mlcCaseYes" type="checkbox" name="mlcCaseYes"/> Yes &nbsp;&nbsp;&nbsp;&nbsp;</td>
+				<td><select id="mlc" name="patient.mlc" style='width: 152px;'>	</select></td>
+		</tr>
+		<tr>
+				<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+				<td id="mlcCaseNoField"><input id="mlcCaseNo" type="checkbox" name="mlcCaseNo"/> No &nbsp;&nbsp;&nbsp;&nbsp;</td>
+		</tr>
 		
-				</tr>
+		
+		<tr>
+				<td><b>Room to Visit:</b>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+				<td id="triageRoomField"><input id="triageRoom" type="checkbox" name="triageRoom"/> Triage Room &nbsp;&nbsp;&nbsp;&nbsp;</td>
+				<td id="triageField"><select id="triage" name="patient.triage" style='width: 152px;'>	</select></td>
+		</tr>
+		<tr>
+				<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+				<td id="opdRoomField"><input id="opdRoom" type="checkbox" name="opdRoom"/> OPD Room&nbsp;&nbsp;&nbsp;&nbsp;</td>
+				<td id="opdWardField"><select id="opdWard" name="patient.opdWard" style='width: 152px;'>	</select></td>
+		</tr>
+				
+				
 				<tr>
 					<td colspan="1"><b>Registration Fee:</b></td>
 					<td><select id="regFeeValue" name="regFeeValue">

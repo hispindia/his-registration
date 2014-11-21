@@ -147,6 +147,7 @@ input, select, textarea {
 
 				// hide exemption and waver number
 				jQuery("#specialSchemeField").hide();
+				jQuery("#fileNumberField").hide();
 				jQuery("#mlc").hide();
 				jQuery("#otherNationality").hide();
 				jQuery("#triageField").hide();
@@ -609,6 +610,7 @@ input, select, textarea {
 				    jQuery("#specialSchemes").removeAttr("checked");
 					jQuery("#specialSchemeName").val("");
 					jQuery("#specialSchemeField").hide();
+					jQuery("#fileNumberField").hide();
 			}
 		},
 		
@@ -620,6 +622,7 @@ input, select, textarea {
 				    jQuery("#specialSchemes").removeAttr("checked");
 					jQuery("#specialSchemeName").val("");
 					jQuery("#specialSchemeField").hide();
+					jQuery("#fileNumberField").hide();
 			}
 		},
 		
@@ -630,10 +633,12 @@ input, select, textarea {
 					
 					jQuery("#nonPaying").removeAttr("checked");
 					jQuery("#specialSchemeField").show();
+					jQuery("#fileNumberField").show();
 			}
 			else{
 			 jQuery("#specialSchemeName").val("");
 			jQuery("#specialSchemeField").hide();
+			jQuery("#fileNumberField").hide();
 			}
 		},
 		
@@ -963,6 +968,12 @@ input, select, textarea {
 				<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
 				<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
 				<td><span id="specialSchemeField"><input id="specialSchemeName" name="person.attribute.42" placeholder="Please specify" style='width: 152px;'/></span></td>
+		</tr>
+		<tr></tr><tr></tr>
+		<tr>
+				<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+				<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+				<td><span id="fileNumberField"><input id="fileNumber" name="person.attribute.43" placeholder="File Number" style='width: 152px;'/></span></td>
 		</tr>
 		<tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr>
 		

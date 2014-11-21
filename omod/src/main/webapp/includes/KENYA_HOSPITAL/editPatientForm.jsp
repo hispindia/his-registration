@@ -169,16 +169,21 @@ input, select, textarea {
 				
 				if (MODEL.patientAttributes[14]=="Paying") {
 				jQuery("#specialSchemeField").hide();
+				jQuery("#fileNumberField").hide();
 				}
 				
 				if (MODEL.patientAttributes[14]=="Non-Paying") {
 				jQuery("#specialSchemeField").hide();
+				jQuery("#fileNumberField").hide();
 				}
 				
 				if (MODEL.patientAttributes[14]=="Special Schemes") {
 				jQuery("#specialSchemeField").show();
+				jQuery("#fileNumberField").show();
 				formValues += "person.attribute.42=="
 							+ MODEL.patientAttributes[42] + "||";
+				formValues += "person.attribute.43=="
+							+ MODEL.patientAttributes[43] + "||";
 				}
 				
 				// Set value for address 
@@ -579,6 +584,8 @@ input, select, textarea {
 				    jQuery("#specialSchemes").removeAttr("checked");
 					jQuery("#specialSchemeName").val("");
 					jQuery("#specialSchemeField").hide();
+					jQuery("#fileNumber").val("");
+					jQuery("#fileNumberField").hide();
 			}
 			else{
 			     jQuery("#paying").removeAttr("checked");
@@ -593,6 +600,8 @@ input, select, textarea {
 				    jQuery("#specialSchemes").removeAttr("checked");
 					jQuery("#specialSchemeName").val("");
 					jQuery("#specialSchemeField").hide();
+					jQuery("#fileNumber").val("");
+					jQuery("#fileNumberField").hide();
 			}
 			else{
 			     jQuery("#nonPaying").removeAttr("checked");
@@ -606,10 +615,13 @@ input, select, textarea {
 					
 					jQuery("#nonPaying").removeAttr("checked");
 					jQuery("#specialSchemeField").show();
+					jQuery("#fileNumberField").show();
 			}
 			else{
-			 jQuery("#specialSchemeName").val("");
+			jQuery("#specialSchemeName").val("");
 			jQuery("#specialSchemeField").hide();
+			jQuery("#fileNumber").val("");
+			jQuery("#fileNumberField").hide();
 			jQuery("#specialSchemes").removeAttr("checked");
 			}
 		},
@@ -895,6 +907,12 @@ function showOtherNationality(){
 				<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
 				<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
 				<td><span id="specialSchemeField"><input id="specialSchemeName" name="person.attribute.42" placeholder="Please specify" style='width: 152px;'/></span></td>
+		</tr>
+		<tr></tr><tr></tr>
+		<tr>
+				<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+				<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+				<td><span id="fileNumberField"><input id="fileNumber" name="person.attribute.43" placeholder="File Number" style='width: 152px;'/></span></td>
 		</tr>
 		<tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr>
 		

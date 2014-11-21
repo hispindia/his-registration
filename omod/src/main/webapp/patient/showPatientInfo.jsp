@@ -17,7 +17,6 @@
  *  along with Registration module.  If not, see <http://www.gnu.org/licenses/>.
  *
 --%> 
-
 <%@ include file="/WEB-INF/template/include.jsp" %>
 <%@ include file="/WEB-INF/template/header.jsp" %>
 <%@ include file="../includes/js_css.jsp" %>
@@ -48,25 +47,23 @@
 		patientAttributes: _attributes,
 		observations: _observations,
 		currentDateTime: "${currentDateTime}",	
+		selectedTRIAGE: "${selectedTRIAGE}",
+		TRIAGE: "${TRIAGE}",
 		selectedOPD: "${selectedOPD}",
 		OPDs: "${OPDs}",
-		TEMPORARYCAT: "${TEMPORARYCAT}",
-		tempCategory:"${tempCategory}",
-		tempCategoryId: "${tempCategoryId}",
+		MEDICOLEGALCASE: "${MEDICOLEGALCASE}",
+		selectedMLC:"${selectedMLC}",
+		mlcId: "${mlcId}",
 		registrationFee: "${registrationFee}",
 		dueDate: "${dueDate}",
 		daysLeft: "${daysLeft}",
 		reprint: "${param.reprint eq 'true'}",
-		opdWardId: "${opdWardId}",
-		//ghanshyam,11-dec-2013,#3327 Defining patient categories based on Kenyan requirements
-		selectedCategory: "${selectedCategory}",
-		//ghanshyam,18-dec-2013,# 3457 Exemption number for selected category should show on registration receipt
-		exemptionNumber: "${exemptionNumber}",
-		nhifCardNumber: "${nhifCardNumber}",
-		waiverNumber: "${waiverNumber}"
+		triageId: "${triageId}",
+		selectedPaymentCategory: "${selectedPaymentCategory}",
+		specialSchemeName: "${specialSchemeName}"
 	};
 </script>
 
-<jsp:include page="../includes/${hospitalName}/patientInfoFormForOPD.jsp"/>
+<jsp:include page="../includes/${hospitalName}/patientInfoForm.jsp"/>
 
 <%@ include file="/WEB-INF/template/footer.jsp" %>  
