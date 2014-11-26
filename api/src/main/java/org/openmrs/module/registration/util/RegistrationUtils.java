@@ -174,7 +174,7 @@ public class RegistrationUtils {
 	 * @return
 	 */
 	//26-6-2012 - Marta add postal Addres param. to store the addres in the openmrs person_address table
-	public static PersonAddress getPersonAddress(PersonAddress address, String postalAddress, String district, String upazila) {
+	public static PersonAddress getPersonAddress(PersonAddress address, String postalAddress, String district, String upazila, String location) {
 		
 		if (address == null)
 			address = new PersonAddress();
@@ -182,6 +182,7 @@ public class RegistrationUtils {
 		address.setAddress1(postalAddress);
 		address.setCountyDistrict(district);
 		address.setCityVillage(upazila);
+		address.setAddress2(location);
 		
 		return address;
 	}

@@ -229,13 +229,10 @@ public class NewPatientRegistrationController {
 							.get(RegistrationConstants.FORM_FIELD_PATIENT_ADDRESS_POSTALADDRESS),
 					parameters
 							.get(RegistrationConstants.FORM_FIELD_PATIENT_ADDRESS_DISTRICT),
-					/*
-					 * Ghanshyam - Sagar : date- 15 Dec, 2012. Redmine issue's
-					 * for Bangladesh : #510 and #511 and #512 changes tehsil to
-					 * upazila
-					 */
 					parameters
-							.get(RegistrationConstants.FORM_FIELD_PATIENT_ADDRESS_UPAZILA)));
+							.get(RegistrationConstants.FORM_FIELD_PATIENT_ADDRESS_UPAZILA),
+							parameters
+							.get(RegistrationConstants.FORM_FIELD_PATIENT_ADDRESS_LOCATION)));
 		}
 
 		// get custom person attribute

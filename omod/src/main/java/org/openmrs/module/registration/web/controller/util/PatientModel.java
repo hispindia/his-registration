@@ -81,7 +81,8 @@ public class PatientModel {
 		
 		setAddress(patient.getPersonAddress().getAddress1() + ", " + 
 				   patient.getPersonAddress().getCityVillage() + ", " + 
-				   patient.getPersonAddress().getCountyDistrict());
+				   patient.getPersonAddress().getCountyDistrict() + ", " +
+				   patient.getPersonAddress().getAddress2());
 		
 		setBirthdate(RegistrationUtils.formatDate(patient.getBirthdate()));
 		

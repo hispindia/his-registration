@@ -62,7 +62,7 @@ public class EditPatientController {
 		Patient patient = Context.getPatientService().getPatient(patientId);
 		PatientModel patientModel = new PatientModel(patient);
 		model.addAttribute("patient", patientModel);
-		RegistrationWebUtils.getAddressData(model);
+		RegistrationWebUtils.getAddressDta(model);
 		model.addAttribute("religionList", RegistrationWebUtils.getReligionConcept());
 		PersonAttributeType personAttributeReligion=hospitalCoreService.getPersonAttributeTypeByName("Religion");
 		model.addAttribute("personAttributeReligion", personAttributeReligion);
@@ -160,13 +160,10 @@ public class EditPatientController {
 									.get(RegistrationConstants.FORM_FIELD_PATIENT_ADDRESS_POSTALADDRESS),
 							parameters
 									.get(RegistrationConstants.FORM_FIELD_PATIENT_ADDRESS_DISTRICT),
-							/*
-							 * Ghanshyam - Sagar : date- 15 Dec, 2012. Redmine
-							 * issue's for Bangladesh : #510 and #511 and #512
-							 * changes tehsil to upazila
-							 */
 							parameters
-									.get(RegistrationConstants.FORM_FIELD_PATIENT_ADDRESS_UPAZILA));
+									.get(RegistrationConstants.FORM_FIELD_PATIENT_ADDRESS_UPAZILA),
+									parameters
+									.get(RegistrationConstants.FORM_FIELD_PATIENT_ADDRESS_LOCATION));
 		}
 
 		return patient;

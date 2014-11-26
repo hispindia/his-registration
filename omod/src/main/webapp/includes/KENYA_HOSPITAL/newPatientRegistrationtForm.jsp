@@ -383,6 +383,36 @@ input, select, textarea {
 			this.fillOptions("#upazilas", {
 				data : upazilaList.split(",")
 			});
+			
+			
+			selectedUpazila = jQuery("#upazilas option:checked").val();
+			
+			var loc=('${location}');
+			var districtArr = loc.split("@");
+			for (var i = 0; i < districtArr.length; i++){
+			var dis = districtArr[i];
+			var subcountyArr = dis.split("/");
+			if(subcountyArr[0]==selectedDistrict){
+			for(var j = 1; j < subcountyArr.length; j++){
+			
+			var locationArr = subcountyArr[j].split(".");
+			
+			if(locationArr[0]==selectedUpazila){
+			var _locations = new Array();
+			for(var k = 1; k < locationArr.length; k++){
+			_locations.push(locationArr[k]);
+			
+			PAGE.fillOptions("#locations", {
+					data : _locations
+				});
+			
+			   }
+			  }
+			 }
+			}
+		  }	
+			
+			
 		},
 		
 		/** CHANGE UPAZILA */

@@ -258,7 +258,6 @@ public class RegistrationWebUtils {
 			model.addAttribute("districts", distArr);
 			model.addAttribute("upazilas", upazilaArr);
 			model.addAttribute("location", location);
-			System.out.println("vvvvvvvvvvvvvv"+location);
 			
 		}
 	}

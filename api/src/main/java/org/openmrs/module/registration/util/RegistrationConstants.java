@@ -82,6 +82,8 @@ public class RegistrationConstants {
 	  changes tehsil to upazila */
 	public static final String FORM_FIELD_PATIENT_ADDRESS_UPAZILA = "patient.address.upazila";
 	
+	public static final String FORM_FIELD_PATIENT_ADDRESS_LOCATION = "patient.address.location";
+	
 	public static final String FORM_FIELD_PATIENT_MLC= "patient.mlc";
 	
 	public static final String FORM_FIELD_PATIENT_OPD_WARD = "patient.opdWard";
