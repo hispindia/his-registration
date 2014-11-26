@@ -45,7 +45,6 @@ import org.openmrs.EncounterType;
 import org.openmrs.Location;
 import org.openmrs.Patient;
 import org.openmrs.api.context.Context;
-import org.openmrs.module.hospitalcore.HospitalCoreService;
 import org.openmrs.module.hospitalcore.PatientQueueService;
 import org.openmrs.module.hospitalcore.model.OpdPatientQueue;
 import org.openmrs.module.hospitalcore.model.TriagePatientQueue;
@@ -205,6 +204,62 @@ public class RegistrationWebUtils {
 			}
 			model.addAttribute("districts", distArr);
 			model.addAttribute("upazilas", upazilaArr);
+		}
+	}
+	
+	//
+	public static void getAddressDta(Model model) throws MalformedURLException, DocumentException, JaxenException {
+		File addressFile = new File(OpenmrsUtil.getApplicationDataDirectory() + "kenyaaddresshierarchy.xml");
+		if (addressFile.exists()) {
+			SAXReader reader = new SAXReader();
+			Document document = reader.read(addressFile.toURI().toURL());
+			XPath distSelector = new Dom4jXPath("//country/district");
+			@SuppressWarnings("rawtypes")
+			List distList = distSelector.selectNodes(document);
+			String[] distArr = new String[distList.size()];
+			String[] upazilaArr = new String[distList.size()];
+			String location="";
+			
+			if (distList.size() > 0) {
+				for (int i = 0; i < distList.size(); i++) {
+					
+					distArr[i] = ((Element) distList.get(i)).attributeValue("name");
+					@SuppressWarnings("rawtypes")
+					List upazilaList = ((Element) distList.get(i)).elements("upazila");
+					
+					String districtName=((Element) distList.get(i)).attributeValue("name");
+					location=location+districtName;
+					
+					for (int j = 0; j < (upazilaList.size()); j++) {
+						String upazilaName=((Element) upazilaList.get(j)).attributeValue("name");
+						location=location+"/"+upazilaName;
+						
+						upazilaArr[i] = ((Element) upazilaList.get(0)).attributeValue("name") + ",";
+						if(j<upazilaList.size()-1 && j>0){
+						upazilaArr[i] += ((Element) upazilaList.get(j)).attributeValue("name") + ",";
+						}
+						else{
+						upazilaArr[i] += ((Element) upazilaList.get(j)).attributeValue("name");	
+						}
+						
+						List locationList = ((Element) upazilaList.get(j)).elements("location");
+						
+						for(int k = 0; k < (locationList.size()); k++) {
+							String locationName=((Element) locationList.get(k)).attributeValue("name");
+							location=location+"."+locationName;
+						}
+						
+					}
+					if(i<distList.size()-1){
+						location=location+"@";
+					}
+				}
+			}
+			model.addAttribute("districts", distArr);
+			model.addAttribute("upazilas", upazilaArr);
+			model.addAttribute("location", location);
+			System.out.println("vvvvvvvvvvvvvv"+location);
+			
 		}
 	}
 	

@@ -77,7 +77,7 @@ public class NewPatientRegistrationController {
 				"referralReasons",
 				RegistrationWebUtils
 						.getSubConcepts(RegistrationConstants.CONCEPT_NAME_REASON_FOR_REFERRAL));
-		RegistrationWebUtils.getAddressData(model);
+		RegistrationWebUtils.getAddressDta(model);
 		// model.addAttribute("OPDs",
 		// RegistrationWebUtils.getSubConcepts(RegistrationConstants.CONCEPT_NAME_OPD_WARD));
 		// ghanshyam,16-dec-2013,3438 Remove the interdependency

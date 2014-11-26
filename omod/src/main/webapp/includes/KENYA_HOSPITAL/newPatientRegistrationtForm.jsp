@@ -96,6 +96,34 @@ input, select, textarea {
 				PAGE.fillOptions("#upazilas", {
 					data : typeof(MODEL.upazilas[0])=="undefined"?MODEL.upazilas:MODEL.upazilas[0].split(',')
 				});
+				
+			selectedDistrict = jQuery("#districts option:checked").val();
+			selectedUpazila = jQuery("#upazilas option:checked").val();
+			var loc=('${location}');
+			var districtArr = loc.split("@");
+			for (var i = 0; i < districtArr.length; i++){
+			var dis = districtArr[i];
+			var subcountyArr = dis.split("/");
+			if(subcountyArr[0]==selectedDistrict){
+			for(var j = 1; j < subcountyArr.length; j++){
+			
+			var locationArr = subcountyArr[j].split(".");
+			
+			if(locationArr[0]==selectedUpazila){
+			var _locations = new Array();
+			for(var k = 1; k < locationArr.length; k++){
+			_locations.push(locationArr[k]);
+			
+			PAGE.fillOptions("#locations", {
+					data : _locations
+				});
+			
+			   }
+			  }
+			 }
+			}
+		  }	;
+			
 				MODEL.TRIAGE = " , |"
 						+ MODEL.TRIAGE;
 				PAGE.fillOptions("#triage", {
@@ -355,6 +383,36 @@ input, select, textarea {
 			this.fillOptions("#upazilas", {
 				data : upazilaList.split(",")
 			});
+		},
+		
+		/** CHANGE UPAZILA */
+		changeUpazila : function() {
+			selectedDistrict = jQuery("#districts option:checked").val();
+			selectedUpazila = jQuery("#upazilas option:checked").val();
+			var loc=('${location}');
+			var districtArr = loc.split("@");
+			for (var i = 0; i < districtArr.length; i++){
+			var dis = districtArr[i];
+			var subcountyArr = dis.split("/");
+			if(subcountyArr[0]==selectedDistrict){
+			for(var j = 1; j < subcountyArr.length; j++){
+			
+			var locationArr = subcountyArr[j].split(".");
+			
+			if(locationArr[0]==selectedUpazila){
+			var _locations = new Array();
+			for(var k = 1; k < locationArr.length; k++){
+			_locations.push(locationArr[k]);
+			
+			PAGE.fillOptions("#locations", {
+					data : _locations
+				});
+			
+			   }
+			  }
+			 }
+			}
+		  }	
 		},
 
 		/** SHOW OR HIDE REFERRAL INFO */
@@ -837,7 +895,7 @@ input, select, textarea {
 				<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
 				<td>Sub-county&nbsp;&nbsp;&nbsp;&nbsp;</td>
 				<td><select id="upazilas" name="patient.address.upazila"
-							style="width: 152px;">
+							onChange="PAGE.changeUpazila();" style="width: 152px;">
 						</select>
 				</td>
 			</tr>
