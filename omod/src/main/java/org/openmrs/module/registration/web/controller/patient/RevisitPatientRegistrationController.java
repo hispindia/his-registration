@@ -28,7 +28,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.dom4j.DocumentException;
 import org.jaxen.JaxenException;
-import org.openmrs.api.context.Context;
 import org.openmrs.module.registration.util.RegistrationConstants;
 import org.openmrs.module.registration.util.RegistrationUtils;
 import org.openmrs.module.registration.web.controller.util.RegistrationWebUtils;
@@ -71,7 +70,7 @@ public class RevisitPatientRegistrationController {
 				"OPDs",
 				RegistrationWebUtils
 						.getSubConcepts(RegistrationConstants.CONCEPT_NAME_OPD_WARD));
-			return "/module/registration/patient/revisitPatientRegistrationForTriage";
+			return "/module/registration/patient/revisitPatientRegistration";
 
 	}
 }

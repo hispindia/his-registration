@@ -40,14 +40,6 @@
 		jQuery("#triageField").hide();
 		jQuery("#opdWardField").hide();
 		
-		jQuery("#freeRegField").hide();
-	    jQuery("#freeReg").click(function() {
-		VALIDATORS.freeRegCheck();
-		});
-		jQuery("#paidReg").click(function() {
-		VALIDATORS.paidRegCheck();
-		});
-		
         jQuery("#nationalId").html(MODEL.patientAttributes[20]);
 		jQuery("#phoneNumber").html(MODEL.patientAttributes[16]);
 		jQuery("#maritalStatus").html(MODEL.patientAttributes[26]);
@@ -384,24 +376,26 @@
 		
 		/** Validate Form */
 		validate: function(){
-			if(StringUtils.isBlank(jQuery("#triage").val())){
-				alert("Please select Triage");
-				return false;
-			};
-			
-			//ghanshyam  20-may-2013 #1648 capture Health ID and Registration Fee Type
-			if (jQuery("#paidReg").attr('checked') == false
-					&& jQuery("#freeReg").attr('checked') == false) {
-				alert('Please select Registration Type!');
+		if(StringUtils.isBlank(MODEL.selectedTRIAGE) && StringUtils.isBlank(MODEL.selectedOPD)){
+			if (jQuery("#triageRoom").attr('checked') == false
+					&& jQuery("#opdRoom").attr('checked') == false) {			
+			    alert("You did not choose any of the room");
 				return false;
 			} else {
-				if (jQuery("#freeReg").attr('checked')) {
-					if (jQuery("#freeRegReason").val().length <= 0) {
-						alert('Please enter Free reason');
+			    if (jQuery("#triageRoom").attr('checked')) {
+					if (StringUtils.isBlank(jQuery("#triage").val())) {
+						alert("Please select the triage room to visit");
 						return false;
-					} 
+					}
 				}
-		   };
+				else{
+				    if (StringUtils.isBlank(jQuery("#opdWard").val())) {
+						alert("Please select the OPD room to visit");
+						return false;
+					}
+				}
+			}
+		 };
 			
 			if(jQuery("#paymentCategory").val()=="Special Schemes"){
 				if(jQuery("#specialSchemeName").val().length <= 0){
@@ -532,47 +526,9 @@
 				
 			}
 		},
-
-	
-		freeRegCheck : function() {
-			if (jQuery("#freeReg").is(':checked')) {
-				jQuery("#freeRegField").show();
-				if (jQuery("#paidReg").is(":checked"))
-					jQuery("#paidReg").removeAttr("checked");
-			} else {
-				jQuery("#freeRegReason").val("");
-				jQuery("#freeRegField").hide();
-			}
-		},
-		
-		paidRegCheck : function(obj) {
-			if (jQuery("#paidReg").is(':checked')) {
-				if (jQuery("#freeReg").is(":checked")) {
-					jQuery("#freeReg").removeAttr("checked");
-					jQuery("#freeRegReason").val("");
-					jQuery("#freeRegField").hide();
-				}
-			}
-		},
-		
-	
 	};
 </script>
-<script type="text/javascript">
-function paidClick(){
-if (jQuery("#paidReg").attr('checked') == true){
-document.getElementById("message").innerHTML="Please collect "+${initialRegFee}+" TK";
-jQuery("#message").show();
- }
-else{
-jQuery("#message").hide();
-  }
-}
 
-function freeClick(){
-jQuery("#message").hide();
-}
-</script>
 <input id="printSlip" type="button" value="Print"
 	onClick="PAGE.submit(false);" />
 <input id="reprint" type="button" value="Reprint"
