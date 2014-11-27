@@ -429,6 +429,10 @@
 				    jQuery("#specialSchemes").removeAttr("checked");
 					jQuery("#specialSchemeName").val("");
 					jQuery("#specialSchemeNameField").hide();
+					
+					jQuery("#regFeeValue").val(${reVisitFee});
+					//jQuery("#feeHideVal").val(${reVisitFee});
+					//jQuery("#feeHideVal").hide();
 			}
 		},
 		
@@ -440,6 +444,10 @@
 				    jQuery("#specialSchemes").removeAttr("checked");
 					jQuery("#specialSchemeName").val("");
 					jQuery("#specialSchemeNameField").hide();
+					
+					jQuery("#regFeeValue").val(0);
+					//jQuery("#feeHideVal").val(${reVisitFee});
+					//jQuery("#feeHideVal").hide();
 			}
 		},
 		
@@ -450,6 +458,10 @@
 					
 					jQuery("#nonPaying").removeAttr("checked");
 					jQuery("#specialSchemeNameField").show();
+					
+					jQuery("#regFeeValue").val(0);
+					//jQuery("#feeHideVal").val(${reVisitFee});
+					//jQuery("#feeHideVal").hide();
 			}
 			else{
 			 jQuery("#specialSchemeName").val("");
