@@ -176,6 +176,7 @@
 		
 		// Set data for reprint page
 		if(MODEL.reprint=="true"){
+		    jQuery("#payingField").after("<span style='border:0px'>" + '${selectedPaymentCategory}' + "</span>");
 			var triageId=MODEL.triageId;
 		    jQuery("#triage").val(MODEL.observations[triageId]);
 		    jQuery("#triage").attr("disabled", "disabled");
@@ -184,16 +185,6 @@
 			if(!StringUtils.isBlank(MODEL.observations[mlcId])){
 			jQuery("#mlc").val(MODEL.observations[mlcId]);
 			jQuery("#mlc").attr("disabled", "disabled");
-			}
-			
-			jQuery("#paymentCategory").attr("disabled", "disabled");
-			
-			
-			if(jQuery("#paymentCategory").val()=="Paying"){
-				jQuery("#specialSchemeNameField").hide();
-			}
-			if(jQuery("#paymentCategory").val()=="Non-Paying"){
-				jQuery("#specialSchemeNameField").hide();
 			}
 			
 						jQuery("#regFeeValue").val(${registrationFee});
