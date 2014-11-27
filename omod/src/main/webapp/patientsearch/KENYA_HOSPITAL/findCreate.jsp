@@ -122,9 +122,12 @@
 				<td onclick="PATIENTSEARCHRESULT.visit(${patient.patientId},'${patient.dead}');">
 					<c:choose>
                 		<c:when test="${patient.gender eq 'M'}">
+                		<!--
 							<img src="${pageContext.request.contextPath}/images/male.gif"/>
+						-->
+						M
 						</c:when>
-                		<c:otherwise><img src="${pageContext.request.contextPath}/images/female.gif"/></c:otherwise>
+                		<c:otherwise><!-- <img src="${pageContext.request.contextPath}/images/female.gif"/> --> F</c:otherwise>
                 	</c:choose>
 				</td>                
 				<td onclick="PATIENTSEARCHRESULT.visit(${patient.patientId},'${patient.dead}');"> 

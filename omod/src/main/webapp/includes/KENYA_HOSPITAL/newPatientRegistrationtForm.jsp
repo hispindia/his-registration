@@ -173,13 +173,14 @@ input, select, textarea {
 						});
 
 
-				// hide exemption and waver number
+		
 				jQuery("#specialSchemeField").hide();
 				jQuery("#fileNumberField").hide();
 				jQuery("#mlc").hide();
 				jQuery("#otherNationality").hide();
 				jQuery("#triageField").hide();
 				jQuery("#opdWardField").hide();
+				
 				// binding
 				jQuery("#paying").click(function() {
 					VALIDATORS.payingCheck();
@@ -269,10 +270,9 @@ input, select, textarea {
 		},
 		
 		 //ghanshya,3-july-2013 #1962 Create validation for length of Health ID and National ID
-		//Add Validation for checking duplicate National Id and Health Id
+		//Add Validation for checking duplicate National Id
 		checkNationalIDPassportNumber : function() {
 				
-		        //healthId=jQuery("#patientHealthId").val();
 				nationalId=jQuery("#patientNationalId").val();
 				passportNumber=jQuery("#passportNumber").val();
 				
@@ -612,14 +612,15 @@ input, select, textarea {
 					&& jQuery("#specialSchemes").attr('checked') == false) {			
 			    alert("You did not choose any of the payment categories");
 				return false;
-			} else {
+			} 
+			/*else {
 			    if (jQuery("#specialSchemes").attr('checked')) {
 					if (jQuery("#specialSchemeName").val().length <= 0) {
 						alert("Please enter the Special Scheme Name");
 						return false;
 					}
 				}
-			}
+			}*/
 			
 			if (jQuery("#triageRoom").attr('checked') == false
 					&& jQuery("#opdRoom").attr('checked') == false) {			
@@ -1029,7 +1030,7 @@ input, select, textarea {
 		<tr></tr> <tr></tr><tr></tr><tr></tr><tr></tr>
 		
 		<tr>
-				<td><b>ID proof details&nbsp;&nbsp;&nbsp;&nbsp;</b></td>
+				<td><b>ID Proof Details&nbsp;&nbsp;&nbsp;&nbsp;</b></td>
 				<td>National ID&nbsp;&nbsp;&nbsp;&nbsp;</td>
 				<td><input id="patientNationalId" name="patient.attribute.20" style='width: 152px;'/></td>
 		</tr>
@@ -1046,15 +1047,14 @@ input, select, textarea {
 		<tr>
 				<td><b>Payment Category<label style="color:red">*</label>&nbsp;&nbsp;&nbsp;&nbsp;</b></td>
 				<td><input id="paying" type="checkbox" name="person.attribute.14" value="Paying" /> Paying</td>
+		</tr>
+		<tr>
+				<td>&nbsp;&nbsp;&nbsp;&nbsp;</b></td>
 				<td><input id="nonPaying" type="checkbox" name="person.attribute.14" value="Non-Paying" /> Non-Paying</td>
 		</tr>
 		<tr>
 				<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
 				<td><input id="specialSchemes" type="checkbox" name="person.attribute.14" value="Special Schemes" /> Special Schemes</td>
-		</tr>
-		<tr>
-				<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
-				<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
 				<td><span id="specialSchemeField"><input id="specialSchemeName" name="person.attribute.42" placeholder="Please specify" style='width: 152px;'/></span></td>
 		</tr>
 		<tr></tr><tr></tr>
@@ -1104,22 +1104,20 @@ input, select, textarea {
 				</td>
 			</tr>
 		<tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr>
+		<tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr>
 		<tr>
 				<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
 				<td><b>Visit Information&nbsp;&nbsp;&nbsp;&nbsp;</b></td>
 		</tr>
 		<tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr>
-		<tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr>
 		<tr>
 				<td><b>Medico Legal Case&nbsp;&nbsp;&nbsp;&nbsp;</b></td>
-				<td><input id="mlcCaseYes" type="checkbox" name="mlcCaseYes"/> Yes &nbsp;&nbsp;&nbsp;&nbsp;
-				<input id="mlcCaseNo" type="checkbox" name="mlcCaseNo"/> No
-				</td>
+				<td><input id="mlcCaseYes" type="checkbox" name="mlcCaseYes"/> Yes&nbsp;&nbsp;&nbsp;&nbsp;</td>
+				<td><select id="mlc" name="patient.mlc" style='width: 152px;'></select></td>
 		</tr>
 		<tr>
 				<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
-				<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
-				<td><select id="mlc" name="patient.mlc" style='width: 152px;'>	</select></td>
+				<td><input id="mlcCaseNo" type="checkbox" name="mlcCaseNo"/> No&nbsp;&nbsp;&nbsp;&nbsp;</td>
 		</tr>
 		<tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr>
 		<tr>
@@ -1144,15 +1142,13 @@ input, select, textarea {
 		<tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr>
         <tr>
 				<td><b>Room to Visit</b><label style="color:red">*</label>&nbsp;&nbsp;&nbsp;&nbsp;</td>
-				<td><input id="triageRoom" type="checkbox" name="triageRoom"/> Triage Room &nbsp;&nbsp;&nbsp;&nbsp;
-				<input id="opdRoom" type="checkbox" name="opdRoom"/> OPD Room
-				</td>
+				<td><input id="triageRoom" type="checkbox" name="triageRoom"/> Triage Room &nbsp;&nbsp;&nbsp;&nbsp;</td>
+				<td><span id="triageField"><select id="triage" name="patient.triage" style='width: 152px;'>	</select></span></td>
 		</tr>
 		<tr>
 				<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
-				<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
-				<td><span id="triageField"><select id="triage" name="patient.triage" style='width: 152px;'>	</select></span>
-				<span id="opdWardField"><select id="opdWard" name="patient.opdWard" style='width: 152px;'>	</select></span></td>
+				<td><input id="opdRoom" type="checkbox" name="opdRoom"/> OPD Room&nbsp;&nbsp;&nbsp;&nbsp;</td>
+				<td><span id="opdWardField"><select id="opdWard" name="patient.opdWard" style='width: 152px;'>	</select></span></td>
 		</tr>
 		</table>
 		</div>
@@ -1162,7 +1158,7 @@ input, select, textarea {
 		<div class="floatBottom">
 		<table width="100%" height="100%">
 		<tr valign="bottom">
-		<td valign="bottom"><input type="button" value="Save" onclick="PAGE.submit();" style="font-weight:bold"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		<td valign="bottom"><input type="button" value="Next" onclick="PAGE.submit();" style="font-weight:bold"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 		                    <input type="button" value="Reset" onclick="window.location.href=window.location.href" style="font-weight:bold"/>
 		</td>
 		</tr>

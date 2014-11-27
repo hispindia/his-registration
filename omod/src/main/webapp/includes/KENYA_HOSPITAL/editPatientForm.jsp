@@ -578,14 +578,15 @@ input, select, textarea {
 					&& jQuery("#specialSchemes").attr('checked') == false) {			
 			    alert("You did not choose any of the payment categories");
 				return false;
-			} else {
+			} 
+			/*else {
 			    if (jQuery("#specialSchemes").attr('checked')) {
 					if (jQuery("#specialSchemeName").val().length <= 0) {
 						alert("Please enter the Special Scheme Name");
 						return false;
 					}
 				}
-			}
+			}*/
 			
 			        //ghanshya,3-july-2013 #1962 Create validation for length of Health ID and National ID
 			       //Add Validation for checking duplicate National Id and Health Id
@@ -940,7 +941,7 @@ function showOtherNationality(){
 		<tr></tr> <tr></tr><tr></tr><tr></tr><tr></tr>
 		
 		<tr>
-				<td><b>ID proof details&nbsp;&nbsp;&nbsp;&nbsp;</b></td>
+				<td><b>ID Proof Details&nbsp;&nbsp;&nbsp;&nbsp;</b></td>
 				<td>National ID&nbsp;&nbsp;&nbsp;&nbsp;</td>
 				<td><input id="patientNationalId" name="patient.attribute.20" style='width: 152px;'/></td>
 		</tr>
@@ -957,15 +958,14 @@ function showOtherNationality(){
 		<tr>
 				<td><b>Payment Category<label style="color:red">*</label>&nbsp;&nbsp;&nbsp;&nbsp;</b></td>
 				<td><input id="paying" type="checkbox" name="person.attribute.14" value="Paying" /> Paying</td>
+		</tr>
+		<tr>
+				<td>&nbsp;&nbsp;&nbsp;&nbsp;</b></td>
 				<td><input id="nonPaying" type="checkbox" name="person.attribute.14" value="Non-Paying" /> Non-Paying</td>
 		</tr>
 		<tr>
 				<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
 				<td><input id="specialSchemes" type="checkbox" name="person.attribute.14" value="Special Schemes" /> Special Schemes</td>
-		</tr>
-		<tr>
-				<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
-				<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
 				<td><span id="specialSchemeField"><input id="specialSchemeName" name="person.attribute.42" placeholder="Please specify" style='width: 152px;'/></span></td>
 		</tr>
 		<tr></tr><tr></tr>
