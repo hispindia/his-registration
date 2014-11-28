@@ -90,15 +90,15 @@
 	<table style="width:100%">
 		<tr>
 		<openmrs:hasPrivilege privilege="Edit Patients">
-            <td><b>Edit</b></td>
+            <td align="center"><b>Edit</b></td>
         </openmrs:hasPrivilege>			
-			<td><b>Patient ID</b></td>
-			<td><b>Name</b></td>
-			<td><b>Age</b></td>
-			<td><b>Gender</b></td>			
-			<td><b>Relative Name</b></td>
-			<td><b>Date of Previous Visit</b></td>
-			<td><b>Reprint Slip</b></td>
+			<td align="center"><b>Patient ID</b></td>
+			<td align="center"><b>Name</b></td>
+			<td align="center"><b>Age</b></td>
+			<td align="center"><b>Gender</b></td>			
+			<!-- <td><b>Relative Name</b></td> -->
+			<td align="center"><b>Date of Previous Visit</b></td>
+			<td align="center"><b>Reprint Slip</b></td>
 		</tr>
 		<c:forEach items="${patients}" var="patient" varStatus="varStatus">
 			<tr class='${varStatus.index % 2 == 0 ? "oddRow" : "evenRow" } patientSearchRow'>
@@ -109,17 +109,17 @@
 						</center>
 					</td>
 				</openmrs:hasPrivilege>		
-				<td onclick="PATIENTSEARCHRESULT.visit(${patient.patientId},'${patient.dead}');">
+				<td align="center" onclick="PATIENTSEARCHRESULT.visit(${patient.patientId},'${patient.dead}');">
 					${patient.patientIdentifier.identifier}
 				</td>
-				<td onclick="PATIENTSEARCHRESULT.visit(${patient.patientId},'${patient.dead}');">${patient.givenName} ${patient.familyName}  ${fn:replace(patient.middleName,',',' ')}</td>
-				<td onclick="PATIENTSEARCHRESULT.visit(${patient.patientId},'${patient.dead}');"> 
+				<td  align="center" onclick="PATIENTSEARCHRESULT.visit(${patient.patientId},'${patient.dead}');">${patient.givenName} ${patient.familyName}  ${fn:replace(patient.middleName,',',' ')}</td>
+				<td align="center" onclick="PATIENTSEARCHRESULT.visit(${patient.patientId},'${patient.dead}');"> 
                 	<c:choose>
                 		<c:when test="${patient.age == 0}"> &lt 1 </c:when>
                 		<c:otherwise >${patient.age}</c:otherwise>
                 	</c:choose>
                 </td>
-				<td onclick="PATIENTSEARCHRESULT.visit(${patient.patientId},'${patient.dead}');">
+				<td align="center" onclick="PATIENTSEARCHRESULT.visit(${patient.patientId},'${patient.dead}');">
 					<c:choose>
                 		<c:when test="${patient.gender eq 'M'}">
                 		<!--
@@ -130,7 +130,7 @@
                 		<c:otherwise><!-- <img src="${pageContext.request.contextPath}/images/female.gif"/> --> F</c:otherwise>
                 	</c:choose>
 				</td>                
-				<td onclick="PATIENTSEARCHRESULT.visit(${patient.patientId},'${patient.dead}');"> 
+				<%-- <td onclick="PATIENTSEARCHRESULT.visit(${patient.patientId},'${patient.dead}');"> 
                 	<%
 						Patient patient = (Patient) pageContext.getAttribute("patient");
 						Map<Integer, Map<Integer, String>> attributes = (Map<Integer, Map<Integer, String>>) pageContext.findAttribute("attributeMap");						
@@ -139,11 +139,11 @@
 						if(relativeName!=null)
 							out.print(relativeName);
 					%>
-                </td>
-                <td onclick="PATIENTSEARCHRESULT.visit(${patient.patientId},'${patient.dead}');">
+                </td> --%>
+                <td align="center" onclick="PATIENTSEARCHRESULT.visit(${patient.patientId},'${patient.dead}');">
 	                <openmrs:formatDate date="${lastVisitTime[patient.patientId]}"/>              	
                 </td>
-                <td onclick="PATIENTSEARCHRESULT.reprint(${patient.patientId},'${patient.dead}');"> 
+                <td align="center" onclick="PATIENTSEARCHRESULT.reprint(${patient.patientId},'${patient.dead}');"> 
                 	Reprint slip
                 </td>
 			</tr>
