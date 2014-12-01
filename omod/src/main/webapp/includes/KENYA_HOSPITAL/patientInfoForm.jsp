@@ -681,6 +681,9 @@
 							</span>
 					</td>
 				</tr>
+				<tr>
+                <td><input type="hidden" id="selectedPaymentCategory" name="selectedPaymentCategory" value="${selectedPaymentCategory}"></td>
+                </tr>
 			</table>
 		</form>
 	</center>
