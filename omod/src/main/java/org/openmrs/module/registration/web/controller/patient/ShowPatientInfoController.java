@@ -204,7 +204,6 @@ public class ShowPatientInfoController {
 	public void savePatientInfo(@RequestParam("patientId") Integer patientId,
 	                            @RequestParam(value = "encounterId", required = false) Integer encounterId,
 	                            @RequestParam(value = "selectedRegFeeValue", required = false) Double selectedRegFeeValue,
-	                            @RequestParam(value = "catHideVal", required = false) String catHideVal,
 	                            HttpServletRequest request, HttpServletResponse response) throws ParseException, IOException {
 		
 		Map<String, String> parameters = RegistrationWebUtils.optimizeParameters(request);
@@ -217,8 +216,8 @@ public class ShowPatientInfoController {
 		 */
 		Encounter encounter = null;
 		if (encounterId != null) {
-			/*
 			encounter = Context.getEncounterService().getEncounter(encounterId);
+			/*
 				Concept cnrf = Context.getConceptService().getConcept(RegistrationConstants.CONCEPT_NAME_REGISTRATION_FEE);
 				Concept cnp = Context.getConceptService().getConcept(RegistrationConstants.CONCEPT_NEW_PATIENT);
 				Obs obsn = new Obs();
@@ -228,6 +227,9 @@ public class ShowPatientInfoController {
 				obsn.setValueText(selectedPaymentCategory);
 				encounter.addObs(obsn);	
 				*/
+			HospitalCoreService hcs = Context.getService(HospitalCoreService.class);
+			Obs obs=hcs.getObs(Context.getPersonService().getPerson(patient), encounter);
+			obs.setValueNumeric(selectedRegFeeValue);
 		} else {
 			encounter = RegistrationWebUtils.createEncounter(patient, true);
 		
@@ -283,9 +285,6 @@ public class ShowPatientInfoController {
 			obsr.setValueNumeric(selectedRegFeeValue);
 			obsr.setValueText(parameters.get(RegistrationConstants.FORM_FIELD_PAYMENT_CATEGORY));
 			encounter.addObs(obsr);	
-			
-			// save encounter
-			Context.getEncounterService().saveEncounter(encounter);
 						
 		}
 		
@@ -342,7 +341,7 @@ public class ShowPatientInfoController {
 		*/
 		
 		// save encounter
-		//Context.getEncounterService().saveEncounter(encounter);
+		Context.getEncounterService().saveEncounter(encounter);
 		//logger.info(String.format("Save encounter for the visit of patient [encounterId=%s, patientId=%s]",encounter.getId(), patient.getId()));
 		
 		response.setContentType("text/html;charset=UTF-8");

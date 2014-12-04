@@ -152,6 +152,7 @@
 			        jQuery("#payingField").after("<span style='border:0px'>" + jQuery("#paying").val() + "</span>");
 					jQuery("#regFeeValue").val(${initialRegFee});
 					jQuery("#regFeeValue").attr("disabled", "disabled");
+					//jQuery("#selectedRegFeeValue").val(${initialRegFee});
 					//	jQuery("#regFeeValue").hide();
 					//	jQuery("#regFeeValue").after("<span>" + jQuery("#regFeeValue option:checked").html() +  "</span>");  
 				}
@@ -159,6 +160,7 @@
 			            jQuery("#payingField").after("<span style='border:0px'>" + jQuery("#nonPaying").val() + "</span>");
 						jQuery("#regFeeValue").val(0);
 						jQuery("#regFeeValue").attr("disabled", "disabled");
+						//jQuery("#selectedRegFeeValue").val(0);
 					//	jQuery("#regFeeValue").hide();
 					//	jQuery("#regFeeValue").after("<span>" + jQuery("#regFeeValue option:checked").html() +  "</span>"); 
 				}
@@ -230,6 +232,25 @@
 				
 				jQuery("#regFeeValue").hide();
 				jQuery("#regFeeValue").after("<span style='border:0px'>" + jQuery("#regFeeValue  option:checked").html() + "</span>"); 
+				
+				
+				jQuery("#selectedRegFeeValue").val(jQuery("#regFeeValue").val());
+				
+				/*if(MODEL.firstTimeVisit=="true"){
+				
+				if(MODEL.selectedPaymentCategory == "Special Schemes"){
+				jQuery("#selectedRegFeeValue").val(jQuery("#regFeeValue").val());
+				}
+				
+				}
+                else if(MODEL.revisit=="true"){
+			     if (jQuery("#paying").is(':checked')) {
+					jQuery("#selectedRegFeeValue").val(jQuery("#regFeeValue").val());
+			      }
+			      if (jQuery("#nonPaying").is(':checked')) {
+					jQuery("#selectedRegFeeValue").val(jQuery("#regFeeValue").val());
+			      }
+                }*/
 				
 
 			if(jQuery("#paymentCategory").val()=="Special Schemes"){
@@ -420,6 +441,7 @@
 					jQuery("#specialSchemeNameField").hide();
 					
 					jQuery("#regFeeValue").val(${reVisitFee});
+					jQuery("#regFeeValue").attr("disabled", "disabled");
 			}
 		},
 		
@@ -433,6 +455,7 @@
 					jQuery("#specialSchemeNameField").hide();
 					
 					jQuery("#regFeeValue").val(0);
+					jQuery("#regFeeValue").attr("disabled", "disabled");
 			}
 		},
 		
@@ -445,6 +468,7 @@
 					jQuery("#specialSchemeNameField").show();
 					
 					jQuery("#regFeeValue").val(0);
+					jQuery("#regFeeValue").removeAttr("disabled");
 			}
 			else{
 			 jQuery("#specialSchemeName").val("");
