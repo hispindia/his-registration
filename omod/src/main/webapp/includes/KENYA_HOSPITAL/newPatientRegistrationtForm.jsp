@@ -622,6 +622,12 @@ input, select, textarea {
 				}
 			}*/
 			
+			if (jQuery("#mlcCaseYes").attr('checked') == false
+					&& jQuery("#mlcCaseNo").attr('checked') == false) {			
+			    alert("You did not choose any of the Medico Legal Case ");
+				return false;
+			} 
+			
 			if (jQuery("#triageRoom").attr('checked') == false
 					&& jQuery("#opdRoom").attr('checked') == false) {			
 			    alert("You did not choose any of the room");

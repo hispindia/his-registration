@@ -222,10 +222,6 @@
 				jQuery("#printSlip").hide();
 				jQuery("#reprint").hide();
 				
-				// Convert OPDWard dropdown to printable format
-				//jQuery("#triage").hide();
-				//jQuery("#triage").after("<span>" + jQuery("#triage option:checked").html() +  "</span>");  
-				jQuery("#opdWardLabel").hide();
 				
 				jQuery("#paymentCategory").hide();
 				jQuery("#paymentCategory").after("<span style='border:0px'>" + jQuery("#paymentCategory  option:checked").html() + "</span>"); 
@@ -251,37 +247,55 @@
 					jQuery("#selectedRegFeeValue").val(jQuery("#regFeeValue").val());
 			      }
                 }*/
-				
-
-			if(jQuery("#paymentCategory").val()=="Special Schemes"){
-				jQuery("#specialSchemeName").hide();
-				jQuery("#specialSchemeName").after("<span style='border:0px'>" + jQuery("#specialSchemeName").val() + "</span>"); 
-				}
-				
-				//ghanshyam  20-may-2013 #1648 capture Health ID and Registration Fee Type	
-                 jQuery("#regFeeType input").each(function(index, value){				
-					if(jQuery(value).is(":checked")){
-						jQuery("#printableRegFee").append("<span style='margin:5px;'>" + jQuery(value).val() + "</span>");
-						jQuery("#regFee").show();		
-					}
-				});
-				jQuery("#regFeeType").hide();
-				
-				// Convert temporary categories to printable format
-				jQuery("#temporaryCategories input").each(function(index, value){				
-					if(jQuery(value).is(":checked")){
-						jQuery("#printableTemporaryCategories").append("<span style='margin:10px;'>" + jQuery(value).val() + "</span>");
-						jQuery("#tempCat").show();		
-					}
-				});
-				
-/*				Sagar Bele, 11-01-2013: Issue #663 Registration alignment				
-				if(!StringUtils.isBlank(jQuery("#printableTemporaryCategories").html())){
-					jQuery("#printableTemporaryCategories").prepend("<b>Temporary Categories:</b>");
-				}
-*/				
-				jQuery("#temporaryCategories").hide();
-//				jQuery("#tempCat").show();
+                
+                if(MODEL.revisit=="true"){
+                
+                if (jQuery("#paying").attr('checked') == false
+					&& jQuery("#nonPaying").attr('checked') == false
+					&& jQuery("#specialSchemes").attr('checked') == false) {			
+			    alert("You did not choose any of the payment categories");
+				return false;
+			};
+			
+		if (jQuery("#mlcCaseYes").attr('checked') == false
+					&& jQuery("#mlcCaseNo").attr('checked') == false) {			
+			    alert("You did not choose any of the Medico Legal Case ");
+				return false;
+			} ;
+                
+                
+                jQuery("#payingField").hide();
+			    jQuery("#nonPayingField").hide();
+			    jQuery("#specialSchemeField").hide();
+			    
+			    if (jQuery("#mlcCaseYes").is(':checked')) {
+		        jQuery("#mlcCaseNoRowField").hide();
+		        jQuery("#mlcCaseYesField").hide();
+		        jQuery("#mlc").hide();
+		        jQuery("#mlc").after("<span style='border:0px'>" + jQuery("#mlc option:checked").html() +  "</span>");
+			    }
+			    if (jQuery("#mlcCaseNo").is(':checked')) {
+		        jQuery("#temporaryCategories").hide();
+		        jQuery("#mlcCaseNoRowField").hide();
+			    }
+			    
+			    if (jQuery("#triageRoom").is(':checked')) {
+			    jQuery("#opdRowField").hide();
+			    jQuery("#triageRoomField").hide();
+			    jQuery("#triage").hide();
+				jQuery("#triage").after("<span style='border:0px'>" + jQuery("#triage option:checked").html() +  "</span>");
+			    }
+                if (jQuery("#opdRoom").is(':checked')) {
+                jQuery("#triageRowField").hide();
+                jQuery("#opdRoomField").hide();
+                jQuery("#opdWard").hide();
+                //jQuery("#opdWard").prepend("<td><b>Room to Visit:</b></td>"); 
+				jQuery("#opdWard").after("<span style='border:0px'>" + jQuery("#opdWard option:checked").html() +  "</span>");
+				//jQuery("#printableTemporaryCategories").prepend("<b>Temporary Categories:</b>");   
+                }
+			    
+                }
+			
 				
 				// submit form and print		
 				if(!reprint){
@@ -387,6 +401,21 @@
 		
 		/** Validate Form */
 		validate: function(){
+		/*
+		if (jQuery("#paying").attr('checked') == false
+					&& jQuery("#nonPaying").attr('checked') == false
+					&& jQuery("#specialSchemes").attr('checked') == false) {			
+			    alert("You did not choose any of the payment categories");
+				return false;
+			};
+			
+		if (jQuery("#mlcCaseYes").attr('checked') == false
+					&& jQuery("#mlcCaseNo").attr('checked') == false) {			
+			    alert("You did not choose any of the Medico Legal Case ");
+				return false;
+			} ;
+			*/
+		
 		if(StringUtils.isBlank(MODEL.selectedTRIAGE) && StringUtils.isBlank(MODEL.selectedOPD)){
 			if (jQuery("#triageRoom").attr('checked') == false
 					&& jQuery("#opdRoom").attr('checked') == false) {			
@@ -655,18 +684,18 @@
 				<td id="mlcCaseYesField"><input id="mlcCaseYes" type="checkbox" name="mlcCaseYes"/> Yes &nbsp;&nbsp;&nbsp;&nbsp;</td>
 				<td><select id="mlc" name="patient.mlc" style='width: 152px;'>	</select></td>
 		</tr>
-		<tr>
+		<tr id="mlcCaseNoRowField">
 				<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
 				<td id="mlcCaseNoField"><input id="mlcCaseNo" type="checkbox" name="mlcCaseNo"/> No &nbsp;&nbsp;&nbsp;&nbsp;</td>
 		</tr>
 		
 		
-		<tr>
+		<tr id="triageRowField">
 				<td><b>Room to Visit:</b>&nbsp;&nbsp;&nbsp;&nbsp;</td>
 				<td id="triageRoomField"><input id="triageRoom" type="checkbox" name="triageRoom"/> Triage Room &nbsp;&nbsp;&nbsp;&nbsp;</td>
 				<td id="triageField"><select id="triage" name="patient.triage" style='width: 152px;'>	</select></td>
 		</tr>
-		<tr>
+		<tr id="opdRowField">
 				<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
 				<td id="opdRoomField"><input id="opdRoom" type="checkbox" name="opdRoom"/> OPD Room&nbsp;&nbsp;&nbsp;&nbsp;</td>
 				<td id="opdWardField"><select id="opdWard" name="patient.opdWard" style='width: 152px;'>	</select></td>
