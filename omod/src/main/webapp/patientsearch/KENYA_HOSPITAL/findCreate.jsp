@@ -33,7 +33,7 @@
         alert("This Patient is Dead");
         return false;
         }						
-			window.location.href = openmrsContextPath + "/module/registration/showPatientInfo.form?patientId=" + patientId;
+			window.location.href = openmrsContextPath + "/module/registration/showPatientInfo.form?patientId=" + patientId + "&revisit=true";
 		},
 		
 		/** Edit a patient */

@@ -28,8 +28,7 @@
 		jQuery("#identifier").html(MODEL.patientIdentifier);
 		jQuery("#age").html(MODEL.patientAge);
 		jQuery("#name").html(MODEL.patientName);
-		jQuery("#feeHideVal").hide();
-		jQuery("#catHideVal").hide();
+		jQuery("#selectedRegFeeValueRowField").hide();
 		
 		jQuery("#mlc").hide();
 		
@@ -116,44 +115,7 @@
 
 		
 		//ghanshyam,11-dec-2013,#3327 Defining patient categories based on Kenyan requirements
-		if(!StringUtils.isBlank(MODEL.selectedPaymentCategory)){
-			
-			jQuery("#payingField").hide();
-			jQuery("#nonPayingField").hide();
-			jQuery("#specialSchemeField").hide();
-			
-			jQuery("#catHideVal").val(MODEL.selectedPaymentCategory);
-			jQuery("#catHideVal").hide();
-	//		jQuery("#paymentCategory").hide();
-	//		jQuery("#paymentCategory").after("<span>" + jQuery("#paymentCategory option:checked").html() +  "</span>"); 
-			if(${registrationFee==''} || ${registrationFee==null}){
-			if(MODEL.selectedPaymentCategory == "Paying"){
-			        jQuery("#payingField").after("<span style='border:0px'>" + jQuery("#paying").val() + "</span>");
-					jQuery("#regFeeValue").val(${initialRegFee});
-					jQuery("#regFeeValue").attr("disabled", "disabled");
-					jQuery("#feeHideVal").val(${initialRegFee});
-						jQuery("#feeHideVal").hide();
-					//	jQuery("#regFeeValue").hide();
-					//	jQuery("#regFeeValue").after("<span>" + jQuery("#regFeeValue option:checked").html() +  "</span>");  
-				}
-			if(MODEL.selectedPaymentCategory == "Non-Paying"){
-			            jQuery("#payingField").after("<span style='border:0px'>" + jQuery("#nonPaying").val() + "</span>");
-						jQuery("#regFeeValue").val(0);
-						jQuery("#regFeeValue").attr("disabled", "disabled");
-						jQuery("#feeHideVal").val(0);
-						jQuery("#feeHideVal").hide();
-					//	jQuery("#regFeeValue").hide();
-					//	jQuery("#regFeeValue").after("<span>" + jQuery("#regFeeValue option:checked").html() +  "</span>"); 
-				}
-			if(MODEL.selectedPaymentCategory == "Special Schemes"){
-			            if(!StringUtils.isBlank(MODEL.specialSchemeName)){	
-			            jQuery("#payingField").after("<span style='border:0px'>" + MODEL.specialSchemeName + "&nbsp;&nbsp;" + "</span>");
-		                 }
-			            jQuery("#payingField").after("<span style='border:0px'>" + jQuery("#specialSchemes").val() + "</span>");
-						jQuery("#feeHideVal").val(jQuery("#regFeeValue").val());
-				}
-				}
-			}
+		
 			
 			if(!StringUtils.isBlank(MODEL.selectedTRIAGE) || !StringUtils.isBlank(MODEL.selectedOPD)){	
 			jQuery("#mlcCaseYesField").hide();
@@ -174,8 +136,46 @@
 			VALIDATORS.tempCatCheck();
 		});*/
 		
-		// Set data for reprint page
-		if(MODEL.reprint=="true"){
+		// Set data for first time visit,revisit,reprint
+		if(MODEL.firstTimeVisit=="true"){
+		    jQuery("#reprint").hide();
+		    jQuery("#tempCat").hide();
+			
+			jQuery("#payingField").hide();
+			jQuery("#nonPayingField").hide();
+			jQuery("#specialSchemeField").hide();
+			
+	//		jQuery("#paymentCategory").hide();
+	//		jQuery("#paymentCategory").after("<span>" + jQuery("#paymentCategory option:checked").html() +  "</span>"); 
+			if(${registrationFee==''} || ${registrationFee==null}){
+			if(MODEL.selectedPaymentCategory == "Paying"){
+			        jQuery("#payingField").after("<span style='border:0px'>" + jQuery("#paying").val() + "</span>");
+					jQuery("#regFeeValue").val(${initialRegFee});
+					jQuery("#regFeeValue").attr("disabled", "disabled");
+					//	jQuery("#regFeeValue").hide();
+					//	jQuery("#regFeeValue").after("<span>" + jQuery("#regFeeValue option:checked").html() +  "</span>");  
+				}
+			if(MODEL.selectedPaymentCategory == "Non-Paying"){
+			            jQuery("#payingField").after("<span style='border:0px'>" + jQuery("#nonPaying").val() + "</span>");
+						jQuery("#regFeeValue").val(0);
+						jQuery("#regFeeValue").attr("disabled", "disabled");
+					//	jQuery("#regFeeValue").hide();
+					//	jQuery("#regFeeValue").after("<span>" + jQuery("#regFeeValue option:checked").html() +  "</span>"); 
+				}
+			if(MODEL.selectedPaymentCategory == "Special Schemes"){
+			            if(!StringUtils.isBlank(MODEL.specialSchemeName)){	
+			            jQuery("#payingField").after("<span style='border:0px'>" + MODEL.specialSchemeName + "&nbsp;&nbsp;" + "</span>");
+		                 }
+			            jQuery("#payingField").after("<span style='border:0px'>" + jQuery("#specialSchemes").val() + "</span>");
+				}
+			}
+		}
+		else if(MODEL.revisit=="true"){
+			jQuery("#reprint").hide();
+			
+			
+		}
+		else if(MODEL.reprint=="true"){
 		    jQuery("#payingField").after("<span style='border:0px'>" + '${selectedPaymentCategory}' + "</span>");
 			var triageId=MODEL.triageId;
 		    jQuery("#triage").val(MODEL.observations[triageId]);
@@ -189,7 +189,6 @@
 			
 						jQuery("#regFeeValue").val(${registrationFee});
 						jQuery("#regFeeValue").attr("disabled", "disabled");
-						jQuery("#feeHideVal").val(${registrationFee});
 				//		jQuery("#regFeeValue").hide();
 				//		jQuery("#regFeeValue").after("<span>" + jQuery("#regFeeValue option:checked").html() +  "</span>"); 
 			
@@ -402,7 +401,6 @@
 
 			if(jQuery("#paymentCategory").val()=="Special Schemes"){
 			//jQuery("#specialSchemeNameField").show();
-			jQuery("#feeHideVal").val(jQuery("#regFeeValue").val());
 			}
 			
 			return true;
@@ -422,8 +420,6 @@
 					jQuery("#specialSchemeNameField").hide();
 					
 					jQuery("#regFeeValue").val(${reVisitFee});
-					//jQuery("#feeHideVal").val(${reVisitFee});
-					//jQuery("#feeHideVal").hide();
 			}
 		},
 		
@@ -437,8 +433,6 @@
 					jQuery("#specialSchemeNameField").hide();
 					
 					jQuery("#regFeeValue").val(0);
-					//jQuery("#feeHideVal").val(${reVisitFee});
-					//jQuery("#feeHideVal").hide();
 			}
 		},
 		
@@ -451,8 +445,6 @@
 					jQuery("#specialSchemeNameField").show();
 					
 					jQuery("#regFeeValue").val(0);
-					//jQuery("#feeHideVal").val(${reVisitFee});
-					//jQuery("#feeHideVal").hide();
 			}
 			else{
 			 jQuery("#specialSchemeName").val("");
@@ -509,7 +501,6 @@
 				jQuery("#specialSchemeNameField").hide();
 				
 				jQuery("#regFeeValue").val(${reVisitFee});
-				jQuery("#feeHideVal").val(${reVisitFee});
 				//jQuery("#regFeeValue").attr("disabled", "disabled");
 				
 			} else if(jQuery("#paymentCategory").val() == "Non-Paying"){
@@ -517,7 +508,6 @@
 				jQuery("#specialSchemeNameField").hide();
 
 				jQuery("#regFeeValue").val(0);
-				jQuery("#feeHideVal").val(0);
 				//jQuery("#regFeeValue").attr("disabled", "disabled");
 
 		
@@ -525,7 +515,6 @@
 				jQuery("#specialSchemeNameField").show();
 				
 				jQuery("#regFeeValue").removeAttr("disabled");
-				jQuery("#feeHideVal").val(jQuery("#regFeeValue").val());
 				
 			}
 		},
@@ -676,14 +665,10 @@
 										<option value=100>100</option>
 						</select>
 					</td>			
-					<td id="feeHide">
-							<span><input id="feeHideVal" name="feeHideVal" />
-							</span>
-					</td>
 				</tr>
-				<tr>
-                <td><input type="hidden" id="selectedPaymentCategory" name="selectedPaymentCategory" value="${selectedPaymentCategory}"></td>
-                </tr>
+				<tr id="selectedRegFeeValueRowField">			
+					<td id="selectedRegFeeValueColumnField"> <input id="selectedRegFeeValue" name="selectedRegFeeValue" /> </td>
+				</tr>
 			</table>
 		</form>
 	</center>

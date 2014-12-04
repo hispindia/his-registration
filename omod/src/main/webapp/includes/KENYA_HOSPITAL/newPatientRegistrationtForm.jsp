@@ -700,6 +700,7 @@ input, select, textarea {
 					jQuery("#specialSchemeName").val("");
 					jQuery("#specialSchemeField").hide();
 					jQuery("#fileNumberField").hide();
+					jQuery("#selectedRegFeeValu").val(${initialRegFee});
 			}
 		},
 		
@@ -712,6 +713,7 @@ input, select, textarea {
 					jQuery("#specialSchemeName").val("");
 					jQuery("#specialSchemeField").hide();
 					jQuery("#fileNumberField").hide();
+					jQuery("#selectedRegFeeValu").val(0);
 			}
 		},
 		
@@ -723,6 +725,7 @@ input, select, textarea {
 					jQuery("#nonPaying").removeAttr("checked");
 					jQuery("#specialSchemeField").show();
 					jQuery("#fileNumberField").show();
+					jQuery("#selectedRegFeeValu").val(0);
 			}
 			else{
 			 jQuery("#specialSchemeName").val("");
@@ -1149,6 +1152,11 @@ input, select, textarea {
 				<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
 				<td><input id="opdRoom" type="checkbox" name="opdRoom"/> OPD Room&nbsp;&nbsp;&nbsp;&nbsp;</td>
 				<td><span id="opdWardField"><select id="opdWard" name="patient.opdWard" style='width: 152px;'>	</select></span></td>
+		</tr>
+		<tr>
+		<td>
+		<input type="hidden" id="selectedRegFeeValu" name="patient.registration.fee" />
+		</td>
 		</tr>
 		</table>
 		</div>

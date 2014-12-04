@@ -63,6 +63,10 @@ public class RegistrationConstants {
 	
 	public static final String FORM_FIELD_PAYMENT_CATEGORY = "person.attribute.14";
 	
+	public static final String FORM_FIELD_REGISTRATION_FEE = "patient.registration.fee";
+	
+	//public static final String FORM_FIELD_SELECTED_PAYMENT_CATEGORY = "patient.selectedPaymentCategory";
+	
 	public static final String FORM_FIELD_PATIENT_IDENTIFIER = "patient.identifier";
 	
 	public static final String FORM_FIELD_PATIENT_BIRTHDATE = "patient.birthdate";

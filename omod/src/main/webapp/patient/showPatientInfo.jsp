@@ -57,6 +57,8 @@
 		registrationFee: "${registrationFee}",
 		dueDate: "${dueDate}",
 		daysLeft: "${daysLeft}",
+		firstTimeVisit: "${firstTimeVisit eq 'true'}",
+		revisit: "${param.revisit eq 'true'}",
 		reprint: "${param.reprint eq 'true'}",
 		triageId: "${triageId}",
 		selectedPaymentCategory: "${selectedPaymentCategory}",

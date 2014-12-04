@@ -96,6 +96,7 @@ public class NewPatientRegistrationController {
 				"OPDs",
 				RegistrationWebUtils
 						.getSubConcepts(RegistrationConstants.CONCEPT_NAME_OPD_WARD));
+		model.addAttribute("initialRegFee", GlobalPropertyUtil.getString(RegistrationConstants.PROPERTY_INITIAL_REGISTRATION_FEE, ""));
 		
 			return "/module/registration/patient/newPatientRegistration";
 
@@ -309,7 +310,22 @@ public class NewPatientRegistrationController {
 			RegistrationWebUtils.sendPatientToOPDQueue(patient,
 					selectedOPDConcept, false, selectedCategory);
 		}
+		
+		//payment category and registration fee
+		Concept cnrf = Context.getConceptService().getConcept(RegistrationConstants.CONCEPT_NAME_REGISTRATION_FEE);
+		Concept cnp = Context.getConceptService().getConcept(RegistrationConstants.CONCEPT_NEW_PATIENT);
+		Obs obsn = new Obs();
+		obsn.setConcept(cnrf);
+		obsn.setValueCoded(cnp);
+		Double doubleVal = Double.parseDouble(parameters
+				.get(RegistrationConstants.FORM_FIELD_REGISTRATION_FEE));
+		obsn.setValueNumeric(doubleVal);
+		obsn.setValueText(parameters
+				.get(RegistrationConstants.FORM_FIELD_PAYMENT_CATEGORY));
+		encounter.addObs(obsn);	
 
+		
+		
 		Concept mlcConcept = Context.getConceptService().getConcept(
 				RegistrationConstants.CONCEPT_NAME_MEDICO_LEGAL_CASE);
 
@@ -325,12 +341,13 @@ public class NewPatientRegistrationController {
 			mlcObs.setConcept(mlcConcept);
 			mlcObs.setValueCoded(selectedMlcConcept);
 			encounter.addObs(mlcObs);
-		} else {
+		}/* else {
 			mlcObs.setConcept(mlcConcept);
 			mlcObs.setValueCoded(Context.getConceptService().getConcept(
 					"NO"));
 			encounter.addObs(mlcObs);
-		}
+		}*/
+		
 		/*
 		 * REFERRAL INFORMATION
 		 */
