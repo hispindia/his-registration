@@ -178,6 +178,38 @@
 			
 		}
 		else if(MODEL.reprint=="true"){
+		
+		
+		    jQuery("#payingField").hide();
+			jQuery("#nonPayingField").hide();
+			jQuery("#specialSchemeField").hide();
+			if(${registrationFee==''} || ${registrationFee==null}){
+			if(MODEL.selectedPaymentCategory == "Paying"){
+			        jQuery("#payingField").after("<span style='border:0px'>" + jQuery("#paying").val() + "</span>");
+					jQuery("#regFeeValue").val(${initialRegFee});
+					jQuery("#regFeeValue").attr("disabled", "disabled");
+					//jQuery("#selectedRegFeeValue").val(${initialRegFee});
+					//	jQuery("#regFeeValue").hide();
+					//	jQuery("#regFeeValue").after("<span>" + jQuery("#regFeeValue option:checked").html() +  "</span>");  
+				}
+			if(MODEL.selectedPaymentCategory == "Non-Paying"){
+			            jQuery("#payingField").after("<span style='border:0px'>" + jQuery("#nonPaying").val() + "</span>");
+						jQuery("#regFeeValue").val(0);
+						jQuery("#regFeeValue").attr("disabled", "disabled");
+						//jQuery("#selectedRegFeeValue").val(0);
+					//	jQuery("#regFeeValue").hide();
+					//	jQuery("#regFeeValue").after("<span>" + jQuery("#regFeeValue option:checked").html() +  "</span>"); 
+				}
+			if(MODEL.selectedPaymentCategory == "Special Schemes"){
+			            if(!StringUtils.isBlank(MODEL.specialSchemeName)){	
+			            jQuery("#payingField").after("<span style='border:0px'>" + MODEL.specialSchemeName + "&nbsp;&nbsp;" + "</span>");
+		                 }
+			            jQuery("#payingField").after("<span style='border:0px'>" + jQuery("#specialSchemes").val() + "</span>");
+				}
+			}
+		//
+		
+		
 		    jQuery("#payingField").after("<span style='border:0px'>" + '${selectedPaymentCategory}' + "</span>");
 			var triageId=MODEL.triageId;
 		    jQuery("#triage").val(MODEL.observations[triageId]);
