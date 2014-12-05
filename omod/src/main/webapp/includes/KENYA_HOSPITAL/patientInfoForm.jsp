@@ -234,50 +234,25 @@
 				
 				/*if(MODEL.firstTimeVisit=="true"){
 				
-				if(MODEL.selectedPaymentCategory == "Special Schemes"){
-				jQuery("#selectedRegFeeValue").val(jQuery("#regFeeValue").val());
-				}
-				
-				}
-                else if(MODEL.revisit=="true"){
-			     if (jQuery("#paying").is(':checked')) {
-					jQuery("#selectedRegFeeValue").val(jQuery("#regFeeValue").val());
-			      }
-			      if (jQuery("#nonPaying").is(':checked')) {
-					jQuery("#selectedRegFeeValue").val(jQuery("#regFeeValue").val());
-			      }
                 }*/
                 
                 if(MODEL.revisit=="true"){
-                
-                if (jQuery("#paying").attr('checked') == false
-					&& jQuery("#nonPaying").attr('checked') == false
-					&& jQuery("#specialSchemes").attr('checked') == false) {			
-			    alert("You did not choose any of the payment categories");
-				return false;
-			};
 			
-		if (jQuery("#mlcCaseYes").attr('checked') == false
-					&& jQuery("#mlcCaseNo").attr('checked') == false) {			
-			    alert("You did not choose any of the Medico Legal Case ");
-				return false;
-			} ;
-                
-                
-                jQuery("#payingField").hide();
-			    jQuery("#nonPayingField").hide();
-			    jQuery("#specialSchemeField").hide();
-			    
-			    if (jQuery("#mlcCaseYes").is(':checked')) {
+			   if (jQuery("#mlcCaseYes").is(':checked')) {
 		        jQuery("#mlcCaseNoRowField").hide();
 		        jQuery("#mlcCaseYesField").hide();
 		        jQuery("#mlc").hide();
 		        jQuery("#mlc").after("<span style='border:0px'>" + jQuery("#mlc option:checked").html() +  "</span>");
 			    }
-			    if (jQuery("#mlcCaseNo").is(':checked')) {
+			    else if (jQuery("#mlcCaseNo").is(':checked')) {
 		        jQuery("#temporaryCategories").hide();
 		        jQuery("#mlcCaseNoRowField").hide();
 			    }
+                
+                
+                jQuery("#payingField").hide();
+			    jQuery("#nonPayingField").hide();
+			    jQuery("#specialSchemeField").hide();
 			    
 			    if (jQuery("#triageRoom").is(':checked')) {
 			    jQuery("#opdRowField").hide();
@@ -401,22 +376,34 @@
 		
 		/** Validate Form */
 		validate: function(){
-		/*
-		if (jQuery("#paying").attr('checked') == false
+		
+		
+			
+		if(MODEL.revisit=="true"){
+				
+				if (jQuery("#paying").attr('checked') == false
 					&& jQuery("#nonPaying").attr('checked') == false
 					&& jQuery("#specialSchemes").attr('checked') == false) {			
 			    alert("You did not choose any of the payment categories");
 				return false;
-			};
+			 }
+                
 			
 		if (jQuery("#mlcCaseYes").attr('checked') == false
 					&& jQuery("#mlcCaseNo").attr('checked') == false) {			
 			    alert("You did not choose any of the Medico Legal Case ");
 				return false;
-			} ;
-			*/
+			} else {
+			
+			   if (jQuery("#mlcCaseYes").is(':checked')) {
+				if (StringUtils.isBlank(jQuery("#mlc").val())){
+					alert("Please select the medico legal case");
+					return false;
+				}
+			}
+			
+			}
 		
-		if(StringUtils.isBlank(MODEL.selectedTRIAGE) && StringUtils.isBlank(MODEL.selectedOPD)){
 			if (jQuery("#triageRoom").attr('checked') == false
 					&& jQuery("#opdRoom").attr('checked') == false) {			
 			    alert("You did not choose any of the room");
@@ -435,23 +422,7 @@
 					}
 				}
 			}
-		 };
-			
-			if(jQuery("#paymentCategory").val()=="Special Schemes"){
-				if(jQuery("#specialSchemeName").val().length <= 0){
-					alert("Please fill Special Scheme Name");
-					return false;
-				}
-			};
-			
-			if(jQuery("#paymentCategory").val()=="Payment Category"){
-				alert("Please Select Payment Category");
-				return false;
-			};
-
-			if(jQuery("#paymentCategory").val()=="Special Schemes"){
-			//jQuery("#specialSchemeNameField").show();
-			}
+		 }
 			
 			return true;
 		}
