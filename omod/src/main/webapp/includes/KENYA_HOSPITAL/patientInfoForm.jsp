@@ -29,6 +29,8 @@
 		jQuery("#age").html(MODEL.patientAge);
 		jQuery("#name").html(MODEL.patientName);
 		jQuery("#selectedRegFeeValueRowField").hide();
+		jQuery("#printablePaymentCategoryRow").hide();
+		jQuery("#printableRoomToVisitRow").hide();
 		
 		jQuery("#mlc").hide();
 		
@@ -126,12 +128,6 @@
 			}
 			
 		
-		
-		//Category Check
-		jQuery("#paymentCategory").change(function() {
-			VALIDATORS.categoryCheck();
-		});
-		
 		// Set data for first time visit,revisit,reprint
 		if(MODEL.firstTimeVisit=="true"){
 		    jQuery("#reprint").hide();
@@ -163,31 +159,35 @@
 			
 		}
 		else if(MODEL.reprint=="true"){
-		
-		
-		    jQuery("#payingField").hide();
-			jQuery("#nonPayingField").hide();
-			jQuery("#specialSchemeField").hide();
 			
-			if(MODEL.selectedPaymentCategory == "Paying"){
-			        jQuery("#payingField").after("<span style='border:0px'>" + jQuery("#paying").val() + "</span>");
-					jQuery("#regFeeValue").val(${registrationFee});
-					jQuery("#regFeeValue").attr("disabled", "disabled");
-				}
-			if(MODEL.selectedPaymentCategory == "Non-Paying"){
-			            jQuery("#payingField").after("<span style='border:0px'>" + jQuery("#nonPaying").val() + "</span>");
-						jQuery("#regFeeValue").val(${registrationFee});
-						jQuery("#regFeeValue").attr("disabled", "disabled");
-				}
-			if(MODEL.selectedPaymentCategory == "Special Schemes"){
-			            if(!StringUtils.isBlank(MODEL.specialSchemeName)){	
-			            jQuery("#payingField").after("<span style='border:0px'>" + MODEL.specialSchemeName + "&nbsp;&nbsp;" + "</span>");
-		                 }
-			            jQuery("#payingField").after("<span style='border:0px'>" + jQuery("#specialSchemes").val() + "</span>");
-			            
-			            jQuery("#regFeeValue").val(${registrationFee});
-						jQuery("#regFeeValue").attr("disabled", "disabled");
-				}
+			jQuery("#paymentCategoryRow").hide();
+			jQuery("#nonPayingCategoryRow").hide();
+			jQuery("#specialSchemesRow").hide();
+			    
+			jQuery("#triageRowField").hide();
+			jQuery("#opdRowField").hide();
+				
+			jQuery("#printablePaymentCategory").append("<span style='border:0px'>" + MODEL.selectedPaymentCategory + "</span>");
+			jQuery("#printablePaymentCategoryRow").show();
+			
+			if(!StringUtils.isBlank(MODEL.selectedMLC)){
+			jQuery("#mlcCaseNoRowField").hide();
+			}
+			else{
+			jQuery("#medicoLegalCaseRowField").hide();
+		    jQuery("#mlcCaseNoRowField").hide();
+			}	
+			
+			if(!StringUtils.isBlank(MODEL.selectedTRIAGE)){	
+			jQuery("#printableRoomToVisit").append("<span style='border:0px'>" + jQuery("#triage option:checked").html() + "</span>");
+			}
+           if(!StringUtils.isBlank(MODEL.selectedOPD)){
+		    jQuery("#printableRoomToVisit").append("<span style='border:0px'>" + jQuery("#opdWard option:checked").html() + "</span>");
+            }
+            jQuery("#printableRoomToVisitRow").show();
+			
+			jQuery("#regFeeValue").val(${registrationFee});
+			jQuery("#regFeeValue").attr("disabled", "disabled");	
 		
 		    
 			jQuery("#printSlip").hide();
@@ -209,10 +209,6 @@
 				jQuery("#printSlip").hide();
 				jQuery("#reprint").hide();
 				
-				
-				jQuery("#paymentCategory").hide();
-				jQuery("#paymentCategory").after("<span style='border:0px'>" + jQuery("#paymentCategory  option:checked").html() + "</span>"); 
-				
 				jQuery("#regFeeValue").hide();
 				jQuery("#regFeeValue").after("<span style='border:0px'>" + jQuery("#regFeeValue  option:checked").html() + "</span>"); 
 				
@@ -232,29 +228,39 @@
 		        jQuery("#mlc").after("<span style='border:0px'>" + jQuery("#mlc option:checked").html() +  "</span>");
 			    }
 			    else if (jQuery("#mlcCaseNo").is(':checked')) {
-		        jQuery("#temporaryCategories").hide();
+		        jQuery("#medicoLegalCaseRowField").hide();
 		        jQuery("#mlcCaseNoRowField").hide();
 			    }
+			    
+			    jQuery("#paymentCategoryRow").hide();
+			    jQuery("#nonPayingCategoryRow").hide();
+			    jQuery("#specialSchemesRow").hide();
+			    
+			    jQuery("#triageRowField").hide();
+			    jQuery("#opdRowField").hide();
+			    
+			    if (jQuery("#paying").is(':checked')) {
+			     jQuery("#printablePaymentCategory").append("<span style='border:0px'>" + jQuery("#paying").val() + "</span>");
+			    }
+
+                if (jQuery("#nonPaying").is(':checked')) {
+                 jQuery("#printablePaymentCategory").append("<span style='border:0px'>" + jQuery("#nonPaying").val() + "</span>");
+                }
+
+                if (jQuery("#specialSchemes").is(':checked')) {
+                 jQuery("#printablePaymentCategory").append("<span style='border:0px'>" + jQuery("#specialSchemes").val() + "</span>");
+                }
                 
-                
-                jQuery("#payingField").hide();
-			    jQuery("#nonPayingField").hide();
-			    jQuery("#specialSchemeField").hide();
+                jQuery("#printablePaymentCategoryRow").show();	
 			    
 			    if (jQuery("#triageRoom").is(':checked')) {
-			    jQuery("#opdRowField").hide();
-			    jQuery("#triageRoomField").hide();
-			    jQuery("#triage").hide();
-				jQuery("#triage").after("<span style='border:0px'>" + jQuery("#triage option:checked").html() +  "</span>");
+				//jQuery("#triage").after("<span style='border:0px'>" + jQuery("#triage option:checked").html() +  "</span>");
+				jQuery("#printableRoomToVisit").append("<span style='border:0px'>" + jQuery("#triage option:checked").html() + "</span>");
 			    }
                 if (jQuery("#opdRoom").is(':checked')) {
-                jQuery("#triageRowField").hide();
-                jQuery("#opdRoomField").hide();
-                jQuery("#opdWard").hide();
-                //jQuery("#opdWard").prepend("<td><b>Room to Visit:</b></td>"); 
-				jQuery("#opdWard").after("<span style='border:0px'>" + jQuery("#opdWard option:checked").html() +  "</span>");
-				//jQuery("#printableTemporaryCategories").prepend("<b>Temporary Categories:</b>");   
+				jQuery("#printableRoomToVisit").append("<span style='border:0px'>" + jQuery("#opdWard option:checked").html() + "</span>");
                 }
+                jQuery("#printableRoomToVisitRow").show();
 			    
                 }
 			
@@ -592,18 +598,25 @@
 					
 				</tr>
 				
-				<tr>
+				<tr id="paymentCategoryRow">
 				<td><b>Payment Category:&nbsp;&nbsp;&nbsp;&nbsp;</b></td>
 				<td id="payingField"><input id="paying" type="checkbox" name="person.attribute.14" value="Paying" /> Paying</td>
 		</tr>
-		<tr>
+		<tr id="nonPayingCategoryRow">
 				<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
 				<td id="nonPayingField"><input id="nonPaying" type="checkbox" name="person.attribute.14" value="Non-Paying" /> Non-Paying</td>
 		</tr>
-		<tr>
+		<tr id="specialSchemesRow">
 				<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
 				<td id="specialSchemeField"><input id="specialSchemes" type="checkbox" name="person.attribute.14" value="Special Schemes" /> Special Schemes &nbsp;&nbsp;&nbsp;&nbsp;</td>
 				<td id="specialSchemeNameField"><input id="specialSchemeName" name="person.attribute.42" placeholder="Please specify" style='width: 152px;'/></td>
+		</tr>
+		
+		<tr id="printablePaymentCategoryRow">
+					<td><b>Payment Category:</b></td>
+					<td>
+						<div id="printablePaymentCategory"></div>
+					</td>
 		</tr>
 		
 				
@@ -637,7 +650,7 @@
 					<td><span style="color:red;" id="message" > </span></td>
 				</tr> --%>
 				
-				<tr id="temporaryCategories">
+				<tr id="medicoLegalCaseRowField">
 				<td><b>Medico Legal Case:&nbsp;&nbsp;&nbsp;&nbsp;</b></td>
 				<td id="mlcCaseYesField"><input id="mlcCaseYes" type="checkbox" name="mlcCaseYes"/> Yes &nbsp;&nbsp;&nbsp;&nbsp;</td>
 				<td><select id="mlc" name="patient.mlc" style='width: 152px;'>	</select></td>
@@ -657,6 +670,12 @@
 				<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
 				<td id="opdRoomField"><input id="opdRoom" type="checkbox" name="opdRoom"/> OPD Room&nbsp;&nbsp;&nbsp;&nbsp;</td>
 				<td id="opdWardField"><select id="opdWard" name="patient.opdWard" style='width: 152px;'>	</select></td>
+		</tr>
+		<tr id="printableRoomToVisitRow">
+					<td><b>Room to Visit:</b></td>
+					<td>
+						<div id="printableRoomToVisit"></div>
+					</td>
 		</tr>
 				
 				

@@ -53,14 +53,14 @@
 		OPDs: "${OPDs}",
 		MEDICOLEGALCASE: "${MEDICOLEGALCASE}",
 		selectedMLC:"${selectedMLC}",
-		mlcId: "${mlcId}",
+		//mlcId: "${mlcId}",
 		registrationFee: "${registrationFee}",
 		dueDate: "${dueDate}",
 		daysLeft: "${daysLeft}",
 		firstTimeVisit: "${firstTimeVisit eq 'true'}",
 		revisit: "${param.revisit eq 'true'}",
 		reprint: "${param.reprint eq 'true'}",
-		triageId: "${triageId}",
+		//triageId: "${triageId}",
 		selectedPaymentCategory: "${selectedPaymentCategory}",
 		specialSchemeName: "${specialSchemeName}"
 	};
