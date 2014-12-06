@@ -131,38 +131,24 @@
 		jQuery("#paymentCategory").change(function() {
 			VALIDATORS.categoryCheck();
 		});
-
-	/*	jQuery("#mlc").change(function() {
-			VALIDATORS.tempCatCheck();
-		});*/
 		
 		// Set data for first time visit,revisit,reprint
 		if(MODEL.firstTimeVisit=="true"){
 		    jQuery("#reprint").hide();
-		    jQuery("#tempCat").hide();
 			
 			jQuery("#payingField").hide();
 			jQuery("#nonPayingField").hide();
 			jQuery("#specialSchemeField").hide();
 			
-	//		jQuery("#paymentCategory").hide();
-	//		jQuery("#paymentCategory").after("<span>" + jQuery("#paymentCategory option:checked").html() +  "</span>"); 
-			if(${registrationFee==''} || ${registrationFee==null}){
 			if(MODEL.selectedPaymentCategory == "Paying"){
 			        jQuery("#payingField").after("<span style='border:0px'>" + jQuery("#paying").val() + "</span>");
 					jQuery("#regFeeValue").val(${initialRegFee});
 					jQuery("#regFeeValue").attr("disabled", "disabled");
-					//jQuery("#selectedRegFeeValue").val(${initialRegFee});
-					//	jQuery("#regFeeValue").hide();
-					//	jQuery("#regFeeValue").after("<span>" + jQuery("#regFeeValue option:checked").html() +  "</span>");  
 				}
 			if(MODEL.selectedPaymentCategory == "Non-Paying"){
 			            jQuery("#payingField").after("<span style='border:0px'>" + jQuery("#nonPaying").val() + "</span>");
 						jQuery("#regFeeValue").val(0);
 						jQuery("#regFeeValue").attr("disabled", "disabled");
-						//jQuery("#selectedRegFeeValue").val(0);
-					//	jQuery("#regFeeValue").hide();
-					//	jQuery("#regFeeValue").after("<span>" + jQuery("#regFeeValue option:checked").html() +  "</span>"); 
 				}
 			if(MODEL.selectedPaymentCategory == "Special Schemes"){
 			            if(!StringUtils.isBlank(MODEL.specialSchemeName)){	
@@ -170,7 +156,6 @@
 		                 }
 			            jQuery("#payingField").after("<span style='border:0px'>" + jQuery("#specialSchemes").val() + "</span>");
 				}
-			}
 		}
 		else if(MODEL.revisit=="true"){
 			jQuery("#reprint").hide();
@@ -183,60 +168,30 @@
 		    jQuery("#payingField").hide();
 			jQuery("#nonPayingField").hide();
 			jQuery("#specialSchemeField").hide();
-			if(${registrationFee==''} || ${registrationFee==null}){
+			
 			if(MODEL.selectedPaymentCategory == "Paying"){
 			        jQuery("#payingField").after("<span style='border:0px'>" + jQuery("#paying").val() + "</span>");
-					jQuery("#regFeeValue").val(${initialRegFee});
+					jQuery("#regFeeValue").val(${registrationFee});
 					jQuery("#regFeeValue").attr("disabled", "disabled");
-					//jQuery("#selectedRegFeeValue").val(${initialRegFee});
-					//	jQuery("#regFeeValue").hide();
-					//	jQuery("#regFeeValue").after("<span>" + jQuery("#regFeeValue option:checked").html() +  "</span>");  
 				}
 			if(MODEL.selectedPaymentCategory == "Non-Paying"){
 			            jQuery("#payingField").after("<span style='border:0px'>" + jQuery("#nonPaying").val() + "</span>");
-						jQuery("#regFeeValue").val(0);
+						jQuery("#regFeeValue").val(${registrationFee});
 						jQuery("#regFeeValue").attr("disabled", "disabled");
-						//jQuery("#selectedRegFeeValue").val(0);
-					//	jQuery("#regFeeValue").hide();
-					//	jQuery("#regFeeValue").after("<span>" + jQuery("#regFeeValue option:checked").html() +  "</span>"); 
 				}
 			if(MODEL.selectedPaymentCategory == "Special Schemes"){
 			            if(!StringUtils.isBlank(MODEL.specialSchemeName)){	
 			            jQuery("#payingField").after("<span style='border:0px'>" + MODEL.specialSchemeName + "&nbsp;&nbsp;" + "</span>");
 		                 }
 			            jQuery("#payingField").after("<span style='border:0px'>" + jQuery("#specialSchemes").val() + "</span>");
-				}
-			}
-		//
-		
-		
-		    jQuery("#payingField").after("<span style='border:0px'>" + '${selectedPaymentCategory}' + "</span>");
-			var triageId=MODEL.triageId;
-		    jQuery("#triage").val(MODEL.observations[triageId]);
-		    jQuery("#triage").attr("disabled", "disabled");
-		
-			var mlcId=MODEL.mlcId;
-			if(!StringUtils.isBlank(MODEL.observations[mlcId])){
-			jQuery("#mlc").val(MODEL.observations[mlcId]);
-			jQuery("#mlc").attr("disabled", "disabled");
-			}
-			
-						jQuery("#regFeeValue").val(${registrationFee});
+			            
+			            jQuery("#regFeeValue").val(${registrationFee});
 						jQuery("#regFeeValue").attr("disabled", "disabled");
-				//		jQuery("#regFeeValue").hide();
-				//		jQuery("#regFeeValue").after("<span>" + jQuery("#regFeeValue option:checked").html() +  "</span>"); 
-			
+				}
+		
 		    
 			jQuery("#printSlip").hide();
 			jQuery("#save").hide();
-			//ghanshyam  20-may-2013 #1648 capture Health ID and Registration Fee Type
-		//	jQuery("#regFee").hide()
-			jQuery("#tempCat").hide();
-		} else {
-			jQuery("#reprint").hide();
-			//ghanshyam  20-may-2013 #1648 capture Health ID and Registration Fee Type
-			jQuery("#regFee").hide()
-			jQuery("#tempCat").hide();
 		}
 		
 	});

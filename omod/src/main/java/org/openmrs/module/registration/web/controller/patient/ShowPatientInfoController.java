@@ -144,17 +144,15 @@ public class ShowPatientInfoController {
 				Map<Integer, String> observations = new HashMap<Integer, String>();
 				
 				for (Obs obs : encounter.getAllObs()) {
-					if (obs.getConcept().getDisplayString()
-					        .equalsIgnoreCase(RegistrationConstants.CONCEPT_NAME_MEDICO_LEGAL_CASE)) {
-						model.addAttribute("mlcId", obs.getConcept().getConceptId());
+					if (obs.getConcept().getName().getName().equalsIgnoreCase(RegistrationConstants.CONCEPT_NAME_TRIAGE)) {
+						model.addAttribute("selectedTRIAGE", obs.getValueCoded().getConceptId());
 					}
-					if (obs.getConcept().getDisplayString()
-					        .equalsIgnoreCase(RegistrationConstants.CONCEPT_NAME_TRIAGE)) {
-						model.addAttribute("triageId", obs.getConcept().getConceptId());
+					if (obs.getConcept().getName().getName().equalsIgnoreCase(RegistrationConstants.CONCEPT_NAME_OPD_WARD)) {
+						model.addAttribute("selectedOPD", obs.getValueCoded().getConceptId());
 					}
-					if (obs.getConcept().getDisplayString()
-					        .equalsIgnoreCase(RegistrationConstants.CONCEPT_NAME_OPD_WARD)) {
-						model.addAttribute("opdWardId", obs.getConcept().getConceptId());
+
+					if (obs.getConcept().getName().getName().equalsIgnoreCase(RegistrationConstants.CONCEPT_NAME_MEDICO_LEGAL_CASE)) {
+						model.addAttribute("selectedMLC", obs.getValueCoded().getConceptId());
 					}
 					if (obs.getConcept().getDisplayString()
 					        .equalsIgnoreCase(RegistrationConstants.CONCEPT_NAME_REGISTRATION_FEE)) {
