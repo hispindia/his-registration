@@ -53,6 +53,7 @@
 		////ghanshyam,16-dec-2013,3438 Remove the interdependency
 		TRIAGE: "${TRIAGE}",
 		OPDs: "${OPDs}",
+		SPECIALCLINIC: "${SPECIALCLINIC}",
 		referredFrom: "${referralHospitals}",
 		referralType: "${referralReasons}",
 		TEMPORARYCAT: "${TEMPORARYCAT}",

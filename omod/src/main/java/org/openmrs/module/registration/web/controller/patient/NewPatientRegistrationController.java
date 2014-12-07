@@ -78,9 +78,6 @@ public class NewPatientRegistrationController {
 				RegistrationWebUtils
 						.getSubConcepts(RegistrationConstants.CONCEPT_NAME_REASON_FOR_REFERRAL));
 		RegistrationWebUtils.getAddressDta(model);
-		// model.addAttribute("OPDs",
-		// RegistrationWebUtils.getSubConcepts(RegistrationConstants.CONCEPT_NAME_OPD_WARD));
-		// ghanshyam,16-dec-2013,3438 Remove the interdependency
 		model.addAttribute(
 				"TEMPORARYCAT",
 				RegistrationWebUtils
@@ -96,6 +93,10 @@ public class NewPatientRegistrationController {
 				"OPDs",
 				RegistrationWebUtils
 						.getSubConcepts(RegistrationConstants.CONCEPT_NAME_OPD_WARD));
+		model.addAttribute(
+				"SPECIALCLINIC",
+				RegistrationWebUtils
+						.getSubConcepts(RegistrationConstants.CONCEPT_NAME_SPECIAL_CLINIC));
 		model.addAttribute("initialRegFee", GlobalPropertyUtil.getString(RegistrationConstants.PROPERTY_INITIAL_REGISTRATION_FEE, ""));
 		
 			return "/module/registration/patient/newPatientRegistration";
@@ -119,30 +120,6 @@ public class NewPatientRegistrationController {
 			RegistrationUtils.savePatientSearch(patient);
 			logger.info(String.format("Saved new patient [id=%s]",
 					patient.getId()));
-
-			/**
-			 * Supported automatic buy a new slip for PUNJAB
-			 */
-			// Because: If receiption staff forget to click "Buy a new slip",
-			// the report will be wrong
-			// June 7th 2012 - Thai Chuong
-			String hospitalName = GlobalPropertyUtil.getString(
-					HospitalCoreConstants.PROPERTY_HOSPITAL_NAME, "");
-			if (!StringUtils.isBlank(hospitalName)) {
-				if (hospitalName.equalsIgnoreCase("PUNJAB")) {
-					RegistrationFee fee = new RegistrationFee();
-					fee.setPatient(patient);
-					fee.setCreatedOn(new Date());
-					fee.setCreatedBy(Context.getAuthenticatedUser());
-					fee.setFee(new BigDecimal(
-							GlobalPropertyUtil
-									.getInteger(
-											RegistrationConstants.PROPERTY_INITIAL_REGISTRATION_FEE,
-											0)));
-					Context.getService(RegistrationService.class)
-							.saveRegistrationFee(fee);
-				}
-			}
 
 			// create encounter for the visit
 			Encounter encounter = createEncounter(patient, parameters);
@@ -292,7 +269,8 @@ public class NewPatientRegistrationController {
 
 			RegistrationWebUtils.sendPatientToTriageQueue(patient,
 					selectedTRIAGEConcept, false, selectedCategory);
-		} else {
+		} else if (!StringUtils.isBlank(parameters
+				.get(RegistrationConstants.FORM_FIELD_PATIENT_OPD_WARD))) {
 			Concept opdConcept = Context.getConceptService().getConcept(
 					RegistrationConstants.CONCEPT_NAME_OPD_WARD);
 
@@ -309,6 +287,23 @@ public class NewPatientRegistrationController {
 
 			RegistrationWebUtils.sendPatientToOPDQueue(patient,
 					selectedOPDConcept, false, selectedCategory);
+		}else {
+			Concept specialClinicConcept = Context.getConceptService().getConcept(
+					RegistrationConstants.CONCEPT_NAME_SPECIAL_CLINIC);
+
+			Concept selectedSpecialClinicConcept = Context
+					.getConceptService()
+					.getConcept(
+							parameters
+									.get(RegistrationConstants.FORM_FIELD_PATIENT_SPECIAL_CLINIC));
+			String selectedCategory=parameters.get(RegistrationConstants.FORM_FIELD_PAYMENT_CATEGORY);
+			Obs opdObs = new Obs();
+			opdObs.setConcept(specialClinicConcept);
+			opdObs.setValueCoded(selectedSpecialClinicConcept);
+			encounter.addObs(opdObs);
+
+			RegistrationWebUtils.sendPatientToOPDQueue(patient,
+					selectedSpecialClinicConcept, false, selectedCategory);
 		}
 		
 		//payment category and registration fee

@@ -77,23 +77,21 @@ public class RegistrationConstants {
 	
 	public static final String FORM_FIELD_PATIENT_RELIGION = "patient.religion";
 	
-	//26-6-2012 - Marta add constant to store the addres in the openmrs person_address table
 	public static final String FORM_FIELD_PATIENT_ADDRESS_POSTALADDRESS = "patient.address.postalAddress";
 	
 	public static final String FORM_FIELD_PATIENT_ADDRESS_DISTRICT = "patient.address.district";
 	
-	/*Ghanshyam - Sagar :  date- 15 Dec, 2012. Redmine issue's for Bangladesh : #510 and #511 and #512
-	  changes tehsil to upazila */
 	public static final String FORM_FIELD_PATIENT_ADDRESS_UPAZILA = "patient.address.upazila";
 	
 	public static final String FORM_FIELD_PATIENT_ADDRESS_LOCATION = "patient.address.location";
 	
 	public static final String FORM_FIELD_PATIENT_MLC= "patient.mlc";
 	
+	public static final String FORM_FIELD_PATIENT_TRIAGE = "patient.triage";
+	
 	public static final String FORM_FIELD_PATIENT_OPD_WARD = "patient.opdWard";
 	
-	//ghanshyam,16-dec-2013,3438 Remove the interdependency
-	public static final String FORM_FIELD_PATIENT_TRIAGE = "patient.triage";
+	public static final String FORM_FIELD_PATIENT_SPECIAL_CLINIC = "patient.specialClinic";
 	
 	public static final String FORM_FIELD_PATIENT_REFERRED = "patient.referred";
 	
@@ -103,10 +101,11 @@ public class RegistrationConstants {
 	
 	public static final String FORM_FIELD_PATIENT_REFERRED_DESCRIPTION= "patient.referred.description";
 	
-	// concept name
-	public static final String CONCEPT_NAME_OPD_WARD = "OPD WARD";
-	//ghanshyam,16-dec-2013,3438 Remove the interdependency
 	public static final String CONCEPT_NAME_TRIAGE = "TRIAGE";
+	
+	public static final String CONCEPT_NAME_OPD_WARD = "OPD WARD";
+	
+	public static final String CONCEPT_NAME_SPECIAL_CLINIC = "SPECIAL CLINIC";
 	
 	public static final String CONCEPT_NAME_PATIENT_REFERRED_TO_HOSPITAL = "PATIENT REFERRED TO HOSPITAL?";
 	
@@ -118,10 +117,8 @@ public class RegistrationConstants {
 	
 	public static final String CONCEPT_REVISIT = "Revisit";
 	
-	// harsh 2/7/2012 adding property for temp category
 	public static final String CONCEPT_NAME_MEDICO_LEGAL_CASE = "MEDICO LEGAL CASE";
 	
-	//ghanshyam  20-may-2013 #1648 capture Health ID and Registration Fee Type
 	public static final String FORM_FIELD_PATIENT_REGISTRATION_FEE_ATTRIBUTE = "patient.registration.fee.attribute";
 	public static final String FORM_FIELD_PATIENT_REGISTRATION_FEE_FREE_REASON_ATTRIBUTE = "patient.registration.fee.free.reason.attribute";
 	public static final String CONCEPT_NAME_REGISTRATION_FEE = "REGISTRATION FEE";

@@ -121,6 +121,9 @@ public class ShowPatientInfoController {
 				if (obs.getConcept().getName().getName().equalsIgnoreCase(RegistrationConstants.CONCEPT_NAME_OPD_WARD)) {
 					model.addAttribute("selectedOPD", obs.getValueCoded().getConceptId());
 				}
+				if (obs.getConcept().getName().getName().equalsIgnoreCase(RegistrationConstants.CONCEPT_NAME_SPECIAL_CLINIC)) {
+					model.addAttribute("selectedSPECIALCLINIC", obs.getValueCoded().getConceptId());
+				}
 
 				if (obs.getConcept().getName().getName().equalsIgnoreCase(RegistrationConstants.CONCEPT_NAME_MEDICO_LEGAL_CASE)) {
 					model.addAttribute("selectedMLC", obs.getValueCoded().getConceptId());
@@ -149,6 +152,9 @@ public class ShowPatientInfoController {
 					}
 					if (obs.getConcept().getName().getName().equalsIgnoreCase(RegistrationConstants.CONCEPT_NAME_OPD_WARD)) {
 						model.addAttribute("selectedOPD", obs.getValueCoded().getConceptId());
+					}
+					if (obs.getConcept().getName().getName().equalsIgnoreCase(RegistrationConstants.CONCEPT_NAME_SPECIAL_CLINIC)) {
+						model.addAttribute("selectedSPECIALCLINIC", obs.getValueCoded().getConceptId());
 					}
 
 					if (obs.getConcept().getName().getName().equalsIgnoreCase(RegistrationConstants.CONCEPT_NAME_MEDICO_LEGAL_CASE)) {
@@ -183,6 +189,7 @@ public class ShowPatientInfoController {
 		model.addAttribute("reVisitFee", GlobalPropertyUtil.getString(RegistrationConstants.PROPERTY_REVISIT_REGISTRATION_FEE, ""));
 		model.addAttribute("TRIAGE", RegistrationWebUtils.getSubConcepts(RegistrationConstants.CONCEPT_NAME_TRIAGE));
 		model.addAttribute("OPDs", RegistrationWebUtils.getSubConcepts(RegistrationConstants.CONCEPT_NAME_OPD_WARD));
+		model.addAttribute("SPECIALCLINIC", RegistrationWebUtils.getSubConcepts(RegistrationConstants.CONCEPT_NAME_SPECIAL_CLINIC));
 			return "/module/registration/patient/showPatientInfo";
 	}
 	
@@ -245,7 +252,8 @@ public class ShowPatientInfoController {
 				// send patient to triage room
 				RegistrationWebUtils.sendPatientToTriageQueue(patient, selectedTRIAGEConcept, true ,selectedCategory);
 			}
-			else{
+			else if (!StringUtils.isBlank(parameters
+					.get(RegistrationConstants.FORM_FIELD_PATIENT_OPD_WARD))) {
 				Concept opdConcept = Context.getConceptService().getConcept(RegistrationConstants.CONCEPT_NAME_OPD_WARD);
 				Concept selectedOPDConcept = Context.getConceptService().getConcept(
 				    Integer.parseInt(parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_OPD_WARD)));
@@ -257,6 +265,19 @@ public class ShowPatientInfoController {
 				
 				// send patient to opd room
 				RegistrationWebUtils.sendPatientToOPDQueue(patient, selectedOPDConcept, true ,selectedCategory);
+			}
+			else{
+				Concept specialClinicConcept = Context.getConceptService().getConcept(RegistrationConstants.CONCEPT_NAME_SPECIAL_CLINIC);
+				Concept selectedSpecialClinicConcept = Context.getConceptService().getConcept(
+				    Integer.parseInt(parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_SPECIAL_CLINIC)));
+				String selectedCategory=parameters.get(RegistrationConstants.FORM_FIELD_PAYMENT_CATEGORY);
+				Obs opd = new Obs();
+				opd.setConcept(specialClinicConcept);
+				opd.setValueCoded(selectedSpecialClinicConcept);
+				encounter.addObs(opd);
+				
+				// send patient to special clinic
+				RegistrationWebUtils.sendPatientToOPDQueue(patient, selectedSpecialClinicConcept, true ,selectedCategory);
 			}
 			
 			Concept mlcConcept = Context.getConceptService().getConcept(RegistrationConstants.CONCEPT_NAME_MEDICO_LEGAL_CASE);

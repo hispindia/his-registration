@@ -1023,7 +1023,9 @@ function showOtherNationality(){
 		<table width="100%" height="100%">
 		<tr valign="bottom">
 		<td valign="bottom"><input type="button" value="Save" onclick="PAGE.submit();" style="font-weight:bold"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		                    <!--
 		                    <input type="button" value="Reset" onclick="window.location.href=window.location.href" style="font-weight:bold"/>
+		                    -->
 		</td>
 		</tr>
 		</table>

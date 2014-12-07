@@ -138,6 +138,13 @@ input, select, textarea {
 					delimiter : ",",
 					optionDelimiter : "|"
 				});
+				MODEL.SPECIALCLINIC = " , |"
+						+ MODEL.SPECIALCLINIC;
+				PAGE.fillOptions("#specialClinic", {
+					data : MODEL.SPECIALCLINIC,
+					delimiter : ",",
+					optionDelimiter : "|"
+				});
 				MODEL.TEMPORARYCAT = " , |"
 						+ MODEL.TEMPORARYCAT;
 				PAGE.fillOptions("#mlc", {
@@ -180,6 +187,7 @@ input, select, textarea {
 				jQuery("#otherNationality").hide();
 				jQuery("#triageField").hide();
 				jQuery("#opdWardField").hide();
+				jQuery("#specialClinicField").hide();
 				
 				// binding
 				jQuery("#paying").click(function() {
@@ -206,6 +214,10 @@ input, select, textarea {
 				
 				jQuery("#opdRoom").click(function() {
 					VALIDATORS.opdRoomCheck();
+				});
+				
+				jQuery("#specialClinicRoom").click(function() {
+					VALIDATORS.specialClinicRoomCheck();
 				});
 
 				jQuery("#sameAddress").click(function() {
@@ -629,7 +641,8 @@ input, select, textarea {
 			} 
 			
 			if (jQuery("#triageRoom").attr('checked') == false
-					&& jQuery("#opdRoom").attr('checked') == false) {			
+				&& jQuery("#opdRoom").attr('checked') == false
+				&& jQuery("#specialClinicRoom").attr('checked') == false) {			
 			    alert("You did not choose any of the room");
 				return false;
 			} else {
@@ -639,9 +652,15 @@ input, select, textarea {
 						return false;
 					}
 				}
-				else{
+				else if (jQuery("#opdRoom").attr('checked')){
 				    if (StringUtils.isBlank(jQuery("#opdWard").val())) {
 						alert("Please select the OPD room to visit");
+						return false;
+					}
+				}
+				else{
+				    if (StringUtils.isBlank(jQuery("#specialClinic").val())) {
+						alert("Please select the Special Clinic to visit");
 						return false;
 					}
 				}
@@ -706,7 +725,7 @@ input, select, textarea {
 					jQuery("#specialSchemeName").val("");
 					jQuery("#specialSchemeField").hide();
 					jQuery("#fileNumberField").hide();
-					jQuery("#selectedRegFeeValu").val(${initialRegFee});
+					jQuery("#selectedRegFeeValue").val(${initialRegFee});
 			}
 		},
 		
@@ -719,7 +738,7 @@ input, select, textarea {
 					jQuery("#specialSchemeName").val("");
 					jQuery("#specialSchemeField").hide();
 					jQuery("#fileNumberField").hide();
-					jQuery("#selectedRegFeeValu").val(0);
+					jQuery("#selectedRegFeeValue").val(0);
 			}
 		},
 		
@@ -731,7 +750,7 @@ input, select, textarea {
 					jQuery("#nonPaying").removeAttr("checked");
 					jQuery("#specialSchemeField").show();
 					jQuery("#fileNumberField").show();
-					jQuery("#selectedRegFeeValu").val(0);
+					jQuery("#selectedRegFeeValue").val(0);
 			}
 			else{
 			 jQuery("#specialSchemeName").val("");
@@ -760,8 +779,10 @@ input, select, textarea {
 		triageRoomCheck : function () {
 			if (jQuery("#triageRoom").is(':checked')) {
 			        jQuery("#opdRoom").removeAttr("checked");
+			        jQuery("#specialClinicRoom").removeAttr("checked");
 					jQuery("#triageField").show();	
 					jQuery("#opdWardField").hide();	
+					jQuery("#specialClinicField").hide();	
 			}
 			else{
 			jQuery("#triageField").hide();	
@@ -771,11 +792,26 @@ input, select, textarea {
 		opdRoomCheck : function () {
 			if (jQuery("#opdRoom").is(':checked')) {
 			        jQuery("#triageRoom").removeAttr("checked");
+			        jQuery("#specialClinicRoom").removeAttr("checked");
 			        jQuery("#triageField").hide();
 					jQuery("#opdWardField").show();	
+					jQuery("#specialClinicField").hide();
 			}
 			else{
 			jQuery("#opdWardField").hide();	
+			}
+		},
+		
+		specialClinicRoomCheck : function () {
+			if (jQuery("#specialClinicRoom").is(':checked')) {
+			        jQuery("#triageRoom").removeAttr("checked");
+			        jQuery("#opdRoom").removeAttr("checked");
+			        jQuery("#triageField").hide();
+			        jQuery("#opdWardField").hide();
+					jQuery("#specialClinicField").show();	
+			}
+			else{
+			jQuery("#specialClinicField").hide();	
 			}
 		},
 
@@ -1160,8 +1196,13 @@ input, select, textarea {
 				<td><span id="opdWardField"><select id="opdWard" name="patient.opdWard" style='width: 152px;'>	</select></span></td>
 		</tr>
 		<tr>
+				<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+				<td><input id="specialClinicRoom" type="checkbox" name="specialClinicRoom"/> Special Clinic&nbsp;&nbsp;&nbsp;&nbsp;</td>
+				<td><span id="specialClinicField"><select id="specialClinic" name="patient.specialClinic" style='width: 152px;'>	</select></span></td>
+		</tr>
+		<tr>
 		<td>
-		<input type="hidden" id="selectedRegFeeValu" name="patient.registration.fee" />
+		<input type="hidden" id="selectedRegFeeValue" name="patient.registration.fee" />
 		</td>
 		</tr>
 		</table>

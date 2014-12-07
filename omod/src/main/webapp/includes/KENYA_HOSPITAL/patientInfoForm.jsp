@@ -40,6 +40,7 @@
 		
 		jQuery("#triageField").hide();
 		jQuery("#opdWardField").hide();
+		jQuery("#specialClinicField").hide();
 		
         jQuery("#nationalId").html(MODEL.patientAttributes[20]);
 		jQuery("#phoneNumber").html(MODEL.patientAttributes[16]);
@@ -58,6 +59,13 @@
 		MODEL.OPDs = " ,Please Select OPD to Visit|" + MODEL.OPDs;
 		PAGE.fillOptions("#opdWard", {
 			data:MODEL.OPDs,
+			delimiter: ",",
+			optionDelimiter: "|"
+		});
+		
+		MODEL.SPECIALCLINIC = " ,Please Select Special Clinic to Visit|" + MODEL.SPECIALCLINIC;
+		PAGE.fillOptions("#specialClinic", {
+			data:MODEL.SPECIALCLINIC,
 			delimiter: ",",
 			optionDelimiter: "|"
 		});
@@ -81,6 +89,13 @@
 		    jQuery("#opdWardField").show();
 			jQuery("#opdWard").val(MODEL.selectedOPD);
 			jQuery("#opdWard").attr("disabled", "disabled");
+		}
+		
+		// Set the selected SPECIAL CLINIC
+		if(!StringUtils.isBlank(MODEL.selectedSPECIALCLINIC)){
+		    jQuery("#specialClinicField").show();
+			jQuery("#specialClinic").val(MODEL.selectedSPECIALCLINIC);
+			jQuery("#specialClinic").attr("disabled", "disabled");
 		}
 		
 		if(!StringUtils.isBlank(MODEL.selectedMLC)){	
@@ -114,17 +129,14 @@
 		jQuery("#opdRoom").click(function() {
 		VALIDATORS.opdRoomCheck();
 		});
-
+		jQuery("#specialClinicRoom").click(function() {
+		VALIDATORS.specialClinicRoomCheck();
+		});
 		
-		//ghanshyam,11-dec-2013,#3327 Defining patient categories based on Kenyan requirements
-		
-			
-			if(!StringUtils.isBlank(MODEL.selectedTRIAGE) || !StringUtils.isBlank(MODEL.selectedOPD)){	
-			jQuery("#mlcCaseYesField").hide();
-			jQuery("#mlcCaseNoField").hide();
-			
+			if(!StringUtils.isBlank(MODEL.selectedTRIAGE) || !StringUtils.isBlank(MODEL.selectedOPD) || !StringUtils.isBlank(MODEL.selectedSPECIALCLINIC)){	
 			jQuery("#triageRoomField").hide();
 			jQuery("#opdRoomField").hide();
+			jQuery("#specialClinicRoomField").hide();
 			}
 			
 		
@@ -132,25 +144,41 @@
 		if(MODEL.firstTimeVisit=="true"){
 		    jQuery("#reprint").hide();
 			
-			jQuery("#payingField").hide();
-			jQuery("#nonPayingField").hide();
-			jQuery("#specialSchemeField").hide();
+			jQuery("#paymentCategoryRow").hide();
+			jQuery("#nonPayingCategoryRow").hide();
+			jQuery("#specialSchemesRow").hide();
+			
+			if(!StringUtils.isBlank(MODEL.selectedMLC)){
+			jQuery("#mlcCaseYesField").hide();
+			jQuery("#mlcCaseNoRowField").hide();
+			}
+			else{
+			jQuery("#medicoLegalCaseRowField").hide();
+		    jQuery("#mlcCaseNoRowField").hide();
+			}	
+			    
+			jQuery("#triageRowField").hide();
+			jQuery("#opdRowField").hide();
+			jQuery("#specialClinicRowField").hide();
+			
+			jQuery("#printablePaymentCategory").append("<span style='border:0px'>" + MODEL.selectedPaymentCategory + "</span>");
+			jQuery("#printablePaymentCategoryRow").show();
 			
 			if(MODEL.selectedPaymentCategory == "Paying"){
-			        jQuery("#payingField").after("<span style='border:0px'>" + jQuery("#paying").val() + "</span>");
+			        //jQuery("#payingField").after("<span style='border:0px'>" + jQuery("#paying").val() + "</span>");
 					jQuery("#regFeeValue").val(${initialRegFee});
 					jQuery("#regFeeValue").attr("disabled", "disabled");
 				}
 			if(MODEL.selectedPaymentCategory == "Non-Paying"){
-			            jQuery("#payingField").after("<span style='border:0px'>" + jQuery("#nonPaying").val() + "</span>");
+			            //jQuery("#payingField").after("<span style='border:0px'>" + jQuery("#nonPaying").val() + "</span>");
 						jQuery("#regFeeValue").val(0);
 						jQuery("#regFeeValue").attr("disabled", "disabled");
 				}
 			if(MODEL.selectedPaymentCategory == "Special Schemes"){
-			            if(!StringUtils.isBlank(MODEL.specialSchemeName)){	
-			            jQuery("#payingField").after("<span style='border:0px'>" + MODEL.specialSchemeName + "&nbsp;&nbsp;" + "</span>");
-		                 }
-			            jQuery("#payingField").after("<span style='border:0px'>" + jQuery("#specialSchemes").val() + "</span>");
+			            //if(!StringUtils.isBlank(MODEL.specialSchemeName)){	
+			            //jQuery("#payingField").after("<span style='border:0px'>" + MODEL.specialSchemeName + "&nbsp;&nbsp;" + "</span>");
+		                 //}
+			            //jQuery("#payingField").after("<span style='border:0px'>" + jQuery("#specialSchemes").val() + "</span>");
 				}
 		}
 		else if(MODEL.revisit=="true"){
@@ -163,9 +191,19 @@
 			jQuery("#paymentCategoryRow").hide();
 			jQuery("#nonPayingCategoryRow").hide();
 			jQuery("#specialSchemesRow").hide();
+			
+			if(!StringUtils.isBlank(MODEL.selectedMLC)){
+			jQuery("#mlcCaseYesField").hide();
+			jQuery("#mlcCaseNoRowField").hide();
+			}
+			else{
+			jQuery("#medicoLegalCaseRowField").hide();
+		    jQuery("#mlcCaseNoRowField").hide();
+			}	
 			    
 			jQuery("#triageRowField").hide();
 			jQuery("#opdRowField").hide();
+			jQuery("#specialClinicRowField").hide();
 				
 			jQuery("#printablePaymentCategory").append("<span style='border:0px'>" + MODEL.selectedPaymentCategory + "</span>");
 			jQuery("#printablePaymentCategoryRow").show();
@@ -181,8 +219,11 @@
 			if(!StringUtils.isBlank(MODEL.selectedTRIAGE)){	
 			jQuery("#printableRoomToVisit").append("<span style='border:0px'>" + jQuery("#triage option:checked").html() + "</span>");
 			}
-           if(!StringUtils.isBlank(MODEL.selectedOPD)){
+            if(!StringUtils.isBlank(MODEL.selectedOPD)){
 		    jQuery("#printableRoomToVisit").append("<span style='border:0px'>" + jQuery("#opdWard option:checked").html() + "</span>");
+            }
+            if(!StringUtils.isBlank(MODEL.selectedSPECIALCLINIC)){
+		    jQuery("#printableRoomToVisit").append("<span style='border:0px'>" + jQuery("#specialClinic option:checked").html() + "</span>");
             }
             jQuery("#printableRoomToVisitRow").show();
 			
@@ -238,6 +279,7 @@
 			    
 			    jQuery("#triageRowField").hide();
 			    jQuery("#opdRowField").hide();
+			    jQuery("#specialClinicRowField").hide();
 			    
 			    if (jQuery("#paying").is(':checked')) {
 			     jQuery("#printablePaymentCategory").append("<span style='border:0px'>" + jQuery("#paying").val() + "</span>");
@@ -259,6 +301,9 @@
 			    }
                 if (jQuery("#opdRoom").is(':checked')) {
 				jQuery("#printableRoomToVisit").append("<span style='border:0px'>" + jQuery("#opdWard option:checked").html() + "</span>");
+                }
+                if (jQuery("#specialClinicRoom").is(':checked')) {
+				jQuery("#printableRoomToVisit").append("<span style='border:0px'>" + jQuery("#specialClinic option:checked").html() + "</span>");
                 }
                 jQuery("#printableRoomToVisitRow").show();
 			    
@@ -398,7 +443,8 @@
 			}
 		
 			if (jQuery("#triageRoom").attr('checked') == false
-					&& jQuery("#opdRoom").attr('checked') == false) {			
+				&& jQuery("#opdRoom").attr('checked') == false
+				&& jQuery("#specialClinicRoom").attr('checked') == false) {			
 			    alert("You did not choose any of the room");
 				return false;
 			} else {
@@ -408,9 +454,15 @@
 						return false;
 					}
 				}
-				else{
+				else if (jQuery("#opdRoom").attr('checked')){
 				    if (StringUtils.isBlank(jQuery("#opdWard").val())) {
 						alert("Please select the OPD room to visit");
+						return false;
+					}
+				}
+				else{
+				    if (StringUtils.isBlank(jQuery("#specialClinic").val())) {
+						alert("Please select the Special Clinic to visit");
 						return false;
 					}
 				}
@@ -489,8 +541,10 @@
 		triageRoomCheck : function () {
 			if (jQuery("#triageRoom").is(':checked')) {
 			        jQuery("#opdRoom").removeAttr("checked");
+			        jQuery("#specialClinicRoom").removeAttr("checked");
 					jQuery("#triageField").show();	
 					jQuery("#opdWardField").hide();	
+					jQuery("#specialClinicField").hide();	
 			}
 			else{
 			jQuery("#triageField").hide();	
@@ -500,11 +554,26 @@
 		opdRoomCheck : function () {
 			if (jQuery("#opdRoom").is(':checked')) {
 			        jQuery("#triageRoom").removeAttr("checked");
+			        jQuery("#specialClinicRoom").removeAttr("checked");
 			        jQuery("#triageField").hide();
 					jQuery("#opdWardField").show();	
+					jQuery("#specialClinicField").hide();
 			}
 			else{
 			jQuery("#opdWardField").hide();	
+			}
+		},
+		
+		specialClinicRoomCheck : function () {
+			if (jQuery("#specialClinicRoom").is(':checked')) {
+			        jQuery("#triageRoom").removeAttr("checked");
+			        jQuery("#opdRoom").removeAttr("checked");
+			        jQuery("#triageField").hide();
+			        jQuery("#opdWardField").hide();
+					jQuery("#specialClinicField").show();	
+			}
+			else{
+			jQuery("#specialClinicField").hide();	
 			}
 		},
 		
@@ -670,6 +739,11 @@
 				<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
 				<td id="opdRoomField"><input id="opdRoom" type="checkbox" name="opdRoom"/> OPD Room&nbsp;&nbsp;&nbsp;&nbsp;</td>
 				<td id="opdWardField"><select id="opdWard" name="patient.opdWard" style='width: 152px;'>	</select></td>
+		</tr>
+		<tr id="specialClinicRowField">
+				<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+				<td id="specialClinicRoomField"><input id="specialClinicRoom" type="checkbox" name="specialClinicRoom"/> Special Clinic&nbsp;&nbsp;&nbsp;&nbsp;</td>
+				<td id="specialClinicField"><select id="specialClinic" name="patient.specialClinic" style='width: 152px;'>	</select><</td>
 		</tr>
 		<tr id="printableRoomToVisitRow">
 					<td><b>Room to Visit:</b></td>
