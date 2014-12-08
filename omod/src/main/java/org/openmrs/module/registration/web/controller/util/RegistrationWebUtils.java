@@ -230,26 +230,38 @@ public class RegistrationWebUtils {
 					String countyName=((Element) countyList.get(i)).attributeValue("name");
 					location=location+countyName;
 					
-					for (int j = 0; j < (subcountyList.size()); j++) {
-						String subcountyName=((Element) subcountyList.get(j)).attributeValue("name");
-						location=location+"/"+subcountyName;
-						
-						subcountyArr[i] = ((Element) subcountyList.get(0)).attributeValue("name") + ",";
-						if(j<subcountyList.size()-1 && j>0){
-						subcountyArr[i] += ((Element) subcountyList.get(j)).attributeValue("name") + ",";
-						}
-						else{
-						subcountyArr[i] += ((Element) subcountyList.get(j)).attributeValue("name");	
-						}
-						
-						List locationList = ((Element) subcountyList.get(j)).elements("location");
-						
-						for(int k = 0; k < (locationList.size()); k++) {
-							String locationName=((Element) locationList.get(k)).attributeValue("name");
-							location=location+"."+locationName;
-						}
-						
+					
+					String subcountyName=((Element) subcountyList.get(0)).attributeValue("name");
+					location=location+"/"+subcountyName;
+					subcountyArr[i] = ((Element) subcountyList.get(0)).attributeValue("name") + ",";
+					@SuppressWarnings("rawtypes")
+					List locationList = ((Element) subcountyList.get(0)).elements("location");
+					for(int k = 0; k < (locationList.size()); k++) {
+						String locationName=((Element) locationList.get(k)).attributeValue("name");
+						location=location+"."+locationName;
 					}
+						
+					
+					for (int j = 1; j < (subcountyList.size()-1); j++) {
+					subcountyName=((Element) subcountyList.get(j)).attributeValue("name");
+					location=location+"/"+subcountyName;
+					subcountyArr[i] += ((Element) subcountyList.get(j)).attributeValue("name") + ",";
+					locationList = ((Element) subcountyList.get(j)).elements("location");
+					for(int k = 0; k < (locationList.size()); k++) {
+						String locationName=((Element) locationList.get(k)).attributeValue("name");
+						location=location+"."+locationName;
+						}	
+					}
+					
+					subcountyName=((Element) subcountyList.get((subcountyList.size()-1))).attributeValue("name");
+					location=location+"/"+subcountyName;
+					subcountyArr[i] += ((Element) subcountyList.get((subcountyList.size()-1))).attributeValue("name") + ",";
+					locationList = ((Element) subcountyList.get((subcountyList.size()-1))).elements("location");
+					for(int k = 0; k < (locationList.size()); k++) {
+						String locationName=((Element) locationList.get(k)).attributeValue("name");
+						location=location+"."+locationName;
+					}
+					
 					if(i<countyList.size()-1){
 						location=location+"@";
 					}
