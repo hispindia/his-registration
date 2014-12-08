@@ -22,15 +22,17 @@
 <openmrs:globalProperty var="userLocation" key="hospital.location_user" defaultValue="false"/>
 
 <script type="text/javascript">
-	jQuery(document).ready(function(){		
+	jQuery(document).ready(function(){
+	    jQuery("#save").hide();	
 		jQuery("#patientId").val(MODEL.patientId);
 		jQuery("#revisit").val(MODEL.revisit);
 		jQuery("#identifier").html(MODEL.patientIdentifier);
 		jQuery("#age").html(MODEL.patientAge);
 		jQuery("#name").html(MODEL.patientName);
-		jQuery("#selectedRegFeeValueRowField").hide();
 		jQuery("#printablePaymentCategoryRow").hide();
 		jQuery("#printableRoomToVisitRow").hide();
+		jQuery("#selectedRegFeeValueRowField").hide();
+		//jQuery("#printableUserRow").hide();
 		
 		jQuery("#mlc").hide();
 		
@@ -228,9 +230,8 @@
             jQuery("#printableRoomToVisitRow").show();
 			
 			jQuery("#regFeeValue").val(${registrationFee});
-			jQuery("#regFeeValue").attr("disabled", "disabled");	
+			jQuery("#regFeeValue").attr("disabled", "disabled");
 		
-		    
 			jQuery("#printSlip").hide();
 			jQuery("#save").hide();
 		}
@@ -249,20 +250,10 @@
 				// Hide print button
 				jQuery("#printSlip").hide();
 				jQuery("#reprint").hide();
-				
-				jQuery("#regFeeValue").hide();
-				jQuery("#regFeeValue").after("<span style='border:0px'>" + jQuery("#regFeeValue  option:checked").html() + "</span>"); 
-				
-				
-				jQuery("#selectedRegFeeValue").val(jQuery("#regFeeValue").val());
-				
-				/*if(MODEL.firstTimeVisit=="true"){
-				
-                }*/
                 
                 if(MODEL.revisit=="true"){
 			
-			   if (jQuery("#mlcCaseYes").is(':checked')) {
+			    if (jQuery("#mlcCaseYes").is(':checked')) {
 		        jQuery("#mlcCaseNoRowField").hide();
 		        jQuery("#mlcCaseYesField").hide();
 		        jQuery("#mlc").hide();
@@ -308,6 +299,11 @@
                 jQuery("#printableRoomToVisitRow").show();
 			    
                 }
+                
+                jQuery("#regFeeValue").hide();
+				jQuery("#regFeeValue").after("<span style='border:0px'>" + jQuery("#regFeeValue  option:checked").html() + "</span>"); 
+	
+				jQuery("#selectedRegFeeValue").val(jQuery("#regFeeValue").val());
 			
 				
 				// submit form and print		
@@ -678,7 +674,9 @@
 		<tr id="specialSchemesRow">
 				<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
 				<td id="specialSchemeField"><input id="specialSchemes" type="checkbox" name="person.attribute.14" value="Special Schemes" /> Special Schemes &nbsp;&nbsp;&nbsp;&nbsp;</td>
+				<!--
 				<td id="specialSchemeNameField"><input id="specialSchemeName" name="person.attribute.42" placeholder="Please specify" style='width: 152px;'/></td>
+				-->
 		</tr>
 		
 		<tr id="printablePaymentCategoryRow">
@@ -772,6 +770,10 @@
 				</tr>
 				<tr id="selectedRegFeeValueRowField">			
 					<td id="selectedRegFeeValueColumnField"> <input id="selectedRegFeeValue" name="selectedRegFeeValue" /> </td>
+				</tr>
+				<tr id="printableUserRow">			
+					<td><b>You were served by:</b>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+					<td>${user}</td>
 				</tr>
 			</table>
 		</form>
