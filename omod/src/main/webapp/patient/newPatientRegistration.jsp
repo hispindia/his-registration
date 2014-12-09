@@ -54,6 +54,8 @@
 		TRIAGE: "${TRIAGE}",
 		OPDs: "${OPDs}",
 		SPECIALCLINIC: "${SPECIALCLINIC}",
+		nonPayingCategory: "${nonPayingCategory}",
+		specialScheme: "${specialScheme}",
 		referredFrom: "${referralHospitals}",
 		referralType: "${referralReasons}",
 		TEMPORARYCAT: "${TEMPORARYCAT}",

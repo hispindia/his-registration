@@ -124,6 +124,22 @@ input, select, textarea {
 			}
 		  }	;
 			
+				MODEL.nonPayingCategory = " , |"
+						+ MODEL.nonPayingCategory;
+				PAGE.fillOptions("#nonPayingCategory", {
+					data : MODEL.nonPayingCategory,
+					delimiter : ",",
+					optionDelimiter : "|"
+				});
+				
+				MODEL.specialScheme = " , |"
+						+ MODEL.specialScheme;
+				PAGE.fillOptions("#specialScheme", {
+					data : MODEL.specialScheme,
+					delimiter : ",",
+					optionDelimiter : "|"
+				});
+				
 				MODEL.TRIAGE = " , |"
 						+ MODEL.TRIAGE;
 				PAGE.fillOptions("#triage", {
@@ -153,14 +169,14 @@ input, select, textarea {
 					optionDelimiter : "|"
 				});
 							
-				MODEL.referredFrom = " , |"
+				MODEL.referredFrom = " ,Referred From|"
 						+ MODEL.referredFrom;
 				PAGE.fillOptions("#referredFrom", {
 					data : MODEL.referredFrom,
 					delimiter : ",",
 					optionDelimiter : "|"
 				});
-				MODEL.referralType = " , |"
+				MODEL.referralType = " ,Referral Type|"
 						+ MODEL.referralType;
 				PAGE.fillOptions("#referralType	", {
 					data : MODEL.referralType,
@@ -181,10 +197,15 @@ input, select, textarea {
 
 
 		
+				jQuery("#nonPayingCategoryField").hide();
+				jQuery("#specialSchemeCategoryField").hide();
 				jQuery("#specialSchemeField").hide();
 				jQuery("#fileNumberField").hide();
 				jQuery("#mlc").hide();
 				jQuery("#otherNationality").hide();
+				jQuery("#referredFromColumn").hide();
+				jQuery("#referralTypeRow").hide();
+				jQuery("#referralDescriptionRow").hide();
 				jQuery("#triageField").hide();
 				jQuery("#opdWardField").hide();
 				jQuery("#specialClinicField").hide();
@@ -206,6 +227,14 @@ input, select, textarea {
 				
 				jQuery("#mlcCaseNo").click(function() {
 					VALIDATORS.mlcNoCheck();
+				});
+				
+				jQuery("#referredYes").click(function() {
+					VALIDATORS.referredYesCheck();
+				});
+				
+				jQuery("#referredNo").click(function() {
+					VALIDATORS.referredNoCheck();
 				});
 				
 				jQuery("#triageRoom").click(function() {
@@ -528,37 +557,11 @@ input, select, textarea {
 					alert('Please enter othername in correct format');
 				}
 			}
-	
-				
-
-			if (StringUtils.isBlank(jQuery("#patientRelativeName").val())) {
-				alert("Please enter the patient's relative name");
-				return false;
-			} /*else {
-				if (jQuery("#patientGender").val() == "M"||jQuery("#patientGender").val() == "F") {
-					if (jQuery("#patientRegistrationForm input[name=person.attribute.15]:checked").length == 0) {
-						alert("Please select relative name type");
-						return false;
-					}
-				}
-			}*/
-			
-			if (jQuery("#relationshipType").val() == "Relationship") {
-				alert("Please enter the patient's relationship type with the NOK");
-				return false;
-			}
 
 			if (StringUtils.isBlank(jQuery("#birthdate").val())) {
 				alert("Please enter age or DOB of the patient");
 				return false;
 			} 
-
-			if (!StringUtils.isBlank(jQuery("#referredFrom").val())) {
-				if (StringUtils.isBlank(jQuery("#referralType").val())) {
-					alert("Please enter referral type of the patient");
-					return false;
-				} 
-			}	
 			
 			if (jQuery("#patientGender").val() == "Any") {
 				alert("Please select gender of the patient");
@@ -574,14 +577,6 @@ input, select, textarea {
 				alert("Please select religion of the patient");
 				return false;
 			} 
-			
-			
-			if (jQuery("#mlcCaseYes").is(':checked')) {
-				if (StringUtils.isBlank(jQuery("#mlc").val())){
-					alert("Please select the medico legal case");
-					return false;
-				}
-			}
 					
 			
 			if (StringUtils.isBlank(jQuery("#patientPostalAddress").val())) {
@@ -625,20 +620,76 @@ input, select, textarea {
 			    alert("You did not choose any of the payment categories");
 				return false;
 			} 
-			/*else {
-			    if (jQuery("#specialSchemes").attr('checked')) {
-					if (jQuery("#specialSchemeName").val().length <= 0) {
-						alert("Please enter the Special Scheme Name");
+			else {
+			    if (jQuery("#nonPaying").attr('checked')) {
+					if (StringUtils.isBlank(jQuery("#nonPayingCategory").val())){
+						alert("Please select the Non-Paying Category");
+						return false;
+					}
+				}
+				else if (jQuery("#specialSchemes").attr('checked')) {
+					if (StringUtils.isBlank(jQuery("#specialScheme").val())){
+						alert("Please select the Special Scheme");
+						return false;
+					}
+				}
+			}
+			
+			if (StringUtils.isBlank(jQuery("#patientRelativeName").val())) {
+				alert("Please enter the patient's relative name");
+				return false;
+			} /*else {
+				if (jQuery("#patientGender").val() == "M"||jQuery("#patientGender").val() == "F") {
+					if (jQuery("#patientRegistrationForm input[name=person.attribute.15]:checked").length == 0) {
+						alert("Please select relative name type");
 						return false;
 					}
 				}
 			}*/
 			
+			if (jQuery("#relationshipType").val() == "Relationship") {
+				alert("Please enter the patient's relationship type with the NOK");
+				return false;
+			}
+			
 			if (jQuery("#mlcCaseYes").attr('checked') == false
 					&& jQuery("#mlcCaseNo").attr('checked') == false) {			
-			    alert("You did not choose any of the Medico Legal Case ");
+			    alert("You did not choose any of the Medico Legal Case");
+				return false;
+			}
+			else{
+			 if (jQuery("#mlcCaseYes").is(':checked')) {
+				if (StringUtils.isBlank(jQuery("#mlc").val())){
+					alert("Please select the medico legal case");
+					return false;
+				}
+			  }
+			}
+			
+			if (jQuery("#referredYes").attr('checked') == false
+					&& jQuery("#referredNo").attr('checked') == false) {			
+			    alert("You did not choose any of the Referral Information");
 				return false;
 			} 
+			else{
+			
+			if (jQuery("#referredYes").attr('checked')) {
+			
+			if (StringUtils.isBlank(jQuery("#referredFrom").val())) {
+				alert("Please enter referral from of the patient");
+				return false;
+			   }
+			 else{
+			 
+			 if (StringUtils.isBlank(jQuery("#referralType").val())) {
+					alert("Please enter referral type of the patient");
+					return false;
+				} 
+			 } 
+			 
+			 }
+			  
+			}	
 			
 			if (jQuery("#triageRoom").attr('checked') == false
 				&& jQuery("#opdRoom").attr('checked') == false
@@ -720,7 +771,8 @@ input, select, textarea {
 		payingCheck : function() {
 			if (jQuery("#paying").is(':checked')) {
 					jQuery("#nonPaying").removeAttr("checked");
-				    
+				    jQuery("#nonPayingCategoryField").hide();
+				    jQuery("#specialSchemeCategoryField").hide();
 				    jQuery("#specialSchemes").removeAttr("checked");
 					jQuery("#specialSchemeName").val("");
 					jQuery("#specialSchemeField").hide();
@@ -733,12 +785,16 @@ input, select, textarea {
 		nonPayingCheck : function() {
 			if (jQuery("#nonPaying").is(':checked')) {
 					jQuery("#paying").removeAttr("checked");
-				    
+				    jQuery("#nonPayingCategoryField").show();
 				    jQuery("#specialSchemes").removeAttr("checked");
+				    jQuery("#specialSchemeCategoryField").hide();
 					jQuery("#specialSchemeName").val("");
 					jQuery("#specialSchemeField").hide();
 					jQuery("#fileNumberField").hide();
 					jQuery("#selectedRegFeeValue").val(0);
+			}
+			else{
+			jQuery("#nonPayingCategoryField").hide();
 			}
 		},
 		
@@ -746,14 +802,16 @@ input, select, textarea {
 		specialSchemeCheck : function() {
 			if (jQuery("#specialSchemes").is(':checked')) {
 					jQuery("#paying").removeAttr("checked");
-					
+					jQuery("#nonPayingCategoryField").hide();
 					jQuery("#nonPaying").removeAttr("checked");
+					jQuery("#specialSchemeCategoryField").show();
 					jQuery("#specialSchemeField").show();
 					jQuery("#fileNumberField").show();
 					jQuery("#selectedRegFeeValue").val(0);
 			}
 			else{
-			 jQuery("#specialSchemeName").val("");
+			jQuery("#specialSchemeCategoryField").hide();
+			jQuery("#specialSchemeName").val("");
 			jQuery("#specialSchemeField").hide();
 			jQuery("#fileNumberField").hide();
 			}
@@ -773,6 +831,29 @@ input, select, textarea {
 			if (jQuery("#mlcCaseNo").is(':checked')) {
 			    jQuery("#mlcCaseYes").removeAttr("checked");	
 				jQuery("#mlc").hide();	
+			}
+		},
+		
+		referredYesCheck : function () {
+			if (jQuery("#referredYes").is(':checked')) {
+			        jQuery("#referredNo").removeAttr("checked");
+					jQuery("#referredFromColumn").show();
+				    jQuery("#referralTypeRow").show();
+				    jQuery("#referralDescriptionRow").show();	
+			}
+			else{
+			jQuery("#referredFromColumn").hide();
+			jQuery("#referralTypeRow").hide();
+			jQuery("#referralDescriptionRow").hide();
+			}
+		},
+		
+		referredNoCheck : function () {
+			if (jQuery("#referredNo").is(':checked')) {
+			    jQuery("#referredYes").removeAttr("checked");	
+				jQuery("#referredFromColumn").hide();
+				jQuery("#referralTypeRow").hide();
+				jQuery("#referralDescriptionRow").hide();	
 			}
 		},
 		
@@ -1096,6 +1177,7 @@ input, select, textarea {
 		<tr>
 				<td>&nbsp;&nbsp;&nbsp;&nbsp;</b></td>
 				<td><input id="nonPaying" type="checkbox" name="person.attribute.14" value="Non-Paying" /> Non-Paying</td>
+				<td><span id="nonPayingCategoryField"><select id="nonPayingCategory" name="patient.nonPayingCategory" style='width: 152px;'>	</select></span></td>
 		</tr>
 		<tr>
 				<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
@@ -1103,6 +1185,7 @@ input, select, textarea {
 				<!--
 				<td><span id="specialSchemeField"><input id="specialSchemeName" name="person.attribute.42" placeholder="Please specify" style='width: 152px;'/></span></td>
 				-->
+				<td><span id="specialSchemeCategoryField"><select id="specialScheme" name="patient.specialScheme" style='width: 152px;'>	</select></span></td>
 		</tr>
 		<!--
 		<tr></tr><tr></tr>
@@ -1171,22 +1254,22 @@ input, select, textarea {
 		<tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr>
 		<tr>
 				<td><b>Referral Information&nbsp;&nbsp;&nbsp;&nbsp;</b></td>
-				<td>Referred From&nbsp;&nbsp;&nbsp;&nbsp;</td>
-				<td><select id="referredFrom" name="patient.referred.from" style="width: 152px;"></select></td>
+				<td><input id="referredYes" type="checkbox" name="referredYes"/> Yes&nbsp;&nbsp;&nbsp;&nbsp;</td>
+				<td id="referredFromColumn"><select id="referredFrom" name="patient.referred.from" style="width: 152px;"></select></td>
 		</tr>
-		<tr>
+		<tr id="referralTypeRow">
 				<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
-				<td>Referral Type&nbsp;&nbsp;&nbsp;&nbsp;</td>
+				<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
 				<td><select id="referralType" name="patient.referred.reason" style="width: 152px;"></select></td>
 		</tr>
-		<tr>
+		<tr id="referralDescriptionRow">
 				<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
-				<td>Comments / Additional&nbsp;&nbsp;&nbsp;&nbsp;</td>
-				<td><input id="referralDescription" name="patient.referred.description" style="width: 152px;"/></td>
+				<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+				<td><input id="referralDescription" name="patient.referred.description" placeholder="Comments" style="width: 152px;"/></td>
 		</tr>
 		<tr>
 				<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
-				<td>Information&nbsp;&nbsp;&nbsp;&nbsp;</td>
+				<td><input id="referredNo" type="checkbox" name="referredNo"/> No&nbsp;&nbsp;&nbsp;&nbsp;</td>
 		</tr>
 		<tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr>
         <tr>

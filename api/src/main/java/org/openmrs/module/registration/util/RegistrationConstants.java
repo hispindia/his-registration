@@ -85,6 +85,10 @@ public class RegistrationConstants {
 	
 	public static final String FORM_FIELD_PATIENT_ADDRESS_LOCATION = "patient.address.location";
 	
+	public static final String FORM_FIELD_NONPAYING_CATEGORY = "patient.nonPayingCategory";
+	
+	public static final String FORM_FIELD_PATIENT_SPECIAL_SCHEME = "patient.specialScheme";
+	
 	public static final String FORM_FIELD_PATIENT_MLC= "patient.mlc";
 	
 	public static final String FORM_FIELD_PATIENT_TRIAGE = "patient.triage";
@@ -106,6 +110,10 @@ public class RegistrationConstants {
 	public static final String CONCEPT_NAME_OPD_WARD = "OPD WARD";
 	
 	public static final String CONCEPT_NAME_SPECIAL_CLINIC = "SPECIAL CLINIC";
+	
+	public static final String CONCEPT_NAME_NONPAYING_CATEGORY = "NON-PAYING CATEGORY";
+	
+	public static final String CONCEPT_NAME_SPECIAL_SCHEME = "SPECIAL SCHEME";
 	
 	public static final String CONCEPT_NAME_PATIENT_REFERRED_TO_HOSPITAL = "PATIENT REFERRED TO HOSPITAL?";
 	
