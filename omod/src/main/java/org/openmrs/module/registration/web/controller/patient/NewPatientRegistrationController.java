@@ -98,6 +98,10 @@ public class NewPatientRegistrationController {
 				RegistrationWebUtils
 						.getSubConcepts(RegistrationConstants.CONCEPT_NAME_SPECIAL_CLINIC));
 		model.addAttribute(
+				"payingCategory",
+				RegistrationWebUtils
+						.getSubConcepts(RegistrationConstants.CONCEPT_NAME_PAYING_CATEGORY));
+		model.addAttribute(
 				"nonPayingCategory",
 				RegistrationWebUtils
 						.getSubConcepts(RegistrationConstants.CONCEPT_NAME_NONPAYING_CATEGORY));
@@ -106,6 +110,8 @@ public class NewPatientRegistrationController {
 				RegistrationWebUtils
 						.getSubConcepts(RegistrationConstants.CONCEPT_NAME_SPECIAL_SCHEME));
 		model.addAttribute("initialRegFee", GlobalPropertyUtil.getString(RegistrationConstants.PROPERTY_INITIAL_REGISTRATION_FEE, ""));
+		model.addAttribute("mchRegFee", GlobalPropertyUtil.getString(RegistrationConstants.PROPERTY_MCH_REGISTRATION_FEE, ""));
+		model.addAttribute("specialClinicRegFee", GlobalPropertyUtil.getString(RegistrationConstants.PROPERTY_SPECIALCLINIC_REGISTRATION_FEE, ""));
 		
 			return "/module/registration/patient/newPatientRegistration";
 

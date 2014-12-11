@@ -124,6 +124,14 @@ input, select, textarea {
 			}
 		  }	;
 			
+				MODEL.payingCategory = " , |"
+						+ MODEL.payingCategory;
+				PAGE.fillOptions("#payingCategory", {
+					data : MODEL.payingCategory,
+					delimiter : ",",
+					optionDelimiter : "|"
+				});
+				
 				MODEL.nonPayingCategory = " , |"
 						+ MODEL.nonPayingCategory;
 				PAGE.fillOptions("#nonPayingCategory", {
@@ -197,6 +205,7 @@ input, select, textarea {
 
 
 		
+				jQuery("#payingCategoryField").hide();
 				jQuery("#nonPayingCategoryField").hide();
 				jQuery("#specialSchemeCategoryField").hide();
 				jQuery("#specialSchemeField").hide();
@@ -771,6 +780,7 @@ input, select, textarea {
 		payingCheck : function() {
 			if (jQuery("#paying").is(':checked')) {
 					jQuery("#nonPaying").removeAttr("checked");
+					jQuery("#payingCategoryField").show();
 				    jQuery("#nonPayingCategoryField").hide();
 				    jQuery("#specialSchemeCategoryField").hide();
 				    jQuery("#specialSchemes").removeAttr("checked");
@@ -778,6 +788,9 @@ input, select, textarea {
 					jQuery("#specialSchemeField").hide();
 					jQuery("#fileNumberField").hide();
 					jQuery("#selectedRegFeeValue").val(${initialRegFee});
+			}
+			else{
+			jQuery("#payingCategoryField").hide();
 			}
 		},
 		
@@ -787,6 +800,7 @@ input, select, textarea {
 					jQuery("#paying").removeAttr("checked");
 				    jQuery("#nonPayingCategoryField").show();
 				    jQuery("#specialSchemes").removeAttr("checked");
+				    jQuery("#payingCategoryField").hide();
 				    jQuery("#specialSchemeCategoryField").hide();
 					jQuery("#specialSchemeName").val("");
 					jQuery("#specialSchemeField").hide();
@@ -802,6 +816,7 @@ input, select, textarea {
 		specialSchemeCheck : function() {
 			if (jQuery("#specialSchemes").is(':checked')) {
 					jQuery("#paying").removeAttr("checked");
+					jQuery("#payingCategoryField").hide();
 					jQuery("#nonPayingCategoryField").hide();
 					jQuery("#nonPaying").removeAttr("checked");
 					jQuery("#specialSchemeCategoryField").show();
@@ -1173,6 +1188,7 @@ input, select, textarea {
 		<tr>
 				<td><b>Payment Category<label style="color:red">*</label>&nbsp;&nbsp;&nbsp;&nbsp;</b></td>
 				<td><input id="paying" type="checkbox" name="person.attribute.14" value="Paying" /> Paying</td>
+				<td><span id="payingCategoryField"><select id="payingCategory" name="patient.payingCategory" style='width: 152px;'>	</select></span></td>
 		</tr>
 		<tr>
 				<td>&nbsp;&nbsp;&nbsp;&nbsp;</b></td>

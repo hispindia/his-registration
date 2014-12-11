@@ -40,7 +40,9 @@ public class RegistrationConstants {
 	
 	public static final String PROPERTY_INITIAL_REGISTRATION_FEE = MODULE_ID + ".initialVisitRegistrationFee";
 	
-	public static final String PROPERTY_MCH_INITIAL_REGISTRATION_FEE = MODULE_ID + ".mchRegistrationFee";
+	public static final String PROPERTY_MCH_REGISTRATION_FEE = MODULE_ID + ".mchRegistrationFee";
+	
+	public static final String PROPERTY_SPECIALCLINIC_REGISTRATION_FEE = MODULE_ID + ".specialClinicRegistrationFee";
 	
 	public static final String PROPERTY_REVISIT_REGISTRATION_FEE = MODULE_ID + ".reVisitRegistrationFee";
 	
@@ -85,6 +87,8 @@ public class RegistrationConstants {
 	
 	public static final String FORM_FIELD_PATIENT_ADDRESS_LOCATION = "patient.address.location";
 	
+	public static final String FORM_FIELD_PAYING_CATEGORY = "patient.payingCategory";
+	
 	public static final String FORM_FIELD_NONPAYING_CATEGORY = "patient.nonPayingCategory";
 	
 	public static final String FORM_FIELD_PATIENT_SPECIAL_SCHEME = "patient.specialScheme";
@@ -110,6 +114,8 @@ public class RegistrationConstants {
 	public static final String CONCEPT_NAME_OPD_WARD = "OPD WARD";
 	
 	public static final String CONCEPT_NAME_SPECIAL_CLINIC = "SPECIAL CLINIC";
+	
+	public static final String CONCEPT_NAME_PAYING_CATEGORY = "PAYING CATEGORY";
 	
 	public static final String CONCEPT_NAME_NONPAYING_CATEGORY = "NON-PAYING CATEGORY";
 	
