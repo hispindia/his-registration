@@ -109,9 +109,9 @@ public class ShowPatientInfoController {
 				 if(attributeType.getPersonAttributeTypeId()==personAttributePaymentCategory.getPersonAttributeTypeId()){
 					 model.addAttribute("selectedPaymentCategory",pa.getValue()); 
 				 }
-				 if(attributeType.getPersonAttributeTypeId()==personAttributeSpecialSchemeName.getPersonAttributeTypeId()){
-					 model.addAttribute("specialSchemeName",pa.getValue()); 
-				 }
+				 //if(attributeType.getPersonAttributeTypeId()==personAttributeSpecialSchemeName.getPersonAttributeTypeId()){
+					 //model.addAttribute("specialSchemeName",pa.getValue()); 
+				 //}
 			 }
 			 
 			Encounter encounter = Context.getEncounterService().getEncounter(encounterId);
@@ -128,6 +128,12 @@ public class ShowPatientInfoController {
 
 				if (obs.getConcept().getName().getName().equalsIgnoreCase(RegistrationConstants.CONCEPT_NAME_MEDICO_LEGAL_CASE)) {
 					model.addAttribute("selectedMLC", obs.getValueCoded().getConceptId());
+				}
+				
+				if (obs.getConcept().getDisplayString().equalsIgnoreCase(RegistrationConstants.CONCEPT_NAME_REGISTRATION_FEE)) {
+					double regFee=obs.getValueNumeric();
+					int regFeeToInt = (int)regFee;
+					model.addAttribute("registrationFee", regFeeToInt);
 				}
 
 			}
@@ -179,16 +185,17 @@ public class ShowPatientInfoController {
 					 if(attributeType.getPersonAttributeTypeId()==personAttributePaymentCategory.getPersonAttributeTypeId()){
 						 model.addAttribute("selectedPaymentCategory",pa.getValue()); 
 					 }
-					 if(attributeType.getPersonAttributeTypeId()==personAttributeSpecialSchemeName.getPersonAttributeTypeId()){
-						 model.addAttribute("specialSchemeName",pa.getValue()); 
-					 }
+					 //if(attributeType.getPersonAttributeTypeId()==personAttributeSpecialSchemeName.getPersonAttributeTypeId()){
+						 //model.addAttribute("specialSchemeName",pa.getValue()); 
+					 //}
 				 }
 			}
 		}
 		
 		User user = Context.getAuthenticatedUser();
-		model.addAttribute("initialRegFee", GlobalPropertyUtil.getString(RegistrationConstants.PROPERTY_INITIAL_REGISTRATION_FEE, ""));
 		model.addAttribute("reVisitFee", GlobalPropertyUtil.getString(RegistrationConstants.PROPERTY_REVISIT_REGISTRATION_FEE, ""));
+		model.addAttribute("childLessThanFiveYearRegistrationFee", GlobalPropertyUtil.getString(RegistrationConstants.PROPERTY_CHILDLESSTHANFIVEYEAR_REGISTRATION_FEE, ""));
+		model.addAttribute("specialClinicRegFee", GlobalPropertyUtil.getString(RegistrationConstants.PROPERTY_SPECIALCLINIC_REGISTRATION_FEE, ""));
 		model.addAttribute("TRIAGE", RegistrationWebUtils.getSubConcepts(RegistrationConstants.CONCEPT_NAME_TRIAGE));
 		model.addAttribute("OPDs", RegistrationWebUtils.getSubConcepts(RegistrationConstants.CONCEPT_NAME_OPD_WARD));
 		model.addAttribute("SPECIALCLINIC", RegistrationWebUtils.getSubConcepts(RegistrationConstants.CONCEPT_NAME_SPECIAL_CLINIC));

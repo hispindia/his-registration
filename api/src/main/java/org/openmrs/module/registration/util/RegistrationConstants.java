@@ -44,6 +44,8 @@ public class RegistrationConstants {
 	
 	public static final String PROPERTY_SPECIALCLINIC_REGISTRATION_FEE = MODULE_ID + ".specialClinicRegistrationFee";
 	
+	public static final String PROPERTY_CHILDLESSTHANFIVEYEAR_REGISTRATION_FEE = MODULE_ID + ".childLessThanFiveYearRegistrationFee";
+	
 	public static final String PROPERTY_REVISIT_REGISTRATION_FEE = MODULE_ID + ".reVisitRegistrationFee";
 	
 	public static final String PROPERTY_RSBY_NO_OF_PATIENT = MODULE_ID + ".patientPerRSBY";
@@ -91,7 +93,15 @@ public class RegistrationConstants {
 	
 	public static final String FORM_FIELD_NONPAYING_CATEGORY = "patient.nonPayingCategory";
 	
+	public static final String FORM_FIELD_NHIFNUMBER = "patient.nhifNumber";
+	
 	public static final String FORM_FIELD_PATIENT_SPECIAL_SCHEME = "patient.specialScheme";
+	
+	public static final String FORM_FIELD_PATIENT_UNIVERSITY = "patient.university";
+	
+	public static final String FORM_FIELD_PATIENT_STUDENTID = "patient.studentId";
+	
+	public static final String FORM_FIELD_PATIENT_WAIVERNUMBER = "patient.waiverNumber";
 	
 	public static final String FORM_FIELD_PATIENT_MLC= "patient.mlc";
 	
@@ -120,6 +130,8 @@ public class RegistrationConstants {
 	public static final String CONCEPT_NAME_NONPAYING_CATEGORY = "NON-PAYING CATEGORY";
 	
 	public static final String CONCEPT_NAME_SPECIAL_SCHEME = "SPECIAL SCHEME";
+	
+	public static final String CONCEPT_NAME_LIST_OF_UNIVERSITIES = "LIST OF UNIVERSITIES";
 	
 	public static final String CONCEPT_NAME_PATIENT_REFERRED_TO_HOSPITAL = "PATIENT REFERRED TO HOSPITAL?";
 	

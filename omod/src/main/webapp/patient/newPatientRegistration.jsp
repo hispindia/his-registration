@@ -43,6 +43,21 @@
 		_upazilas[${status.index}] = "${upazila}";
 	</c:forEach>
 	
+	var _payingCategoryMap = new Array();
+	<c:forEach var="entry" items="${payingCategoryMap}">
+		_payingCategoryMap[${entry.key}] = "${entry.value}";
+	</c:forEach>
+	
+	var _nonPayingCategoryMap = new Array();
+	<c:forEach var="entry" items="${nonPayingCategoryMap}">
+		_nonPayingCategoryMap[${entry.key}] = "${entry.value}";
+	</c:forEach>
+	
+	var _specialSchemeMap = new Array();
+	<c:forEach var="entry" items="${specialSchemeMap}">
+		_specialSchemeMap[${entry.key}] = "${entry.value}";
+	</c:forEach>
+	
 	/**
 	 ** MODEL FROM CONTROLLER
 	 **/
@@ -57,6 +72,10 @@
 		payingCategory: "${payingCategory}",
 		nonPayingCategory: "${nonPayingCategory}",
 		specialScheme: "${specialScheme}",
+		payingCategoryMap: _payingCategoryMap,
+		nonPayingCategoryMap: _nonPayingCategoryMap,
+		specialSchemeMap: _specialSchemeMap,
+		universities: "${universities}",
 		referredFrom: "${referralHospitals}",
 		referralType: "${referralReasons}",
 		TEMPORARYCAT: "${TEMPORARYCAT}",

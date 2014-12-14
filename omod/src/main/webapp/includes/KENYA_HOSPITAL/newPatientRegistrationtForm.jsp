@@ -123,7 +123,7 @@ input, select, textarea {
 			 }
 			}
 		  }	;
-			
+		  
 				MODEL.payingCategory = " , |"
 						+ MODEL.payingCategory;
 				PAGE.fillOptions("#payingCategory", {
@@ -140,10 +140,18 @@ input, select, textarea {
 					optionDelimiter : "|"
 				});
 				
-				MODEL.specialScheme = " , |"
+				MODEL.specialScheme = ", |"
 						+ MODEL.specialScheme;
 				PAGE.fillOptions("#specialScheme", {
 					data : MODEL.specialScheme,
+					delimiter : ",",
+					optionDelimiter : "|"
+				});
+				
+				MODEL.universities = " , |"
+						+ MODEL.universities;
+				PAGE.fillOptions("#university", {
+					data : MODEL.universities,
 					delimiter : ",",
 					optionDelimiter : "|"
 				});
@@ -162,7 +170,7 @@ input, select, textarea {
 					delimiter : ",",
 					optionDelimiter : "|"
 				});
-				MODEL.SPECIALCLINIC = " , |"
+				MODEL.SPECIALCLINIC = ", |"
 						+ MODEL.SPECIALCLINIC;
 				PAGE.fillOptions("#specialClinic", {
 					data : MODEL.SPECIALCLINIC,
@@ -208,6 +216,10 @@ input, select, textarea {
 				jQuery("#payingCategoryField").hide();
 				jQuery("#nonPayingCategoryField").hide();
 				jQuery("#specialSchemeCategoryField").hide();
+				jQuery("#nhifNumberRow").hide();
+				jQuery("#universityRow").hide();
+				jQuery("#studentIdRow").hide();
+				jQuery("#waiverNumberRow").hide();
 				jQuery("#specialSchemeField").hide();
 				jQuery("#fileNumberField").hide();
 				jQuery("#mlc").hide();
@@ -723,6 +735,17 @@ input, select, textarea {
 						alert("Please select the Special Clinic to visit");
 						return false;
 					}
+					else{
+					if (jQuery("#paying").is(':checked')) {
+					payingCategorySelection();
+					}
+					if (jQuery("#nonPaying").is(':checked')) {
+					nonPayingCategorySelection();
+					}
+					if (jQuery("#specialSchemes").is(':checked')) {
+					specialSchemeSelection();
+					}		
+					}
 				}
 			}
 
@@ -787,7 +810,12 @@ input, select, textarea {
 					jQuery("#specialSchemeName").val("");
 					jQuery("#specialSchemeField").hide();
 					jQuery("#fileNumberField").hide();
-					jQuery("#selectedRegFeeValue").val(${initialRegFee});
+					//jQuery("#selectedRegFeeValue").val(${initialRegFee});
+					
+					jQuery("#nhifNumberRow").hide();
+					jQuery("#universityRow").hide();
+	                jQuery("#studentIdRow").hide();
+	                jQuery("#waiverNumberRow").hide();
 			}
 			else{
 			jQuery("#payingCategoryField").hide();
@@ -805,10 +833,23 @@ input, select, textarea {
 					jQuery("#specialSchemeName").val("");
 					jQuery("#specialSchemeField").hide();
 					jQuery("#fileNumberField").hide();
-					jQuery("#selectedRegFeeValue").val(0);
+					//jQuery("#selectedRegFeeValue").val(0);
+					
+					var selectedNonPayingCategory=jQuery("#nonPayingCategory option:checked").val();
+	                if(MODEL.nonPayingCategoryMap[selectedNonPayingCategory]==="NHIF CIVIL SERVANT"){
+	                jQuery("#nhifNumberRow").show();
+	                }
+	                else{
+	                jQuery("#nhifNumberRow").hide();
+	                }
+	                
+					jQuery("#universityRow").hide();
+	                jQuery("#studentIdRow").hide();
+	                jQuery("#waiverNumberRow").hide();
 			}
 			else{
 			jQuery("#nonPayingCategoryField").hide();
+			jQuery("#nhifNumberRow").hide();
 			}
 		},
 		
@@ -822,13 +863,35 @@ input, select, textarea {
 					jQuery("#specialSchemeCategoryField").show();
 					jQuery("#specialSchemeField").show();
 					jQuery("#fileNumberField").show();
-					jQuery("#selectedRegFeeValue").val(0);
+					//jQuery("#selectedRegFeeValue").val(0);
+					
+					jQuery("#nhifNumberRow").hide();
+					
+					var selectedSpecialScheme=jQuery("#specialScheme option:checked").val();
+	                if(MODEL.specialSchemeMap[selectedSpecialScheme]==="STUDENT SCHEME"){
+	                jQuery("#universityRow").show();
+	                jQuery("#studentIdRow").show();
+	                }
+	                else{
+	                jQuery("#universityRow").hide();
+	                jQuery("#studentIdRow").hide();
+	                }
+	                
+	                if(MODEL.specialSchemeMap[selectedSpecialScheme]==="WAIVER CASE"){
+	                jQuery("#waiverNumberRow").show();
+	                }
+	                else{
+	                jQuery("#waiverNumberRow").hide();
+	                }				
 			}
 			else{
 			jQuery("#specialSchemeCategoryField").hide();
 			jQuery("#specialSchemeName").val("");
 			jQuery("#specialSchemeField").hide();
 			jQuery("#fileNumberField").hide();
+			jQuery("#universityRow").hide();
+	        jQuery("#studentIdRow").hide();
+	        jQuery("#waiverNumberRow").hide();
 			}
 		},
 		
@@ -878,7 +941,7 @@ input, select, textarea {
 			        jQuery("#specialClinicRoom").removeAttr("checked");
 					jQuery("#triageField").show();	
 					jQuery("#opdWardField").hide();	
-					jQuery("#specialClinicField").hide();	
+					jQuery("#specialClinicField").hide();
 			}
 			else{
 			jQuery("#triageField").hide();	
@@ -904,7 +967,7 @@ input, select, textarea {
 			        jQuery("#opdRoom").removeAttr("checked");
 			        jQuery("#triageField").hide();
 			        jQuery("#opdWardField").hide();
-					jQuery("#specialClinicField").show();	
+					jQuery("#specialClinicField").show();
 			}
 			else{
 			jQuery("#specialClinicField").hide();	
@@ -947,6 +1010,107 @@ input, select, textarea {
 	  else{
 	  jQuery("#otherNationality").hide();
 	  }
+	}
+	
+	
+	function payingCategorySelection(){
+	var selectedPayingCategory=jQuery("#payingCategory option:checked").val();
+	 if(MODEL.payingCategoryMap[selectedPayingCategory]=="CHILD LESS THAN 5 YEARS"){
+	 jQuery("#selectedRegFeeValue").val(${childLessThanFiveYearRegistrationFee});
+	 }
+	 else{
+	  if(jQuery("#specialClinic").val()){
+	   var initialRegFee=parseInt('${initialRegFee}');
+	   var specialClinicRegFee=parseInt('${specialClinicRegFee}');
+	   var totalRegFee= initialRegFee+specialClinicRegFee;
+	   jQuery("#selectedRegFeeValue").val(totalRegFee);
+	   }
+	  else{
+	   jQuery("#selectedRegFeeValue").val(${initialRegFee});
+	  }
+	 }
+	}
+	
+	function nonPayingCategorySelection(){
+	var selectedNonPayingCategory=jQuery("#nonPayingCategory option:checked").val();
+	if(MODEL.nonPayingCategoryMap[selectedNonPayingCategory]=="NHIF CIVIL SERVANT"){
+	jQuery("#nhifNumberRow").show();
+	}
+	else{
+	jQuery("#nhifNumberRow").hide();
+	}
+	
+	var selectedNonPayingCategory=jQuery("#nonPayingCategory option:checked").val();
+	if(MODEL.nonPayingCategoryMap[selectedNonPayingCategory]=="TB PATIENT" || MODEL.nonPayingCategoryMap[selectedNonPayingCategory]=="CCC PATIENT"){
+	if(jQuery("#specialClinic").val()){
+	jQuery("#selectedRegFeeValue").val(${specialClinicRegFee});
+	}
+	else{
+	jQuery("#selectedRegFeeValue").val(0);
+	}
+	}
+	else{
+	jQuery("#selectedRegFeeValue").val(0);
+	}
+	
+	}
+	
+	function specialSchemeSelection(){
+	var selectedSpecialScheme=jQuery("#specialScheme option:checked").val();
+	if(MODEL.specialSchemeMap[selectedSpecialScheme]=="STUDENT SCHEME"){
+	jQuery("#universityRow").show();
+	jQuery("#studentIdRow").show();
+	}
+	else{
+	jQuery("#universityRow").hide();
+	jQuery("#studentIdRow").hide();
+	}
+	  
+	if(MODEL.specialSchemeMap[selectedSpecialScheme]=="WAIVER CASE"){
+	jQuery("#waiverNumberRow").show();
+	}
+	else{
+	jQuery("#waiverNumberRow").hide();
+	}
+	
+	jQuery("#selectedRegFeeValue").val(0);		
+	}
+	
+	function feeSelection(){
+	
+	 var selectedPayingCategory=jQuery("#payingCategory option:checked").val();
+	 if(MODEL.payingCategoryMap[selectedPayingCategory]=="CHILD LESS THAN 5 YEARS"){
+	 jQuery("#selectedRegFeeValue").val(${childLessThanFiveYearRegistrationFee});
+	 }
+	 else{
+	  if(jQuery("#specialClinic").val()){
+	   var initialRegFee=parseInt('${initialRegFee}');
+	   var specialClinicRegFee=parseInt('${specialClinicRegFee}');
+	   var totalRegFee= initialRegFee+specialClinicRegFee;
+	   jQuery("#selectedRegFeeValue").val(totalRegFee);
+	   }
+	  else{
+	   jQuery("#selectedRegFeeValue").val(${initialRegFee});
+	  }
+	 }
+					
+	var selectedNonPayingCategory=jQuery("#nonPayingCategory option:checked").val();
+	if(MODEL.nonPayingCategoryMap[selectedNonPayingCategory]=="TB PATIENT" || MODEL.nonPayingCategoryMap[selectedNonPayingCategory]=="CCC PATIENT"){
+	if(jQuery("#specialClinic").val()){
+	jQuery("#selectedRegFeeValue").val(${specialClinicRegFee});
+	}
+	else{
+	jQuery("#selectedRegFeeValue").val(0);
+	}
+	}
+	else{
+	jQuery("#selectedRegFeeValue").val(0);
+	}
+
+	if(jQuery("#specialScheme").val()){
+	jQuery("#selectedRegFeeValue").val(0);
+	}
+	
 	}
 	
 </script>
@@ -1188,12 +1352,23 @@ input, select, textarea {
 		<tr>
 				<td><b>Payment Category<label style="color:red">*</label>&nbsp;&nbsp;&nbsp;&nbsp;</b></td>
 				<td><input id="paying" type="checkbox" name="person.attribute.14" value="Paying" /> Paying</td>
-				<td><span id="payingCategoryField"><select id="payingCategory" name="patient.payingCategory" style='width: 152px;'>	</select></span></td>
+				<td><span id="payingCategoryField"><select id="payingCategory" name="patient.payingCategory" onchange="payingCategorySelection();" style='width: 152px;'>	</select></span></td>
 		</tr>
 		<tr>
 				<td>&nbsp;&nbsp;&nbsp;&nbsp;</b></td>
 				<td><input id="nonPaying" type="checkbox" name="person.attribute.14" value="Non-Paying" /> Non-Paying</td>
-				<td><span id="nonPayingCategoryField"><select id="nonPayingCategory" name="patient.nonPayingCategory" style='width: 152px;'>	</select></span></td>
+				<td><span id="nonPayingCategoryField"><select id="nonPayingCategory" name="patient.nonPayingCategory" onchange="nonPayingCategorySelection();" style='width: 152px;'>	</select></span></td>
+		</tr>
+		<tr id="nhifNumberRow">
+				<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+				<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+				<td><input type="text" id="nhifNumber" name="patient.attribute.34" placeholder="NHIF NUMBER" style='width: 152px; 	border-width: 1px;
+	border-right: 1px;
+	border-left: 1px;
+	border-top: 1px;
+	border-bottom: 1px;
+	border-color: black;
+	border-style: solid;'></td>
 		</tr>
 		<tr>
 				<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
@@ -1201,7 +1376,34 @@ input, select, textarea {
 				<!--
 				<td><span id="specialSchemeField"><input id="specialSchemeName" name="person.attribute.42" placeholder="Please specify" style='width: 152px;'/></span></td>
 				-->
-				<td><span id="specialSchemeCategoryField"><select id="specialScheme" name="patient.specialScheme" style='width: 152px;'>	</select></span></td>
+				<td><span id="specialSchemeCategoryField"><select id="specialScheme" name="patient.specialScheme" onchange="specialSchemeSelection();" style='width: 152px;'>	</select></span></td>
+		</tr>
+		<tr id="universityRow">
+				<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+				<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+				<td><span id="universityField"><select id="university" name="patient.university" style='width: 152px;'>	</select></span></td>
+		</tr>
+		<tr id="studentIdRow">
+				<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+				<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+				<td><input type="text" id="studentId" name="patient.attribute.42" placeholder="StudentID" style='width: 152px; 	border-width: 1px;
+	border-right: 1px;
+	border-left: 1px;
+	border-top: 1px;
+	border-bottom: 1px;
+	border-color: black;
+	border-style: solid;'></td>
+		</tr>
+	  <tr id="waiverNumberRow">
+			<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+			<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+			<td><input type="text" id="waiverNumber" name="patient.attribute.32" placeholder="Waiver Number" style='width: 152px; 	border-width: 1px;
+	border-right: 1px;
+	border-left: 1px;
+	border-top: 1px;
+	border-bottom: 1px;
+	border-color: black;
+	border-style: solid;'></td>
 		</tr>
 		<!--
 		<tr></tr><tr></tr>

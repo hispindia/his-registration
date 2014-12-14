@@ -166,22 +166,9 @@
 			jQuery("#printablePaymentCategory").append("<span style='border:0px'>" + MODEL.selectedPaymentCategory + "</span>");
 			jQuery("#printablePaymentCategoryRow").show();
 			
-			if(MODEL.selectedPaymentCategory == "Paying"){
-			        //jQuery("#payingField").after("<span style='border:0px'>" + jQuery("#paying").val() + "</span>");
-					jQuery("#regFeeValue").val(${initialRegFee});
-					jQuery("#regFeeValue").attr("disabled", "disabled");
-				}
-			if(MODEL.selectedPaymentCategory == "Non-Paying"){
-			            //jQuery("#payingField").after("<span style='border:0px'>" + jQuery("#nonPaying").val() + "</span>");
-						jQuery("#regFeeValue").val(0);
-						jQuery("#regFeeValue").attr("disabled", "disabled");
-				}
-			if(MODEL.selectedPaymentCategory == "Special Schemes"){
-			            //if(!StringUtils.isBlank(MODEL.specialSchemeName)){	
-			            //jQuery("#payingField").after("<span style='border:0px'>" + MODEL.specialSchemeName + "&nbsp;&nbsp;" + "</span>");
-		                 //}
-			            //jQuery("#payingField").after("<span style='border:0px'>" + jQuery("#specialSchemes").val() + "</span>");
-				}
+			jQuery("#regFeeValue").val(${registrationFee});
+			jQuery("#regFeeValue").attr("disabled", "disabled");
+			jQuery("#selectedRegFeeValue").val(${registrationFee});
 		}
 		else if(MODEL.revisit=="true"){
 			jQuery("#reprint").hide();
@@ -231,6 +218,7 @@
 			
 			jQuery("#regFeeValue").val(${registrationFee});
 			jQuery("#regFeeValue").attr("disabled", "disabled");
+			jQuery("#selectedRegFeeValue").val(${registrationFee});
 		
 			jQuery("#printSlip").hide();
 			jQuery("#save").hide();
@@ -303,7 +291,7 @@
                 jQuery("#regFeeValue").hide();
 				jQuery("#regFeeValue").after("<span style='border:0px'>" + jQuery("#regFeeValue  option:checked").html() + "</span>"); 
 	
-				jQuery("#selectedRegFeeValue").val(jQuery("#regFeeValue").val());
+				jQuery("#selectedRegFeeValue").val(${registrationFee});
 			
 				
 				// submit form and print		
@@ -753,19 +741,7 @@
 				
 				<tr>
 					<td colspan="1"><b>Registration Fee:</b></td>
-					<td><select id="regFeeValue" name="regFeeValue">
-										<option value=0>0</option>
-										<option value=10>10</option>
-										<option value=20>20</option>
-										<option value=30>30</option>
-										<option value=40>40</option>
-										<option value=50>50</option>
-										<option value=60>60</option>
-										<option value=70>70</option>
-										<option value=80>80</option>
-										<option value=90>90</option>
-										<option value=100>100</option>
-						</select>
+					<td><input id="regFeeValue" name="regFeeValue">
 					</td>			
 				</tr>
 				<tr id="selectedRegFeeValueRowField">			
