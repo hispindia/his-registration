@@ -88,6 +88,15 @@ public class RegistrationWebUtils {
 		return sb.toString();
 	}
 	
+	public static String getSubConceptsWithName(String conceptName) {
+		Concept opdward = Context.getConceptService().getConcept(conceptName);
+		StringBuilder sb = new StringBuilder();
+		for (ConceptAnswer ca : opdward.getAnswers()) {
+			sb.append(ca.getAnswerConcept().getName().getName() + "," + ca.getAnswerConcept().getName().getName() + "|");
+		}
+		return sb.toString();
+	}
+	
 	public static String getReligionConcept() {
 		Concept religion = Context.getConceptService().getConcept("RELIGION");
 		StringBuilder sb = new StringBuilder();

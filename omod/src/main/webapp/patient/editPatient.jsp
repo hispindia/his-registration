@@ -48,6 +48,22 @@
 		_attributes[${entry.key}] = "${entry.value}";
 	</c:forEach>
 	
+	//
+	var _payingCategoryMap = new Array();
+	<c:forEach var="entry" items="${payingCategoryMap}">
+		_payingCategoryMap[${entry.key}] = "${entry.value}";
+	</c:forEach>
+	
+	var _nonPayingCategoryMap = new Array();
+	<c:forEach var="entry" items="${nonPayingCategoryMap}">
+		_nonPayingCategoryMap[${entry.key}] = "${entry.value}";
+	</c:forEach>
+	
+	var _specialSchemeMap = new Array();
+	<c:forEach var="entry" items="${specialSchemeMap}">
+		_specialSchemeMap[${entry.key}] = "${entry.value}";
+	</c:forEach>
+	
 	/**
 	 ** MODEL FROM CONTROLLER
 	 ** Ghanshyam - Sagar :  date- 15 Dec, 2012. Redmine issue's for Bangladesh : #510 and #511 and #512
@@ -65,7 +81,14 @@
 		patientAttributes: _attributes,
 		districts: _districts,
 		upazilas: _upazilas,
-		religions: "${religionList}"
+		religions: "${religionList}",
+		payingCategory: "${payingCategory}",
+		nonPayingCategory: "${nonPayingCategory}",
+		specialScheme: "${specialScheme}",
+		payingCategoryMap: _payingCategoryMap,
+		nonPayingCategoryMap: _nonPayingCategoryMap,
+		specialSchemeMap: _specialSchemeMap,
+		universities: "${universities}"
 	};
 </script>
 

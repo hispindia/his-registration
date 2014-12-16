@@ -22,6 +22,7 @@ package org.openmrs.module.registration.web.controller.patient;
 
 import java.io.IOException;
 import java.text.ParseException;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -31,6 +32,8 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.dom4j.DocumentException;
 import org.jaxen.JaxenException;
+import org.openmrs.Concept;
+import org.openmrs.ConceptAnswer;
 import org.openmrs.Patient;
 import org.openmrs.PersonAttribute;
 import org.openmrs.PersonAttributeType;
@@ -68,6 +71,42 @@ public class EditPatientController {
 		model.addAttribute("personAttributeReligion", personAttributeReligion);
 		PersonAttributeType personAttributeChiefdom=hospitalCoreService.getPersonAttributeTypeByName("Chiefdom");
 		model.addAttribute("personAttributeChiefdom", personAttributeChiefdom);
+		
+		//
+		model.addAttribute(
+				"payingCategory",
+				RegistrationWebUtils
+						.getSubConceptsWithName(RegistrationConstants.CONCEPT_NAME_PAYING_CATEGORY));
+		model.addAttribute(
+				"nonPayingCategory",
+				RegistrationWebUtils
+						.getSubConceptsWithName(RegistrationConstants.CONCEPT_NAME_NONPAYING_CATEGORY));
+		model.addAttribute(
+				"specialScheme",
+				RegistrationWebUtils
+						.getSubConceptsWithName(RegistrationConstants.CONCEPT_NAME_SPECIAL_SCHEME));
+		model.addAttribute(
+				"universities",
+				RegistrationWebUtils
+						.getSubConceptsWithName(RegistrationConstants.CONCEPT_NAME_LIST_OF_UNIVERSITIES));
+		Map<Integer, String> payingCategoryMap = new LinkedHashMap<Integer, String>();
+		Concept payingCategory = Context.getConceptService().getConcept(RegistrationConstants.CONCEPT_NAME_PAYING_CATEGORY);
+		for (ConceptAnswer ca : payingCategory.getAnswers()) {
+			payingCategoryMap.put(ca.getAnswerConcept().getConceptId(), ca.getAnswerConcept().getName().getName());
+		}
+		Map<Integer, String> nonPayingCategoryMap = new LinkedHashMap<Integer, String>();
+		Concept nonPayingCategory = Context.getConceptService().getConcept(RegistrationConstants.CONCEPT_NAME_NONPAYING_CATEGORY);
+		for (ConceptAnswer ca : nonPayingCategory.getAnswers()) {
+			nonPayingCategoryMap.put(ca.getAnswerConcept().getConceptId(), ca.getAnswerConcept().getName().getName());
+		}
+		Map<Integer, String> specialSchemeMap = new LinkedHashMap<Integer, String>();
+		Concept specialScheme = Context.getConceptService().getConcept(RegistrationConstants.CONCEPT_NAME_SPECIAL_SCHEME);
+		for (ConceptAnswer ca : specialScheme.getAnswers()) {
+			specialSchemeMap.put(ca.getAnswerConcept().getConceptId(), ca.getAnswerConcept().getName().getName());
+		}
+		model.addAttribute("payingCategoryMap", payingCategoryMap);
+		model.addAttribute("nonPayingCategoryMap", nonPayingCategoryMap);
+		model.addAttribute("specialSchemeMap", specialSchemeMap);
 		return "/module/registration/patient/editPatient";
 	}
 

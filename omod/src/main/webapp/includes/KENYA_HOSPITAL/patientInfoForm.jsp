@@ -31,7 +31,6 @@
 		jQuery("#name").html(MODEL.patientName);
 		jQuery("#printablePaymentCategoryRow").hide();
 		jQuery("#printableRoomToVisitRow").hide();
-		jQuery("#selectedRegFeeValueRowField").hide();
 		//jQuery("#printableUserRow").hide();
 		
 		jQuery("#mlc").hide();
@@ -146,10 +145,6 @@
 		if(MODEL.firstTimeVisit=="true"){
 		    jQuery("#reprint").hide();
 			
-			jQuery("#paymentCategoryRow").hide();
-			jQuery("#nonPayingCategoryRow").hide();
-			jQuery("#specialSchemesRow").hide();
-			
 			if(!StringUtils.isBlank(MODEL.selectedMLC)){
 			jQuery("#mlcCaseYesField").hide();
 			jQuery("#mlcCaseNoRowField").hide();
@@ -165,21 +160,22 @@
 			
 			jQuery("#printablePaymentCategory").append("<span style='border:0px'>" + MODEL.selectedPaymentCategory + "</span>");
 			jQuery("#printablePaymentCategoryRow").show();
-			
-			jQuery("#regFeeValue").val(${registrationFee});
-			jQuery("#regFeeValue").attr("disabled", "disabled");
-			jQuery("#selectedRegFeeValue").val(${registrationFee});
 		}
 		else if(MODEL.revisit=="true"){
 			jQuery("#reprint").hide();
-			
+			jQuery("#selectedPaymentCategory").val(MODEL.patientAttributes[14]);
+			if(MODEL.patientAttributes[14]=="Paying"){
+            jQuery("#selectedPaymentSubCategory").val(MODEL.patientAttributes[44]);
+            }
+            if(MODEL.patientAttributes[14]=="Non-Paying"){
+            jQuery("#selectedPaymentSubCategory").val(MODEL.patientAttributes[45]);
+            }
+            if(MODEL.patientAttributes[14]=="Special Schemes"){
+            jQuery("#selectedPaymentSubCategory").val(MODEL.patientAttributes[46]);
+            }
 			
 		}
 		else if(MODEL.reprint=="true"){
-			
-			jQuery("#paymentCategoryRow").hide();
-			jQuery("#nonPayingCategoryRow").hide();
-			jQuery("#specialSchemesRow").hide();
 			
 			if(!StringUtils.isBlank(MODEL.selectedMLC)){
 			jQuery("#mlcCaseYesField").hide();
@@ -215,10 +211,6 @@
 		    jQuery("#printableRoomToVisit").append("<span style='border:0px'>" + jQuery("#specialClinic option:checked").html() + "</span>");
             }
             jQuery("#printableRoomToVisitRow").show();
-			
-			jQuery("#regFeeValue").val(${registrationFee});
-			jQuery("#regFeeValue").attr("disabled", "disabled");
-			jQuery("#selectedRegFeeValue").val(${registrationFee});
 		
 			jQuery("#printSlip").hide();
 			jQuery("#save").hide();
@@ -252,10 +244,6 @@
 		        jQuery("#mlcCaseNoRowField").hide();
 			    }
 			    
-			    jQuery("#paymentCategoryRow").hide();
-			    jQuery("#nonPayingCategoryRow").hide();
-			    jQuery("#specialSchemesRow").hide();
-			    
 			    jQuery("#triageRowField").hide();
 			    jQuery("#opdRowField").hide();
 			    jQuery("#specialClinicRowField").hide();
@@ -287,12 +275,6 @@
                 jQuery("#printableRoomToVisitRow").show();
 			    
                 }
-                
-                jQuery("#regFeeValue").hide();
-				jQuery("#regFeeValue").after("<span style='border:0px'>" + jQuery("#regFeeValue  option:checked").html() + "</span>"); 
-	
-				jQuery("#selectedRegFeeValue").val(${registrationFee});
-			
 				
 				// submit form and print		
 				if(!reprint){
@@ -402,13 +384,6 @@
 		
 			
 		if(MODEL.revisit=="true"){
-				
-				if (jQuery("#paying").attr('checked') == false
-					&& jQuery("#nonPaying").attr('checked') == false
-					&& jQuery("#specialSchemes").attr('checked') == false) {			
-			    alert("You did not choose any of the payment categories");
-				return false;
-			 }
                 
 			
 		if (jQuery("#mlcCaseYes").attr('checked') == false
@@ -468,9 +443,6 @@
 				    jQuery("#specialSchemes").removeAttr("checked");
 					jQuery("#specialSchemeName").val("");
 					jQuery("#specialSchemeNameField").hide();
-					
-					jQuery("#regFeeValue").val(${reVisitFee});
-					jQuery("#regFeeValue").attr("disabled", "disabled");
 			}
 		},
 		
@@ -482,9 +454,6 @@
 				    jQuery("#specialSchemes").removeAttr("checked");
 					jQuery("#specialSchemeName").val("");
 					jQuery("#specialSchemeNameField").hide();
-					
-					jQuery("#regFeeValue").val(0);
-					jQuery("#regFeeValue").attr("disabled", "disabled");
 			}
 		},
 		
@@ -495,9 +464,6 @@
 					
 					jQuery("#nonPaying").removeAttr("checked");
 					jQuery("#specialSchemeNameField").show();
-					
-					jQuery("#regFeeValue").val(0);
-					jQuery("#regFeeValue").removeAttr("disabled");
 			}
 			else{
 			 jQuery("#specialSchemeName").val("");
@@ -570,25 +536,79 @@
 				jQuery("#specialSchemeName").val("");
 				jQuery("#specialSchemeNameField").hide();
 				
-				jQuery("#regFeeValue").val(${reVisitFee});
-				//jQuery("#regFeeValue").attr("disabled", "disabled");
-				
 			} else if(jQuery("#paymentCategory").val() == "Non-Paying"){
 				jQuery("#specialSchemeName").val("");
 				jQuery("#specialSchemeNameField").hide();
 
-				jQuery("#regFeeValue").val(0);
-				//jQuery("#regFeeValue").attr("disabled", "disabled");
-
 		
 			} else if(jQuery("#paymentCategory").val() == "Special Schemes"){
 				jQuery("#specialSchemeNameField").show();
-				
-				jQuery("#regFeeValue").removeAttr("disabled");
-				
 			}
 		},
 	};
+	
+function triageRoomSelection(){
+
+if(MODEL.patientAttributes[14]=="Paying"){
+jQuery("#selectedRegFeeValue").val('${reVisitFee}');
+if(MODEL.patientAttributes[44]=="CHILD LESS THAN 5 YEARS"){
+jQuery("#selectedRegFeeValue").val(${childLessThanFiveYearRegistrationFee});
+}
+}
+
+if(MODEL.patientAttributes[14]=="Non-Paying"){
+jQuery("#selectedRegFeeValue").val(0);
+}
+
+if(MODEL.patientAttributes[14]=="Special Schemes"){
+jQuery("#selectedRegFeeValue").val(0);
+}
+			
+}
+
+function opdRoomSelection(){
+if(MODEL.patientAttributes[14]=="Paying"){
+jQuery("#selectedRegFeeValue").val('${reVisitFee}');
+if(MODEL.patientAttributes[44]=="CHILD LESS THAN 5 YEARS"){
+jQuery("#selectedRegFeeValue").val(${childLessThanFiveYearRegistrationFee});
+}
+}
+
+if(MODEL.patientAttributes[14]=="Non-Paying"){
+jQuery("#selectedRegFeeValue").val(0);
+}
+
+if(MODEL.patientAttributes[14]=="Special Schemes"){
+jQuery("#selectedRegFeeValue").val(0);
+}
+}
+
+function specialClinicSelection(){
+
+if(MODEL.patientAttributes[14]=="Paying"){
+var reVisitRegFee=parseInt('${reVisitFee}');
+var specialClinicRegFee=parseInt('${specialClinicRegFee}');
+var totalRegFee= reVisitRegFee+specialClinicRegFee;
+jQuery("#selectedRegFeeValue").val(totalRegFee);
+if(MODEL.patientAttributes[44]=="CHILD LESS THAN 5 YEARS"){
+jQuery("#selectedRegFeeValue").val(${childLessThanFiveYearRegistrationFee});
+}
+}
+
+if(MODEL.patientAttributes[14]=="Non-Paying"){
+jQuery("#selectedRegFeeValue").val(0);
+if(MODEL.patientAttributes[45]=="TB PATIENT"){
+jQuery("#selectedRegFeeValue").val(${specialClinicRegFee});
+}
+if(MODEL.patientAttributes[45]=="CCC PATIENT"){
+jQuery("#selectedRegFeeValue").val(${specialClinicRegFee});
+}
+}
+
+if(MODEL.patientAttributes[14]=="Special Schemes"){
+jQuery("#selectedRegFeeValue").val(0);
+}
+}
 </script>
 
 <input id="printSlip" type="button" value="Print"
@@ -650,22 +670,6 @@
 					<td></td><td></td>
 					
 				</tr>
-				
-				<tr id="paymentCategoryRow">
-				<td><b>Payment Category:&nbsp;&nbsp;&nbsp;&nbsp;</b></td>
-				<td id="payingField"><input id="paying" type="checkbox" name="person.attribute.14" value="Paying" /> Paying</td>
-		</tr>
-		<tr id="nonPayingCategoryRow">
-				<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
-				<td id="nonPayingField"><input id="nonPaying" type="checkbox" name="person.attribute.14" value="Non-Paying" /> Non-Paying</td>
-		</tr>
-		<tr id="specialSchemesRow">
-				<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
-				<td id="specialSchemeField"><input id="specialSchemes" type="checkbox" name="person.attribute.14" value="Special Schemes" /> Special Schemes &nbsp;&nbsp;&nbsp;&nbsp;</td>
-				<!--
-				<td id="specialSchemeNameField"><input id="specialSchemeName" name="person.attribute.42" placeholder="Please specify" style='width: 152px;'/></td>
-				-->
-		</tr>
 		
 		<tr id="printablePaymentCategoryRow">
 					<td><b>Payment Category:</b></td>
@@ -719,17 +723,17 @@
 		<tr id="triageRowField">
 				<td><b>Room to Visit:</b>&nbsp;&nbsp;&nbsp;&nbsp;</td>
 				<td id="triageRoomField"><input id="triageRoom" type="checkbox" name="triageRoom"/> Triage Room &nbsp;&nbsp;&nbsp;&nbsp;</td>
-				<td id="triageField"><select id="triage" name="patient.triage" style='width: 152px;'>	</select></td>
+				<td id="triageField"><select id="triage" name="patient.triage" onchange="triageRoomSelection();" style='width: 152px;'>	</select></td>
 		</tr>
 		<tr id="opdRowField">
 				<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
 				<td id="opdRoomField"><input id="opdRoom" type="checkbox" name="opdRoom"/> OPD Room&nbsp;&nbsp;&nbsp;&nbsp;</td>
-				<td id="opdWardField"><select id="opdWard" name="patient.opdWard" style='width: 152px;'>	</select></td>
+				<td id="opdWardField"><select id="opdWard" name="patient.opdWard" onchange="opdRoomSelection();" style='width: 152px;'>	</select></td>
 		</tr>
 		<tr id="specialClinicRowField">
 				<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
 				<td id="specialClinicRoomField"><input id="specialClinicRoom" type="checkbox" name="specialClinicRoom"/> Special Clinic&nbsp;&nbsp;&nbsp;&nbsp;</td>
-				<td id="specialClinicField"><select id="specialClinic" name="patient.specialClinic" style='width: 152px;'>	</select><</td>
+				<td id="specialClinicField"><select id="specialClinic" name="patient.specialClinic" onchange="specialClinicSelection();" style='width: 152px;'>	</select></td>
 		</tr>
 		<tr id="printableRoomToVisitRow">
 					<td><b>Room to Visit:</b></td>
@@ -737,19 +741,18 @@
 						<div id="printableRoomToVisit"></div>
 					</td>
 		</tr>
-				
-				
-				<tr>
-					<td colspan="1"><b>Registration Fee:</b></td>
-					<td><input id="regFeeValue" name="regFeeValue">
-					</td>			
-				</tr>
-				<tr id="selectedRegFeeValueRowField">			
-					<td id="selectedRegFeeValueColumnField"> <input id="selectedRegFeeValue" name="selectedRegFeeValue" /> </td>
+				<tr id="printableRegistrationFeeRow">			
+					<td><b>Registration Fee:</b></td>
+					<td>${registrationFee}</td>
 				</tr>
 				<tr id="printableUserRow">			
 					<td><b>You were served by:</b>&nbsp;&nbsp;&nbsp;&nbsp;</td>
 					<td>${user}</td>
+				</tr>
+				<tr>
+				<td><input type="hidden" id="selectedPaymentCategory" name="patient.selectedPaymentCategory" /></td>
+				<td><input type="hidden" id="selectedPaymentSubCategory" name="patient.selectedPaymentSubCategory" /></td>
+				<td><input type="hidden" id="selectedRegFeeValue" name="patient.registration.fee" /></td>
 				</tr>
 			</table>
 		</form>

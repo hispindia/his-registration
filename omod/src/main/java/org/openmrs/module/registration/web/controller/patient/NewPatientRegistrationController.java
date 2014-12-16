@@ -21,8 +21,6 @@
 package org.openmrs.module.registration.web.controller.patient;
 
 import java.io.IOException;
-import java.math.BigDecimal;
-import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -45,11 +43,8 @@ import org.openmrs.PersonName;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.hospitalcore.HospitalCoreService;
 import org.openmrs.module.hospitalcore.util.GlobalPropertyUtil;
-import org.openmrs.module.hospitalcore.util.HospitalCoreConstants;
 import org.openmrs.module.hospitalcore.util.HospitalCoreUtils;
-import org.openmrs.module.registration.RegistrationService;
 import org.openmrs.module.registration.includable.validator.attribute.PatientAttributeValidatorService;
-import org.openmrs.module.registration.model.RegistrationFee;
 import org.openmrs.module.registration.util.RegistrationConstants;
 import org.openmrs.module.registration.util.RegistrationUtils;
 import org.openmrs.module.registration.web.controller.util.RegistrationWebUtils;
@@ -102,19 +97,19 @@ public class NewPatientRegistrationController {
 		model.addAttribute(
 				"payingCategory",
 				RegistrationWebUtils
-						.getSubConcepts(RegistrationConstants.CONCEPT_NAME_PAYING_CATEGORY));
+						.getSubConceptsWithName(RegistrationConstants.CONCEPT_NAME_PAYING_CATEGORY));
 		model.addAttribute(
 				"nonPayingCategory",
 				RegistrationWebUtils
-						.getSubConcepts(RegistrationConstants.CONCEPT_NAME_NONPAYING_CATEGORY));
+						.getSubConceptsWithName(RegistrationConstants.CONCEPT_NAME_NONPAYING_CATEGORY));
 		model.addAttribute(
 				"specialScheme",
 				RegistrationWebUtils
-						.getSubConcepts(RegistrationConstants.CONCEPT_NAME_SPECIAL_SCHEME));
+						.getSubConceptsWithName(RegistrationConstants.CONCEPT_NAME_SPECIAL_SCHEME));
 		model.addAttribute(
 				"universities",
 				RegistrationWebUtils
-						.getSubConcepts(RegistrationConstants.CONCEPT_NAME_LIST_OF_UNIVERSITIES));
+						.getSubConceptsWithName(RegistrationConstants.CONCEPT_NAME_LIST_OF_UNIVERSITIES));
 		Map<Integer, String> payingCategoryMap = new LinkedHashMap<Integer, String>();
 		Concept payingCategory = Context.getConceptService().getConcept(RegistrationConstants.CONCEPT_NAME_PAYING_CATEGORY);
 		for (ConceptAnswer ca : payingCategory.getAnswers()) {
@@ -358,6 +353,12 @@ public class NewPatientRegistrationController {
 				.get(RegistrationConstants.FORM_FIELD_PAYMENT_CATEGORY));
 		if (!StringUtils
 				.isBlank(parameters
+						.get(RegistrationConstants.FORM_FIELD_PAYING_CATEGORY))) {
+		obsn.setComment(parameters
+				.get(RegistrationConstants.FORM_FIELD_PAYING_CATEGORY));
+		}
+		else if (!StringUtils
+				.isBlank(parameters
 						.get(RegistrationConstants.FORM_FIELD_NONPAYING_CATEGORY))) {
 		obsn.setComment(parameters
 				.get(RegistrationConstants.FORM_FIELD_NONPAYING_CATEGORY));
@@ -367,12 +368,6 @@ public class NewPatientRegistrationController {
 						.get(RegistrationConstants.FORM_FIELD_PATIENT_SPECIAL_SCHEME))) {
 		obsn.setComment(parameters
 				.get(RegistrationConstants.FORM_FIELD_PATIENT_SPECIAL_SCHEME));
-		if (!StringUtils
-				.isBlank(parameters
-						.get(RegistrationConstants.FORM_FIELD_PATIENT_UNIVERSITY))) {
-		obsn.setValueComplex(parameters
-				.get(RegistrationConstants.FORM_FIELD_PATIENT_UNIVERSITY));
-		}
 		}
 		encounter.addObs(obsn);	
 

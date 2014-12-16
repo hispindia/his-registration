@@ -100,18 +100,13 @@ public class ShowPatientInfoController {
 		
 		// Get selected OPD room if this is the first time of visit
 		if (encounterId != null) {
-			//ghanshyam,11-dec-2013,#3327 Defining patient categories based on Kenyan requirements
 			List<PersonAttribute> pas = hcs.getPersonAttributes(patientId);
 			 for (PersonAttribute pa : pas) {
 				 PersonAttributeType attributeType = pa.getAttributeType(); 
 				 PersonAttributeType personAttributePaymentCategory=hcs.getPersonAttributeTypeByName("Payment Category");
-				 PersonAttributeType personAttributeSpecialSchemeName=hcs.getPersonAttributeTypeByName("Special Scheme Name");
 				 if(attributeType.getPersonAttributeTypeId()==personAttributePaymentCategory.getPersonAttributeTypeId()){
 					 model.addAttribute("selectedPaymentCategory",pa.getValue()); 
 				 }
-				 //if(attributeType.getPersonAttributeTypeId()==personAttributeSpecialSchemeName.getPersonAttributeTypeId()){
-					 //model.addAttribute("specialSchemeName",pa.getValue()); 
-				 //}
 			 }
 			 
 			Encounter encounter = Context.getEncounterService().getEncounter(encounterId);
@@ -139,6 +134,10 @@ public class ShowPatientInfoController {
 			}
 			Boolean firstTimeVisit=true;
 			model.addAttribute("firstTimeVisit",firstTimeVisit);
+		}
+		
+		if ((revisit != null) && revisit) {
+			
 		}
 		
 		// If reprint, get the latest registration encounter
@@ -181,13 +180,9 @@ public class ShowPatientInfoController {
 				 for (PersonAttribute pa : pas) {
 					 PersonAttributeType attributeType = pa.getAttributeType(); 
 					 PersonAttributeType personAttributePaymentCategory=hcs.getPersonAttributeTypeByName("Payment Category");
-					 PersonAttributeType personAttributeSpecialSchemeName=hcs.getPersonAttributeTypeByName("Special Scheme Name");
 					 if(attributeType.getPersonAttributeTypeId()==personAttributePaymentCategory.getPersonAttributeTypeId()){
 						 model.addAttribute("selectedPaymentCategory",pa.getValue()); 
 					 }
-					 //if(attributeType.getPersonAttributeTypeId()==personAttributeSpecialSchemeName.getPersonAttributeTypeId()){
-						 //model.addAttribute("specialSchemeName",pa.getValue()); 
-					 //}
 				 }
 			}
 		}
@@ -218,7 +213,7 @@ public class ShowPatientInfoController {
 	@RequestMapping(method = RequestMethod.POST)
 	public void savePatientInfo(@RequestParam("patientId") Integer patientId,
 	                            @RequestParam(value = "encounterId", required = false) Integer encounterId,
-	                            @RequestParam(value = "selectedRegFeeValue", required = false) Double selectedRegFeeValue,
+	                           // @RequestParam(value = "regFeeValue", required = false) Double selectedRegFeeValue,
 	                            HttpServletRequest request, HttpServletResponse response) throws ParseException, IOException {
 		
 		Map<String, String> parameters = RegistrationWebUtils.optimizeParameters(request);
@@ -244,7 +239,7 @@ public class ShowPatientInfoController {
 				*/
 			HospitalCoreService hcs = Context.getService(HospitalCoreService.class);
 			Obs obs=hcs.getObs(Context.getPersonService().getPerson(patient), encounter);
-			obs.setValueNumeric(selectedRegFeeValue);
+			//obs.setValueNumeric(selectedRegFeeValue);
 		} else {
 			encounter = RegistrationWebUtils.createEncounter(patient, true);
 		
@@ -308,11 +303,13 @@ public class ShowPatientInfoController {
 			}*/
 			Concept cnrffr = Context.getConceptService().getConcept(RegistrationConstants.CONCEPT_NAME_REGISTRATION_FEE);
 			Concept cr = Context.getConceptService().getConcept(RegistrationConstants.CONCEPT_REVISIT);
+			Double doubleVal = Double.parseDouble(parameters.get(RegistrationConstants.FORM_FIELD_REGISTRATION_FEE));
 			Obs obsr = new Obs();
 			obsr.setConcept(cnrffr);
 			obsr.setValueCoded(cr);
-			obsr.setValueNumeric(selectedRegFeeValue);
-			obsr.setValueText(parameters.get(RegistrationConstants.FORM_FIELD_PAYMENT_CATEGORY));
+			obsr.setValueNumeric(doubleVal);
+			obsr.setValueText(parameters.get(RegistrationConstants.FORM_FIELD_SELECTED_PAYMENT_CATEGORY));
+			obsr.setComment(parameters.get(RegistrationConstants.FORM_FIELD_SELECTED_PAYMENT_SUBCATEGORY));
 			encounter.addObs(obsr);	
 						
 		}

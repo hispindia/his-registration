@@ -52,8 +52,6 @@ public class RegistrationConstants {
 	
 	public static final String PROPERTY_BPL_NO_OF_PATIENT = MODULE_ID + ".patientPerBPL";
 	
-	//	public static final String PROPERTY_BLOODBANK_CONCEPT_ID = MODULE_ID
-	//		+ ".bloodbankConceptId";	
 	public static final String PROPERTY_ORDER_TYPE_ID = MODULE_ID + ".bloodbankOrderTypeId";
 	
 	public static final String PROPERTY_BLOODBANK_OPDWARD_NAME = "bloodbank.wardName";
@@ -69,7 +67,9 @@ public class RegistrationConstants {
 	
 	public static final String FORM_FIELD_REGISTRATION_FEE = "patient.registration.fee";
 	
-	//public static final String FORM_FIELD_SELECTED_PAYMENT_CATEGORY = "patient.selectedPaymentCategory";
+	public static final String FORM_FIELD_SELECTED_PAYMENT_CATEGORY = "patient.selectedPaymentCategory";
+	
+	public static final String FORM_FIELD_SELECTED_PAYMENT_SUBCATEGORY = "patient.selectedPaymentSubCategory";
 	
 	public static final String FORM_FIELD_PATIENT_IDENTIFIER = "patient.identifier";
 	
@@ -89,19 +89,19 @@ public class RegistrationConstants {
 	
 	public static final String FORM_FIELD_PATIENT_ADDRESS_LOCATION = "patient.address.location";
 	
-	public static final String FORM_FIELD_PAYING_CATEGORY = "patient.payingCategory";
+	public static final String FORM_FIELD_PAYING_CATEGORY = "person.attribute.44";
 	
-	public static final String FORM_FIELD_NONPAYING_CATEGORY = "patient.nonPayingCategory";
+	public static final String FORM_FIELD_NONPAYING_CATEGORY = "person.attribute.45";
 	
-	public static final String FORM_FIELD_NHIFNUMBER = "patient.nhifNumber";
+	//public static final String FORM_FIELD_NHIFNUMBER = "patient.nhifNumber";
 	
-	public static final String FORM_FIELD_PATIENT_SPECIAL_SCHEME = "patient.specialScheme";
+	public static final String FORM_FIELD_PATIENT_SPECIAL_SCHEME = "person.attribute.46";
 	
-	public static final String FORM_FIELD_PATIENT_UNIVERSITY = "patient.university";
+	//public static final String FORM_FIELD_PATIENT_UNIVERSITY = "person.attribute.47";
 	
-	public static final String FORM_FIELD_PATIENT_STUDENTID = "patient.studentId";
+	//public static final String FORM_FIELD_PATIENT_STUDENTID = "patient.studentId";
 	
-	public static final String FORM_FIELD_PATIENT_WAIVERNUMBER = "patient.waiverNumber";
+	//public static final String FORM_FIELD_PATIENT_WAIVERNUMBER = "patient.waiverNumber";
 	
 	public static final String FORM_FIELD_PATIENT_MLC= "patient.mlc";
 	

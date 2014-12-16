@@ -220,8 +220,6 @@ input, select, textarea {
 				jQuery("#universityRow").hide();
 				jQuery("#studentIdRow").hide();
 				jQuery("#waiverNumberRow").hide();
-				jQuery("#specialSchemeField").hide();
-				jQuery("#fileNumberField").hide();
 				jQuery("#mlc").hide();
 				jQuery("#otherNationality").hide();
 				jQuery("#referredFromColumn").hide();
@@ -642,17 +640,54 @@ input, select, textarea {
 				return false;
 			} 
 			else {
-			    if (jQuery("#nonPaying").attr('checked')) {
+			    if (jQuery("#paying").attr('checked')) {
+					if (StringUtils.isBlank(jQuery("#payingCategory").val())){
+						alert("Please select the Paying Category");
+						return false;
+					}
+				}
+			    else if (jQuery("#nonPaying").attr('checked')) {
 					if (StringUtils.isBlank(jQuery("#nonPayingCategory").val())){
 						alert("Please select the Non-Paying Category");
 						return false;
 					}
+					else{
+					     var selectedNonPayingCategory=jQuery("#nonPayingCategory option:checked").val();
+	                     //if(MODEL.nonPayingCategoryMap[selectedNonPayingCategory]=="NHIF CIVIL SERVANT"){
+	                     if(selectedNonPayingCategory=="NHIF CIVIL SERVANT"){
+	                          if (StringUtils.isBlank(jQuery("#nhifNumber").val())){
+						      alert("Please enter the NHIF Number");
+						      return false;
+					           }
+	                       }
+					   }
 				}
 				else if (jQuery("#specialSchemes").attr('checked')) {
 					if (StringUtils.isBlank(jQuery("#specialScheme").val())){
 						alert("Please select the Special Scheme");
 						return false;
 					}
+					else{
+					     if (StringUtils.isBlank(jQuery("#university").val())){
+						 alert("Please select the University");
+						 return false;
+					     }
+					     var selectedSpecialScheme=jQuery("#specialScheme option:checked").val();
+	                     //if(MODEL.specialSchemeMap[selectedSpecialScheme]=="STUDENT SCHEME"){
+	                     if(selectedSpecialScheme=="STUDENT SCHEME"){
+	                          if (StringUtils.isBlank(jQuery("#studentId").val())){
+						      alert("Please enter the Student ID");
+						      return false;
+					           }
+	                      }
+	                     //if(MODEL.specialSchemeMap[selectedSpecialScheme]=="WAIVER CASE"){
+	                     if(selectedSpecialScheme=="WAIVER CASE"){
+	                          if (StringUtils.isBlank(jQuery("#waiverNumber").val())){
+						      alert("Please enter the Waiver Number");
+						      return false;
+					           }
+	                      }
+					   }
 				}
 			}
 			
@@ -807,9 +842,6 @@ input, select, textarea {
 				    jQuery("#nonPayingCategoryField").hide();
 				    jQuery("#specialSchemeCategoryField").hide();
 				    jQuery("#specialSchemes").removeAttr("checked");
-					jQuery("#specialSchemeName").val("");
-					jQuery("#specialSchemeField").hide();
-					jQuery("#fileNumberField").hide();
 					//jQuery("#selectedRegFeeValue").val(${initialRegFee});
 					
 					jQuery("#nhifNumberRow").hide();
@@ -830,13 +862,11 @@ input, select, textarea {
 				    jQuery("#specialSchemes").removeAttr("checked");
 				    jQuery("#payingCategoryField").hide();
 				    jQuery("#specialSchemeCategoryField").hide();
-					jQuery("#specialSchemeName").val("");
-					jQuery("#specialSchemeField").hide();
-					jQuery("#fileNumberField").hide();
 					//jQuery("#selectedRegFeeValue").val(0);
 					
 					var selectedNonPayingCategory=jQuery("#nonPayingCategory option:checked").val();
-	                if(MODEL.nonPayingCategoryMap[selectedNonPayingCategory]==="NHIF CIVIL SERVANT"){
+	                //if(MODEL.nonPayingCategoryMap[selectedNonPayingCategory]==="NHIF CIVIL SERVANT"){
+	                if(selectedNonPayingCategory=="NHIF CIVIL SERVANT"){
 	                jQuery("#nhifNumberRow").show();
 	                }
 	                else{
@@ -861,14 +891,13 @@ input, select, textarea {
 					jQuery("#nonPayingCategoryField").hide();
 					jQuery("#nonPaying").removeAttr("checked");
 					jQuery("#specialSchemeCategoryField").show();
-					jQuery("#specialSchemeField").show();
-					jQuery("#fileNumberField").show();
 					//jQuery("#selectedRegFeeValue").val(0);
 					
 					jQuery("#nhifNumberRow").hide();
 					
 					var selectedSpecialScheme=jQuery("#specialScheme option:checked").val();
-	                if(MODEL.specialSchemeMap[selectedSpecialScheme]==="STUDENT SCHEME"){
+	                //if(MODEL.specialSchemeMap[selectedSpecialScheme]==="STUDENT SCHEME"){
+	                if(selectedSpecialScheme=="STUDENT SCHEME"){
 	                jQuery("#universityRow").show();
 	                jQuery("#studentIdRow").show();
 	                }
@@ -877,7 +906,8 @@ input, select, textarea {
 	                jQuery("#studentIdRow").hide();
 	                }
 	                
-	                if(MODEL.specialSchemeMap[selectedSpecialScheme]==="WAIVER CASE"){
+	                //if(MODEL.specialSchemeMap[selectedSpecialScheme]==="WAIVER CASE"){
+	                if(selectedSpecialScheme=="WAIVER CASE"){
 	                jQuery("#waiverNumberRow").show();
 	                }
 	                else{
@@ -886,9 +916,6 @@ input, select, textarea {
 			}
 			else{
 			jQuery("#specialSchemeCategoryField").hide();
-			jQuery("#specialSchemeName").val("");
-			jQuery("#specialSchemeField").hide();
-			jQuery("#fileNumberField").hide();
 			jQuery("#universityRow").hide();
 	        jQuery("#studentIdRow").hide();
 	        jQuery("#waiverNumberRow").hide();
@@ -1015,7 +1042,8 @@ input, select, textarea {
 	
 	function payingCategorySelection(){
 	var selectedPayingCategory=jQuery("#payingCategory option:checked").val();
-	 if(MODEL.payingCategoryMap[selectedPayingCategory]=="CHILD LESS THAN 5 YEARS"){
+	 //if(MODEL.payingCategoryMap[selectedPayingCategory]=="CHILD LESS THAN 5 YEARS"){
+	 if(selectedPayingCategory=="CHILD LESS THAN 5 YEARS"){
 	 jQuery("#selectedRegFeeValue").val(${childLessThanFiveYearRegistrationFee});
 	 }
 	 else{
@@ -1033,7 +1061,8 @@ input, select, textarea {
 	
 	function nonPayingCategorySelection(){
 	var selectedNonPayingCategory=jQuery("#nonPayingCategory option:checked").val();
-	if(MODEL.nonPayingCategoryMap[selectedNonPayingCategory]=="NHIF CIVIL SERVANT"){
+	//if(MODEL.nonPayingCategoryMap[selectedNonPayingCategory]=="NHIF CIVIL SERVANT"){
+	if(selectedNonPayingCategory=="NHIF CIVIL SERVANT"){
 	jQuery("#nhifNumberRow").show();
 	}
 	else{
@@ -1041,7 +1070,8 @@ input, select, textarea {
 	}
 	
 	var selectedNonPayingCategory=jQuery("#nonPayingCategory option:checked").val();
-	if(MODEL.nonPayingCategoryMap[selectedNonPayingCategory]=="TB PATIENT" || MODEL.nonPayingCategoryMap[selectedNonPayingCategory]=="CCC PATIENT"){
+	//if(MODEL.nonPayingCategoryMap[selectedNonPayingCategory]=="TB PATIENT" || MODEL.nonPayingCategoryMap[selectedNonPayingCategory]=="CCC PATIENT"){
+	if(selectedNonPayingCategory=="TB PATIENT" || selectedNonPayingCategory=="CCC PATIENT"){
 	if(jQuery("#specialClinic").val()){
 	jQuery("#selectedRegFeeValue").val(${specialClinicRegFee});
 	}
@@ -1057,7 +1087,8 @@ input, select, textarea {
 	
 	function specialSchemeSelection(){
 	var selectedSpecialScheme=jQuery("#specialScheme option:checked").val();
-	if(MODEL.specialSchemeMap[selectedSpecialScheme]=="STUDENT SCHEME"){
+	//if(MODEL.specialSchemeMap[selectedSpecialScheme]=="STUDENT SCHEME"){
+	if(selectedSpecialScheme=="STUDENT SCHEME"){
 	jQuery("#universityRow").show();
 	jQuery("#studentIdRow").show();
 	}
@@ -1066,7 +1097,8 @@ input, select, textarea {
 	jQuery("#studentIdRow").hide();
 	}
 	  
-	if(MODEL.specialSchemeMap[selectedSpecialScheme]=="WAIVER CASE"){
+	//if(MODEL.specialSchemeMap[selectedSpecialScheme]=="WAIVER CASE"){
+	if(selectedSpecialScheme=="WAIVER CASE"){
 	jQuery("#waiverNumberRow").show();
 	}
 	else{
@@ -1079,7 +1111,8 @@ input, select, textarea {
 	function feeSelection(){
 	
 	 var selectedPayingCategory=jQuery("#payingCategory option:checked").val();
-	 if(MODEL.payingCategoryMap[selectedPayingCategory]=="CHILD LESS THAN 5 YEARS"){
+	 //if(MODEL.payingCategoryMap[selectedPayingCategory]=="CHILD LESS THAN 5 YEARS"){
+	 if(selectedPayingCategory=="CHILD LESS THAN 5 YEARS"){
 	 jQuery("#selectedRegFeeValue").val(${childLessThanFiveYearRegistrationFee});
 	 }
 	 else{
@@ -1095,7 +1128,8 @@ input, select, textarea {
 	 }
 					
 	var selectedNonPayingCategory=jQuery("#nonPayingCategory option:checked").val();
-	if(MODEL.nonPayingCategoryMap[selectedNonPayingCategory]=="TB PATIENT" || MODEL.nonPayingCategoryMap[selectedNonPayingCategory]=="CCC PATIENT"){
+	//if(MODEL.nonPayingCategoryMap[selectedNonPayingCategory]=="TB PATIENT" || MODEL.nonPayingCategoryMap[selectedNonPayingCategory]=="CCC PATIENT"){
+	if(selectedNonPayingCategory=="TB PATIENT" || selectedNonPayingCategory=="CCC PATIENT"){
 	if(jQuery("#specialClinic").val()){
 	jQuery("#selectedRegFeeValue").val(${specialClinicRegFee});
 	}
@@ -1337,12 +1371,12 @@ input, select, textarea {
 		<tr>
 				<td><b>ID Proof Details&nbsp;&nbsp;&nbsp;&nbsp;</b></td>
 				<td>National ID&nbsp;&nbsp;&nbsp;&nbsp;</td>
-				<td><input id="patientNationalId" name="patient.attribute.20" style='width: 152px;'/></td>
+				<td><input id="patientNationalId" name="person.attribute.20" style='width: 152px;'/></td>
 		</tr>
 		<tr>
 				<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
 				<td>Passport Number&nbsp;&nbsp;&nbsp;&nbsp;</td>
-		        <td><input id="passportNumber" name="patient.attribute.38" style='width: 152px;'/></td>
+		        <td><input id="passportNumber" name="person.attribute.38" style='width: 152px;'/></td>
 		</tr>
 		</table>
 		</div>
@@ -1352,17 +1386,17 @@ input, select, textarea {
 		<tr>
 				<td><b>Payment Category<label style="color:red">*</label>&nbsp;&nbsp;&nbsp;&nbsp;</b></td>
 				<td><input id="paying" type="checkbox" name="person.attribute.14" value="Paying" /> Paying</td>
-				<td><span id="payingCategoryField"><select id="payingCategory" name="patient.payingCategory" onchange="payingCategorySelection();" style='width: 152px;'>	</select></span></td>
+				<td><span id="payingCategoryField"><select id="payingCategory" name="person.attribute.44" onchange="payingCategorySelection();" style='width: 152px;'>	</select></span></td>
 		</tr>
 		<tr>
 				<td>&nbsp;&nbsp;&nbsp;&nbsp;</b></td>
 				<td><input id="nonPaying" type="checkbox" name="person.attribute.14" value="Non-Paying" /> Non-Paying</td>
-				<td><span id="nonPayingCategoryField"><select id="nonPayingCategory" name="patient.nonPayingCategory" onchange="nonPayingCategorySelection();" style='width: 152px;'>	</select></span></td>
+				<td><span id="nonPayingCategoryField"><select id="nonPayingCategory" name="person.attribute.45" onchange="nonPayingCategorySelection();" style='width: 152px;'>	</select></span></td>
 		</tr>
 		<tr id="nhifNumberRow">
 				<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
 				<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
-				<td><input type="text" id="nhifNumber" name="patient.attribute.34" placeholder="NHIF NUMBER" style='width: 152px; 	border-width: 1px;
+				<td><input type="text" id="nhifNumber" name="person.attribute.34" placeholder="NHIF NUMBER" style='width: 152px; 	border-width: 1px;
 	border-right: 1px;
 	border-left: 1px;
 	border-top: 1px;
@@ -1376,17 +1410,17 @@ input, select, textarea {
 				<!--
 				<td><span id="specialSchemeField"><input id="specialSchemeName" name="person.attribute.42" placeholder="Please specify" style='width: 152px;'/></span></td>
 				-->
-				<td><span id="specialSchemeCategoryField"><select id="specialScheme" name="patient.specialScheme" onchange="specialSchemeSelection();" style='width: 152px;'>	</select></span></td>
+				<td><span id="specialSchemeCategoryField"><select id="specialScheme" name="person.attribute.46" onchange="specialSchemeSelection();" style='width: 152px;'>	</select></span></td>
 		</tr>
 		<tr id="universityRow">
 				<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
 				<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
-				<td><span id="universityField"><select id="university" name="patient.university" style='width: 152px;'>	</select></span></td>
+				<td><span id="universityField"><select id="university" name="person.attribute.47" style='width: 152px;'>	</select></span></td>
 		</tr>
 		<tr id="studentIdRow">
 				<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
 				<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
-				<td><input type="text" id="studentId" name="patient.attribute.42" placeholder="StudentID" style='width: 152px; 	border-width: 1px;
+				<td><input type="text" id="studentId" name="person.attribute.42" placeholder="StudentID" style='width: 152px; 	border-width: 1px;
 	border-right: 1px;
 	border-left: 1px;
 	border-top: 1px;
@@ -1397,7 +1431,7 @@ input, select, textarea {
 	  <tr id="waiverNumberRow">
 			<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
 			<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
-			<td><input type="text" id="waiverNumber" name="patient.attribute.32" placeholder="Waiver Number" style='width: 152px; 	border-width: 1px;
+			<td><input type="text" id="waiverNumber" name="person.attribute.32" placeholder="Waiver Number" style='width: 152px; 	border-width: 1px;
 	border-right: 1px;
 	border-left: 1px;
 	border-top: 1px;
