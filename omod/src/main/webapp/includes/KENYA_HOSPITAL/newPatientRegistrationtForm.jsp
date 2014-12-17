@@ -668,13 +668,13 @@ input, select, textarea {
 						return false;
 					}
 					else{
-					     if (StringUtils.isBlank(jQuery("#university").val())){
-						 alert("Please select the University");
-						 return false;
-					     }
 					     var selectedSpecialScheme=jQuery("#specialScheme option:checked").val();
 	                     //if(MODEL.specialSchemeMap[selectedSpecialScheme]=="STUDENT SCHEME"){
 	                     if(selectedSpecialScheme=="STUDENT SCHEME"){
+	                          if (StringUtils.isBlank(jQuery("#university").val())){
+						      alert("Please select the University");
+						      return false;
+					          }
 	                          if (StringUtils.isBlank(jQuery("#studentId").val())){
 						      alert("Please enter the Student ID");
 						      return false;

@@ -89,9 +89,9 @@ public class RegistrationWebUtils {
 	}
 	
 	public static String getSubConceptsWithName(String conceptName) {
-		Concept opdward = Context.getConceptService().getConcept(conceptName);
+		Concept concept = Context.getConceptService().getConcept(conceptName);
 		StringBuilder sb = new StringBuilder();
-		for (ConceptAnswer ca : opdward.getAnswers()) {
+		for (ConceptAnswer ca : concept.getAnswers()) {
 			sb.append(ca.getAnswerConcept().getName().getName() + "," + ca.getAnswerConcept().getName().getName() + "|");
 		}
 		return sb.toString();

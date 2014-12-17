@@ -141,6 +141,48 @@
 			}
 			
 		
+		    if(MODEL.patientAttributes[14]=="Paying"){
+			var a=MODEL.patientAttributes[14];
+			var b=MODEL.patientAttributes[44];
+			var c=a+"/"+b;	
+			jQuery("#printablePaymentCategory").append("<span style='border:0px'>" + c + "</span>");
+			}
+			
+			if(MODEL.patientAttributes[14]=="Non-Paying"){
+			var a=MODEL.patientAttributes[14];
+			var b=MODEL.patientAttributes[45];
+			if(MODEL.patientAttributes[45]=="NHIF CIVIL SERVANT"){
+			var c=MODEL.patientAttributes[34];
+			var d=a+"/"+b+"/"+c;
+			jQuery("#printablePaymentCategory").append("<span style='border:0px'>" + d + "</span>");
+			}
+			else{
+			var c=a+"/"+b;	
+			jQuery("#printablePaymentCategory").append("<span style='border:0px'>" + c + "</span>");
+			  }
+			}
+			
+			if(MODEL.patientAttributes[14]=="Special Schemes"){	
+			var a=MODEL.patientAttributes[14];
+			var b=MODEL.patientAttributes[46];
+			if(MODEL.patientAttributes[46]=="STUDENT SCHEME"){
+			var c=MODEL.patientAttributes[47];
+			var d=MODEL.patientAttributes[42];
+			var e=a+"/"+b+"/"+c+"/"+d;
+			jQuery("#printablePaymentCategory").append("<span style='border:0px'>" + e + "</span>");
+			}
+			else if(MODEL.patientAttributes[46]=="WAIVER CASE"){
+			var c=MODEL.patientAttributes[32];
+			var d=a+"/"+b+"/"+c;
+			jQuery("#printablePaymentCategory").append("<span style='border:0px'>" + d + "</span>");
+			}
+			else{
+			var c=a+"/"+b;
+			jQuery("#printablePaymentCategory").append("<span style='border:0px'>" + c + "</span>");
+			  }
+			}
+			jQuery("#printablePaymentCategoryRow").show();
+			
 		// Set data for first time visit,revisit,reprint
 		if(MODEL.firstTimeVisit=="true"){
 		    jQuery("#reprint").hide();
@@ -157,9 +199,6 @@
 			jQuery("#triageRowField").hide();
 			jQuery("#opdRowField").hide();
 			jQuery("#specialClinicRowField").hide();
-			
-			jQuery("#printablePaymentCategory").append("<span style='border:0px'>" + MODEL.selectedPaymentCategory + "</span>");
-			jQuery("#printablePaymentCategoryRow").show();
 		}
 		else if(MODEL.revisit=="true"){
 			jQuery("#reprint").hide();
@@ -189,9 +228,6 @@
 			jQuery("#triageRowField").hide();
 			jQuery("#opdRowField").hide();
 			jQuery("#specialClinicRowField").hide();
-				
-			jQuery("#printablePaymentCategory").append("<span style='border:0px'>" + MODEL.selectedPaymentCategory + "</span>");
-			jQuery("#printablePaymentCategoryRow").show();
 			
 			if(!StringUtils.isBlank(MODEL.selectedMLC)){
 			jQuery("#mlcCaseNoRowField").hide();
