@@ -186,6 +186,7 @@
 		// Set data for first time visit,revisit,reprint
 		if(MODEL.firstTimeVisit=="true"){
 		    jQuery("#reprint").hide();
+		    jQuery("#printableRegistrationFeeRow2").hide();
 			
 			if(!StringUtils.isBlank(MODEL.selectedMLC)){
 			jQuery("#mlcCaseYesField").hide();
@@ -202,6 +203,7 @@
 		}
 		else if(MODEL.revisit=="true"){
 			jQuery("#reprint").hide();
+			jQuery("#printableRegistrationFeeRow").hide();
 			jQuery("#selectedPaymentCategory").val(MODEL.patientAttributes[14]);
 			if(MODEL.patientAttributes[14]=="Paying"){
             jQuery("#selectedPaymentSubCategory").val(MODEL.patientAttributes[44]);
@@ -215,7 +217,7 @@
 			
 		}
 		else if(MODEL.reprint=="true"){
-			
+			jQuery("#printableRegistrationFeeRow2").hide();
 			if(!StringUtils.isBlank(MODEL.selectedMLC)){
 			jQuery("#mlcCaseYesField").hide();
 			jQuery("#mlcCaseNoRowField").hide();
@@ -599,6 +601,10 @@ jQuery("#selectedRegFeeValue").val(0);
 if(MODEL.patientAttributes[14]=="Special Schemes"){
 jQuery("#selectedRegFeeValue").val(0);
 }
+
+var selectedRegFeeValue=jQuery("#selectedRegFeeValue").val();
+jQuery("#printableRegistrationFee").empty();
+jQuery("#printableRegistrationFee").append("<span style='margin:5px;'>" + selectedRegFeeValue + "</span>");	
 			
 }
 
@@ -617,6 +623,11 @@ jQuery("#selectedRegFeeValue").val(0);
 if(MODEL.patientAttributes[14]=="Special Schemes"){
 jQuery("#selectedRegFeeValue").val(0);
 }
+
+var selectedRegFeeValue=jQuery("#selectedRegFeeValue").val();
+jQuery("#printableRegistrationFee").empty();
+jQuery("#printableRegistrationFee").append("<span style='margin:5px;'>" + selectedRegFeeValue + "</span>");	
+
 }
 
 function specialClinicSelection(){
@@ -644,6 +655,11 @@ jQuery("#selectedRegFeeValue").val(${specialClinicRegFee});
 if(MODEL.patientAttributes[14]=="Special Schemes"){
 jQuery("#selectedRegFeeValue").val(0);
 }
+
+var selectedRegFeeValue=jQuery("#selectedRegFeeValue").val();
+jQuery("#printableRegistrationFee").empty();
+jQuery("#printableRegistrationFee").append("<span style='margin:5px;'>" + selectedRegFeeValue + "</span>");	
+
 }
 </script>
 
@@ -772,24 +788,30 @@ jQuery("#selectedRegFeeValue").val(0);
 				<td id="specialClinicField"><select id="specialClinic" name="patient.specialClinic" onchange="specialClinicSelection();" style='width: 152px;'>	</select></td>
 		</tr>
 		<tr id="printableRoomToVisitRow">
-					<td><b>Room to Visit:</b></td>
-					<td>
-						<div id="printableRoomToVisit"></div>
-					</td>
+				<td><b>Room to Visit:</b></td>
+				<td>
+				<div id="printableRoomToVisit"></div>
+				</td>
 		</tr>
-				<tr id="printableRegistrationFeeRow">			
-					<td><b>Registration Fee:</b></td>
-					<td>${registrationFee}</td>
-				</tr>
-				<tr id="printableUserRow">			
-					<td><b>You were served by:</b>&nbsp;&nbsp;&nbsp;&nbsp;</td>
-					<td>${user}</td>
-				</tr>
-				<tr>
+		<tr id="printableRegistrationFeeRow">			
+				<td><b>Registration Fee:</b></td>
+				<td>${registrationFee}</td>
+		</tr>
+		<tr id="printableRegistrationFeeRow2">
+				<td><b>Registration Fee:</b></td>
+				<td>
+				<div id="printableRegistrationFee"></div>
+				</td>
+		</tr>
+		<tr id="printableUserRow">			
+				<td><b>You were served by:</b>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+				<td>${user}</td>
+		</tr>
+		<tr>
 				<td><input type="hidden" id="selectedPaymentCategory" name="patient.selectedPaymentCategory" /></td>
 				<td><input type="hidden" id="selectedPaymentSubCategory" name="patient.selectedPaymentSubCategory" /></td>
 				<td><input type="hidden" id="selectedRegFeeValue" name="patient.registration.fee" /></td>
-				</tr>
+		</tr>
 			</table>
 		</form>
 	</center>
