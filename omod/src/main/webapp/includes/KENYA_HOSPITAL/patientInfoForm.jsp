@@ -31,7 +31,8 @@
 		jQuery("#name").html(MODEL.patientName);
 		jQuery("#printablePaymentCategoryRow").hide();
 		jQuery("#printableRoomToVisitRow").hide();
-		//jQuery("#printableUserRow").hide();
+		jQuery("#fileNumberRowField").hide();
+		jQuery("#printableFileNumberRow").hide();
 		
 		jQuery("#mlc").hide();
 		
@@ -200,6 +201,20 @@
 			jQuery("#triageRowField").hide();
 			jQuery("#opdRowField").hide();
 			jQuery("#specialClinicRowField").hide();
+			
+			jQuery("#printableRoomToVisitRow").show();
+			if(!StringUtils.isBlank(MODEL.selectedTRIAGE)){	
+			jQuery("#printableRoomToVisit").append("<span style='border:0px'>" + jQuery("#triage option:checked").html() + "</span>");
+			}
+            if(!StringUtils.isBlank(MODEL.selectedOPD)){
+		    jQuery("#printableRoomToVisit").append("<span style='border:0px'>" + jQuery("#opdWard option:checked").html() + "</span>");
+            }
+            if(!StringUtils.isBlank(MODEL.selectedSPECIALCLINIC)){
+		    jQuery("#printableRoomToVisit").append("<span style='border:0px'>" + jQuery("#specialClinic option:checked").html() + "</span>");
+		    jQuery("#printableFileNumberRow").append("<span style='border:0px'>" + MODEL.patientAttributes[43] + "</span>");
+		    jQuery("#printableFileNumberRow").show();
+            }
+			
 		}
 		else if(MODEL.revisit=="true"){
 			jQuery("#reprint").hide();
@@ -239,6 +254,7 @@
 		    jQuery("#mlcCaseNoRowField").hide();
 			}	
 			
+			jQuery("#printableRoomToVisitRow").show();
 			if(!StringUtils.isBlank(MODEL.selectedTRIAGE)){	
 			jQuery("#printableRoomToVisit").append("<span style='border:0px'>" + jQuery("#triage option:checked").html() + "</span>");
 			}
@@ -247,8 +263,9 @@
             }
             if(!StringUtils.isBlank(MODEL.selectedSPECIALCLINIC)){
 		    jQuery("#printableRoomToVisit").append("<span style='border:0px'>" + jQuery("#specialClinic option:checked").html() + "</span>");
+		    jQuery("#printableFileNumberRow").append("<span style='border:0px'>" + MODEL.patientAttributes[43] + "</span>");
+		    jQuery("#printableFileNumberRow").show();
             }
-            jQuery("#printableRoomToVisitRow").show();
 		
 			jQuery("#printSlip").hide();
 			jQuery("#save").hide();
@@ -300,8 +317,8 @@
                 
                 jQuery("#printablePaymentCategoryRow").show();	
 			    
+			    jQuery("#printableRoomToVisitRow").show();
 			    if (jQuery("#triageRoom").is(':checked')) {
-				//jQuery("#triage").after("<span style='border:0px'>" + jQuery("#triage option:checked").html() +  "</span>");
 				jQuery("#printableRoomToVisit").append("<span style='border:0px'>" + jQuery("#triage option:checked").html() + "</span>");
 			    }
                 if (jQuery("#opdRoom").is(':checked')) {
@@ -309,8 +326,10 @@
                 }
                 if (jQuery("#specialClinicRoom").is(':checked')) {
 				jQuery("#printableRoomToVisit").append("<span style='border:0px'>" + jQuery("#specialClinic option:checked").html() + "</span>");
+				jQuery("#printableFileNumberRow").append("<span style='border:0px'>" + jQuery("#fileNumber").val() + "</span>");
+		        jQuery("#fileNumberRowField").hide();
+		        jQuery("#printableFileNumberRow").show();
                 }
-                jQuery("#printableRoomToVisitRow").show();
 			    
                 }
 				
@@ -462,6 +481,10 @@
 						alert("Please select the Special Clinic to visit");
 						return false;
 					}
+					if (StringUtils.isBlank(jQuery("#fileNumber").val())) {
+						alert("Please enter the File Number");
+						return false;
+					}
 				}
 			}
 		 }
@@ -532,7 +555,8 @@
 			        jQuery("#specialClinicRoom").removeAttr("checked");
 					jQuery("#triageField").show();	
 					jQuery("#opdWardField").hide();	
-					jQuery("#specialClinicField").hide();	
+					jQuery("#specialClinicField").hide();
+					jQuery("#fileNumberRowField").hide(); 	
 			}
 			else{
 			jQuery("#triageField").hide();	
@@ -546,6 +570,7 @@
 			        jQuery("#triageField").hide();
 					jQuery("#opdWardField").show();	
 					jQuery("#specialClinicField").hide();
+					jQuery("#fileNumberRowField").hide(); 
 			}
 			else{
 			jQuery("#opdWardField").hide();	
@@ -558,10 +583,14 @@
 			        jQuery("#opdRoom").removeAttr("checked");
 			        jQuery("#triageField").hide();
 			        jQuery("#opdWardField").hide();
-					jQuery("#specialClinicField").show();	
+					jQuery("#specialClinicField").show();
+					if (!StringUtils.isBlank(jQuery("#specialClinic").val())) {
+                    jQuery("#fileNumberRowField").show();
+                    }	
 			}
 			else{
-			jQuery("#specialClinicField").hide();	
+			jQuery("#specialClinicField").hide();
+			jQuery("#fileNumberRowField").hide();	
 			}
 		},
 		
@@ -586,7 +615,6 @@
 	};
 	
 function triageRoomSelection(){
-
 if(MODEL.patientAttributes[14]=="Paying"){
 jQuery("#selectedRegFeeValue").val('${reVisitFee}');
 if(MODEL.patientAttributes[44]=="CHILD LESS THAN 5 YEARS"){
@@ -631,6 +659,17 @@ jQuery("#printableRegistrationFee").append("<span style='margin:5px;'>" + select
 }
 
 function specialClinicSelection(){
+
+if (!StringUtils.isBlank(jQuery("#specialClinic").val())) {
+jQuery("#fileNumberRowField").show();
+if(MODEL.patientAttributes[43]!=null){
+jQuery("#fileNumber").val(MODEL.patientAttributes[43]);
+jQuery("#fileNumber").attr("disabled", "disabled");
+}
+}
+else{
+jQuery("#fileNumberRowField").hide();
+}
 
 if(MODEL.patientAttributes[14]=="Paying"){
 var reVisitRegFee=parseInt('${reVisitFee}');
@@ -787,10 +826,21 @@ jQuery("#printableRegistrationFee").append("<span style='margin:5px;'>" + select
 				<td id="specialClinicRoomField"><input id="specialClinicRoom" type="checkbox" name="specialClinicRoom"/> Special Clinic&nbsp;&nbsp;&nbsp;&nbsp;</td>
 				<td id="specialClinicField"><select id="specialClinic" name="patient.specialClinic" onchange="specialClinicSelection();" style='width: 152px;'>	</select></td>
 		</tr>
+		<tr id="fileNumberRowField">
+				<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+				<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+				<td id="fileNumberField"><input id="fileNumber" name="person.attribute.43" placeholder="File Number" style='width: 152px;'/></td>
+		</tr>
 		<tr id="printableRoomToVisitRow">
 				<td><b>Room to Visit:</b></td>
 				<td>
 				<div id="printableRoomToVisit"></div>
+				</td>
+		</tr>
+		<tr id="printableFileNumberRow">
+				<td></td>
+				<td>
+				<div id="printableFileNumber"></div>
 				</td>
 		</tr>
 		<tr id="printableRegistrationFeeRow">			

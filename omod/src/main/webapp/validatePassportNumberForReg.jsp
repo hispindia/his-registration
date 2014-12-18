@@ -15,14 +15,11 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with Registration module.  If not, see <http://www.gnu.org/licenses/>.
- *  author: Ghanshyam
- *  date:   3-june-2013
- *  issue no: #1962
+ *  
+ *  
+ * 
 --%>
-<form>
-<input id="abc"  name="abc" type='hidden' value="abc"/>
-<input id="def"  name="def" type='hidden' value="def"/>
-<input id="nId"  name="nId" type='hidden' value="${nid}"/>
+<div>
 <input id="pNum"  name="pNum" type='hidden' value="${pnum}"/>
-</form>
+</div>
 

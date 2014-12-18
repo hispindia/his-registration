@@ -36,15 +36,19 @@ public class ValidateNationalIdAndPassportNumberEditController {
 	@RequestMapping(method = RequestMethod.GET)
 	public String main(
 			Model model,
-			@RequestParam(value = "patientId", required = false) Integer patientId, 
-			@RequestParam(value = "nationalId", required = false) String patientNationalId, 
-			@RequestParam(value = "passportNumber", required = false) String patientpassportNumber) {
-		RegistrationService registrationService  = Context.getService(RegistrationService.class);
-		Integer nid=registrationService .getNationalId(patientId,patientNationalId);
-		Integer pnum=registrationService .getPassportNumber(patientId, patientpassportNumber);
-		model.addAttribute("nid", nid);
-		model.addAttribute("pnum", pnum);
-		return "/module/registration/validateNationalIdAndPassportNumberEdit";
+			@RequestParam(value = "patientId", required = false) Integer patientId,
+			@RequestParam(value = "nationalId", required = false) String nationalId,
+			@RequestParam(value = "passportNumber", required = false) String passportNumber) {
+		RegistrationService registrationService = Context
+				.getService(RegistrationService.class);
+		if (nationalId != null) {
+			Integer nid = registrationService.getNationalId(patientId,nationalId);
+			model.addAttribute("nid", nid);
+			return "/module/registration/validateNationalIdForEdit";
+		} else {
+			Integer pnum = registrationService.getPassportNumber(patientId,passportNumber);
+			model.addAttribute("pnum", pnum);
+			return "/module/registration/validatePassportNumberForEdit";
+		}
 	}
 }
-

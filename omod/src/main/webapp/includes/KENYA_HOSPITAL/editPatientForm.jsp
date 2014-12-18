@@ -337,26 +337,53 @@ input, select, textarea {
 			}
 		},
 
-		 //ghanshya,3-july-2013 #1962 Create validation for length of Health ID and National ID
-		//Add Validation for checking duplicate National Id and Health Id
-		checkNationalIDPassportNumber : function() {
-		        patientId=MODEL.patientId;
-				nationalId=jQuery("#patientNationalId").val();
-				passportNumber=jQuery("#passportNumber").val();
-				jQuery.ajax({
-				type : "GET",
-				url : getContextPath() + "/module/registration/validatenationalidandpassportnumberedit.form",
-				data : ({
-					patientId			: patientId,
-					nationalId			: nationalId,
-					passportNumber		: passportNumber
+		checkNationalID : function() {	
+		nationalId=jQuery("#patientNationalId").val();
+		jQuery.ajax({
+		type : "GET",
+		url : getContextPath() + "/module/registration/validatenationalidandpassportnumber.form",
+		data : ({
+			nationalId			: nationalId
 				}),
-				success : function(data) {	
-				    jQuery("#validationMessage").html(data);	
-					 
-		           } 
-               });
-			},	
+		success : function(data) {	
+		jQuery("#divForNationalId").html(data);
+		validateNationalID();
+		   } 
+         });
+	   },
+	   
+	    checkPassportNumber : function() {	
+		passportNumber=jQuery("#passportNumber").val();
+		jQuery.ajax({
+		type : "GET",
+		url : getContextPath() + "/module/registration/validatenationalidandpassportnumber.form",
+		data : ({
+			passportNumber			: passportNumber
+				}),
+		success : function(data) {	
+		jQuery("#divForpassportNumber").html(data);
+		validatePassportNumber();
+		   } 
+         });
+	   },
+	   
+	   //This function is not used.left for future use if required
+	   checkNationalIDAndPassportNumber : function() {	
+		nationalId=jQuery("#patientNationalId").val();
+		passportNumber=jQuery("#passportNumber").val();
+		jQuery.ajax({
+		type : "GET",
+		url : getContextPath() + "/module/registration/validatenationalidandpassportnumber.form",
+		data : ({
+			nationalId			: nationalId,
+			passportNumber		: passportNumber
+				}),
+		success : function(data) {	
+		jQuery("#validationMessage").html(data);
+		validateNationalIDAndPassportNumber();
+		   } 
+         });
+	   },
 		
 		/** VALIDATE BIRTHDATE */
 		checkBirthDate : function() {
@@ -691,45 +718,13 @@ input, select, textarea {
 				}
 			}
 			
-			        //ghanshya,3-july-2013 #1962 Create validation for length of Health ID and National ID
-			       //Add Validation for checking duplicate National Id and Health Id
-			        PAGE.checkNationalIDPassportNumber();
-		            alert("click ok to proceed");
-		            abc=jQuery("#abc").val();
-					def=jQuery("#def").val();
-					nd=jQuery("#nId").val();
-					pn=jQuery("#pNum").val();
-					nId=jQuery("#nId").val();
-					pNum=jQuery("#pNum").val();
-				
-					if(typeof nId!="undefined" || typeof pNum!="undefined"){
-					if(nId=="1" && pNum=="1"){
-					//document.getElementById("nationalIdValidationMessage").innerHTML="Patient already registered with this National id";
-					//document.getElementById("healthIdValidationMessage").innerHTML="Patient already registered with this Health id";
-                    //jQuery("#nationalIdValidationMessage").show();
-                    //jQuery("#healthIdValidationMessage").show();
-		            alert("Patient already registered with the same National ID and Passport Number");
-					return false
-		            }
-		            else if(nId=="1"){
-                    //document.getElementById("nationalIdValidationMessage").innerHTML="Patient already registered with this National id";
-                    //jQuery("#nationalIdValidationMessage").show();
-                    //jQuery("#healthIdValidationMessage").hide();
-		            alert("Patient already registered with the same National ID");
-                    return false;					
-		            }
-		            else if(pNum=="1"){
-		             //document.getElementById("healthIdValidationMessage").innerHTML="Patient already registered with this Health id";
-                     //jQuery("#healthIdValidationMessage").show();
-                     //jQuery("#nationalIdValidationMessage").hide();
-		             alert("Patient already registered with the same Passport Number");	
-					 return false;
-		            }
-		            }
-		            else{
-		            alert("please try again");
-		            return false;
-		            }
+			//submitNationalIDAndPassportNumber();
+            if(validateNationalIDAndPassportNumber()){
+            return true;
+            }
+            else{
+            return false;
+            }
 
 			return true;
 		}
@@ -860,6 +855,74 @@ input, select, textarea {
 	  jQuery("#otherNationality").hide();
 	  }
 	}
+	
+	function submitNationalID(){
+	PAGE.checkNationalID();
+   }
+	
+	function validateNationalID(){
+	var nId=jQuery("#nId").val();
+	if(nId=="1"){
+	document.getElementById("nationalIdValidationMessage").innerHTML="Patient already registered with this National ID";
+	jQuery("#nationalIdValidationMessage").show();
+    return false;					
+    }
+    else{
+    jQuery("#nationalIdValidationMessage").hide();
+    }  
+   }
+		          
+		       
+   function submitPassportNumber(){
+   PAGE.checkPassportNumber();
+   }
+   
+   function validatePassportNumber(){
+   var pNum=jQuery("#pNum").val();
+   if(pNum=="1"){
+   document.getElementById("passportNumberValidationMessage").innerHTML="Patient already registered with this Passport Number";
+   jQuery("#passportNumberValidationMessage").show();
+   return false;
+	}
+	else{
+	jQuery("#passportNumberValidationMessage").hide();
+	}
+   }
+   
+   function submitNationalIDAndPassportNumber(){
+   PAGE.checkNationalIDAndPassportNumber();
+   }
+   
+   function validateNationalIDAndPassportNumber(){
+   var nId=jQuery("#nId").val();
+   var pNum=jQuery("#pNum").val();
+   if(nId=="1" && pNum=="1"){
+   //alert("Patient already registered with the same National ID and Passport Number");	
+   document.getElementById("nationalIdValidationMessage").innerHTML="Patient already registered with this National ID";
+   document.getElementById("passportNumberValidationMessage").innerHTML="Patient already registered with this Passport Number";
+   jQuery("#nationalIdValidationMessage").show();
+   jQuery("#passportNumberValidationMessage").show();
+   return false;
+	}
+   else if(nId=="1"){
+   //alert("Patient already registered with the same National ID");
+   document.getElementById("nationalIdValidationMessage").innerHTML="Patient already registered with this National ID";
+   jQuery("#nationalIdValidationMessage").show();
+   jQuery("#passportNumberValidationMessage").hide();
+   return false;					
+    }  
+   else if(pNum=="1"){
+   //alert("Patient already registered with the same Passport Number");	
+   jQuery("#nationalIdValidationMessage").hide();
+   jQuery("#passportNumberValidationMessage").show();
+   return false;
+	}
+   else{
+   jQuery("#nationalIdValidationMessage").hide();
+   jQuery("#passportNumberValidationMessage").hide();
+   return true;
+	}
+   }
 	
     function nonPayingCategorySelection(){
 	var selectedNonPayingCategory=jQuery("#nonPayingCategory option:checked").val();
@@ -1114,12 +1177,14 @@ input, select, textarea {
 		<tr>
 				<td><b>ID Proof Details&nbsp;&nbsp;&nbsp;&nbsp;</b></td>
 				<td>National ID&nbsp;&nbsp;&nbsp;&nbsp;</td>
-				<td><input id="patientNationalId" name="person.attribute.20" style='width: 152px;'/></td>
+				<td><input id="patientNationalId" name="person.attribute.20" onblur="submitNationalID();" style='width: 152px;'/></td>
+				<td><span style="color: red;" id="nationalIdValidationMessage"> </span></td>
 		</tr>
 		<tr>
 				<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
 				<td>Passport Number&nbsp;&nbsp;&nbsp;&nbsp;</td>
-		        <td><input id="passportNumber" name="person.attribute.38" style='width: 152px;'/></td>
+		        <td><input id="passportNumber" name="person.attribute.38" onblur="submitPassportNumber();" style='width: 152px;'/></td>
+		        <td><span style="color: red;" id="passportNumberValidationMessage"> </span></td>
 		</tr>
 		</table>
 		</div>
@@ -1233,7 +1298,8 @@ input, select, textarea {
 		</table>
 		</div>
 		
-		<div id="validationMessage"></div>
+		<div id="divForNationalId"></div>
+		<div id="divForpassportNumber"></div>
 		
 		<div class="floatBottom">
 		<table width="100%" height="100%">
