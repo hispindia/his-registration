@@ -1,5 +1,5 @@
  <%--
- *  Copyright 2013 Society for Health Information Systems Programmes, India (HISP India)
+ *  Copyright 2014 Society for Health Information Systems Programmes, India (HISP India)
  *
  *  This file is part of Registration module.
  *
@@ -75,10 +75,6 @@
 			}
 		);
 		
-		// insert images
-		jQuery(".editImage").each(function(index, value){
-			jQuery(this).attr("src", openmrsContextPath + "/images/edit.gif");
-		});		
 	});
 	
 </script>
@@ -88,38 +84,27 @@
 <c:choose>
 	<c:when test="${not empty patients}" >		
 	<table style="width:100%">
-		<tr>
-		<openmrs:hasPrivilege privilege="Edit Patients">
-            <td align="center"><b>Edit</b></td>
-        </openmrs:hasPrivilege>			
+		<tr>	
 			<td align="center"><b>Patient ID</b></td>
 			<td align="center"><b>Name</b></td>
 			<td align="center"><b>Age</b></td>
 			<td align="center"><b>Gender</b></td>			
-			<!-- <td><b>Relative Name</b></td> -->
 			<td align="center"><b>Date of Previous Visit</b></td>
-			<td align="center"><b>Reprint Slip</b></td>
+			<td align="center" colspan="8"><b>Action</b></td>
 		</tr>
 		<c:forEach items="${patients}" var="patient" varStatus="varStatus">
-			<tr class='${varStatus.index % 2 == 0 ? "oddRow" : "evenRow" } patientSearchRow'>
-				<openmrs:hasPrivilege privilege="Edit Patients">
-					<td onclick="PATIENTSEARCHRESULT.editPatient(${patient.patientId},'${patient.dead}');">
-						<center>
-							<img class="editImage" title="Edit patient information"/>
-						</center>
-					</td>
-				</openmrs:hasPrivilege>		
-				<td align="center" onclick="PATIENTSEARCHRESULT.visit(${patient.patientId},'${patient.dead}');">
+			<tr class='${varStatus.index % 2 == 0 ? "oddRow" : "evenRow" } patientSearchRow'>		
+				<td align="center">
 					${patient.patientIdentifier.identifier}
 				</td>
-				<td  align="center" onclick="PATIENTSEARCHRESULT.visit(${patient.patientId},'${patient.dead}');">${patient.givenName} ${patient.familyName}  ${fn:replace(patient.middleName,',',' ')}</td>
-				<td align="center" onclick="PATIENTSEARCHRESULT.visit(${patient.patientId},'${patient.dead}');"> 
+				<td  align="center">${patient.givenName} ${patient.familyName}  ${fn:replace(patient.middleName,',',' ')}</td>
+				<td align="center"> 
                 	<c:choose>
                 		<c:when test="${patient.age == 0}"> &lt 1 </c:when>
                 		<c:otherwise >${patient.age}</c:otherwise>
                 	</c:choose>
                 </td>
-				<td align="center" onclick="PATIENTSEARCHRESULT.visit(${patient.patientId},'${patient.dead}');">
+				<td align="center">
 					<c:choose>
                 		<c:when test="${patient.gender eq 'M'}">
                 		<!--
@@ -130,21 +115,25 @@
                 		<c:otherwise><!-- <img src="${pageContext.request.contextPath}/images/female.gif"/> --> F</c:otherwise>
                 	</c:choose>
 				</td>                
-				<%-- <td onclick="PATIENTSEARCHRESULT.visit(${patient.patientId},'${patient.dead}');"> 
-                	<%
-						Patient patient = (Patient) pageContext.getAttribute("patient");
-						Map<Integer, Map<Integer, String>> attributes = (Map<Integer, Map<Integer, String>>) pageContext.findAttribute("attributeMap");						
-						Map<Integer, String> patientAttributes = (Map<Integer, String>) attributes.get(patient.getPatientId());						
-						String relativeName = patientAttributes.get(8); 
-						if(relativeName!=null)
-							out.print(relativeName);
-					%>
-                </td> --%>
-                <td align="center" onclick="PATIENTSEARCHRESULT.visit(${patient.patientId},'${patient.dead}');">
+                <td align="center">
 	                <openmrs:formatDate date="${lastVisitTime[patient.patientId]}"/>              	
                 </td>
-                <td align="center" onclick="PATIENTSEARCHRESULT.reprint(${patient.patientId},'${patient.dead}');"> 
-                	Reprint slip
+                <td align="center" onclick="PATIENTSEARCHRESULT.visit(${patient.patientId},'${patient.dead}');">
+					<center>
+							<img title="Revisit" alt="Revisit" src="${pageContext.request.contextPath}/moduleResources/registration/images/revisit.png"/>
+					</center>
+				</td>	
+                <openmrs:hasPrivilege privilege="Edit Patients">
+					<td onclick="PATIENTSEARCHRESULT.editPatient(${patient.patientId},'${patient.dead}');">
+						<center>
+							<img title="Edit" alt="Edit" src="${pageContext.request.contextPath}/moduleResources/registration/images/edit.png"/>
+						</center>
+					</td>
+				</openmrs:hasPrivilege>	
+				<td align="center" onclick="PATIENTSEARCHRESULT.reprint(${patient.patientId},'${patient.dead}');"> 
+                	<center>
+							<img title="Reprint" alt="Reprint" src="${pageContext.request.contextPath}/moduleResources/registration/images/printer.png"/>
+					</center>
                 </td>
 			</tr>
 		</c:forEach>

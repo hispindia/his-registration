@@ -187,7 +187,7 @@
 		// Set data for first time visit,revisit,reprint
 		if(MODEL.firstTimeVisit=="true"){
 		    jQuery("#reprint").hide();
-		    jQuery("#printableRegistrationFeeRow2").hide();
+		    jQuery("#printableRegistrationFeeForFirstVisitAndReprintRow").hide();
 			
 			if(!StringUtils.isBlank(MODEL.selectedMLC)){
 			jQuery("#mlcCaseYesField").hide();
@@ -211,14 +211,15 @@
             }
             if(!StringUtils.isBlank(MODEL.selectedSPECIALCLINIC)){
 		    jQuery("#printableRoomToVisit").append("<span style='border:0px'>" + jQuery("#specialClinic option:checked").html() + "</span>");
-		    jQuery("#printableFileNumberRow").append("<span style='border:0px'>" + MODEL.patientAttributes[43] + "</span>");
+		    jQuery("#printableFileNumber").empty();
+            jQuery("#printableFileNumber").append("<span style='margin:5px;'>" + MODEL.patientAttributes[43] + "</span>");	
 		    jQuery("#printableFileNumberRow").show();
             }
 			
 		}
 		else if(MODEL.revisit=="true"){
 			jQuery("#reprint").hide();
-			jQuery("#printableRegistrationFeeRow").hide();
+			jQuery("#printableRegistrationFeeForRevisitRow").hide();
 			jQuery("#selectedPaymentCategory").val(MODEL.patientAttributes[14]);
 			if(MODEL.patientAttributes[14]=="Paying"){
             jQuery("#selectedPaymentSubCategory").val(MODEL.patientAttributes[44]);
@@ -232,7 +233,7 @@
 			
 		}
 		else if(MODEL.reprint=="true"){
-			jQuery("#printableRegistrationFeeRow2").hide();
+			jQuery("#printableRegistrationFeeForFirstVisitAndReprintRow").hide();
 			if(!StringUtils.isBlank(MODEL.selectedMLC)){
 			jQuery("#mlcCaseYesField").hide();
 			jQuery("#mlcCaseNoRowField").hide();
@@ -263,7 +264,8 @@
             }
             if(!StringUtils.isBlank(MODEL.selectedSPECIALCLINIC)){
 		    jQuery("#printableRoomToVisit").append("<span style='border:0px'>" + jQuery("#specialClinic option:checked").html() + "</span>");
-		    jQuery("#printableFileNumberRow").append("<span style='border:0px'>" + MODEL.patientAttributes[43] + "</span>");
+		    jQuery("#printableFileNumber").empty();
+            jQuery("#printableFileNumber").append("<span style='margin:5px;'>" + MODEL.patientAttributes[43] + "</span>");	
 		    jQuery("#printableFileNumberRow").show();
             }
 		
@@ -326,7 +328,8 @@
                 }
                 if (jQuery("#specialClinicRoom").is(':checked')) {
 				jQuery("#printableRoomToVisit").append("<span style='border:0px'>" + jQuery("#specialClinic option:checked").html() + "</span>");
-				jQuery("#printableFileNumberRow").append("<span style='border:0px'>" + jQuery("#fileNumber").val() + "</span>");
+				jQuery("#printableFileNumber").empty();
+				jQuery("#printableFileNumber").append("<span style='border:0px'>" + jQuery("#fileNumber").val() + "</span>");
 		        jQuery("#fileNumberRowField").hide();
 		        jQuery("#printableFileNumberRow").show();
                 }
@@ -838,16 +841,16 @@ jQuery("#printableRegistrationFee").append("<span style='margin:5px;'>" + select
 				</td>
 		</tr>
 		<tr id="printableFileNumberRow">
-				<td></td>
+				<td><b>File Number:</b></td>
 				<td>
 				<div id="printableFileNumber"></div>
 				</td>
 		</tr>
-		<tr id="printableRegistrationFeeRow">			
+		<tr id="printableRegistrationFeeForRevisitRow">			
 				<td><b>Registration Fee:</b></td>
 				<td>${registrationFee}</td>
 		</tr>
-		<tr id="printableRegistrationFeeRow2">
+		<tr id="printableRegistrationFeeForFirstVisitAndReprintRow">
 				<td><b>Registration Fee:</b></td>
 				<td>
 				<div id="printableRegistrationFee"></div>
