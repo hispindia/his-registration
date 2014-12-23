@@ -28,11 +28,15 @@
 		oldBackgroundColor: "",
 		
 		/** Click to view patient info */
-		visit: function(patientId,deadInfo){
+		visit: function(patientId,deadInfo,admittedInfo){
 		if(deadInfo=="true"){
         alert("This Patient is Dead");
         return false;
-        }						
+        }
+        if(admittedInfo=="true"){
+        alert("This Patient is admitted");
+        return false;
+        }							
 			window.location.href = openmrsContextPath + "/module/registration/showPatientInfo.form?patientId=" + patientId + "&revisit=true";
 		},
 		
@@ -118,7 +122,7 @@
                 <td align="center">
 	                <openmrs:formatDate date="${lastVisitTime[patient.patientId]}"/>              	
                 </td>
-                <td align="center" onclick="PATIENTSEARCHRESULT.visit(${patient.patientId},'${patient.dead}');">
+                <td align="center" onclick="PATIENTSEARCHRESULT.visit(${patient.patientId},'${patient.dead}','${patient.voided}');">
 					<center>
 							<img title="Revisit" alt="Revisit" src="${pageContext.request.contextPath}/moduleResources/registration/images/revisit.png"/>
 					</center>

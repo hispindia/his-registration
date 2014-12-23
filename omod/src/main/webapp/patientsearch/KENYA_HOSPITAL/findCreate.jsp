@@ -28,11 +28,15 @@
 		oldBackgroundColor: "",
 		
 		/** Click to view patient info */
-		visit: function(patientId,deadInfo){
+		visit: function(patientId,deadInfo,admittedInfo){
 		if(deadInfo=="true"){
         alert("This Patient is Dead");
         return false;
-        }						
+        }
+        if(admittedInfo=="true"){
+        alert("This Patient is admitted");
+        return false;
+        }							
 			window.location.href = openmrsContextPath + "/module/registration/showPatientInfo.form?patientId=" + patientId + "&revisit=true";
 		},
 		
@@ -109,17 +113,17 @@
 						</center>
 					</td>
 				</openmrs:hasPrivilege>		
-				<td align="center" onclick="PATIENTSEARCHRESULT.visit(${patient.patientId},'${patient.dead}');">
+				<td align="center" onclick="PATIENTSEARCHRESULT.visit(${patient.patientId},'${patient.dead}','${patient.voided}');">
 					${patient.patientIdentifier.identifier}
 				</td>
-				<td  align="center" onclick="PATIENTSEARCHRESULT.visit(${patient.patientId},'${patient.dead}');">${patient.givenName} ${patient.familyName}  ${fn:replace(patient.middleName,',',' ')}</td>
-				<td align="center" onclick="PATIENTSEARCHRESULT.visit(${patient.patientId},'${patient.dead}');"> 
+				<td  align="center" onclick="PATIENTSEARCHRESULT.visit(${patient.patientId},'${patient.dead}','${patient.voided}');">${patient.givenName} ${patient.familyName}  ${fn:replace(patient.middleName,',',' ')}</td>
+				<td align="center" onclick="PATIENTSEARCHRESULT.visit(${patient.patientId},'${patient.dead}','${patient.voided}');"> 
                 	<c:choose>
                 		<c:when test="${patient.age == 0}"> &lt 1 </c:when>
                 		<c:otherwise >${patient.age}</c:otherwise>
                 	</c:choose>
                 </td>
-				<td align="center" onclick="PATIENTSEARCHRESULT.visit(${patient.patientId},'${patient.dead}');">
+				<td align="center" onclick="PATIENTSEARCHRESULT.visit(${patient.patientId},'${patient.dead}','${patient.voided}');">
 					<c:choose>
                 		<c:when test="${patient.gender eq 'M'}">
                 		<!--
@@ -140,7 +144,7 @@
 							out.print(relativeName);
 					%>
                 </td> --%>
-                <td align="center" onclick="PATIENTSEARCHRESULT.visit(${patient.patientId},'${patient.dead}');">
+                <td align="center" onclick="PATIENTSEARCHRESULT.visit(${patient.patientId},'${patient.dead}','${patient.voided}');">
 	                <openmrs:formatDate date="${lastVisitTime[patient.patientId]}"/>              	
                 </td>
                 <td align="center" onclick="PATIENTSEARCHRESULT.reprint(${patient.patientId},'${patient.dead}');"> 
