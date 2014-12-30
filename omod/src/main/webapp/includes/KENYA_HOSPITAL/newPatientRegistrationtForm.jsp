@@ -1560,7 +1560,7 @@ input, select, textarea {
 		</tr>
 		<tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr>
 		<tr>
-				<td><b>Medico Legal Case&nbsp;&nbsp;&nbsp;&nbsp;</b></td>
+				<td><b>Medico Legal Case</b><label style="color:red">*</label>&nbsp;&nbsp;&nbsp;&nbsp;</td>
 				<td><input id="mlcCaseYes" type="checkbox" name="mlcCaseYes"/> Yes&nbsp;&nbsp;&nbsp;&nbsp;</td>
 				<td><select id="mlc" name="patient.mlc" style='width: 152px;'></select></td>
 		</tr>
@@ -1570,7 +1570,7 @@ input, select, textarea {
 		</tr>
 		<tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr>
 		<tr>
-				<td><b>Referral Information&nbsp;&nbsp;&nbsp;&nbsp;</b></td>
+				<td><b>Referral Information</b><label style="color:red">*&nbsp;&nbsp;&nbsp;&nbsp;</label></td>
 				<td><input id="referredYes" type="checkbox" name="referredYes"/> Yes&nbsp;&nbsp;&nbsp;&nbsp;</td>
 				<td id="referredFromColumn"><select id="referredFrom" name="patient.referred.from" style="width: 152px;"></select></td>
 		</tr>
