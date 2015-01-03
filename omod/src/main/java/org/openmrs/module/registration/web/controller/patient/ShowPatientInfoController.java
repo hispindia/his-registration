@@ -309,7 +309,16 @@ public class ShowPatientInfoController {
 			obsr.setValueCoded(cr);
 			obsr.setValueNumeric(doubleVal);
 			obsr.setValueText(parameters.get(RegistrationConstants.FORM_FIELD_SELECTED_PAYMENT_CATEGORY));
-			obsr.setComment(parameters.get(RegistrationConstants.FORM_FIELD_SELECTED_PAYMENT_SUBCATEGORY));
+//			obsr.setComment(parameters.get(RegistrationConstants.FORM_FIELD_SELECTED_PAYMENT_SUBCATEGORY));
+			HospitalCoreService hcs = Context.getService(HospitalCoreService.class);
+			List<PersonAttribute> pas = hcs.getPersonAttributes(patientId);
+			 for (PersonAttribute pa : pas) {
+				 PersonAttributeType attributeType = pa.getAttributeType(); 
+				 PersonAttributeType personAttributePaymentCategory=hcs.getPersonAttributeTypeByName("Paying Category Type");
+				 if(attributeType.getPersonAttributeTypeId()==personAttributePaymentCategory.getPersonAttributeTypeId()){
+						obsr.setComment(pa.getValue());
+				 }
+			 }
 			encounter.addObs(obsr);	
 						
 		}
