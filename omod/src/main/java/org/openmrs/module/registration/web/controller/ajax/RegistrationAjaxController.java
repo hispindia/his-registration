@@ -84,6 +84,7 @@ public class RegistrationAjaxController {
 				json.put("estimated", false);
 				json.put("birthdate", birthdate);
 				json.put("age", RegistrationUtils.estimateAge(birthdate));
+				json.put("ageInYear", RegistrationUtils.estimateAgeInYear(birthdate));
 				logger.info("User entered the correct birthdate.");
 			}
 			
@@ -98,6 +99,7 @@ public class RegistrationAjaxController {
 					String estimatedBirthdate = getEstimatedBirthdate(birthdate);
 					json.put("birthdate", estimatedBirthdate);
 					json.put("age", RegistrationUtils.estimateAge(estimatedBirthdate));
+					json.put("ageInYear", RegistrationUtils.estimateAgeInYear(estimatedBirthdate));
 				}
 				catch (Exception e) {
 					json.put("error", e.getMessage());

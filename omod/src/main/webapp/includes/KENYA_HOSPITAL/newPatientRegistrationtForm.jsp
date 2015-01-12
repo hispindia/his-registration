@@ -397,6 +397,7 @@ input, select, textarea {
 									jQuery("#birthdateEstimated").val("false");
 								}
 								jQuery("#estimatedAge").html(json.age);
+								jQuery("#estimatedAgeInYear").val(json.ageInYear);
 								jQuery("#birthdate").val(json.birthdate);
 								jQuery("#calendar").val(json.birthdate);
 
@@ -614,7 +615,16 @@ input, select, textarea {
 			if (jQuery("#patientGender").val() == "Any") {
 				alert("Please select gender of the patient");
 				return false;
-			} 
+			}
+			else{
+				var selectedPayingCategory=jQuery("#payingCategory option:checked").val();
+	             if(selectedPayingCategory=="EXPECTANT MOTHER"){
+	              if(jQuery("#patientGender").val() == "M"){
+	              alert("Selected Payment category is only valid for Female");
+	              return false;
+	              }
+	           }
+	       } 
 			
 			if (jQuery("#maritalStatus").val() == "Marital") {
 				alert("Please select marital status of the patient");
@@ -674,6 +684,19 @@ input, select, textarea {
 						alert("Please select the Paying Category");
 						return false;
 					}
+					else{
+					var selectedPayingCategory=jQuery("#payingCategory option:checked").val();
+	                var estAge = jQuery("#estimatedAgeInYear").val();
+	                if(selectedPayingCategory=="CHILD LESS THAN 5 YEARS"){
+	                if(estAge<6){
+	 
+	                }
+	                else{
+	                alert("Selected Payment category is only valid for a child less than 5 years");
+	                return false;
+	                }
+	               }
+	              }
 				}
 			    else if (jQuery("#nonPaying").attr('checked')) {
 					if (StringUtils.isBlank(jQuery("#nonPayingCategory").val())){
@@ -1114,10 +1137,24 @@ input, select, textarea {
 	function payingCategorySelection(){
 	var selectedPayingCategory=jQuery("#payingCategory option:checked").val();
 	 //if(MODEL.payingCategoryMap[selectedPayingCategory]=="CHILD LESS THAN 5 YEARS"){
+	 var estAge = jQuery("#estimatedAgeInYear").val();
 	 if(selectedPayingCategory=="CHILD LESS THAN 5 YEARS"){
+	 if(estAge<6){
 	 jQuery("#selectedRegFeeValue").val(${childLessThanFiveYearRegistrationFee});
 	 }
 	 else{
+	 alert("This category is only valid for a child less than 5 years");
+	 return false;
+	 }
+	 }
+	 else{
+	  
+	  if(selectedPayingCategory=="EXPECTANT MOTHER"){
+	  if (jQuery("#patientGender").val() == "M"){
+	  alert("This category is only valid for female");
+	  }
+	  }
+	  
 	  if(jQuery("#specialClinic").val()){
 	   var initialRegFee=parseInt('${initialRegFee}');
 	   var specialClinicRegFee=parseInt('${specialClinicRegFee}');
@@ -1281,6 +1318,7 @@ input, select, textarea {
 							src="moduleResources/registration/calendar.gif" /> <input
 							id="birthdateEstimated" type="hidden"
 							name="patient.birthdateEstimate" value="true" />
+							<input type="hidden" id="estimatedAgeInYear" name="estimatedAgeInYear"/>
 							<span id="estimatedAge" />
 				</td>
 			</tr>

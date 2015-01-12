@@ -215,6 +215,11 @@ public class RegistrationUtils {
 		return PatientUtils.estimateAge(date);
 	}
 	
+	public static String estimateAgeInYear(String birthdate) throws ParseException {
+		Date date = RegistrationUtils.parseDate(birthdate);
+		return PatientUtils.estimateAgeInYear(date);
+	}
+	
 	/**
 	 * Save common information to patientSearch table to speed up search process
 	 * 

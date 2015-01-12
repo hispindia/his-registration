@@ -406,6 +406,7 @@ input, select, textarea {
 								}
 
 								jQuery("#estimatedAge").html(json.age);
+								jQuery("#estimatedAgeInYear").val(json.ageInYear);
 								jQuery("#birthdate").val(json.birthdate);
 								jQuery("#calendar").val(json.birthdate);
 							} else {
@@ -614,6 +615,15 @@ input, select, textarea {
 				alert("Please select gender of the patient");
 				return false;
 			}
+			else{
+				var selectedPayingCategory=jQuery("#payingCategory option:checked").val();
+	             if(selectedPayingCategory=="EXPECTANT MOTHER"){
+	              if(jQuery("#patientGender").val() == "M"){
+	              alert("Selected Payment category is only valid for Female");
+	              return false;
+	              }
+	           }
+	       } 
 			
 			if (jQuery("#patientGender").val() == "M" &&  jQuery("#patientMaritalStatus").val() == "Widow") {
 				alert("Widow marital status is only for Female");
@@ -672,6 +682,19 @@ input, select, textarea {
 						alert("Please select the Paying Category");
 						return false;
 					}
+					else{
+					var selectedPayingCategory=jQuery("#payingCategory option:checked").val();
+	                var estAge = jQuery("#estimatedAgeInYear").val();
+	                if(selectedPayingCategory=="CHILD LESS THAN 5 YEARS"){
+	                if(estAge<6){
+	 
+	                }
+	                else{
+	                alert("Selected Payment category is only valid for a child less than 5 years");
+	                return false;
+	                }
+	               }
+	              }
 				}
 			    else if (jQuery("#nonPaying").attr('checked')) {
 					if (StringUtils.isBlank(jQuery("#nonPayingCategory").val())){
@@ -924,6 +947,28 @@ input, select, textarea {
 	}
    }
 	
+    
+    function payingCategorySelection(){
+	var selectedPayingCategory=jQuery("#payingCategory option:checked").val();
+	 var estAge = jQuery("#estimatedAgeInYear").val();
+	 if(selectedPayingCategory=="CHILD LESS THAN 5 YEARS"){
+	 if(estAge<6){
+
+	 }
+	 else{
+	 alert("This category is only valid for a child less than 5 years");
+	 return false;
+	 }
+	 }
+	 else{
+	  if(selectedPayingCategory=="EXPECTANT MOTHER"){
+	  if (jQuery("#patientGender").val() == "M"){
+	  alert("This category is only valid for female");
+	  }
+	  }
+	 }
+	}
+    
     function nonPayingCategorySelection(){
 	var selectedNonPayingCategory=jQuery("#nonPayingCategory option:checked").val();
 	//if(MODEL.nonPayingCategoryMap[selectedNonPayingCategory]=="NHIF CIVIL SERVANT"){
@@ -1016,6 +1061,7 @@ input, select, textarea {
 							src="moduleResources/registration/calendar.gif" /> <input
 							id="birthdateEstimated" type="hidden"
 							name="patient.birthdateEstimate" value="true" />
+							<input type="hidden" id="estimatedAgeInYear" name="estimatedAgeInYear"/>
 							<span id="estimatedAge" />
 				</td>
 			</tr>
@@ -1194,7 +1240,7 @@ input, select, textarea {
 		<tr>
 				<td><b>Payment Category<label style="color:red">*</label>&nbsp;&nbsp;&nbsp;&nbsp;</b></td>
 				<td><input id="paying" type="checkbox" name="person.attribute.14" value="Paying" /> Paying</td>
-				<td><span id="payingCategoryField"><select id="payingCategory" name="person.attribute.44" style='width: 152px;'>	</select></span></td>
+				<td><span id="payingCategoryField"><select id="payingCategory" name="person.attribute.44" onchange="payingCategorySelection();" style='width: 152px;'>	</select></span></td>
 		</tr>
 		<tr>
 				<td>&nbsp;&nbsp;&nbsp;&nbsp;</b></td>
