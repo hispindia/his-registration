@@ -554,7 +554,8 @@ input, select, textarea {
 			else{
 			    value = jQuery("#surName").val();
 				value = value.toUpperCase();
-				pattern = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 -";
+				//pattern = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 -";
+				pattern = "ABCDEFGHIJKLMNOPQRSTUVWXYZ -";
 				for (i = 0; i < value.length; i++) {
 					if (pattern.indexOf(value[i]) < 0) {
 						alert("Please enter surname/identifier in correct format");
@@ -570,7 +571,8 @@ input, select, textarea {
 			else{
 			    value = jQuery("#firstName").val();
 				value = value.toUpperCase();
-				pattern = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 -";
+				//pattern = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 -";
+				pattern = "ABCDEFGHIJKLMNOPQRSTUVWXYZ -";
 				for (i = 0; i < value.length; i++) {
 					if (pattern.indexOf(value[i]) < 0) {
 						alert("Please enter firstname in correct format");
@@ -582,7 +584,8 @@ input, select, textarea {
 			if (!StringUtils.isBlank(jQuery("#otherName").val())) {
 			 value = jQuery("#otherName").val();
 				value = value.toUpperCase();
-				pattern = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 -";
+				//pattern = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 -";
+				pattern = "ABCDEFGHIJKLMNOPQRSTUVWXYZ -";
 				for (i = 0; i < value.length; i++) {
 					if (pattern.indexOf(value[i]) < 0) {
 						alert("Please enter othername in correct format");

@@ -592,7 +592,8 @@ input, select, textarea {
 			    value = jQuery("#firstName").val();
 				value = value.substr(0, 1).toUpperCase() + value.substr(1);
 				jQuery("#firstName").val(value);
-				if(/^[a-zA-Z0-9- ]*$/.test(value) == false) {
+				//if(/^[a-zA-Z0-9- ]*$/.test(value) == false) {
+				if(/^[a-zA-Z- ]*$/.test(value) == false) {
 					alert("Please enter firstname in correct format");
 				}
 				
@@ -602,7 +603,8 @@ input, select, textarea {
 				value = jQuery("#otherName").val();
 				value = value.substr(0, 1).toUpperCase() + value.substr(1);
 				jQuery("#otherName").val(value);
-				if(/^[a-zA-Z0-9- ]*$/.test(value) == false) {
+				//if(/^[a-zA-Z0-9- ]*$/.test(value) == false) {
+				if(/^[a-zA-Z- ]*$/.test(value) == false) {
 					alert('Please enter othername in correct format');
 				}
 			}
