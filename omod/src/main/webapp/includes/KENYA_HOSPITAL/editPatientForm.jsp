@@ -605,6 +605,11 @@ input, select, textarea {
 				alert("Please enter the patient's relationship type with the NOK");
 				return false;
 			}
+			
+			if (jQuery("#relativePostalAddress").val().length>255) {
+			    alert("Kin Physical Address should not exceed more than 255 characters");
+				return false;
+			}
 
 			if (StringUtils.isBlank(jQuery("#birthdate").val())) {
 				alert("Please enter age or DOB of the patient");
@@ -649,6 +654,12 @@ input, select, textarea {
 				alert("Please enter the physical address of the patient");
 				return false;
 			} 
+			else{
+			if (jQuery("#patientPostalAddress").val().length>255) {
+			    alert("Physical Address should not exceed more than 255 characters");
+				return false;
+			  }
+			}
 
 			if (!StringUtils.isBlank(jQuery("#patientPhoneNumber").val())) {
 				if (!StringUtils.isDigit(jQuery("#patientPhoneNumber").val())) {

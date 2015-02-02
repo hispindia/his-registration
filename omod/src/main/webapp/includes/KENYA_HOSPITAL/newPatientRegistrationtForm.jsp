@@ -641,6 +641,12 @@ input, select, textarea {
 				alert("Please enter the physical address of the patient");
 				return false;
 			}
+			else{
+			if (jQuery("#patientPostalAddress").val().length>255) {
+			    alert("Physical Address should not exceed more than 255 characters");
+				return false;
+			  }
+			}
 
 			if (jQuery("#patientGender").val() == "M" &&  jQuery("#maritalStatus").val() == "Widow") {
 				alert("Widow marital status is only for Female");
@@ -757,6 +763,11 @@ input, select, textarea {
 			
 			if (jQuery("#relationshipType").val() == "Relationship") {
 				alert("Please enter the patient's relationship type with the NOK");
+				return false;
+			}
+			
+			if (jQuery("#relativePostalAddress").val().length>255) {
+			    alert("Kin Physical Address should not exceed more than 255 characters");
 				return false;
 			}
 			
