@@ -578,7 +578,8 @@ input, select, textarea {
 			    value = jQuery("#surName").val();
 				value = value.substr(0, 1).toUpperCase() + value.substr(1);
 				jQuery("#surName").val(value);
-				if(/^[a-zA-Z0-9- ]*$/.test(value) == false) {
+				//if(/^[a-zA-Z0-9- ]*$/.test(value) == false) {
+				if(/^[a-zA-Z- ]*$/.test(value) == false) {
 					alert('Please enter surname in correct format');
 				}
 				
