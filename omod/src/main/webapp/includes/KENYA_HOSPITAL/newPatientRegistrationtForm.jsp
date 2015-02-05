@@ -621,12 +621,21 @@ input, select, textarea {
 			}
 			else{
 				var selectedPayingCategory=jQuery("#payingCategory option:checked").val();
+				var selectedSpecialScheme=jQuery("#specialSchemes option:checked").val();
 	             if(selectedPayingCategory=="EXPECTANT MOTHER"){
 	              if(jQuery("#patientGender").val() == "M"){
 	              alert("Selected Payment category is only valid for Female");
 	              return false;
 	              }
 	           }
+	           
+	           if(selectedPayingCategory=="DELIVERY CASE"){
+	              if(jQuery("#patientGender").val() == "M"){
+	              alert("Selected Payment category is only valid for Female");
+	              return false;
+	              }
+	           }
+	           
 	       } 
 			
 			if (jQuery("#maritalStatus").val() == "Marital") {
@@ -1170,6 +1179,7 @@ input, select, textarea {
 	  }
 	  }
 	  
+	  
 	  if(jQuery("#specialClinic").val()){
 	   var initialRegFee=parseInt('${initialRegFee}');
 	   var specialClinicRegFee=parseInt('${specialClinicRegFee}');
@@ -1210,6 +1220,13 @@ input, select, textarea {
 	
 	function specialSchemeSelection(){
 	var selectedSpecialScheme=jQuery("#specialScheme option:checked").val();
+	
+	if(selectedSpecialScheme=="DELIVERY CASE"){
+	  if (jQuery("#patientGender").val() == "M"){
+	  alert("This category is only valid for female");
+	  }
+	  }
+	  
 	//if(MODEL.specialSchemeMap[selectedSpecialScheme]=="STUDENT SCHEME"){
 	if(selectedSpecialScheme=="STUDENT SCHEME"){
 	jQuery("#universityRow").show();
