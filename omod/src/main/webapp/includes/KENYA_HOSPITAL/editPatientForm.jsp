@@ -217,10 +217,15 @@ input, select, textarea {
 				jQuery("#nonPayingCategoryField").show();
 				formValues += "person.attribute.45=="
 						+ MODEL.patientAttributes[45] + "||";
-			    var selectedNonPayingCategory=jQuery("#nonPayingCategory option:checked").val();
+			     //var selectedNonPayingCategory=jQuery("#nonPayingCategory option:checked").val();
 	            //if(MODEL.nonPayingCategoryMap[selectedNonPayingCategory]==="NHIF CIVIL SERVANT"){
-	            if(selectedNonPayingCategory==="NHIF CIVIL SERVANT"){
+	            if(MODEL.patientAttributes[45]=="NHIF CIVIL SERVANT"){
 	            jQuery("#nhifNumberRow").show();
+	            
+	            if (!StringUtils.isBlank(MODEL.patientAttributes[34])) {
+					formValues += "person.attribute.34==" + MODEL.patientAttributes[34] + "||";
+				}
+	           
 	            }
 				}
 				
@@ -228,9 +233,9 @@ input, select, textarea {
 				jQuery("#specialSchemeCategoryField").show();
 				formValues += "person.attribute.46=="
 						+ MODEL.patientAttributes[46] + "||";
-				var selectedSpecialScheme=jQuery("#specialScheme option:checked").val();
+				 //var selectedSpecialScheme=jQuery("#specialScheme option:checked").val();
 	            //if(MODEL.specialSchemeMap[selectedSpecialScheme]==="STUDENT SCHEME"){
-	            if(selectedSpecialScheme==="STUDENT SCHEME"){
+	            if(MODEL.patientAttributes[46]=="STUDENT SCHEME"){
 	            jQuery("#universityRow").show();
 	            formValues += "person.attribute.47=="
 						+ MODEL.patientAttributes[47] + "||";
@@ -239,7 +244,7 @@ input, select, textarea {
 							+ MODEL.patientAttributes[42] + "||";
 	            }
 	            //if(MODEL.specialSchemeMap[selectedSpecialScheme]==="WAIVER CASE"){
-	            if(selectedSpecialScheme==="WAIVER CASE"){
+	            if(MODEL.patientAttributes[46]=="WAIVER CASE"){
 	            jQuery("#waiverNumberRow").show();
 	            formValues += "person.attribute.32=="
 							+ MODEL.patientAttributes[32] + "||";
