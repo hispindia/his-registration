@@ -581,6 +581,7 @@ input, select, textarea {
 				//if(/^[a-zA-Z0-9- ]*$/.test(value) == false) {
 				if(/^[a-zA-Z- ]*$/.test(value) == false) {
 					alert('Please enter surname in correct format');
+					return false;
 				}
 				
 			}
@@ -596,6 +597,7 @@ input, select, textarea {
 				//if(/^[a-zA-Z0-9- ]*$/.test(value) == false) {
 				if(/^[a-zA-Z- ]*$/.test(value) == false) {
 					alert("Please enter firstname in correct format");
+					return false;
 				}
 				
 			}
@@ -607,6 +609,7 @@ input, select, textarea {
 				//if(/^[a-zA-Z0-9- ]*$/.test(value) == false) {
 				if(/^[a-zA-Z- ]*$/.test(value) == false) {
 					alert('Please enter othername in correct format');
+					return false;
 				}
 			}
 
