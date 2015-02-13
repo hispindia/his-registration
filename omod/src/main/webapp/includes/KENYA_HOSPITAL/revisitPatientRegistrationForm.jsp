@@ -123,7 +123,7 @@ input, select, textarea {
 						{
 							searchBoxView : hospitalName + "/registration",
 							resultView : "/module/registration/patientsearch/"
-									+ hospitalName + "/findCreate",
+									+ hospitalName + "/findCreatePatient",
 							success : function(data) {
 								PAGE.searchPatientSuccess(data);
 							},
