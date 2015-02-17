@@ -804,7 +804,7 @@ jQuery("#printableRegistrationFee").append("<span style='margin:5px;'>" + select
 				</tr> --%>
 				
 				<tr id="medicoLegalCaseRowField">
-				<td><b>Medico Legal Case:&nbsp;&nbsp;&nbsp;&nbsp;</b></td>
+				<td><b>Medico Legal Case:</b><label style="color:red">*</label>&nbsp;&nbsp;&nbsp;&nbsp;</td>
 				<td id="mlcCaseYesField"><input id="mlcCaseYes" type="checkbox" name="mlcCaseYes"/> Yes &nbsp;&nbsp;&nbsp;&nbsp;</td>
 				<td><select id="mlc" name="patient.mlc" style='width: 152px;'>	</select></td>
 		</tr>
@@ -815,7 +815,7 @@ jQuery("#printableRegistrationFee").append("<span style='margin:5px;'>" + select
 		
 		
 		<tr id="triageRowField">
-				<td><b>Room to Visit:</b>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+				<td><b>Room to Visit:</b><label style="color:red">*</label>&nbsp;&nbsp;&nbsp;&nbsp;</td>
 				<td id="triageRoomField"><input id="triageRoom" type="checkbox" name="triageRoom"/> Triage Room &nbsp;&nbsp;&nbsp;&nbsp;</td>
 				<td id="triageField"><select id="triage" name="patient.triage" onchange="triageRoomSelection();" style='width: 152px;'>	</select></td>
 		</tr>
