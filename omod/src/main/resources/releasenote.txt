@@ -1,3 +1,22 @@
+2.3.1
+- #Religion drop down added in new patient registration and edit page that is customizable
+- #Location drop down added in new patient registration and edit page that is customizable
+- #Chiefdom text field added in new patient registration and edit page
+- #OPD Room  visit drop down added in new patient registration page that is customizable
+- #Special Clinic visit drop down added in new patient registration page that is customizable
+- #registration page redesign.
+- #Payment Category is revised in new patient registration and edit page that is customizable.
+- #Medico Legal Case is redesign in new patient registration page that is customizable.
+- #Referral Information is redesign in new patient registration page that is customizable.
+- #Room to Visit is redesign in new patient registration page that is customizable.
+- #revisit patient receipt is redesign.
+- #registration clerk name is reflected on the registration receipt.
+- #reprint is redesign
+- #The patient can be searched by the full name as well (e.g. Thomas More, and not just Thomas or More)
+- #Added validation for admittd patient
+- #registration fee issue has been fixed
+
+
 2.3.0
 - #Multiple Patient Category
 - #Client Information
