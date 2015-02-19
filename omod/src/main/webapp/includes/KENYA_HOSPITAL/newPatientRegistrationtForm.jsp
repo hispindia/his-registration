@@ -768,14 +768,16 @@ input, select, textarea {
 			if (StringUtils.isBlank(jQuery("#patientRelativeName").val())) {
 				alert("Please enter the patient's relative name");
 				return false;
-			} /*else {
-				if (jQuery("#patientGender").val() == "M"||jQuery("#patientGender").val() == "F") {
-					if (jQuery("#patientRegistrationForm input[name=person.attribute.15]:checked").length == 0) {
-						alert("Please select relative name type");
-						return false;
-					}
+			} 
+			else{
+			    value = jQuery("#patientRelativeName").val();
+				//value = value.substr(0, 1).toUpperCase() + value.substr(1);
+				//jQuery("#patientRelativeName").val(value);
+				if(/^[a-zA-Z- ]*$/.test(value) == false) {
+					alert("Please enter patient's relative name in correct format");
+					return false;
 				}
-			}*/
+			}
 			
 			if (jQuery("#relationshipType").val() == "Relationship") {
 				alert("Please enter the patient's relationship type with the NOK");
