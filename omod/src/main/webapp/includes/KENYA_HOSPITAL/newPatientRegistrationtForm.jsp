@@ -890,7 +890,9 @@ input, select, textarea {
 			if (jQuery("#paying").is(':checked')) {
 					jQuery("#nonPaying").removeAttr("checked");
 					jQuery("#payingCategoryField").show();
+					jQuery("#nonPayingCategory").val("");
 				    jQuery("#nonPayingCategoryField").hide();
+				    jQuery("#specialScheme").val("");
 				    jQuery("#specialSchemeCategoryField").hide();
 				    jQuery("#specialSchemes").removeAttr("checked");
 					//jQuery("#selectedRegFeeValue").val(${initialRegFee});
@@ -911,7 +913,9 @@ input, select, textarea {
 					jQuery("#paying").removeAttr("checked");
 				    jQuery("#nonPayingCategoryField").show();
 				    jQuery("#specialSchemes").removeAttr("checked");
+				    jQuery("#payingCategory").val("");
 				    jQuery("#payingCategoryField").hide();
+                    jQuery("#specialScheme").val("");
 				    jQuery("#specialSchemeCategoryField").hide();
 					//jQuery("#selectedRegFeeValue").val(0);
 					
@@ -938,7 +942,9 @@ input, select, textarea {
 		specialSchemeCheck : function() {
 			if (jQuery("#specialSchemes").is(':checked')) {
 					jQuery("#paying").removeAttr("checked");
+					jQuery("#payingCategory").val("");
 					jQuery("#payingCategoryField").hide();
+					jQuery("#nonPayingCategory").val("");
 					jQuery("#nonPayingCategoryField").hide();
 					jQuery("#nonPaying").removeAttr("checked");
 					jQuery("#specialSchemeCategoryField").show();

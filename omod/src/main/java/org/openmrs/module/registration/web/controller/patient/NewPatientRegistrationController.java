@@ -351,21 +351,15 @@ public class NewPatientRegistrationController {
 		obsn.setValueNumeric(doubleVal);
 		obsn.setValueText(parameters
 				.get(RegistrationConstants.FORM_FIELD_PAYMENT_CATEGORY));
-		if (!StringUtils
-				.isBlank(parameters
-						.get(RegistrationConstants.FORM_FIELD_PAYING_CATEGORY))) {
+		if (parameters.get(RegistrationConstants.FORM_FIELD_PAYMENT_CATEGORY).equals("Paying")) {
 		obsn.setComment(parameters
 				.get(RegistrationConstants.FORM_FIELD_PAYING_CATEGORY));
 		}
-		else if (!StringUtils
-				.isBlank(parameters
-						.get(RegistrationConstants.FORM_FIELD_NONPAYING_CATEGORY))) {
+		else if (parameters.get(RegistrationConstants.FORM_FIELD_PAYMENT_CATEGORY).equals("Non-Paying")) {
 		obsn.setComment(parameters
 				.get(RegistrationConstants.FORM_FIELD_NONPAYING_CATEGORY));
 		}
-		else if (!StringUtils
-				.isBlank(parameters
-						.get(RegistrationConstants.FORM_FIELD_PATIENT_SPECIAL_SCHEME))) {
+		else if (parameters.get(RegistrationConstants.FORM_FIELD_PAYMENT_CATEGORY).equals("Special Schemes")) {
 		obsn.setComment(parameters
 				.get(RegistrationConstants.FORM_FIELD_PATIENT_SPECIAL_SCHEME));
 		}
