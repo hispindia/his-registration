@@ -133,12 +133,14 @@
 							<img title="Edit" alt="Edit" src="${pageContext.request.contextPath}/moduleResources/registration/images/edit.png"/>
 						</center>
 					</td>
-				</openmrs:hasPrivilege>	
+				</openmrs:hasPrivilege>
+				<openmrs:hasPrivilege privilege="Print Duplicate Slip">	
 				<td align="center" onclick="PATIENTSEARCHRESULT.reprint(${patient.patientId},'${patient.dead}');"> 
                 	<center>
-							<img title="Reprint" alt="Reprint" src="${pageContext.request.contextPath}/moduleResources/registration/images/printer.png"/>
+							<img title="Duplicate Slip" alt="Reprint" src="${pageContext.request.contextPath}/moduleResources/registration/images/printer.png"/>
 					</center>
                 </td>
+                </openmrs:hasPrivilege>
 			</tr>
 		</c:forEach>
 	</table>

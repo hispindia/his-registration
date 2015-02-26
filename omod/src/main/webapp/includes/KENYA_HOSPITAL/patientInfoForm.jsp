@@ -212,7 +212,9 @@
             if(!StringUtils.isBlank(MODEL.selectedSPECIALCLINIC)){
 		    jQuery("#printableRoomToVisit").append("<span style='border:0px'>" + jQuery("#specialClinic option:checked").html() + "</span>");
 		    jQuery("#printableFileNumber").empty();
+		    if(MODEL.patientAttributes[43]!=undefined){
             jQuery("#printableFileNumber").append("<span style='margin:5px;'>" + MODEL.patientAttributes[43] + "</span>");	
+            }
 		    jQuery("#printableFileNumberRow").show();
             }
 			
@@ -265,7 +267,9 @@
             if(!StringUtils.isBlank(MODEL.selectedSPECIALCLINIC)){
 		    jQuery("#printableRoomToVisit").append("<span style='border:0px'>" + jQuery("#specialClinic option:checked").html() + "</span>");
 		    jQuery("#printableFileNumber").empty();
-            jQuery("#printableFileNumber").append("<span style='margin:5px;'>" + MODEL.patientAttributes[43] + "</span>");	
+		    if(MODEL.patientAttributes[43]!=undefined){
+            jQuery("#printableFileNumber").append("<span style='margin:5px;'>" + MODEL.patientAttributes[43] + "</span>");
+            }	
 		    jQuery("#printableFileNumberRow").show();
             }
 		
@@ -484,10 +488,12 @@
 						alert("Please select the Special Clinic to visit");
 						return false;
 					}
+					/*
 					if (StringUtils.isBlank(jQuery("#fileNumber").val())) {
 						alert("Please enter the File Number");
 						return false;
 					}
+					*/
 				}
 			}
 		 }
@@ -738,7 +744,7 @@ jQuery("#printableRegistrationFee").append("<span style='margin:5px;'>" + select
 			<tr><h3><center><u><b>${userLocation} </b></u></center></h3></tr>
 						<tr><h4><center><b>Registration Receipt</b></center></h4></tr>
 				<tr>
-					<td colspan="1"><b>Date/Time:</b></td>
+					<td colspan="1"><b>Previous Day of Visit:</b></td>
 					<td colspan="5"><span id="datetime"></span></td>
 				</tr>
 				<tr>

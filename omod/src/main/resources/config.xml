@@ -21,6 +21,11 @@
 	
 	<require_version>1.9.7</require_version>	
 	
+	<privilege>
+		<name>Print Duplicate Slip</name>
+		<description>Allows user to provide duplicate slip to patient</description>
+	</privilege>
+	
 	<globalProperty>
 		<property>@MODULE_ID@.identifier_prefix</property>
 		<defaultValue>BDHOS</defaultValue>

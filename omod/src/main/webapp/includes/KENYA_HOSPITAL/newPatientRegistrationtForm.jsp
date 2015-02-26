@@ -862,10 +862,12 @@ input, select, textarea {
 					specialSchemeSelection();
 					}		
 					}
+					/*
 					if (StringUtils.isBlank(jQuery("#fileNumber").val())) {
 						alert("Please enter the File Number");
 						return false;
 					}
+					*/
 				}
 			}
             //submitNationalIDAndPassportNumber();
