@@ -1724,7 +1724,7 @@ input, select, textarea {
 		</tr>
 		<tr>
 		<td>
-		<input type="type" id="selectedRegFeeValue" name="patient.registration.fee" />
+		<input type="hidden" id="selectedRegFeeValue" name="patient.registration.fee" />
 		</td>
 		</tr>
 		</table>
