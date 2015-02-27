@@ -1025,8 +1025,10 @@ input, select, textarea {
 			if (jQuery("#triageRoom").is(':checked')) {
 			        jQuery("#opdRoom").removeAttr("checked");
 			        jQuery("#specialClinicRoom").removeAttr("checked");
-					jQuery("#triageField").show();	
+					jQuery("#triageField").show();
+					jQuery("#opdWard").val("");	
 					jQuery("#opdWardField").hide();	
+					jQuery("#specialClinic").val("");	
 					jQuery("#specialClinicField").hide();
 					jQuery("#fileNumberField").hide();
 			}
@@ -1039,8 +1041,10 @@ input, select, textarea {
 			if (jQuery("#opdRoom").is(':checked')) {
 			        jQuery("#triageRoom").removeAttr("checked");
 			        jQuery("#specialClinicRoom").removeAttr("checked");
+			        jQuery("#triage").val("");	
 			        jQuery("#triageField").hide();
 					jQuery("#opdWardField").show();	
+					jQuery("#specialClinic").val("");	
 					jQuery("#specialClinicField").hide();
 					jQuery("#fileNumberField").hide();
 			}
@@ -1053,7 +1057,9 @@ input, select, textarea {
 			if (jQuery("#specialClinicRoom").is(':checked')) {
 			        jQuery("#triageRoom").removeAttr("checked");
 			        jQuery("#opdRoom").removeAttr("checked");
+			        jQuery("#triage").val("");	
 			        jQuery("#triageField").hide();
+			        jQuery("#opdWard").val("");	
 			        jQuery("#opdWardField").hide();
 					jQuery("#specialClinicField").show();
 					jQuery("#fileNumberField").show();
@@ -1261,43 +1267,67 @@ input, select, textarea {
 	jQuery("#selectedRegFeeValue").val(0);		
 	}
 	
-	function feeSelection(){
+	function triageRoomSelectionFor(){
+	if(jQuery("#payingCategory").val()!=" "){
+    var selectedPayingCategory=jQuery("#payingCategory option:checked").val();
+    if(selectedPayingCategory=="CHILD LESS THAN 5 YEARS"){
+	jQuery("#selectedRegFeeValue").val(${childLessThanFiveYearRegistrationFee});
+	}
+    else{
+	jQuery("#selectedRegFeeValue").val(${initialRegFee});
+    }
+    }
+    else if(jQuery("#nonPayingCategory").val()!=" "){
+	jQuery("#selectedRegFeeValue").val(0);
+    }
+    else if(jQuery("#specialScheme").val()!=" "){
+    jQuery("#selectedRegFeeValue").val(0);
+    }
+	}
 	
-	 var selectedPayingCategory=jQuery("#payingCategory option:checked").val();
-	 //if(MODEL.payingCategoryMap[selectedPayingCategory]=="CHILD LESS THAN 5 YEARS"){
-	 if(selectedPayingCategory=="CHILD LESS THAN 5 YEARS"){
-	 jQuery("#selectedRegFeeValue").val(${childLessThanFiveYearRegistrationFee});
-	 }
-	 else{
-	  if(jQuery("#specialClinic").val()){
-	   var initialRegFee=parseInt('${initialRegFee}');
-	   var specialClinicRegFee=parseInt('${specialClinicRegFee}');
-	   var totalRegFee= initialRegFee+specialClinicRegFee;
-	   jQuery("#selectedRegFeeValue").val(totalRegFee);
-	   }
-	  else{
-	   jQuery("#selectedRegFeeValue").val(${initialRegFee});
-	  }
-	 }
-					
-	var selectedNonPayingCategory=jQuery("#nonPayingCategory option:checked").val();
-	//if(MODEL.nonPayingCategoryMap[selectedNonPayingCategory]=="TB PATIENT" || MODEL.nonPayingCategoryMap[selectedNonPayingCategory]=="CCC PATIENT"){
+	function opdRoomSelectionForReg(){
+	if(jQuery("#payingCategory").val()!=" "){
+    var selectedPayingCategory=jQuery("#payingCategory option:checked").val();
+    if(selectedPayingCategory=="CHILD LESS THAN 5 YEARS"){
+	jQuery("#selectedRegFeeValue").val(${childLessThanFiveYearRegistrationFee});
+	}
+    else{
+	jQuery("#selectedRegFeeValue").val(${initialRegFee});
+    }
+    }
+    else if(jQuery("#nonPayingCategory").val()!=" "){
+	jQuery("#selectedRegFeeValue").val(0);
+    }
+    else if(jQuery("#specialScheme").val()!=" "){
+    jQuery("#selectedRegFeeValue").val(0);
+    }
+	}
+	
+	function specialClinicSelectionForReg(){
+	if(jQuery("#payingCategory").val()!=" "){
+    var selectedPayingCategory=jQuery("#payingCategory option:checked").val();
+    if(selectedPayingCategory=="CHILD LESS THAN 5 YEARS"){
+	jQuery("#selectedRegFeeValue").val(${childLessThanFiveYearRegistrationFee});
+	}
+    else{
+    var initialRegFee=parseInt('${initialRegFee}');
+	var specialClinicRegFee=parseInt('${specialClinicRegFee}');
+	var totalRegFee= initialRegFee+specialClinicRegFee;
+	jQuery("#selectedRegFeeValue").val(totalRegFee);
+    }
+    }
+    else if(jQuery("#nonPayingCategory").val()!=" "){
+    var selectedNonPayingCategory=jQuery("#nonPayingCategory option:checked").val();
 	if(selectedNonPayingCategory=="TB PATIENT" || selectedNonPayingCategory=="CCC PATIENT"){
-	if(jQuery("#specialClinic").val()){
 	jQuery("#selectedRegFeeValue").val(${specialClinicRegFee});
 	}
 	else{
 	jQuery("#selectedRegFeeValue").val(0);
 	}
-	}
-	else{
-	jQuery("#selectedRegFeeValue").val(0);
-	}
-
-	if(jQuery("#specialScheme").val()){
-	jQuery("#selectedRegFeeValue").val(0);
-	}
-	
+    }
+    else if(jQuery("#specialScheme").val()!=" "){
+    jQuery("#selectedRegFeeValue").val(0);
+    }
 	}
 	
 </script>
@@ -1675,17 +1705,17 @@ input, select, textarea {
         <tr>
 				<td><b>Room to Visit</b><label style="color:red">*</label>&nbsp;&nbsp;&nbsp;&nbsp;</td>
 				<td><input id="triageRoom" type="checkbox" name="triageRoom"/> Triage Room &nbsp;&nbsp;&nbsp;&nbsp;</td>
-				<td><span id="triageField"><select id="triage" name="patient.triage" style='width: 152px;'>	</select></span></td>
+				<td><span id="triageField"><select id="triage" name="patient.triage" style='width: 152px;' onchange="triageRoomSelectionForReg();">	</select></span></td>
 		</tr>
 		<tr>
 				<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
 				<td><input id="opdRoom" type="checkbox" name="opdRoom"/> OPD Room&nbsp;&nbsp;&nbsp;&nbsp;</td>
-				<td><span id="opdWardField"><select id="opdWard" name="patient.opdWard" style='width: 152px;'>	</select></span></td>
+				<td><span id="opdWardField"><select id="opdWard" name="patient.opdWard" style='width: 152px;' onchange="opdRoomSelectionForReg();">	</select></span></td>
 		</tr>
 		<tr>
 				<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
 				<td><input id="specialClinicRoom" type="checkbox" name="specialClinicRoom"/> Special Clinic&nbsp;&nbsp;&nbsp;&nbsp;</td>
-				<td><span id="specialClinicField"><select id="specialClinic" name="patient.specialClinic" style='width: 152px;'>	</select></span></td>
+				<td><span id="specialClinicField"><select id="specialClinic" name="patient.specialClinic" style='width: 152px;' onchange="specialClinicSelectionForReg();">	</select></span></td>
 		</tr>
 		<tr>
 				<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
@@ -1694,7 +1724,7 @@ input, select, textarea {
 		</tr>
 		<tr>
 		<td>
-		<input type="hidden" id="selectedRegFeeValue" name="patient.registration.fee" />
+		<input type="type" id="selectedRegFeeValue" name="patient.registration.fee" />
 		</td>
 		</tr>
 		</table>

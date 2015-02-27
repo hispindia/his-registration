@@ -134,18 +134,18 @@ public class ShowPatientInfoController {
 			}
 			Boolean firstTimeVisit=true;
 			model.addAttribute("firstTimeVisit",firstTimeVisit);
+			model.addAttribute("typeOfSlip","Registration Receipt");
 		}
 		
 		if ((revisit != null) && revisit) {
-			
+			model.addAttribute("typeOfSlip","Registration Receipt");	
 		}
 		
 		// If reprint, get the latest registration encounter
 		if ((reprint != null) && reprint) {
 			
-			/**
-			 * June 7th 2012 - Supported #250 - Registration 2.2.14 (Mohali): Date on Reprint
-			 */
+			model.addAttribute("typeOfSlip","Duplicate Slip");
+			
 			model.addAttribute("currentDateTime", sdf.format(hcs.getLastVisitTime(patient)));
 			
 			Encounter encounter = Context.getService(RegistrationService.class).getLastEncounter(patient);

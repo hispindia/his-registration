@@ -562,8 +562,10 @@
 			if (jQuery("#triageRoom").is(':checked')) {
 			        jQuery("#opdRoom").removeAttr("checked");
 			        jQuery("#specialClinicRoom").removeAttr("checked");
-					jQuery("#triageField").show();	
+					jQuery("#triageField").show();
+					jQuery("#opdWard").val("");	
 					jQuery("#opdWardField").hide();	
+					jQuery("#specialClinic").val("");	
 					jQuery("#specialClinicField").hide();
 					jQuery("#fileNumberRowField").hide(); 	
 			}
@@ -576,8 +578,10 @@
 			if (jQuery("#opdRoom").is(':checked')) {
 			        jQuery("#triageRoom").removeAttr("checked");
 			        jQuery("#specialClinicRoom").removeAttr("checked");
+			        jQuery("#triage").val("");
 			        jQuery("#triageField").hide();
-					jQuery("#opdWardField").show();	
+					jQuery("#opdWardField").show();
+					jQuery("#specialClinic").val("");	
 					jQuery("#specialClinicField").hide();
 					jQuery("#fileNumberRowField").hide(); 
 			}
@@ -590,7 +594,9 @@
 			if (jQuery("#specialClinicRoom").is(':checked')) {
 			        jQuery("#triageRoom").removeAttr("checked");
 			        jQuery("#opdRoom").removeAttr("checked");
+			        jQuery("#triage").val("");
 			        jQuery("#triageField").hide();
+			        jQuery("#opdWard").val("");	
 			        jQuery("#opdWardField").hide();
 					jQuery("#specialClinicField").show();
 					if (!StringUtils.isBlank(jQuery("#specialClinic").val())) {
@@ -742,7 +748,7 @@ jQuery("#printableRegistrationFee").append("<span style='margin:5px;'>" + select
 		<form id="patientInfoForm" method="POST" class="spacer" style="margin-left: 20px;">
 			<table class="spacer" style="margin-left: 20px;">
 			<tr><h3><center><u><b>${userLocation} </b></u></center></h3></tr>
-						<tr><h4><center><b>Registration Receipt</b></center></h4></tr>
+						<tr><h4><center><b>${typeOfSlip}</b></center></h4></tr>
 				<tr>
 					<td colspan="1"><b>Previous Day of Visit:</b></td>
 					<td colspan="5"><span id="datetime"></span></td>
