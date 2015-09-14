@@ -27,12 +27,12 @@ border-style: solid;
 			function() {
 
 				// Fill data into address dropdowns
-				PAGE.fillOptions("#districts", {
+				/*PAGE.fillOptions("#districts", {
 					data : MODEL.districts
 				});
 				PAGE.fillOptions("#tehsils", {
 					data : MODEL.tehsils[0].split(',')
-				});
+				});*/
 
 				// Set value for patient information
 				formValues = "patient.name==" + MODEL.patientName + "||";
@@ -73,9 +73,9 @@ border-style: solid;
 				// 26-6-2012 Marta - to store address in the openmrs patient_address table #289
 				addressParts = MODEL.patientAddress.split(',');
 				formValues += "patient.address.postalAddress==" + StringUtils.trim(addressParts[0]) + "||";
-				jQuery("#districts").val(StringUtils.trim(addressParts[2]));
-				PAGE.changeDistrict();
-				jQuery("#tehsils").val(StringUtils.trim(addressParts[1]));
+				//jQuery("#districts").val(StringUtils.trim(addressParts[2]));
+				//PAGE.changeDistrict();
+				//jQuery("#tehsils").val(StringUtils.trim(addressParts[1]));
 				
 				jQuery("#patientRegistrationForm").fillForm(formValues);
 				PAGE.checkBirthDate();
@@ -322,10 +322,10 @@ border-style: solid;
 		},
 
 		/** CHANGE DISTRICT */
-		changeDistrict : function() {
+		/*changeDistrict : function() {
 
 			// get the list of tehsils
-			tehsilList = "";
+			//tehsilList = "";
 			selectedDistrict = jQuery("#districts option:checked").val();
 			jQuery.each(MODEL.districts, function(index, value) {
 				if (value == selectedDistrict) {
@@ -337,7 +337,7 @@ border-style: solid;
 			this.fillOptions("#tehsils", {
 				data : tehsilList.split(",")
 			});
-		},
+		},*/
 
 		/** VALIDATE FORM */
 		validateRegisterForm : function() {
@@ -1045,7 +1045,7 @@ border-style: solid;
 							<input id="patientPostalAddress" name="patient.address.postalAddress" style="width: 300px;" />
 						</td>
 					</tr>
-					<tr>
+					<!-- <tr>
 						<td>District:</td>
 						<td><select id="districts" name="patient.address.district"
 							onChange="PAGE.changeDistrict();" style="width: 200px;">
@@ -1057,6 +1057,7 @@ border-style: solid;
 							style="width: 200px;">
 						</select></td>
 					</tr>
+					 -->
 				</table>
 			</td>
 		</tr>

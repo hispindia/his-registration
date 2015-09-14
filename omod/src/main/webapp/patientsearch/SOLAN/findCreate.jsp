@@ -32,8 +32,8 @@
 		if(deadInfo=="true"){
 		alert("This Patient is Dead");
 		return false;
-		}			
-			window.location.href = openmrsContextPath + "/module/registration/showPatientInfo.form?patientId=" + patientId;
+		}		
+			//window.location.href = openmrsContextPath + "/module/registration/showPatientInfo.form?patientId=" + patientId;
 		},
 		
 		/** Edit a patient */
@@ -42,22 +42,18 @@
 		alert("This Patient is Dead");
 		return false;
 		}
-			window.location.href = openmrsContextPath + "/module/registration/editPatient.form?patientId=" + patientId;
+			//window.location.href = openmrsContextPath + "/module/registration/editPatient.form?patientId=" + patientId;
 		},
-		
+	
 		reprint: function(patientId,deadInfo){
 		if(deadInfo=="true"){
 		alert("This Patient is Dead");
 		return false;
 		}
-			window.location.href = openmrsContextPath + "/module/registration/showPatientInfo.form?patientId=" + patientId + "&reprint=true";
+			//window.location.href = openmrsContextPath + "/module/registration/showPatientInfo.form?patientId=" + patientId + "&reprint=true";
 		}
-	};
-	
-	jQuery(document).ready(function(){
-	
-		// hover rows
-		jQuery(".patientSearchRow").hover(
+			};
+	jQuery(".patientSearchRow").hover(
 			function(event){					
 				obj = event.target;
 				while(obj.tagName!="TR"){
@@ -78,8 +74,10 @@
 		// insert images
 		jQuery(".editImage").each(function(index, value){
 			jQuery(this).attr("src", openmrsContextPath + "/images/edit.gif");
-		});		
+			
+		});	
 	});
+	
 	
 </script>
 
@@ -90,7 +88,7 @@
 	<table style="width:100%">
 		<tr>
 		<openmrs:hasPrivilege privilege="Edit Patients">
-            <td><b>Edit</b></td>
+            
         </openmrs:hasPrivilege>			
 			<td><b>Identifier</b></td>
 			<td><b>Name</b></td>
@@ -105,23 +103,17 @@
 			 UC 7: Advance search of patient
 			 -->
 			<!-- <td><b>Phone number</b></td> -->
-			<td><b>Reprint OPD slip</b></td>
+			<td><left><b>Action</b></left></td>
+			
 		</tr>
 		<c:forEach items="${patients}" var="patient" varStatus="varStatus">
 			<tr class='${varStatus.index % 2 == 0 ? "oddRow" : "evenRow" } patientSearchRow'>
-				<openmrs:hasPrivilege privilege="Edit Patients">
-				<!-- ghanshyam,22-oct-2013,New Requirement #2940 Dealing with dead patient -->
-					<td onclick="PATIENTSEARCHRESULT.editPatient(${patient.patientId},'${patient.dead}');">
-						<center>
-							<img class="editImage" title="Edit patient information"/>
-						</center>
-					</td>
-				</openmrs:hasPrivilege>		
+			
 				<td onclick="PATIENTSEARCHRESULT.visit(${patient.patientId},'${patient.dead}');">
 					${patient.patientIdentifier.identifier}
 				</td>
-				<td onclick="PATIENTSEARCHRESULT.visit(${patient.patientId},'${patient.dead}');">${patient.givenName} ${patient.middleName} ${patient.familyName}</td>
-				<td onclick="PATIENTSEARCHRESULT.visit(${patient.patientId},'${patient.dead}');"> 
+				<td  onclick="PATIENTSEARCHRESULT.visit(${patient.patientId},'${patient.dead}');">${patient.givenName} ${patient.middleName} ${patient.familyName}</td>
+				<td onclick="PATIENTSEARCHRESULT.visit (${patient.patientId},'${patient.dead}');"> 
                 	<c:choose>
                 		<c:when test="${patient.age == 0}"> &lt 1 </c:when>
                 		<c:otherwise >${patient.age}</c:otherwise>
@@ -151,9 +143,7 @@
 							out.print(relativeName);
 					%>
                 </td>
-                <td onclick="PATIENTSEARCHRESULT.visit(${patient.patientId},'${patient.dead}');">
-	                <openmrs:formatDate date="${lastVisitTime[patient.patientId]}"/>              	
-                </td>
+              
                 <!-- June 8th 2012 - Thai Chuong removed Phone Number field to match requirement:
 				 Feature: Search a patient on the basis of last day of visit
 				 UC 7: Advance search of patient
@@ -165,9 +155,31 @@
 							out.print(phoneNumber); */
 					%>
 					</td>  -->
-                <td onclick="PATIENTSEARCHRESULT.reprint(${patient.patientId},'${patient.dead}');"> 
-                	Reprint OPD slip
+					  <td>
+	                <openmrs:formatDate date="${lastVisitTime[patient.patientId]}"/>              	
                 </td>
+               <openmrs:hasPrivilege privilege="Edit Patients">
+               <div style="width:100px;">
+               <div style="float:right; width: 70px"> 
+               <form id="thisone" action="post_nrs_users.asp" method="post">
+				<td><input type="image" src="../../moduleResources/registration/edit.gif"  onclick="javascript:window.location.href=openmrsContextPath +'/module/registration/editPatient.form?patientId=${patient.patientId}'"/>
+							<!--<img src="${pageContext.request.contextPath}/Downloads/edit.gif"/>-->
+						</form>
+						</div>
+						<div style="float:left; width: 70px"> 
+						<form>
+						<img type="image" src="../../moduleResources/registration/print.gif"  onclick="javascript:window.location.href=openmrsContextPath+'/module/registration/showPatientInfo.form?patientId=${patient.patientId}'+'&reprint=true'" />
+				           </form>     
+					</div>
+					<div style="float: left; width: 70px"> 
+					<form id="thistoo" action="post_nrs_users.asp" method="post">
+					<img type="image" src="../../moduleResources/registration/revisit.gif" onclick="javascript:window.location.href=openmrsContextPath+'/module/registration/showPatientInfo.form?patientId=${patient.patientId}'"/>
+				            
+				               </form>     
+					</div>
+					</td>
+					</div>
+				</openmrs:hasPrivilege>
 			</tr>
 		</c:forEach>
 	</table>
