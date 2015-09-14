@@ -139,6 +139,7 @@
 	
 	<mappingFiles>
 		RegistrationFee.hbm.xml
+		Familydetails.hbm.xml
     </mappingFiles>
 </module>
 
