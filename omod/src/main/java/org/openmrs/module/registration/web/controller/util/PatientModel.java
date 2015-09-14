@@ -25,6 +25,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.openmrs.Patient;
+import org.openmrs.PersonAddress;
 import org.openmrs.PersonAttribute;
 import org.openmrs.module.hospitalcore.util.PatientUtils;
 import org.openmrs.module.registration.util.RegistrationUtils;
@@ -65,9 +66,7 @@ public class PatientModel {
 			setGender("Others");
 		}
 		
-		setAddress(patient.getPersonAddress().getAddress1() + ", " + 
-				   patient.getPersonAddress().getCityVillage() + ", " + 
-				   patient.getPersonAddress().getCountyDistrict());
+		setAddress(patient.getPersonAddress().getAddress1());
 		
 		setBirthdate(RegistrationUtils.formatDate(patient.getBirthdate()));
 		
@@ -113,8 +112,8 @@ public class PatientModel {
 		return address;
 	}
 	
-	public void setAddress(String address) {
-		this.address = address;
+	public void setAddress(String personAddress) {
+		this.address = personAddress;
 	}
 	
 	public Map<Integer, String> getAttributes() {

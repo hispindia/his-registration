@@ -48,6 +48,7 @@ import org.openmrs.module.hospitalcore.util.HospitalCoreUtils;
 import org.openmrs.module.hospitalcore.util.OrderUtil;
 import org.openmrs.module.registration.RegistrationService;
 import org.openmrs.module.registration.includable.validator.attribute.PatientAttributeValidatorService;
+import org.openmrs.module.registration.model.Familydetails;
 import org.openmrs.module.registration.model.RegistrationFee;
 import org.openmrs.module.registration.util.RegistrationConstants;
 import org.openmrs.module.registration.util.RegistrationUtils;
@@ -58,7 +59,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller("RegistrationFindCreatePatientController")
-@RequestMapping("/findPatient.htm")
+@RequestMapping("/module/registration/findCreatePatient.form")
 public class FindCreatePatientController {
 	
 	private static Log logger = LogFactory.getLog(FindCreatePatientController.class);
@@ -67,10 +68,10 @@ public class FindCreatePatientController {
 	public String showForm(HttpServletRequest request, Model model) throws JaxenException, DocumentException, IOException {
 		model.addAttribute("patientIdentifier", RegistrationUtils.getNewIdentifier());
 		model.addAttribute("OPDs", RegistrationWebUtils.getSubConcepts(RegistrationConstants.CONCEPT_NAME_OPD_WARD));
-		model.addAttribute("referralHospitals",
+		/*model.addAttribute("referralHospitals",
 		    RegistrationWebUtils.getSubConcepts(RegistrationConstants.CONCEPT_NAME_PATIENT_REFERRED_FROM));
 		model.addAttribute("referralReasons",
-		    RegistrationWebUtils.getSubConcepts(RegistrationConstants.CONCEPT_NAME_REASON_FOR_REFERRAL));
+		   RegistrationWebUtils.getSubConcepts(RegistrationConstants.CONCEPT_NAME_REASON_FOR_REFERRAL));*/
 		RegistrationWebUtils.getAddressData(model);
 		return "/module/registration/patient/findCreatePatient";
 	}
@@ -123,6 +124,14 @@ public class FindCreatePatientController {
 			model.addAttribute("status", "error");
 			model.addAttribute("message", e.getMessage());
 		}
+		
+	/*	Familydetails familydetails = new Familydetails() ;
+		familydetails.setFatherName(request.getParameter("fatherName"));
+		familydetails.setMotherName(request.getParameter("motherName"));
+		System.out.println("familydetailsfather name " +request.getParameter("fatherName"));
+		System.out.println("familydetailsmother name " +request.getParameter("motherName"));
+		Context.getService(RegistrationService.class).saveFamilydetails(familydetails);*/
+		
 		return "/module/registration/patient/savePatient";
 	}
 	
@@ -141,7 +150,9 @@ public class FindCreatePatientController {
 		if (!StringUtils.isBlank(parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_NAME))) {
 			PersonName personName = RegistrationUtils.getPersonName(null,
 			    parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_NAME));
+			
 			patient.addName(personName);
+			System.out.println(personName);
 		}
 		
 		// get identifier
@@ -166,11 +177,11 @@ public class FindCreatePatientController {
 		}
 		
 		// get address
-		if (!StringUtils.isBlank(parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_ADDRESS_DISTRICT))) {
+		if (!StringUtils.isBlank(parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_ADDRESS_POSTALADDRESS))) {
 			patient.addAddress(RegistrationUtils.getPersonAddress(null,
-			    parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_ADDRESS_POSTALADDRESS),
-			    parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_ADDRESS_DISTRICT),
-			    parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_ADDRESS_TEHSIL)));
+			    parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_ADDRESS_POSTALADDRESS)));
+			  // parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_ADDRESS_DISTRICT),
+			  // parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_ADDRESS_TEHSIL)));
 		}
 		
 		// get custom person attribute
@@ -254,7 +265,7 @@ public class FindCreatePatientController {
 		/*
 		 * REFERRAL INFORMATION
 		 */
-		Obs referralObs = new Obs();
+	/*	Obs referralObs = new Obs();
 		Concept referralConcept = Context.getConceptService().getConcept(
 		    RegistrationConstants.CONCEPT_NAME_PATIENT_REFERRED_TO_HOSPITAL);
 		referralObs.setConcept(referralConcept);
@@ -281,8 +292,8 @@ public class FindCreatePatientController {
 			encounter.addObs(referredReasonObs);
 		} else {
 			referralObs.setValueCoded(Context.getConceptService().getConcept("NO"));
-		}
+		}*/
 		return encounter;
 	}
-	
+
 }

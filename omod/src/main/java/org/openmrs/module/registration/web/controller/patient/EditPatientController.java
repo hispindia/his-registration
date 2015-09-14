@@ -123,11 +123,11 @@ public class EditPatientController {
 		}
 		
 		// get address
-		if (!StringUtils.isBlank(parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_ADDRESS_DISTRICT))) {
+		if (!StringUtils.isBlank(parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_ADDRESS_POSTALADDRESS))) {
 			RegistrationUtils.getPersonAddress(patient.getPersonAddress(),
-				parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_ADDRESS_POSTALADDRESS),
-			    parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_ADDRESS_DISTRICT),
-			    parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_ADDRESS_TEHSIL));
+				parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_ADDRESS_POSTALADDRESS));
+			   // parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_ADDRESS_DISTRICT),
+			  //  parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_ADDRESS_TEHSIL));
 		}
 		
 		return patient;
