@@ -26,7 +26,7 @@
 
 <script type="text/javascript">
 
-/*	// Districts
+	// Districts
 	var _districts = new Array();
 	<c:forEach var="district" items="${districts}" varStatus="status">
 		_districts[${status.index}] = "${district}";
@@ -37,7 +37,7 @@
 	<c:forEach var="tehsil" items="${tehsils}" varStatus="status">
 		_tehsils[${status.index}] = "${tehsil}";
 	</c:forEach>	
-	*/
+	
 	// Patient Attribute
 	var _attributes = new Array();
 	<c:forEach var="entry" items="${patient.attributes}">
@@ -51,14 +51,13 @@
 		patientId: "${patient.patientId}",
 		patientIdentifier: "${patient.identifier}",
 		patientName: "${patient.fullname}",
-		
 		patientAge: "${patient.age}",
 		patientGender: "${patient.gender}",
 		patientAddress: "${patient.address}",
 		patientBirthdate: "${patient.birthdate}",
 		patientAttributes: _attributes,
-		//districts: _districts,
-	///	tehsils: _tehsils
+		districts: _districts,
+		tehsils: _tehsils
 	};
 </script>
 

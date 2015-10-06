@@ -24,12 +24,12 @@ td.border {
 					changeYear : true
 				});
 				jQuery('#birthdate').change(PAGE.checkBirthDate);
-				/*PAGE.fillOptions("#districts", {
+				PAGE.fillOptions("#districts", {
 					data : MODEL.districts
 				});
 				PAGE.fillOptions("#tehsils", {
 					data : MODEL.tehsils[0].split(',')
-				});*/
+				});
 
 				MODEL.OPDs = " ,Please select an OPD room to visit|"
 						+ MODEL.OPDs;
@@ -38,7 +38,7 @@ td.border {
 					delimiter : ",",
 					optionDelimiter : "|"
 				});
-				/*PAGE.fillOptions("#referralHospitals", {
+				PAGE.fillOptions("#referralHospitals", {
 					data : MODEL.referralHospitals,
 					delimiter : ",",
 					optionDelimiter : "|"
@@ -48,7 +48,7 @@ td.border {
 					delimiter : ",",
 					optionDelimiter : "|"
 				});
-*/
+
 				jQuery("#searchbox").showPatientSearchBox(
 						{
 							searchBoxView : hospitalName + "/registration",
@@ -132,10 +132,10 @@ td.border {
 
 			// Capitalize fullname and relative name
 			fullNameInCapital = StringUtils.capitalize(jQuery(
-					"#nameOrgivenNameOrmiddleNameOrfamilyNameOrIdentifier", jQuery("#patientSearchForm")).val());
+					"#nameOrIdentifier", jQuery("#patientSearchForm")).val());
 			jQuery("#patientName", jQuery("#patientRegistrationForm")).val(
 					fullNameInCapital);
-			jQuery("#nameOrgivenNameOrmiddleNameOrfamilyNameOrIdentifier", jQuery("#patientSearchForm")).val(
+			jQuery("#nameOrIdentifier", jQuery("#patientSearchForm")).val(
 					fullNameInCapital);
 			jQuery("#patientName", jQuery("#patientRegistrationForm")).val(
 					fullNameInCapital);
@@ -271,7 +271,7 @@ td.border {
 		},
 
 		/** CHANGE DISTRICT */
-		/*changeDistrict : function() {
+		changeDistrict : function() {
 
 			// get the list of tehsils
 			tehsilList = "";
@@ -286,17 +286,17 @@ td.border {
 			this.fillOptions("#tehsils", {
 				data : tehsilList.split(",")
 			});
-		},*/
+		},
 
 		/** SHOW OR HIDE REFERRAL INFO */
-		/*toogleReferralInfo : function(obj) {
+		toogleReferralInfo : function(obj) {
 			checkbox = jQuery(obj);
 			if (checkbox.is(":checked")) {
 				jQuery("#referralDiv").show();
 			} else {
 				jQuery("#referralDiv").hide();
 			}
-		}/*,
+		},
 
 		/** CALLBACK WHEN SEARCH PATIENT SUCCESSFULLY */
 		searchPatientSuccess : function(data) {
@@ -979,7 +979,6 @@ jQuery("#aadharCardReason").hide();
 			</td>
 
 		</tr>
-		
 		<tr>
 			<td class="cell"><b>Demographics *</b>
 			</td>
@@ -998,7 +997,7 @@ jQuery("#aadharCardReason").hide();
 						<td><input type="hidden" id="calendar" /> <input
 							id="birthdate" name="patient.birthdate" /> <img
 							id="calendarButton"
-							src="../../moduleResources/registration/calendar.gif"/> <input
+							src="moduleResources/registration/calendar.gif" /> <input
 							id="birthdateEstimated" type="hidden"
 							name="patient.birthdateEstimate" value="true" />
 						</td>
@@ -1095,7 +1094,7 @@ jQuery("#aadharCardReason").hide();
 							<input id="patientPostalAddress" name="patient.address.postalAddress" style="width: 300px;" />
 						</td>
 					</tr>
-					<!--  <tr>
+					<tr>
 						<td>District:</td>
 						<td><select id="districts" name="patient.address.district"
 							onChange="PAGE.changeDistrict();" style="width: 200px;">
@@ -1108,7 +1107,7 @@ jQuery("#aadharCardReason").hide();
 							style="width: 200px;">
 						</select>
 						</td>
-					</tr> -->
+					</tr>
 				</table></td>
 		</tr>
 		<tr>
@@ -1128,7 +1127,7 @@ jQuery("#aadharCardReason").hide();
 				style="width: 200px;" /></td>
 
 			<!-- ghanshyam 07-sept-2013 Support #2686 GUI Changes (spellings/ fonts/ alignments) -->
-			<!--<td class="cell"><b>Referral Information </b><input
+			<td class="cell"><b>Referral Information </b><input
 				type="checkbox" id="referred"
 				onClick="PAGE.toogleReferralInfo(this);" name="patient.referred"
 				value="referred" /> Referred<br />
@@ -1153,13 +1152,9 @@ jQuery("#aadharCardReason").hide();
 							</td>
 						</tr>
 					</table>
-					</td>-->
-					<td class="cell">
-					<table>
 				</div> <b>OPD Room to Visit: *</b> <select id="opdWard"
 				name="patient.opdWard">
 			</select>
-			</table>
 			</td>
 
 

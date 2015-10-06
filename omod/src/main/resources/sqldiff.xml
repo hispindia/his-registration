@@ -47,23 +47,6 @@
 			ALTER TABLE person_attribute MODIFY COLUMN value varchar(255);
 		</sql>
 	</diff>
-	
-	<diff>
-		<version>0.3</version>
-		<author>Ambika</author>
-		<date>July 28 2015</date>
-		<description>
-			Create table person 
-		</description>
-		<sql>
-			CREATE TABLE IF NOT EXISTS `Person_relation` (
-			`family_details_id` int(11) NOT NULL AUTO_INCREMENT,
-			`father_name` varchar(255) ,
-		`mother_name` varchar(255) ,			
-			PRIMARY KEY (`family_details_id`)
-			) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-		</sql>
-	</diff>
 
 
 </sqldiff>

@@ -133,8 +133,7 @@ public class RegistrationWebUtils {
 	 */
 	public static void getAddressData(Model model) throws MalformedURLException, DocumentException, JaxenException {
 		File addressFile = new File(OpenmrsUtil.getApplicationDataDirectory() + "addresshierarchy.xml");
-		
-		/*if (addressFile.exists()) {
+		if (addressFile.exists()) {
 			SAXReader reader = new SAXReader();
 			Document document = reader.read(addressFile.toURI().toURL());
 			XPath distSelector = new Dom4jXPath("//state/district");
@@ -156,7 +155,7 @@ public class RegistrationWebUtils {
 			}
 			model.addAttribute("districts", distArr);
 			model.addAttribute("tehsils", tehsilArr);
-		}*/
+		}
 	}
 	
 	/**
