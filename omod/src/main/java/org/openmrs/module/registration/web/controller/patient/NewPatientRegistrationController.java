@@ -21,6 +21,7 @@
 package org.openmrs.module.registration.web.controller.patient;
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -42,6 +43,11 @@ import org.openmrs.PersonAttributeType;
 import org.openmrs.PersonName;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.hospitalcore.HospitalCoreService;
+import org.openmrs.module.hospitalcore.PatientQueueService;
+import org.openmrs.module.hospitalcore.model.PatientDrugHistory;
+import org.openmrs.module.hospitalcore.model.PatientFamilyHistory;
+import org.openmrs.module.hospitalcore.model.PatientMedicalHistory;
+import org.openmrs.module.hospitalcore.model.PatientPersonalHistory;
 import org.openmrs.module.hospitalcore.util.GlobalPropertyUtil;
 import org.openmrs.module.hospitalcore.util.HospitalCoreUtils;
 import org.openmrs.module.registration.includable.validator.attribute.PatientAttributeValidatorService;
@@ -307,7 +313,7 @@ public class NewPatientRegistrationController {
 				.get(RegistrationConstants.FORM_FIELD_PATIENT_OPD_WARD))) {
 			Concept opdConcept = Context.getConceptService().getConcept(
 					RegistrationConstants.CONCEPT_NAME_OPD_WARD);
-
+			PatientQueueService queueService = (PatientQueueService) Context.getService(PatientQueueService.class);
 			Concept selectedOPDConcept = Context
 					.getConceptService()
 					.getConcept(
@@ -318,13 +324,33 @@ public class NewPatientRegistrationController {
 			opdObs.setConcept(opdConcept);
 			opdObs.setValueCoded(selectedOPDConcept);
 			encounter.addObs(opdObs);
-
+		
 			RegistrationWebUtils.sendPatientToOPDQueue(patient,
 					selectedOPDConcept, false, selectedCategory);
+			PatientMedicalHistory patientmedical= new PatientMedicalHistory();
+			patientmedical.setTriageLogId(null);
+			patientmedical.setCreatedOn(new Date());
+			patientmedical.setPatientId(patient.getPatientId());
+			queueService.savePatientMedicalHistory(patientmedical);
+			PatientDrugHistory patientdrug= new PatientDrugHistory();
+			patientdrug.setTriageLogId(null);
+			patientdrug.setCreatedOn(new Date());
+			patientdrug.setPatientId(patient.getPatientId());
+			queueService.savePatientDrugHistory(patientdrug);
+			PatientFamilyHistory patientfamily= new PatientFamilyHistory();
+			patientfamily.setTriageLogId(null);
+			patientfamily.setCreatedOn(new Date());
+			patientfamily.setPatientId(patient.getPatientId());
+			queueService.savePatientFamilyHistory(patientfamily);
+			PatientPersonalHistory patientperson= new PatientPersonalHistory();
+			patientperson.setTriageLogId(null);
+			patientperson.setCreatedOn(new Date());
+			patientperson.setPatientId(patient.getPatientId());
+			queueService.savePatientPersonalHistory(patientperson);
 		}else {
 			Concept specialClinicConcept = Context.getConceptService().getConcept(
 					RegistrationConstants.CONCEPT_NAME_SPECIAL_CLINIC);
-
+			PatientQueueService queueService = (PatientQueueService) Context.getService(PatientQueueService.class);
 			Concept selectedSpecialClinicConcept = Context
 					.getConceptService()
 					.getConcept(
@@ -338,6 +364,27 @@ public class NewPatientRegistrationController {
 
 			RegistrationWebUtils.sendPatientToOPDQueue(patient,
 					selectedSpecialClinicConcept, false, selectedCategory);
+			PatientMedicalHistory patientmedical= new PatientMedicalHistory();
+			patientmedical.setTriageLogId(null);
+			patientmedical.setCreatedOn(new Date());
+			patientmedical.setPatientId(patient.getPatientId());
+			queueService.savePatientMedicalHistory(patientmedical);
+			PatientDrugHistory patientdrug= new PatientDrugHistory();
+			patientdrug.setTriageLogId(null);
+			patientdrug.setCreatedOn(new Date());
+			patientdrug.setPatientId(patient.getPatientId());
+			queueService.savePatientDrugHistory(patientdrug);
+			PatientFamilyHistory patientfamily= new PatientFamilyHistory();
+			patientfamily.setTriageLogId(null);
+			patientfamily.setCreatedOn(new Date());
+			patientfamily.setPatientId(patient.getPatientId());
+			queueService.savePatientFamilyHistory(patientfamily);
+			PatientPersonalHistory patientperson= new PatientPersonalHistory();
+			patientperson.setTriageLogId(null);
+			patientperson.setCreatedOn(new Date());
+			patientperson.setPatientId(patient.getPatientId());
+			queueService.savePatientPersonalHistory(patientperson);
+			
 		}
 		
 		//payment category and registration fee
