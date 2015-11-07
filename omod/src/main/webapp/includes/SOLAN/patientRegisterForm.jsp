@@ -38,11 +38,15 @@ td.border {
 					delimiter : ",",
 					optionDelimiter : "|"
 				});
+				MODEL.referralHospitals = " , Select referral Hospitals|"
+					+ MODEL.referralHospitals;
 				PAGE.fillOptions("#referralHospitals", {
 					data : MODEL.referralHospitals,
 					delimiter : ",",
 					optionDelimiter : "|"
 				});
+				MODEL.referralReasons = " , Select referral Reasons|"
+					+ MODEL.referralReasons;
 				PAGE.fillOptions("#referralReasons	", {
 					data : MODEL.referralReasons,
 					delimiter : ",",
@@ -132,10 +136,10 @@ td.border {
 
 			// Capitalize fullname and relative name
 			fullNameInCapital = StringUtils.capitalize(jQuery(
-					"#nameOrIdentifier", jQuery("#patientSearchForm")).val());
+					"#nameOrgivenNameOrmiddleNameOrfamilyNameOrIdentifier", jQuery("#patientSearchForm")).val());
 			jQuery("#patientName", jQuery("#patientRegistrationForm")).val(
 					fullNameInCapital);
-			jQuery("#nameOrIdentifier", jQuery("#patientSearchForm")).val(
+			jQuery("#nameOrgivenNameOrmiddleNameOrfamilyNameOrIdentifier", jQuery("#patientSearchForm")).val(
 					fullNameInCapital);
 			jQuery("#patientName", jQuery("#patientRegistrationForm")).val(
 					fullNameInCapital);
@@ -965,7 +969,7 @@ jQuery("#aadharCardReason").hide();
 <form id="patientRegistrationForm" method="POST">
 	<table cellspacing="0">
 		<tr>
-			<td valign="top" class="cell"><b>Name *</b>
+			<td valign="top" class="cell"><b>Name <label style="color:red">*</label> </b>
 			</td>
 			<td class="cell"><input id="patientName" type="hidden"
 				name="patient.name" />
@@ -973,14 +977,14 @@ jQuery("#aadharCardReason").hide();
 				<div id="numberOfFoundPatients"></div>
 			</td>
 			<%-- Sagar Bele,Ghanshyam Kumar - 12-12-2012 - Bug #467 [Registration]Duplicate Identifier --%>
-			<td class="cell"><b>ID Number * &nbsp;&nbsp; <input readonly
-						name="patient.identifier" style="border: none;width: 250px;" />
-			</b>
+			<td class="cell"><b>ID Number<label style="color:red">*</label></b> <input readonly
+						name="patient.identifier" style="border: none;" />
+			
 			</td>
 
 		</tr>
 		<tr>
-			<td class="cell"><b>Demographics *</b>
+			<td class="cell"><b>Demographics <label style="color:red">*</label></b>
 			</td>
 			<td class="cell">dd/mm/yyyy<br />
 				<table>
@@ -997,7 +1001,7 @@ jQuery("#aadharCardReason").hide();
 						<td><input type="hidden" id="calendar" /> <input
 							id="birthdate" name="patient.birthdate" /> <img
 							id="calendarButton"
-							src="moduleResources/registration/calendar.gif" /> <input
+							src="../../moduleResources/registration/calendar.gif" /> <input
 							id="birthdateEstimated" type="hidden"
 							name="patient.birthdateEstimate" value="true" />
 						</td>
@@ -1082,18 +1086,17 @@ jQuery("#aadharCardReason").hide();
 		</tr>
 
 		<tr>
-			<td class="cell"><b>Address</b>
-			</td>
+			<td valign="top" class="cell"><b>Address</b>&nbsp;&nbsp;&nbsp;&nbsp;</td>
 			<td class="cell">
 				<table>
-					<tr>
+					
 						<!--  10/05/2012: Thai Chuong, adding a field for address. Feature #211   -->
 						<td>Postal Address:</td>
 						<td> <!-- <input id="patientPostalAddress" name="person.attribute.18" style="width: 300px;" />  -->
 						<!-- 26-6-2012 Marta - to store address in the openmrs patient_address table-->
 							<input id="patientPostalAddress" name="patient.address.postalAddress" style="width: 300px;" />
 						</td>
-					</tr>
+					
 					<tr>
 						<td>District:</td>
 						<td><select id="districts" name="patient.address.district"
@@ -1119,7 +1122,7 @@ jQuery("#aadharCardReason").hide();
 			</td>
 		</tr>
 		<tr>
-			<td class="cell"><b>Relative Name *</b>
+			<td class="cell"><b>Relative Name <label style="color:red">*</label></b>
 			</td>
 			<td class="cell">
 				<div id="patientRelativeNameSection"></div> <input
@@ -1152,7 +1155,7 @@ jQuery("#aadharCardReason").hide();
 							</td>
 						</tr>
 					</table>
-				</div> <b>OPD Room to Visit: *</b> <select id="opdWard"
+				</div> <b>OPD Room to Visit: <label style="color:red">*</label></b> <select id="opdWard"
 				name="patient.opdWard">
 			</select>
 			</td>

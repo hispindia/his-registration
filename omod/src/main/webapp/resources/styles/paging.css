@@ -22,7 +22,8 @@
 div.paging {float:right;  text-align: right; height:16px; }
 div.paging span, div.paging a {padding: 0 5px;font-weight: bold; font-size: 11px;}
 div.paging a {text-decoration: none; color: #FF9900;}
-div.paging a:hover {color: #000;}
+div.paging a:hover {color: #000; visibility: visible;
+  opacity: 1;}
 div.paging span.page {color:#000;}
 div.paging span.seperator {display:none;}
 ul.pageSizeSelection {list-style:none; float:left; width: 160px; margin: 0; padding: 0;}

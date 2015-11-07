@@ -32,8 +32,8 @@
 		if(deadInfo=="true"){
 		alert("This Patient is Dead");
 		return false;
-		}			
-			window.location.href = openmrsContextPath + "/module/registration/showPatientInfo.form?patientId=" + patientId;
+		}		
+			//window.location.href = openmrsContextPath + "/module/registration/showPatientInfo.form?patientId=" + patientId;
 		},
 		
 		/** Edit a patient */
@@ -42,22 +42,18 @@
 		alert("This Patient is Dead");
 		return false;
 		}
-			window.location.href = openmrsContextPath + "/module/registration/editPatient.form?patientId=" + patientId;
+			//window.location.href = openmrsContextPath + "/module/registration/editPatient.form?patientId=" + patientId;
 		},
-		
+	
 		reprint: function(patientId,deadInfo){
 		if(deadInfo=="true"){
 		alert("This Patient is Dead");
 		return false;
 		}
-			window.location.href = openmrsContextPath + "/module/registration/showPatientInfo.form?patientId=" + patientId + "&reprint=true";
+			//window.location.href = openmrsContextPath + "/module/registration/showPatientInfo.form?patientId=" + patientId + "&reprint=true";
 		}
-	};
-	
-	jQuery(document).ready(function(){
-	
-		// hover rows
-		jQuery(".patientSearchRow").hover(
+			};
+	jQuery(".patientSearchRow").hover(
 			function(event){					
 				obj = event.target;
 				while(obj.tagName!="TR"){
@@ -78,8 +74,10 @@
 		// insert images
 		jQuery(".editImage").each(function(index, value){
 			jQuery(this).attr("src", openmrsContextPath + "/images/edit.gif");
-		});		
+			
+		});	
 	});
+	
 	
 </script>
 
@@ -90,44 +88,38 @@
 	<table style="width:100%">
 		<tr>
 		<openmrs:hasPrivilege privilege="Edit Patients">
-            <td><b>Edit</b></td>
+            
         </openmrs:hasPrivilege>			
-			<td><b>Identifier</b></td>
-			<td><b>Name</b></td>
-			<td><b>Age</b></td>
-			<td><b>Gender</b></td>			
+			<td align="center"><b>Identifier</b></td>
+			<td align="center"><b>Name</b></td>
+			<td align="center"><b>Age</b></td>
+			<td align="center"><b>Gender</b></td>			
 		<!--	Sept 22,2012 -- Sagar Bele -- Issue 387 --Removed Birth date from column 
 		<td><b>Birthdate</b></td>  -->
-			<td><b>Relative Name</b></td>
-			<td><b>Last day of visit</b></td>
+			<td align="center"><b>Relative Name</b></td>
+			<td align="center"><b>Last day of visit</b></td>
 			<!-- June 8th 2012 - Thai Chuong removed Phone Number field to match requirement:
 			 Feature: Search a patient on the basis of last day of visit
 			 UC 7: Advance search of patient
 			 -->
 			<!-- <td><b>Phone number</b></td> -->
-			<td><b>Reprint OPD slip</b></td>
+			<td align="center" colspan="8"><b>Action</b></td>
+			
 		</tr>
 		<c:forEach items="${patients}" var="patient" varStatus="varStatus">
 			<tr class='${varStatus.index % 2 == 0 ? "oddRow" : "evenRow" } patientSearchRow'>
-				<openmrs:hasPrivilege privilege="Edit Patients">
-				<!-- ghanshyam,22-oct-2013,New Requirement #2940 Dealing with dead patient -->
-					<td onclick="PATIENTSEARCHRESULT.editPatient(${patient.patientId},'${patient.dead}');">
-						<center>
-							<img class="editImage" title="Edit patient information"/>
-						</center>
-					</td>
-				</openmrs:hasPrivilege>		
-				<td onclick="PATIENTSEARCHRESULT.visit(${patient.patientId},'${patient.dead}');">
+			
+				<td align="center" onclick="PATIENTSEARCHRESULT.visit(${patient.patientId},'${patient.dead}');">
 					${patient.patientIdentifier.identifier}
 				</td>
-				<td onclick="PATIENTSEARCHRESULT.visit(${patient.patientId},'${patient.dead}');">${patient.givenName} ${patient.middleName} ${patient.familyName}</td>
-				<td onclick="PATIENTSEARCHRESULT.visit(${patient.patientId},'${patient.dead}');"> 
+				<td  align="center" onclick="PATIENTSEARCHRESULT.visit(${patient.patientId},'${patient.dead}');">${patient.givenName} ${patient.middleName} ${patient.familyName}</td>
+				<td align="center" onclick="PATIENTSEARCHRESULT.visit (${patient.patientId},'${patient.dead}');"> 
                 	<c:choose>
                 		<c:when test="${patient.age == 0}"> &lt 1 </c:when>
                 		<c:otherwise >${patient.age}</c:otherwise>
                 	</c:choose>
                 </td>
-				<td onclick="PATIENTSEARCHRESULT.visit(${patient.patientId},'${patient.dead}');">
+				<td align="center" onclick="PATIENTSEARCHRESULT.visit(${patient.patientId},'${patient.dead}');">
 					<c:choose>
                 		<c:when test="${patient.gender eq 'M'}">
 							<img src="${pageContext.request.contextPath}/images/male.gif"/>
@@ -141,7 +133,7 @@
                 	<openmrs:formatDate date="${patient.birthdate}"/>
                 </td>  -->
                 
-				<td onclick="PATIENTSEARCHRESULT.visit(${patient.patientId},'${patient.dead}');"> 
+				<td align="center" onclick="PATIENTSEARCHRESULT.visit(${patient.patientId},'${patient.dead}');"> 
                 	<%
 						Patient patient = (Patient) pageContext.getAttribute("patient");
 						Map<Integer, Map<Integer, String>> attributes = (Map<Integer, Map<Integer, String>>) pageContext.findAttribute("attributeMap");						
@@ -151,9 +143,7 @@
 							out.print(relativeName);
 					%>
                 </td>
-                <td onclick="PATIENTSEARCHRESULT.visit(${patient.patientId},'${patient.dead}');">
-	                <openmrs:formatDate date="${lastVisitTime[patient.patientId]}"/>              	
-                </td>
+              
                 <!-- June 8th 2012 - Thai Chuong removed Phone Number field to match requirement:
 				 Feature: Search a patient on the basis of last day of visit
 				 UC 7: Advance search of patient
@@ -165,9 +155,33 @@
 							out.print(phoneNumber); */
 					%>
 					</td>  -->
-                <td onclick="PATIENTSEARCHRESULT.reprint(${patient.patientId},'${patient.dead}');"> 
-                	Reprint OPD slip
+					  <td align="center" >
+	                <openmrs:formatDate date="${lastVisitTime[patient.patientId]}"/>              	
                 </td>
+               <openmrs:hasPrivilege privilege="Edit Patients">
+               	<td align="center">
+               	<div> 
+					<img type="image" title="Revisit" src="../../moduleResources/registration/revisit.gif" onclick="javascript:window.location.href=openmrsContextPath+'/module/registration/showPatientInfo.form?patientId=${patient.patientId}'"/>     
+				</div>
+				</td>
+               <td align="center"> 
+               <div style="float:center;"> 
+               <form>
+			   <img type="image" title="Edit"  src="../../moduleResources/registration/edit.gif"  onclick="javascript:window.location.href=openmrsContextPath +'/module/registration/editPatient.form?patientId=${patient.patientId}'"/>
+							<!--<img src="${pageContext.request.contextPath}/Downloads/edit.gif"/>-->
+				</form>
+				</div>
+				</td>
+				 <td align="center">
+						<div> 
+						<form>
+						<img type="image" title="Reprint" src="../../moduleResources/registration/print.gif"  onclick="javascript:window.location.href=openmrsContextPath+'/module/registration/showPatientInfo.form?patientId=${patient.patientId}'+'&reprint=true'" />
+				          </form>     
+					</div>
+					</td>
+					
+					
+				</openmrs:hasPrivilege>
 			</tr>
 		</c:forEach>
 	</table>

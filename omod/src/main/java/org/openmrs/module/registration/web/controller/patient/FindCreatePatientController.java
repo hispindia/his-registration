@@ -58,7 +58,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller("RegistrationFindCreatePatientController")
-@RequestMapping("/findPatient.htm")
+@RequestMapping("/module/registration/findCreatePatient.form")
 public class FindCreatePatientController {
 	
 	private static Log logger = LogFactory.getLog(FindCreatePatientController.class);
