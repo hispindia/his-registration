@@ -39,8 +39,8 @@
 <table width="100%" height="50%">
 <tr height="30%" valign="top">
 <td width="40%">
-<td width="10%"><input type="radio" name="patient" value="New Patient" onclick="javascript:window.location.href='newPatientRegistration.htm'">New Patient</td>
-<td><input type="radio" name="patient" value="Revisit Patient" onclick="javascript:window.location.href='revisitPatientRegistration.htm'">Revisit Patient</td>
+<td width="15%"><input type="radio" name="patient" value="Create New Patient" onclick="javascript:window.location.href='newPatientRegistration.htm'">Create New Patient</td>
+<td><input type="radio" name="patient" value="Revisit Patient" onclick="javascript:window.location.href='revisitPatientRegistration.htm'">Existing Patient</td>
 </tr>
 </table>
 </form>
