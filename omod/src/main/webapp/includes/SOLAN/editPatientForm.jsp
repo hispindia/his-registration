@@ -1027,7 +1027,7 @@ border-style: solid;
 							name="person.attribute.14" value="Other Free" /> Other Free</td>
 						<!-- 17/5/2012 Marta: Add text field to capture the free category description #188 -->
 						<td><span id="freeField"> <input
-								id="freeCategory" name="person.attribute.18" /></span></td>	
+								id="freeCategory" name="person.attribute.19" /></span></td>	
 					</tr>
 					<!-- ghanshyam 12-sept-2013 New Requirement #2684 Introducing a field at the time of registration to put Aadhar Card Number -->
 					<div id="validationMessage"></div>

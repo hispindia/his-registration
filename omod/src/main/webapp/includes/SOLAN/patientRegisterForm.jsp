@@ -416,6 +416,7 @@ td.border {
 			}	
 			
 			        PAGE.checkAadharCardNumber();
+			        /*
 			        var patientCategoryDisabled=document.getElementById('patientCategory').disabled;
 			        if(patientCategoryDisabled==false){
 			        var patientCategory=document.getElementById('patientCategory');
@@ -423,7 +424,7 @@ td.border {
 			        alert("Please select Patient Category");
 					return false
 			        }
-			        }
+			        }*/
 		            alert("click ok to proceed");
 		            abc=jQuery("#abc").val();
 					def=jQuery("#def").val();
@@ -452,22 +453,18 @@ td.border {
 
 		/** VALIDATE PATIENT CATEGORY */
 		validatePatientCategory : function() {
-			if (jQuery("#patCatGeneral").attr('checked') == false
-					//17/05/2012 Marta: Delete Poor and Governement Employee Categories #188
-					/* && jQuery("#patCatPoor").attr('checked') == false
-					&& jQuery("#patCatGovEmp").attr('checked') == false */
-					// 26/5/2012 Marta: Changing categories to match with requirements on #240
-					/*&& jQuery("#patCatGovEmp").attr('checked') == false
-					&& jQuery("#patCatSeniorCitizen").attr('checked') == false*/
-					&& jQuery("#rsby").attr('checked') == false
-					&& jQuery("#bpl").attr('checked') == false
-					// 15/05/2012: Marta added for Solan new categories validation - Bug #188
-					&& jQuery("#patCatAntenatal").attr('checked') == false
-					&& jQuery("#patCatChildLessThan1yr").attr('checked') == false
-					&& jQuery("#patCatOtherFree").attr('checked') == false
-					&& jQuery("#patCatStaff").attr('checked') == false) {
+			var patientCategoryDisabled=document.getElementById('patientCategory').disabled;
+			if (jQuery("#rsby").attr('checked') == false
+				&& jQuery("#bpl").attr('checked') == false
+				&& patientCategoryDisabled==false) {
+				var patientCategory=document.getElementById('patientCategory');
+				if(patientCategory.value==""){
 				alert('You didn\'t choose any of the patient categories!');
 				return false;
+				}
+				else{
+				return true;
+				}
 			} else {
 				if (jQuery("#rsby").attr('checked')) {
 					if (jQuery("#rsbyNumber").val().length <= 0) {
@@ -1051,15 +1048,15 @@ document.getElementById('freeCategory').style.visibility = "hidden";
 			<td rowspan="3" class="border">
 			<!-- ghanshyam 12-sept-2013 New Requirement #2684 Introducing a field at the time of registration to put Aadhar Card Number -->
 			<b>&nbsp;&nbsp;Aadhar Card Number:</b> &nbsp;&nbsp;
-			Yes <input type="checkbox" checked="checked" id="yes" name="yes" onClick="yesClick();"> &nbsp;&nbsp;
-			No <input type="checkbox" id="no" name="no" onClick="noClick();">
+			<input type="checkbox" checked="checked" id="yes" name="yes" onClick="yesClick();">Yes &nbsp;&nbsp;
+			<input type="checkbox" id="no" name="no" onClick="noClick();">No
 			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 			<input id="aadharCardNo" name="patient.attribute.20" placeholder="Aadhar Card No"/>
 			<input id="aadharCardReason" name="patient.attribute.21" placeholder="Reason"/> <br /> <br />
 			<!-- ghanshyam 07-sept-2013 Support #2686 GUI Changes (spellings/ fonts/ alignments) -->
-			<b>&nbsp;&nbsp;Patient Category</b> &nbsp;&nbsp;&nbsp;&nbsp;
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;RSBY <input id="rsby" type="checkbox" name="person.attribute.14" value="RSBY" onClick="disablePatientCategory();"/> &nbsp;&nbsp;
+			<b>&nbsp;&nbsp;Patient Category:</b> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			RSBY <input id="rsby" type="checkbox" name="person.attribute.14" value="RSBY" onClick="disablePatientCategory();"/> &nbsp;&nbsp;
 			<span id="rsbyField"><input id="rsbyNumber" name="person.attribute.11" />
 			</span>
 			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -1080,7 +1077,11 @@ document.getElementById('freeCategory').style.visibility = "hidden";
 			</select>
 			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			<input id="freeCategory" name="person.attribute.18" />
+			<input id="freeCategory" name="person.attribute.19" />
+			<br />
+			<b> <font color="red">Temporary Categories: </font></b>&nbsp;&nbsp;&nbsp;
+			<input type="checkbox" name="temporary.attribute.22" value="MLC" />MLC  &nbsp;&nbsp;
+			<input type="checkbox" name="temporary.attribute.22" value="Accident" />Accident
 			<table cellspacing="10">
 				<div id="validationMessage"></div>
 			</table></td>

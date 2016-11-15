@@ -6,26 +6,7 @@
 		jQuery("#age").html(MODEL.patientAge);
 		jQuery("#name").html(MODEL.patientName);
 		
-		// 11/06/12: Kesavulu: added BPL/RSBY number on registration slip Bug #208
-		if(MODEL.patientAttributes[14]){
-			pattern = /[A-Z]+[,][A-Z]/;
-			if(pattern.test(MODEL.patientAttributes[14])){
-
-				jQuery("#BPL").html("BPL No.: " + MODEL.patientAttributes[10]);
-				jQuery("#RSBY").html("RSBY No.: " + MODEL.patientAttributes[11]);
-
-
-			}else{			
-				if("BPL" == MODEL.patientAttributes[14])
-					jQuery("#BPL").html(MODEL.patientAttributes[10]);
-
-				if("RSBY" == MODEL.patientAttributes[14])
-					jQuery("#RSBY").html(MODEL.patientAttributes[11]);
-			
-jQuery("#category").html(MODEL.patientAttributes[14]);
-			}
-								
-		}
+		
 
 
 		jQuery("#phoneNumber").html(MODEL.patientAttributes[16]);
@@ -33,6 +14,10 @@ jQuery("#category").html(MODEL.patientAttributes[14]);
 		jQuery("#datetime").html(MODEL.currentDateTime);
 		//ghanshyam 12-sept-2013 New Requirement #2684 Introducing a field at the time of registration to put Aadhar Card Number
 		jQuery("#aadharCardNo").html(MODEL.patientAttributes[20]);
+		jQuery("#category").html(MODEL.patientAttributes[14]);
+		jQuery("#RSBY").html(MODEL.patientAttributes[11]);
+		jQuery("#BPL").html(MODEL.patientAttributes[10]);
+		jQuery("#temporaryCategories").html(MODEL.patientAttributes[22]);
 		MODEL.OPDs = " ,Please select an OPD room to visit|" + MODEL.OPDs;
 		PAGE.fillOptions("#opdWard", {
 			data:MODEL.OPDs,
@@ -109,23 +94,6 @@ jQuery("#category").html(MODEL.patientAttributes[14]);
 				// Convert OPDWard dropdown to printable format
 				jQuery("#opdWard").hide();
 				jQuery("#opdWard").after("<span>" + jQuery("#opdWard option:checked").html() +  "</span>");		
-
-				// Convert temporary categories to printable format
-				jQuery("#temporaryCategories input").each(function(index, value){				
-					if(jQuery(value).is(":checked")){
-						jQuery("#printableTemporaryCategories").append("<span style='margin:5px;'>" + jQuery(value).val() + "</span>");
-						// Sagar Bele : Date 23-1-2013 Issue 792
-						jQuery("#tempCat").show();
-					}
-				});
-				
-/*				Sagar Bele, 11-01-2013: Issue #663 Registration alignment				
-				if(!StringUtils.isBlank(jQuery("#printableTemporaryCategories").html())){
-					jQuery("#printableTemporaryCategories").prepend("<b>Temporary Categories:</b>");
-				}
-*/				
-				jQuery("#temporaryCategories").hide();
-//				jQuery("#tempCat").hide();
 				
 				// submit form and print		
 				if(!reprint){
@@ -293,34 +261,19 @@ jQuery("#category").html(MODEL.patientAttributes[14]);
 					<td colspan="1"><b>Category:</b></td>
 					
 					<td colspan="2"><span id="category" /></td>
-					
-					
 					<td><span id="RSBY" /></td>
 					<td><span id="BPL" /></td>
-					
-					
+					<td><span id="freeCategory" /></td>
 				</tr>
-				<!-- ghanshyam 12-sept-2013 New Requirement #2684 Introducing a field at the time of registration to put Aadhar Card Number  -->
+				
 				<tr>
 					<td colspan="1"><b>Aadhar Card Number:</b></td>
 					<td colspan="2"><span id="aadharCardNo"></span></td>
 				</tr>
-				<tr id="temporaryCategories">
-					<!-- 01/05/12: Marta, Painting Temporary Category in red. Bug #182  -->
-					<td colspan="1" valign="top"><b> <font color="red">Temporary
-								Categories: </font></b></td>
-					<td colspan="5">
-						<!-- 28/04/12: Changed MODEL.observations[11] for MODEL.observations[8058] by Marta - Bug #160 -->
-						<input type="checkbox" name="temporary.attribute.11" value="MLC" />MLC <br /> <input type="checkbox" name="temporary.attribute.11"
-						value="Accident" />Accident <br />
-					</td>
-				</tr>
-				<!-- Sagar Bele, 11-01-2013: Issue #663 Registration alignment -->
-				<tr id="tempCat">
-					<td colspan="1" valign="top"><b>Temporary Categories:</b></td>
-					<td colspan="5">
-						<div id="printableTemporaryCategories"></div>
-					</td>
+				
+				<tr>
+					<td colspan="1"><b>Temporary Categories:</b></td>
+					<td colspan="2"><span id="temporaryCategories"></span></td>
 				</tr>
 			</table>
 		</form>

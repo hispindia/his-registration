@@ -161,7 +161,7 @@
                <openmrs:hasPrivilege privilege="Edit Patients">
                	<td align="center">
                	<div> 
-					<img type="image" title="Revisit" src="../../moduleResources/registration/revisit.gif" onclick="javascript:window.location.href=openmrsContextPath+'/module/registration/showPatientInfo.form?patientId=${patient.patientId}'"/>     
+					<img type="image" title="Revisit" src="../../moduleResources/registration/revisit.gif" onclick="javascript:window.location.href=openmrsContextPath+'/module/registration/showPatientInfoForRevisitPatient.form?patientId=${patient.patientId}'"/>     
 				</div>
 				</td>
                <td align="center"> 
