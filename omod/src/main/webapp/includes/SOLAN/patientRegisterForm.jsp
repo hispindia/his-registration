@@ -402,8 +402,8 @@ td.border {
 				return false;
 			} else {
 			if (jQuery("#yes").attr('checked')) {
-					if (jQuery("#aadharCardNo").val().length <= 0) {
-						alert('Please enter Aadhar Card');
+					if (jQuery("#aadharCardNo").val().length <= 0 || jQuery("#aadharCardNo").val().length!=12) {
+						alert('Please enter 12 digit Aadhar Card');
 						return false;
 					} 
 				}
@@ -415,7 +415,7 @@ td.border {
 			   }	
 			}	
 			
-			        PAGE.checkAadharCardNumber();
+			        //PAGE.checkAadharCardNumber();
 			        /*
 			        var patientCategoryDisabled=document.getElementById('patientCategory').disabled;
 			        if(patientCategoryDisabled==false){
@@ -425,9 +425,9 @@ td.border {
 					return false
 			        }
 			        }*/
-		            alert("click ok to proceed");
-		            abc=jQuery("#abc").val();
-					def=jQuery("#def").val();
+		            //alert("click ok to proceed");
+		            //abc=jQuery("#abc").val();
+					//def=jQuery("#def").val();
 					aadharCardNo=jQuery("#aCardNo").val();
 				
 					if(typeof aadharCardNo!="undefined"){
@@ -437,10 +437,6 @@ td.border {
 		            }
 		       
 		            }
-		            else{
-		            alert("please try again");
-		            return false;
-		            }		
 
 			return true;
 		}
@@ -988,6 +984,24 @@ fCat.value='';
 document.getElementById('freeCategory').style.visibility = "hidden";
 }
 }
+
+function checkAadharCardNumberr() {
+		        aadharCardNo=jQuery("#aadharCardNo").val();
+		        if(aadharCardNo.length==11){
+		         //alert("yyyyyyyyyyyy"+aadharCardNo);
+				jQuery.ajax({
+				type : "GET",
+				url : getContextPath() + "/module/registration/validateaadharcardnoreg.form",
+				data : ({
+					aadharCardNo			: aadharCardNo
+				}),
+				success : function(data) {	
+				    jQuery("#validationMessage").html(data);	
+					 
+		           } 
+               });
+             }
+		  }
 </script>
 
 
@@ -1052,7 +1066,7 @@ document.getElementById('freeCategory').style.visibility = "hidden";
 			<input type="checkbox" id="no" name="no" onClick="noClick();">No
 			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			<input id="aadharCardNo" name="patient.attribute.20" placeholder="Aadhar Card No"/>
+			<input id="aadharCardNo" name="patient.attribute.20" placeholder="Aadhar Card No" onblur="checkAadharCardNumberr();"/>
 			<input id="aadharCardReason" name="patient.attribute.21" placeholder="Reason"/> <br /> <br />
 			<!-- ghanshyam 07-sept-2013 Support #2686 GUI Changes (spellings/ fonts/ alignments) -->
 			<b>&nbsp;&nbsp;Patient Category:</b> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
