@@ -400,10 +400,10 @@ border-style: solid;
 			}
 			
 			        //ghanshyam 12-sept-2013 New Requirement #2684 Introducing a field at the time of registration to put Aadhar Card Number
-			        PAGE.checkAadharCardNumber();
-		            alert("click ok to proceed");
-		            abc=jQuery("#abc").val();
-					def=jQuery("#def").val();
+			        //PAGE.checkAadharCardNumber();
+		            //alert("click ok to proceed");
+		            //abc=jQuery("#abc").val();
+					//def=jQuery("#def").val();
 					aadharCardNo=jQuery("#aCardNo").val();
 				
 					if(typeof aadharCardNo!="undefined"){
@@ -413,12 +413,7 @@ border-style: solid;
 		            }
 		       
 		            }
-		            else{
-		            alert("please try again");
-		            return false;
-		            }		
 			
-
 			return true;
 		}
 	};
@@ -942,6 +937,25 @@ border-style: solid;
 				}
 
 			};
+
+function checkAadharCardNumberr() {
+		        patientId=MODEL.patientId;
+		        aadharCardNo=jQuery("#aadharCardNo").val();
+		        if(aadharCardNo.length==12){
+				jQuery.ajax({
+				type : "GET",
+				url : getContextPath() + "/module/registration/validateaadharcardnoedit.form",
+				data : ({
+					patientId			: patientId,
+					aadharCardNo	    : aadharCardNo
+				}),
+				success : function(data) {	
+				    jQuery("#validationMessage").html(data);	
+					 
+		           } 
+               });
+              }
+			}
 </script>
 
 <h2>Patient Registration</h2>
@@ -983,7 +997,7 @@ border-style: solid;
 		<td rowspan="2" class="border">
 					<!-- ghanshyam 12-sept-2013 New Requirement #2684 Introducing a field at the time of registration to put Aadhar Card Number -->
 					<b>&nbsp;&nbsp;Aadhar Card Number:</b> 
-			        <input id="aadharCardNo" name="patient.attribute.20" placeholder="Aadhar Card No"/> <br />
+			        <input id="aadharCardNo" name="patient.attribute.20" placeholder="Aadhar Card No"/ onblur="checkAadharCardNumberr();"> <br />
 			        <!-- ghanshyam 07-sept-2013 Support #2686 GUI Changes (spellings/ fonts/ alignments) -->
 					<b>&nbsp;&nbsp;Patient Category</b><br />
 					<table cellspacing="10" >

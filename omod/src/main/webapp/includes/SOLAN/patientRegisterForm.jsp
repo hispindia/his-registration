@@ -987,8 +987,7 @@ document.getElementById('freeCategory').style.visibility = "hidden";
 
 function checkAadharCardNumberr() {
 		        aadharCardNo=jQuery("#aadharCardNo").val();
-		        if(aadharCardNo.length==11){
-		         //alert("yyyyyyyyyyyy"+aadharCardNo);
+		        if(aadharCardNo.length==12){
 				jQuery.ajax({
 				type : "GET",
 				url : getContextPath() + "/module/registration/validateaadharcardnoreg.form",
