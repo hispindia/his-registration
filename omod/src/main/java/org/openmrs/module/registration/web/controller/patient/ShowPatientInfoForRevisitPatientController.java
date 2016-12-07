@@ -43,6 +43,7 @@ import org.openmrs.Obs;
 import org.openmrs.Order;
 import org.openmrs.OrderType;
 import org.openmrs.Patient;
+import org.openmrs.PersonAttribute;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.hospitalcore.HospitalCoreService;
 import org.openmrs.module.hospitalcore.util.GlobalPropertyUtil;
@@ -215,6 +216,9 @@ public class ShowPatientInfoForRevisitPatientController {
 				String[] parts = name.split("\\.");
 				String idText = parts[parts.length - 1];
 				Integer id = Integer.parseInt(idText);
+				PersonAttribute attribute = RegistrationUtils.getPersonAttribute(id, parameters.get(name));
+				patient.addAttribute(attribute);
+				patient = Context.getPatientService().savePatient(patient);
 				Concept tempCatConcept = Context.getConceptService().getConceptByName("TEMPORARY CATEGORY");
 				
 				Concept temporaryAttributeConcept = Context.getConceptService().getConcept(tempCatConcept.getConceptId());

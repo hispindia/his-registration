@@ -34,12 +34,46 @@
 
 				if("RSBY" == MODEL.patientAttributes[14])
 					jQuery("#RSBY").html(MODEL.patientAttributes[11]);
-			
-//jQuery("#category").html(MODEL.patientAttributes[14]);
-			}
-								
+			}					
 		}
+		        attributes = MODEL.patientAttributes[14];
+				jQuery.each(attributes.split(","), function(index, value) {
+					jQuery("#patientInfoForm").fillForm(
+							"person.attribute.14==" + value + "||");
+				});
+		         // RSBY Number
+				if (!StringUtils.isBlank(MODEL.patientAttributes[11])
+						&& jQuery("#rsby").attr('checked')) {
+					jQuery("#patientInfoForm").fillForm(
+							"person.attribute.11=="
+									+ MODEL.patientAttributes[11] + "||");
+					document.getElementById('patientCategory').disabled=true;
+					jQuery("#rsbyNumber").show();
+				} else {
+					jQuery("#rsbyNumber").hide();
+				}
 
+				// BPL Number
+				if (!StringUtils.isBlank(MODEL.patientAttributes[10])
+						&& jQuery("#bpl").attr('checked')) {
+					jQuery("#patientInfoForm").fillForm(
+							"person.attribute.10=="
+									+ MODEL.patientAttributes[10] + "||");
+					document.getElementById('patientCategory').disabled=true;
+					jQuery("#bplNumber").show();
+				} else {
+					jQuery("#bplNumber").hide();
+				}
+		
+				if (MODEL.patientAttributes[14]=='General' || MODEL.patientAttributes[14]=='Staff' || MODEL.patientAttributes[14]=='Antenatal' ||
+				MODEL.patientAttributes[14]=='Child Less Than 1yr'){
+				document.getElementById('patientCategory').value=MODEL.patientAttributes[14];
+				}
+				else if(MODEL.patientAttributes[14]=='Other Free'){
+				document.getElementById('patientCategory').value=MODEL.patientAttributes[14];
+				document.getElementById('freeCategory').value=MODEL.patientAttributes[19];
+				document.getElementById("freeCategory").style.visibility = "visible";
+				}
 
 		jQuery("#phoneNumber").html(MODEL.patientAttributes[16]);
 		jQuery("#gender").html(MODEL.patientGender);
@@ -409,10 +443,12 @@ document.getElementById('freeCategory').style.visibility = "hidden";
 	onClick="PAGE.submit(false);" /> <!-- Sept 22,2012 -- Sagar Bele -- Issue 387 --Change case of word Reprint-->
 <input id="reprint" type="button" value="Reprint"
 	onClick="PAGE.submit(true);" />
+<!--
 <input id="buySlip" type="button" value="Buy a new slip"
 	onClick="PAGE.buySlip();" />
 <input id="save" type="button" value="Save" 
 	onClick="PAGE.save();" />
+-->
 <span id="validationDate"></span>
 <div id="patientInfoPrintArea">
 	<center>
