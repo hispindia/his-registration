@@ -57,7 +57,9 @@
 		patientBirthdate: "${patient.birthdate}",
 		patientAttributes: _attributes,
 		districts: _districts,
-		tehsils: _tehsils
+		tehsils: _tehsils,
+		OTHERFREE: "${OTHERFREE}",
+		selectedOtherFree: "${selectedOtherFree}"
 	};
 </script>
 

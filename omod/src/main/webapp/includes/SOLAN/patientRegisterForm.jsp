@@ -38,6 +38,11 @@ td.border {
 					delimiter : ",",
 					optionDelimiter : "|"
 				});
+				PAGE.fillOptions("#freeCategory", {
+					data : MODEL.OTHERFREE,
+					delimiter : ",",
+					optionDelimiter : "|"
+				});
 				MODEL.referralHospitals = " , Select referral Hospitals|"
 					+ MODEL.referralHospitals;
 				PAGE.fillOptions("#referralHospitals", {
@@ -1090,7 +1095,8 @@ function checkAadharCardNumberr() {
 			</select>
 			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			<input id="freeCategory" name="person.attribute.19" />
+			<select id="freeCategory" name="person.attribute.19" style="width: 185px;">
+			</select>
 			<br />
 			<b> <font color="red">Temporary Categories: </font></b>&nbsp;&nbsp;&nbsp;
 			<input type="checkbox" name="temporary.attribute.22" value="MLC" />MLC  &nbsp;&nbsp;

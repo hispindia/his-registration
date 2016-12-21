@@ -19,6 +19,13 @@
 		VALIDATORS.rsbyCheck();
 		});
 		
+		PAGE.fillOptions("#freeCategory", {
+					data : MODEL.OTHERFREE,
+					delimiter : ",",
+					optionDelimiter : "|"
+				});
+	    jQuery("#person.attribute.19").val(MODEL.selectedOtherFree);
+		
 		// 11/06/12: Kesavulu: added BPL/RSBY number on registration slip Bug #208
 		if(MODEL.patientAttributes[14]){
 			pattern = /[A-Z]+[,][A-Z]/;
@@ -182,7 +189,7 @@
 				jQuery("#printablePatientCategory").append("<span style='margin:5px;'>" + patientCategoryValue + "</span>");
 				}
 				else{
-				var freeCategory=document.getElementById('freeCategory').value;
+				var freeCategory=jQuery("#freeCategory option:selected").text();
 				jQuery("#printablePatientCategory").append("<span style='margin:5px;'>" + patientCategoryValue + "</span>");
 				jQuery("#printablePatientCategoryy").append("<span style='margin:5px;'>" + freeCategory + "</span>");
 				document.getElementById("patCatt").style.visibility = "visible";
@@ -516,7 +523,7 @@ document.getElementById('freeCategory').style.visibility = "hidden";
 				</tr>
 				<tr id="patCat4">
 					<td colspan="1"></td>
-					<td colspan="2"><input id="freeCategory" name="person.attribute.19" /></td>
+					<td colspan="2"><select id="freeCategory" name="person.attribute.19" style="width: 185px;"></select></td>
 					<td colspan="3"></td>
 				</tr>
 				<tr id="temporaryCategories">

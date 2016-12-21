@@ -42,8 +42,6 @@ public class RegistrationConstants {
 	+ ".patientPerRSBY";
 	public static final String PROPERTY_BPL_NO_OF_PATIENT = MODULE_ID
 	+ ".patientPerBPL";
-//	public static final String PROPERTY_BLOODBANK_CONCEPT_ID = MODULE_ID
-	//		+ ".bloodbankConceptId";	
 	public static final String PROPERTY_ORDER_TYPE_ID = MODULE_ID
 	+ ".bloodbankOrderTypeId";	
 	public static final String PROPERTY_BLOODBANK_OPDWARD_NAME =  "bloodbank.wardName";	
@@ -55,7 +53,6 @@ public class RegistrationConstants {
 	public static final String FORM_FIELD_PATIENT_BIRTHDATE = "patient.birthdate";
 	public static final String FORM_FIELD_PATIENT_BIRTHDATE_ESTIMATED = "patient.birthdateEstimate";
 	public static final String FORM_FIELD_PATIENT_GENDER = "patient.gender";
-	//26-6-2012 - Marta add constant to store the addres in the openmrs person_address table
 	public static final String FORM_FIELD_PATIENT_ADDRESS_POSTALADDRESS = "patient.address.postalAddress";
 	public static final String FORM_FIELD_PATIENT_ADDRESS_DISTRICT = "patient.address.district";
 	public static final String FORM_FIELD_PATIENT_ADDRESS_TEHSIL = "patient.address.tehsil";
@@ -72,8 +69,8 @@ public class RegistrationConstants {
 	public static final String CONCEPT_NAME_PATIENT_REFERRED_FROM = "PATIENT REFERRED FROM";
 	public static final String CONCEPT_NEW_PATIENT = "New Patient";
 	public static final String CONCEPT_REVISIT = "Revisit";
-	// harsh 2/7/2012 adding property for temp category
 	public static final String CONCEPT_NAME_TEMPORARY_CATEGORY = "TEMPORARY CATEGORY";
+	public static final String CONCEPT_NAME_OTHER_FREE = "OTHER FREE";
 	
 
 }

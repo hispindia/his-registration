@@ -17,6 +17,9 @@
 		jQuery("#category").html(MODEL.patientAttributes[14]);
 		jQuery("#RSBY").html(MODEL.patientAttributes[11]);
 		jQuery("#BPL").html(MODEL.patientAttributes[10]);
+		if(MODEL.patientAttributes[14]=='Other Free'){
+		jQuery("#freeCategory").html(MODEL.selectedOtherFree);
+		}
 		jQuery("#temporaryCategories").html(MODEL.patientAttributes[22]);
 		MODEL.OPDs = " ,Please select an OPD room to visit|" + MODEL.OPDs;
 		PAGE.fillOptions("#opdWard", {

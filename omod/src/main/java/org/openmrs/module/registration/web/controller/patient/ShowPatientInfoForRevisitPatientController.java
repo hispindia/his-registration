@@ -44,6 +44,7 @@ import org.openmrs.Order;
 import org.openmrs.OrderType;
 import org.openmrs.Patient;
 import org.openmrs.PersonAttribute;
+import org.openmrs.PersonAttributeType;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.hospitalcore.HospitalCoreService;
 import org.openmrs.module.hospitalcore.util.GlobalPropertyUtil;
@@ -74,6 +75,7 @@ public class ShowPatientInfoForRevisitPatientController {
 	                                                                                                              throws IOException,
 	                                                                                                              ParseException {
 		
+		HospitalCoreService hcs = Context.getService(HospitalCoreService.class);
 		Patient patient = Context.getPatientService().getPatient(patientId);
 		PatientModel patientModel = new PatientModel(patient);
 		model.addAttribute("patient", patientModel);
@@ -113,7 +115,6 @@ public class ShowPatientInfoForRevisitPatientController {
 			/**
 			 * June 7th 2012 - Supported #250 - Registration 2.2.14 (Mohali): Date on Reprint
 			 */
-			HospitalCoreService hcs = Context.getService(HospitalCoreService.class);
 			model.addAttribute("currentDateTime", sdf.format(hcs.getLastVisitTime(patientId)));
 			
 			Encounter encounter = Context.getService(RegistrationService.class).getLastEncounter(patient);
@@ -131,6 +132,15 @@ public class ShowPatientInfoForRevisitPatientController {
 					observations.put(obs.getConcept().getConceptId(), ObsUtils.getValueAsString(obs));
 				}
 				model.addAttribute("observations", observations);
+			}
+		}
+		
+		model.addAttribute("OTHERFREE", RegistrationWebUtils.getSubConcepts(RegistrationConstants.CONCEPT_NAME_OTHER_FREE));
+		List<PersonAttribute> pas = hcs.getPersonAttributes(patientId);
+		for (PersonAttribute pa : pas) {
+			PersonAttributeType attributeType = pa.getAttributeType();
+			if (attributeType.getPersonAttributeTypeId() == 19) {
+				model.addAttribute("selectedOtherFree", pa.getValue());
 			}
 		}
 		

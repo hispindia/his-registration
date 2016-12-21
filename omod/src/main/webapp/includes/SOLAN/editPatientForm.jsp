@@ -33,6 +33,12 @@ border-style: solid;
 				PAGE.fillOptions("#tehsils", {
 					data : MODEL.tehsils[0].split(',')
 				});
+				PAGE.fillOptions("#freeCategory", {
+					data : MODEL.OTHERFREE,
+					delimiter : ",",
+					optionDelimiter : "|"
+				});
+				jQuery("#person.attribute.19").val(MODEL.selectedOtherFree);
 				
 				document.getElementById("freeCategory").style.visibility = "hidden";
 
@@ -1059,7 +1065,8 @@ function checkAadharCardNumberr() {
 			</select>
 			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			<input id="freeCategory" name="person.attribute.19" />
+			<select id="freeCategory" name="person.attribute.19" style="width: 185px;">
+			</select>
 			<table cellspacing="10">
 				<div id="validationMessage"></div>
 			</table></td>

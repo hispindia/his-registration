@@ -49,6 +49,7 @@
 		districts: _districts,
 		tehsils: _tehsils,
 		OPDs: "${OPDs}",
+		OTHERFREE: "${OTHERFREE}",
 		referralHospitals: "${referralHospitals}",
 		referralReasons: "${referralReasons}"
 	}

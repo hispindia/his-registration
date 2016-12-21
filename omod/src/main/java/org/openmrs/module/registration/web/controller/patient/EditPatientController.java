@@ -22,6 +22,7 @@ package org.openmrs.module.registration.web.controller.patient;
 
 import java.io.IOException;
 import java.text.ParseException;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -33,7 +34,9 @@ import org.dom4j.DocumentException;
 import org.jaxen.JaxenException;
 import org.openmrs.Patient;
 import org.openmrs.PersonAttribute;
+import org.openmrs.PersonAttributeType;
 import org.openmrs.api.context.Context;
+import org.openmrs.module.hospitalcore.HospitalCoreService;
 import org.openmrs.module.hospitalcore.util.HospitalCoreUtils;
 import org.openmrs.module.registration.includable.validator.attribute.PatientAttributeValidatorService;
 import org.openmrs.module.registration.util.RegistrationConstants;
@@ -55,10 +58,19 @@ public class EditPatientController {
 	@RequestMapping(method = RequestMethod.GET)
 	public String showForm(@RequestParam("patientId") Integer patientId, Model model) throws JaxenException,
 	    DocumentException, IOException, ParseException {
+		HospitalCoreService hcs = Context.getService(HospitalCoreService.class);
 		Patient patient = Context.getPatientService().getPatient(patientId);
 		PatientModel patientModel = new PatientModel(patient);
 		model.addAttribute("patient", patientModel);
 		RegistrationWebUtils.getAddressData(model);
+		model.addAttribute("OTHERFREE", RegistrationWebUtils.getSubConcepts(RegistrationConstants.CONCEPT_NAME_OTHER_FREE));
+		List<PersonAttribute> pas = hcs.getPersonAttributes(patientId);
+		for (PersonAttribute pa : pas) {
+			PersonAttributeType attributeType = pa.getAttributeType();
+			if (attributeType.getPersonAttributeTypeId() == 19) {
+				model.addAttribute("selectedOtherFree", pa.getValue());
+			}
+		}
 		return "/module/registration/patient/editPatient";
 	}
 	

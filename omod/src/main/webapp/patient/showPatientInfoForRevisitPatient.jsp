@@ -53,7 +53,9 @@
 		daysLeft: "${daysLeft}",
 		reprint: "${param.reprint eq 'true'}",
 		tempCategoryId: "${tempCategoryId}",
-		opdWardId: "${opdWardId}"
+		opdWardId: "${opdWardId}",
+		OTHERFREE: "${OTHERFREE}",
+		selectedOtherFree: "${selectedOtherFree}"
 	};
 </script>
 
