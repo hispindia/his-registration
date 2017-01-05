@@ -39,8 +39,6 @@ border-style: solid;
 					optionDelimiter : "|"
 				});
 				jQuery("#person.attribute.19").val(MODEL.selectedOtherFree);
-				
-				document.getElementById("freeCategory").style.visibility = "hidden";
 
 				// Set value for patient information
 				formValues = "patient.name==" + MODEL.patientName + "||";
@@ -107,9 +105,13 @@ border-style: solid;
 					jQuery("#patientRegistrationForm").fillForm(
 							"person.attribute.11=="
 									+ MODEL.patientAttributes[11] + "||");
-					document.getElementById('patientCategory').disabled=true;
 				} else {
 					jQuery("#rsbyField").hide();
+				}
+				
+				if(MODEL.patientAttributes[14]=='Other Free'){
+				jQuery("#freeField").show();
+				jQuery("#freeCategory").show();
 				}
 
 				// 17/05/2012 - Marta: Added verification to avoid show old numbers. Bug #188 
@@ -119,28 +121,17 @@ border-style: solid;
 					jQuery("#patientRegistrationForm").fillForm(
 							"person.attribute.10=="
 									+ MODEL.patientAttributes[10] + "||");
-					document.getElementById('patientCategory').disabled=true;
 				} else {
 					jQuery("#bplField").hide();
-				}
-		
-				if (MODEL.patientAttributes[14]=='General' || MODEL.patientAttributes[14]=='Staff' || MODEL.patientAttributes[14]=='Antenatal' ||
-				MODEL.patientAttributes[14]=='Child Less Than 1yr'){
-				document.getElementById('patientCategory').value=MODEL.patientAttributes[14];
-				}
-				else if(MODEL.patientAttributes[14]=='Other Free'){
-				document.getElementById('patientCategory').value=MODEL.patientAttributes[14];
-				document.getElementById('freeCategory').value=MODEL.patientAttributes[19];
-				document.getElementById("freeCategory").style.visibility = "visible";
 				}
 				
 				// 17/5/2012 Marta: Add Other Free Category text field #188
 				// Free Field
-				if (!StringUtils.isBlank(MODEL.patientAttributes[18])
+				if (!StringUtils.isBlank(MODEL.patientAttributes[19])
 						&& jQuery("#patCatOtherFree").attr('checked')) {
 					jQuery("#patientRegistrationForm").fillForm(
-							"person.attribute.18=="
-									+ MODEL.patientAttributes[18] + "||");
+							"person.attribute.19=="
+									+ MODEL.patientAttributes[19] + "||");
 				} else {
 					jQuery("#freeField").hide();
 				}
@@ -433,7 +424,6 @@ border-style: solid;
 		            }
 		       
 		            }
-			
 			return true;
 		}
 	};
@@ -957,32 +947,8 @@ border-style: solid;
 				}
 
 			};
-
-
-function disablePatientCategory(){
-if (jQuery("#rsby").attr('checked') == true || jQuery("#bpl").attr('checked') == true){
- document.getElementById('patientCategory').disabled=true;
- document.getElementById('freeCategory').style.visibility = "hidden";
-}
-else{
-document.getElementById('patientCategory').disabled=false;
-document.getElementById('freeCategory').style.visibility = "hidden";
-}
-}
-
-function patientCategorySelection(){
-var patientCategory = document.getElementById('patientCategory').value;
-if(patientCategory=="Other Free"){
-document.getElementById('freeCategory').style.visibility = "visible";
-}
-else{
-var fCat = document.getElementById('freeCategory');
-fCat.value='';
-document.getElementById('freeCategory').style.visibility = "hidden";
-}
-}
-
-function checkAadharCardNumberr() {
+			
+function checkAadharCardNumberrForEdit() {
 		        patientId=MODEL.patientId;
 		        aadharCardNo=jQuery("#aadharCardNo").val();
 		        if(aadharCardNo.length==12){
@@ -1041,34 +1007,54 @@ function checkAadharCardNumberr() {
 		<td rowspan="2" class="border">
 					<!-- ghanshyam 12-sept-2013 New Requirement #2684 Introducing a field at the time of registration to put Aadhar Card Number -->
 					<b>&nbsp;&nbsp;Aadhar Card Number:</b> 
-			        <input id="aadharCardNo" name="patient.attribute.20" placeholder="Aadhar Card No"/ onblur="checkAadharCardNumberr();"> <br />
+			        <input id="aadharCardNo" name="patient.attribute.20" placeholder="Aadhar Card No"/ onblur="checkAadharCardNumberrForEdit();"> <br />
 			        <!-- ghanshyam 07-sept-2013 Support #2686 GUI Changes (spellings/ fonts/ alignments) -->
-					<b>&nbsp;&nbsp;Patient Category:</b> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					RSBY <input id="rsby" type="checkbox" name="person.attribute.14" value="RSBY" onClick="disablePatientCategory();"/> &nbsp;&nbsp;
-			<span id="rsbyField"><input id="rsbyNumber" name="person.attribute.11" />
-			</span>
-			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			BPL&nbsp;&nbsp;<input id="bpl" type="checkbox" name="person.attribute.14" value="BPL" onClick="disablePatientCategory();" /> &nbsp;&nbsp;&nbsp;
-			<span id="bplField"><input id="bplNumber" name="person.attribute.10" />
-						</span>
-			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			<select id="patientCategory" name="person.attribute.14" onChange="patientCategorySelection();">
-								<option value="">Select Category</option>
-								<option value="General">General</option>
-								<option value="Staff">Staff</option>
-								<option value="Antenatal">Antenatal Patient</option>
-								<option value="Child Less Than 1yr">Child Less Than 1 Year</option>
-								<option value="Other Free">Other Free</option>
-								
-			</select>
-			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			<select id="freeCategory" name="person.attribute.19" style="width: 185px;">
-			</select>
-			<table cellspacing="10">
-				<div id="validationMessage"></div>
+					<b>&nbsp;&nbsp;Patient Category</b><br />
+					<table cellspacing="10" >
+					<!-- 17/5/2012 Marta: Delete Poor and Government Employee categories for new requirements and reestructure layout #188 -->
+					<tr>
+						<td><input id="patCatGeneral" type="checkbox"
+							name="person.attribute.14" value="General" /> General</td>
+						<td><input id="rsby" type="checkbox"
+							name="person.attribute.14" value="RSBY" /> RSBY</td>
+						<td><span id="rsbyField">RSBY Number <input
+								id="rsbyNumber" name="person.attribute.11" /></span></td>
+					</tr>
+					<tr>
+						<td><input id="patCatStaff" type="checkbox"
+							name="person.attribute.14" value="Staff" /> Staff</td>
+						<td><input id="bpl" type="checkbox"
+							name="person.attribute.14" value="BPL" /> BPL</td>
+						<td><span id="bplField">BPL Number <input
+								id="bplNumber" name="person.attribute.10" /></span></td>
+					</tr>
+
+					<tr>
+						<!-- 26/5/2012 Marta: Changing categories to match with requirements on #240 
+						<td><input id="patCatSeniorCitizen" type="checkbox"
+							name="person.attribute.14" value="Senior Citizen" /> Senior
+							Citizen</td> --> 
+						<!-- 11/05/12: Thai Chuong, Added categories Antenatal, Child Less Than 1yr, Other Free. - Bug #188 -->
+						<td></td>
+						<td><input id="patCatAntenatal" type="checkbox"
+							name="person.attribute.14" value="Antenatal" /> Antenatal Patient</td>
+					</tr>
+					<tr>
+						<td></td>
+						<!-- ghanshyam 07-sept-2013 Support #2686 GUI Changes (spellings/ fonts/ alignments) -->
+						<td><input id="patCatChildLessThan1yr" type="checkbox"
+							name="person.attribute.14" value="Child Less Than 1yr" /> Child Less Than 1 Year</td>
+					</tr>
+					<tr>
+						<td></td>
+						<td><input id="patCatOtherFree" type="checkbox"
+							name="person.attribute.14" value="Other Free" /> Other Free</td>
+						<!-- 17/5/2012 Marta: Add text field to capture the free category description #188 -->
+						<td><span id="freeField"> <select id="freeCategory" name="person.attribute.19" style="width: 185px;">
+			            </select></span></td>	
+					</tr>
+					<!-- ghanshyam 12-sept-2013 New Requirement #2684 Introducing a field at the time of registration to put Aadhar Card Number -->
+					<div id="validationMessage"></div>
 			</table></td>
 		</tr>
 		<tr>

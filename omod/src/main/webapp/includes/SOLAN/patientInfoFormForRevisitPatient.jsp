@@ -8,15 +8,31 @@
 		
 		jQuery("#rsbyNumber").hide();
 		jQuery("#bplNumber").hide();
-		document.getElementById("freeCategory").style.visibility = "hidden";
+		//document.getElementById("freeCategory").style.visibility = "hidden";
+		jQuery("#freeField").hide();
 		document.getElementById("patCat").style.visibility = "hidden";
 		document.getElementById("patCatt").style.visibility = "hidden";
 		
+		jQuery("#patCatGeneral").click(function() {
+		VALIDATORS.generalCheck();
+		});
+		jQuery("#patCatStaff").click(function() {
+		VALIDATORS.staffCheck();
+		});
 		jQuery("#bpl").click(function() {
 		VALIDATORS.bplCheck();
 		});
 		jQuery("#rsby").click(function() {
 		VALIDATORS.rsbyCheck();
+		});
+		jQuery("#patCatAntenatal").click(function() {
+		VALIDATORS.patCatAntenatalCheck();
+		});
+		jQuery("#patCatChildLessThan1yr").click(function() {
+		VALIDATORS.patCatChildLessThan1yrCheck();
+		});
+		jQuery("#patCatOtherFree").click(function() {
+		VALIDATORS.patCatOtherFreeCheck();
 		});
 		
 		PAGE.fillOptions("#freeCategory", {
@@ -54,7 +70,6 @@
 					jQuery("#patientInfoForm").fillForm(
 							"person.attribute.11=="
 									+ MODEL.patientAttributes[11] + "||");
-					document.getElementById('patientCategory').disabled=true;
 					jQuery("#rsbyNumber").show();
 				} else {
 					jQuery("#rsbyNumber").hide();
@@ -66,21 +81,12 @@
 					jQuery("#patientInfoForm").fillForm(
 							"person.attribute.10=="
 									+ MODEL.patientAttributes[10] + "||");
-					document.getElementById('patientCategory').disabled=true;
 					jQuery("#bplNumber").show();
 				} else {
 					jQuery("#bplNumber").hide();
 				}
 		
-				if (MODEL.patientAttributes[14]=='General' || MODEL.patientAttributes[14]=='Staff' || MODEL.patientAttributes[14]=='Antenatal' ||
-				MODEL.patientAttributes[14]=='Child Less Than 1yr'){
-				document.getElementById('patientCategory').value=MODEL.patientAttributes[14];
-				}
-				else if(MODEL.patientAttributes[14]=='Other Free'){
-				document.getElementById('patientCategory').value=MODEL.patientAttributes[14];
-				document.getElementById('freeCategory').value=MODEL.patientAttributes[19];
-				document.getElementById("freeCategory").style.visibility = "visible";
-				}
+				///////////////////////
 
 		jQuery("#phoneNumber").html(MODEL.patientAttributes[16]);
 		jQuery("#gender").html(MODEL.patientGender);
@@ -182,18 +188,29 @@
 				jQuery("#printablePatientCategory").append("<span style='margin:5px;'>" + bpl + "</span>");
 				document.getElementById("patCat").style.visibility = "visible";
 				}
-				else{
-				var patientCategory=document.getElementById('patientCategory');
-				var patientCategoryValue = patientCategory.options[patientCategory.selectedIndex].value;
-				if(patientCategoryValue!="Other Free"){
-				jQuery("#printablePatientCategory").append("<span style='margin:5px;'>" + patientCategoryValue + "</span>");
+				else if(jQuery("#patCatGeneral").is(':checked')){
+				var general="General";
+				jQuery("#printablePatientCategory").append("<span style='margin:5px;'>" + general + "</span>");
+				document.getElementById("patCat").style.visibility = "visible";
 				}
-				else{
-				var freeCategory=jQuery("#freeCategory option:selected").text();
-				jQuery("#printablePatientCategory").append("<span style='margin:5px;'>" + patientCategoryValue + "</span>");
-				jQuery("#printablePatientCategoryy").append("<span style='margin:5px;'>" + freeCategory + "</span>");
-				document.getElementById("patCatt").style.visibility = "visible";
+				else if(jQuery("#patCatStaff").is(':checked')){
+				var staff="Staff";
+				jQuery("#printablePatientCategory").append("<span style='margin:5px;'>" + staff + "</span>");
+				document.getElementById("patCat").style.visibility = "visible";
 				}
+				else if(jQuery("#patCatAntenatal").is(':checked')){
+				var antenatal="Antenatal";
+				jQuery("#printablePatientCategory").append("<span style='margin:5px;'>" + antenatal + "</span>");
+				document.getElementById("patCat").style.visibility = "visible";
+				}
+				else if(jQuery("#patCatChildLessThan1yr").is(':checked')){
+				var childLessThanOneYr="Child Less Than 1 Year";
+				jQuery("#printablePatientCategory").append("<span style='margin:5px;'>" + childLessThanOneYr + "</span>");
+				document.getElementById("patCat").style.visibility = "visible";
+				}
+				else if(jQuery("#patCatOtherFree").is(':checked')){
+				var otherFree="Other Free";
+				jQuery("#printablePatientCategory").append("<span style='margin:5px;'>" + otherFree + "</span>");
 				document.getElementById("patCat").style.visibility = "visible";
 				}
 				
@@ -201,6 +218,7 @@
 				jQuery("#patCat2").hide();
 				jQuery("#patCat3").hide();
 				jQuery("#patCat4").hide();
+				jQuery("#patCat5").hide();
 
 				// Convert temporary categories to printable format
 				jQuery("#temporaryCategories input").each(function(index, value){				
@@ -325,18 +343,22 @@
 				return false;
 			};
 			
-			var patientCategoryDisabled=document.getElementById('patientCategory').disabled;
-			if (jQuery("#rsby").attr('checked') == false
-				&& jQuery("#bpl").attr('checked') == false
-				&& patientCategoryDisabled==false) {
-				var patientCategory=document.getElementById('patientCategory');
-				if(patientCategory.value==""){
+			if (jQuery("#patCatGeneral").attr('checked') == false
+					//17/05/2012 Marta: Delete Poor and Governement Employee Categories #188
+					/* && jQuery("#patCatPoor").attr('checked') == false
+					&& jQuery("#patCatGovEmp").attr('checked') == false */
+					// 26/5/2012 Marta: Changing categories to match with requirements on #240
+					/*&& jQuery("#patCatGovEmp").attr('checked') == false
+					&& jQuery("#patCatSeniorCitizen").attr('checked') == false*/
+					&& jQuery("#rsby").attr('checked') == false
+					&& jQuery("#bpl").attr('checked') == false
+					// 15/05/2012: Marta added for Solan new categories validation - Bug #188
+					&& jQuery("#patCatAntenatal").attr('checked') == false
+					&& jQuery("#patCatChildLessThan1yr").attr('checked') == false
+					&& jQuery("#patCatOtherFree").attr('checked') == false
+					&& jQuery("#patCatStaff").attr('checked') == false) {
 				alert('You didn\'t choose any of the patient categories!');
 				return false;
-				}
-				else{
-				return true;
-				}
 			} else {
 				if (jQuery("#rsby").attr('checked')) {
 					if (jQuery("#rsbyNumber").val().length <= 0) {
@@ -370,6 +392,45 @@
 	 **/
 	VALIDATORS = {
 	
+/** CHECK WHEN GENERAL CATEGORY IS SELECTED */
+		generalCheck : function(obj) {
+			if (jQuery("#patCatGeneral").is(':checked')) {
+				if (jQuery("#bpl").is(":checked")) {
+					jQuery("#bpl").removeAttr("checked");
+					jQuery("#bplNumber").val("");
+					jQuery("#bplNumber").hide();
+				}
+				if (jQuery("#rsby").is(":checked")) {
+					jQuery("#rsby").removeAttr("checked");
+					jQuery("#rsbyNumber").val("");
+					jQuery("#rsbyNumber").hide();
+				}
+				//17/05/2012 Marta: Delete Poor and Governement Employee Categories #188
+				/*if (jQuery("#patCatPoor").is(":checked"))
+					jQuery("#patCatPoor").removeAttr("checked");*/
+				// 26/5/2012 Marta: Changing categories to match with requirements on #215
+				/*if (jQuery("#patCatSeniorCitizen").is(":checked"))
+					jQuery("#patCatSeniorCitizen").removeAttr("checked");*/
+				// 11/05/2012: Thai Chuong added for Solan new categories validation - Bug #188
+				if (jQuery("#patCatAntenatal").is(":checked"))
+					jQuery("#patCatAntenatal").removeAttr("checked");
+				if (jQuery("#patCatChildLessThan1yr").is(":checked"))
+					jQuery("#patCatChildLessThan1yr").removeAttr("checked");
+				//17/05/2012 Marta: Add Free Category text field #188
+				if (jQuery("#patCatOtherFree").is(":checked")) {
+					jQuery("#patCatOtherFree").removeAttr("checked");
+					jQuery("#freeCategory").val("");
+					jQuery("#freeField").hide();
+				}
+				// 17/05/2012: Marta added for Solan new categories validation - Bug #188
+				if (jQuery("#patCatStaff").is(":checked"))
+					jQuery("#patCatStaff").removeAttr("checked");
+				//17/05/2012 Marta: Delete Poor and Governement Employee Categories #188
+				/*if (jQuery("#patCatGovEmp").is(":checked"))
+					jQuery("#patCatGovEmp").removeAttr("checked");*/
+			}
+		},
+
 /** CHECK WHEN BPL CATEGORY IS SELECTED */
 		bplCheck : function() {
 			if (jQuery("#bpl").is(':checked')) {
@@ -420,31 +481,161 @@
 				jQuery("#rsbyNumber").val("");
 				jQuery("#rsbyNumber").hide();
 			}
+		},
+		/** CHECK WHEN STAFF CATEGORY IS SELECTED */
+		staffCheck : function() {
+			if (jQuery("#patCatStaff").is(':checked')) {
+				if (jQuery("#bpl").is(":checked")) {
+					jQuery("#bpl").removeAttr("checked");
+					jQuery("#bplNumber").val("");
+					jQuery("#bplNumber").hide();
+				}
+				if (jQuery("#rsby").is(":checked")) {
+					jQuery("#rsby").removeAttr("checked");
+					jQuery("#rsbyNumber").val("");
+					jQuery("#rsbyNumber").hide();
+				}
+				//17/05/2012 Marta: Delete Poor and Governement Employee Categories #188
+				/*if (jQuery("#patCatPoor").is(":checked"))
+					jQuery("#patCatPoor").removeAttr("checked");
+				if (jQuery("#patCatGovEmp").is(":checked"))
+					jQuery("#patCatGovEmp").removeAttr("checked");*/
+				// 11/05/2012: Thai Chuong added for Solan new categories validation - Bug #188
+				if (jQuery("#patCatAntenatal").is(":checked"))
+					jQuery("#patCatAntenatal").removeAttr("checked");
+				if (jQuery("#patCatChildLessThan1yr").is(":checked"))
+					jQuery("#patCatChildLessThan1yr").removeAttr("checked");
+				//17/05/2012 Marta: Add Free Category text field #188
+				if (jQuery("#patCatOtherFree").is(":checked")) {
+					jQuery("#patCatOtherFree").removeAttr("checked");
+					jQuery("#freeCategory").val("");
+					jQuery("#freeField").hide();
+				}
+				// 17/05/2012: Marta added for Solan new categories validation - Bug #188
+				// 26/5/2012 Marta: Changing categories to match with requirements on #240
+				/*if (jQuery("#patCatSeniorCitizen").is(":checked"))
+					jQuery("#patCatSeniorCitizen").removeAttr("checked");
+				 */if (jQuery("#patCatGeneral").is(":checked"))
+					jQuery("#patCatGeneral").removeAttr("checked");
+			}
+		},
+		
+		/** CHECK WHEN ANTENATAL PATIENT CATEGORY IS SELECTED */
+		patCatAntenatalCheck : function() {
+			if (jQuery("#patCatAntenatal").is(':checked')) {
+				if (jQuery("#bpl").is(":checked")) {
+					jQuery("#bpl").removeAttr("checked");
+					jQuery("#bplNumber").val("");
+					jQuery("#bplNumber").hide();
+				}
+				if (jQuery("#rsby").is(":checked")) {
+					jQuery("#rsby").removeAttr("checked");
+					jQuery("#rsbyNumber").val("");
+					jQuery("#rsbyNumber").hide();
+				}
+				//17/05/2012 Marta: Delete Poor and Governement Employee Categories #188
+				/*if (jQuery("#patCatPoor").is(":checked"))
+					jQuery("#patCatPoor").removeAttr("checked");
+				if (jQuery("#patCatGovEmp").is(":checked"))
+					jQuery("#patCatGovEmp").removeAttr("checked");*/
+				if (jQuery("#patCatGeneral").is(":checked"))
+					jQuery("#patCatGeneral").removeAttr("checked");
+				// 11/05/2012: Thai Chuong modified for Solan new categories validation - Bug #188
+				if (jQuery("#patCatChildLessThan1yr").is(":checked"))
+					jQuery("#patCatChildLessThan1yr").removeAttr("checked");
+				//17/05/2012 Marta: Add Free Category text field #188
+				if (jQuery("#patCatOtherFree").is(":checked")) {
+					jQuery("#patCatOtherFree").removeAttr("checked");
+					jQuery("#freeCategory").val("");
+					jQuery("#freeField").hide();
+				}
+				if (jQuery("#patCatStaff").is(":checked"))
+					jQuery("#patCatStaff").removeAttr("checked");
+	
+				/*if (!VALIDATORS.checkGenderForAntenatal()) {
+					jQuery("#patCatAntenatal").removeAttr("checked");
+				}*/
+			}
+		},
+		
+		/** CHECK WHEN CHILD LESS THAN 1YR CATEGORY IS SELECTED */
+		patCatChildLessThan1yrCheck : function() {
+			if (jQuery("#patCatChildLessThan1yr").is(':checked')) {
+				if (jQuery("#bpl").is(":checked")) {
+					jQuery("#bpl").removeAttr("checked");
+					jQuery("#bplNumber").val("");
+					jQuery("#bplNumber").hide();
+				}
+				if (jQuery("#rsby").is(":checked")) {
+					jQuery("#rsby").removeAttr("checked");
+					jQuery("#rsbyNumber").val("");
+					jQuery("#rsbyNumber").hide();
+				}
+				//17/05/2012 Marta: Delete Poor and Governement Employee Categories #188
+				/*if (jQuery("#patCatPoor").is(":checked"))
+					jQuery("#patCatPoor").removeAttr("checked");
+				if (jQuery("#patCatGovEmp").is(":checked"))
+					jQuery("#patCatGovEmp").removeAttr("checked");*/
+				if (jQuery("#patCatGeneral").is(":checked"))
+					jQuery("#patCatGeneral").removeAttr("checked");
+				// 11/05/2012: Thai Chuong modified for Solan new categories validation - Bug #188
+				if (jQuery("#patCatAntenatal").is(":checked"))
+					jQuery("#patCatAntenatal").removeAttr("checked");
+				//17/05/2012 Marta: Add Free Category text field #188
+				if (jQuery("#patCatOtherFree").is(":checked")) {
+					jQuery("#patCatOtherFree").removeAttr("checked");
+					jQuery("#freeCategory").val("");
+					jQuery("#freeField").hide();
+				}
+				if (jQuery("#patCatStaff").is(":checked"))
+					jQuery("#patCatStaff").removeAttr("checked");
+				
+				/*if (!VALIDATORS.checkPatientAgeForChildLessThan1yr()) {
+					jQuery("#patCatChildLessThan1yr").removeAttr("checked");
+				}*/
+			}
+		},
+		
+		/** CHECK WHEN OTHER FREE CATEGORY IS SELECTED */
+		patCatOtherFreeCheck : function() {
+			if (jQuery("#patCatOtherFree").is(':checked')) {
+				//document.getElementById("freeCategory").style.visibility = "visible";
+				jQuery("#freeField").show();
+				if (jQuery("#bpl").is(":checked")) {
+					jQuery("#bpl").removeAttr("checked");
+					jQuery("#bplNumber").val("");
+					jQuery("#bplNumber").hide();
+				}
+				if (jQuery("#rsby").is(":checked")) {
+					jQuery("#rsby").removeAttr("checked");
+					jQuery("#rsbyNumber").val("");
+					jQuery("#rsbyNumber").hide();
+				}
+				//17/05/2012 Marta: Delete Poor and Governement Employee Categories #188
+				/*if (jQuery("#patCatPoor").is(":checked"))
+					jQuery("#patCatPoor").removeAttr("checked");
+				if (jQuery("#patCatGovEmp").is(":checked"))
+					jQuery("#patCatGovEmp").removeAttr("checked");*/
+				if (jQuery("#patCatGeneral").is(":checked"))
+					jQuery("#patCatGeneral").removeAttr("checked");
+				if (jQuery("#patCatStaff").is(":checked"))
+					jQuery("#patCatStaff").removeAttr("checked");
+				// 11/05/2012: Thai Chuong modified for Solan new categories validation - Bug #188
+				if (jQuery("#patCatAntenatal").is(":checked"))
+					jQuery("#patCatAntenatal").removeAttr("checked");
+				if (jQuery("#patCatChildLessThan1yr").is(":checked"))
+					jQuery("#patCatChildLessThan1yr").removeAttr("checked");
+				// 17/05/2012: Marta added for Solan new categories validation - Bug #188
+				// 26/5/2012 Marta: Changing categories to match with requirements on #240
+				// if (jQuery("#patCatSeniorCitizen").is(":checked"))
+				//	jQuery("#patCatSeniorCitizen").removeAttr("checked");
+
+			} else {
+				jQuery("#freeCategory").val("");
+				jQuery("#freeField").hide();
+			}
 		}
 	};
-
-function disablePatientCategory(){
-if (jQuery("#rsby").attr('checked') == true || jQuery("#bpl").attr('checked') == true){
- document.getElementById('patientCategory').disabled=true;
- document.getElementById('freeCategory').style.visibility = "hidden";
-}
-else{
-document.getElementById('patientCategory').disabled=false;
-document.getElementById('freeCategory').style.visibility = "hidden";
-}
-}
-
-function patientCategorySelection(){
-var patientCategory = document.getElementById('patientCategory').value;
-if(patientCategory=="Other Free"){
-document.getElementById('freeCategory').style.visibility = "visible";
-}
-else{
-var fCat = document.getElementById('freeCategory');
-fCat.value='';
-document.getElementById('freeCategory').style.visibility = "hidden";
-}
-}
 </script>
 <input id="printSlip" type="button" value="Print"
 	onClick="PAGE.submit(false);" /> <!-- Sept 22,2012 -- Sagar Bele -- Issue 387 --Change case of word Reprint-->
@@ -500,31 +691,32 @@ document.getElementById('freeCategory').style.visibility = "hidden";
 				</tr>
 				<tr id="patCat1">
 					<td colspan="1"><b>Patient Category:</b></td>
-					<td colspan="2">RSBY&nbsp;&nbsp;<input id="rsby" type="checkbox" name="person.attribute.14" value="RSBY" onClick="disablePatientCategory();"/></td>
-					<td colspan="3"><input id="rsbyNumber" name="person.attribute.11" /></td>
+					<td colspan="2"><input id="patCatGeneral" type="checkbox" name="person.attribute.14" value="General" /> General&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<input id="rsby" type="checkbox" name="person.attribute.14" value="RSBY"/> RSBY
+					<input id="rsbyNumber" name="person.attribute.11" /></td>
 				</tr>
 				<tr id="patCat2">
 					<td colspan="1"></td>
-					<td colspan="2">BPL&nbsp;&nbsp;&nbsp;<input id="bpl" type="checkbox" name="person.attribute.14" value="BPL" onClick="disablePatientCategory();" /></td>
-					<td colspan="3"><input id="bplNumber" name="person.attribute.10" /></td>
+					<td colspan="2"><input id="patCatStaff" type="checkbox" name="person.attribute.14" value="Staff" /> Staff&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<input id="bpl" type="checkbox" name="person.attribute.14" value="BPL"/> BPL
+					<input id="bplNumber" name="person.attribute.10" /></td>
 				</tr>
 				<tr id="patCat3">
-					<td colspan="1"></td>
-					<td colspan="2"><select id="patientCategory" name="person.attribute.14" onChange="patientCategorySelection();">
-								<option value="">Select Category</option>
-								<option value="General">General</option>
-								<option value="Staff">Staff</option>
-								<option value="Antenatal">Antenatal Patient</option>
-								<option value="Child Less Than 1yr">Child Less Than 1 Year</option>
-								<option value="Other Free">Other Free</option>
-								</select>
-					</td>
-					<td colspan="3"></td>
+				<td colspan="1"></td>
+				<td colspan="4">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<input id="patCatAntenatal" type="checkbox" name="person.attribute.14" value="Antenatal" /> Antenatal Patient</td>
 				</tr>
 				<tr id="patCat4">
-					<td colspan="1"></td>
-					<td colspan="2"><select id="freeCategory" name="person.attribute.19" style="width: 185px;"></select></td>
-					<td colspan="3"></td>
+				<td colspan="1"></td>
+				<td colspan="4">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<input id="patCatChildLessThan1yr" type="checkbox" name="person.attribute.14" value="Child Less Than 1yr" /> Child Less Than 1 Year</td>
+				</tr>
+				<tr id="patCat5">
+				<td colspan="1"></td>
+				<td colspan="3">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<input id="patCatOtherFree" type="checkbox" name="person.attribute.14" value="Other Free" /> Other Free</td>
+				<td colspan="4"><span id="freeField"> <select id="freeCategory" name="person.attribute.19" style="width: 185px;">
+			    </select></span></td>
 				</tr>
 				<tr id="temporaryCategories">
 					<!-- 01/05/12: Marta, Painting Temporary Category in red. Bug #182  -->

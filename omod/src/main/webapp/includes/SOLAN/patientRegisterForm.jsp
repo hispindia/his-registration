@@ -75,7 +75,7 @@ td.border {
 				jQuery("#patCatGeneral").attr("checked", "checked");
 				//17/05/2012 Marta: hide free category description field #188
 				jQuery("#freeField").hide();
-				document.getElementById("freeCategory").style.visibility = "hidden";
+				//document.getElementById("freeCategory").style.visibility = "hidden";
 
 				// binding
 				jQuery("#bpl").click(function() {
@@ -454,18 +454,22 @@ td.border {
 
 		/** VALIDATE PATIENT CATEGORY */
 		validatePatientCategory : function() {
-			var patientCategoryDisabled=document.getElementById('patientCategory').disabled;
-			if (jQuery("#rsby").attr('checked') == false
-				&& jQuery("#bpl").attr('checked') == false
-				&& patientCategoryDisabled==false) {
-				var patientCategory=document.getElementById('patientCategory');
-				if(patientCategory.value==""){
+			if (jQuery("#patCatGeneral").attr('checked') == false
+					//17/05/2012 Marta: Delete Poor and Governement Employee Categories #188
+					/* && jQuery("#patCatPoor").attr('checked') == false
+					&& jQuery("#patCatGovEmp").attr('checked') == false */
+					// 26/5/2012 Marta: Changing categories to match with requirements on #240
+					/*&& jQuery("#patCatGovEmp").attr('checked') == false
+					&& jQuery("#patCatSeniorCitizen").attr('checked') == false*/
+					&& jQuery("#rsby").attr('checked') == false
+					&& jQuery("#bpl").attr('checked') == false
+					// 15/05/2012: Marta added for Solan new categories validation - Bug #188
+					&& jQuery("#patCatAntenatal").attr('checked') == false
+					&& jQuery("#patCatChildLessThan1yr").attr('checked') == false
+					&& jQuery("#patCatOtherFree").attr('checked') == false
+					&& jQuery("#patCatStaff").attr('checked') == false) {
 				alert('You didn\'t choose any of the patient categories!');
 				return false;
-				}
-				else{
-				return true;
-				}
 			} else {
 				if (jQuery("#rsby").attr('checked')) {
 					if (jQuery("#rsbyNumber").val().length <= 0) {
@@ -967,29 +971,6 @@ jQuery("#aadharCardReason").hide();
 }
 }
 
-function disablePatientCategory(){
-if (jQuery("#rsby").attr('checked') == true || jQuery("#bpl").attr('checked') == true){
- document.getElementById('patientCategory').disabled=true;
- document.getElementById('freeCategory').style.visibility = "hidden";
-}
-else{
-document.getElementById('patientCategory').disabled=false;
-document.getElementById('freeCategory').style.visibility = "hidden";
-}
-}
-
-function patientCategorySelection(){
-var patientCategory = document.getElementById('patientCategory').value;
-if(patientCategory=="Other Free"){
-document.getElementById('freeCategory').style.visibility = "visible";
-}
-else{
-var fCat = document.getElementById('freeCategory');
-fCat.value='';
-document.getElementById('freeCategory').style.visibility = "hidden";
-}
-}
-
 function checkAadharCardNumberr() {
 		        aadharCardNo=jQuery("#aadharCardNo").val();
 		        if(aadharCardNo.length==12){
@@ -1065,44 +1046,66 @@ function checkAadharCardNumberr() {
 			</td>
 			<td rowspan="3" class="border">
 			<!-- ghanshyam 12-sept-2013 New Requirement #2684 Introducing a field at the time of registration to put Aadhar Card Number -->
-			<b>&nbsp;&nbsp;Aadhar Card Number:</b> &nbsp;&nbsp;
-			<input type="checkbox" checked="checked" id="yes" name="yes" onClick="yesClick();">Yes &nbsp;&nbsp;
-			<input type="checkbox" id="no" name="no" onClick="noClick();">No
-			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			<input id="aadharCardNo" name="patient.attribute.20" placeholder="Aadhar Card No" onblur="checkAadharCardNumberr();"/>
-			<input id="aadharCardReason" name="patient.attribute.21" placeholder="Reason"/> <br /> <br />
+			<b>&nbsp;&nbsp;Aadhar Card Number:</b> 
+			Yes &nbsp;<input type="checkbox" checked="checked" id="yes" name="yes" onClick="yesClick();"> &nbsp;
+			No &nbsp;<input type="checkbox" id="no" name="no" onClick="noClick();">
+			<input id="aadharCardNo" name="patient.attribute.20" placeholder="Aadhar Card No"/ onblur="checkAadharCardNumberr();">
+			<input id="aadharCardReason" name="patient.attribute.21" placeholder="Reason"/> <br />
 			<!-- ghanshyam 07-sept-2013 Support #2686 GUI Changes (spellings/ fonts/ alignments) -->
-			<b>&nbsp;&nbsp;Patient Category:</b> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			RSBY <input id="rsby" type="checkbox" name="person.attribute.14" value="RSBY" onClick="disablePatientCategory();"/> &nbsp;&nbsp;
-			<span id="rsbyField"><input id="rsbyNumber" name="person.attribute.11" />
-			</span>
-			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			BPL&nbsp;&nbsp;<input id="bpl" type="checkbox" name="person.attribute.14" value="BPL" onClick="disablePatientCategory();" /> &nbsp;&nbsp;&nbsp;
-			<span id="bplField"><input id="bplNumber" name="person.attribute.10" />
+				 <b>&nbsp;&nbsp;Patient Category</b><br />
+				<table cellspacing="10">
+					<!-- <b>Paid Categories		Free Categories</b><br /> -->
+
+					<!-- 17/5/2012 Marta: Delete Poor and Government Employee categories for new requirements and reestructure layout #188 -->
+
+					<tr>
+						<td><input id="patCatGeneral" type="checkbox"
+							name="person.attribute.14" value="General" /> General</td>
+						<td><input id="rsby" type="checkbox"
+							name="person.attribute.14" value="RSBY" /> RSBY</td>
+						<td><span id="rsbyField">RSBY Number <input
+								id="rsbyNumber" name="person.attribute.11" />
 						</span>
-			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			<select id="patientCategory" name="person.attribute.14" onChange="patientCategorySelection();">
-								<option value="">Select Category</option>
-								<option value="General">General</option>
-								<option value="Staff">Staff</option>
-								<option value="Antenatal">Antenatal Patient</option>
-								<option value="Child Less Than 1yr">Child Less Than 1 Year</option>
-								<option value="Other Free">Other Free</option>
-								
-			</select>
-			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			<select id="freeCategory" name="person.attribute.19" style="width: 185px;">
-			</select>
-			<br />
-			<b> <font color="red">Temporary Categories: </font></b>&nbsp;&nbsp;&nbsp;
-			<input type="checkbox" name="temporary.attribute.22" value="MLC" />MLC  &nbsp;&nbsp;
-			<input type="checkbox" name="temporary.attribute.22" value="Accident" />Accident
-			<table cellspacing="10">
-				<div id="validationMessage"></div>
+						</td>
+					</tr>
+					<tr>
+						<td><input id="patCatStaff" type="checkbox"
+							name="person.attribute.14" value="Staff" /> Staff</td>
+						<td><input id="bpl" type="checkbox"
+							name="person.attribute.14" value="BPL" /> BPL</td>
+						<td><span id="bplField">BPL Number <input
+								id="bplNumber" name="person.attribute.10" />
+						</span>
+						</td>
+					</tr>
+					<tr>
+						<!-- 26/5/2012 Marta: Changing categories to match with requirements on #240 
+						<td><input id="patCatSeniorCitizen" type="checkbox"
+							name="person.attribute.14" value="Senior Citizen" /> Senior
+							Citizen</td> -->
+						<!-- 11/05/12: Thai Chuong, Added categories Antenatal, Child Less Than 1yr, Other Free. - Bug #188 -->
+						<td></td>
+						<td><input id="patCatAntenatal" type="checkbox"
+							name="person.attribute.14" value="Antenatal" /> Antenatal
+							Patient</td>
+					</tr>
+					<tr>
+						<td></td>
+						<!-- ghanshyam 07-sept-2013 Support #2686 GUI Changes (spellings/ fonts/ alignments) -->
+						<td><input id="patCatChildLessThan1yr" type="checkbox"
+							name="person.attribute.14" value="Child Less Than 1yr" /> Child
+							Less Than 1 Year</td>
+					</tr>
+					<tr>
+						<td></td>
+						<td><input id="patCatOtherFree" type="checkbox"
+							name="person.attribute.14" value="Other Free" /> Other Free</td>
+						<!-- 17/5/2012 Marta: Add text field to capture the free category description #188 -->
+						<td><span id="freeField"> <select id="freeCategory" name="person.attribute.19" style="width: 185px;">
+			            </select></span></td>
+					</tr>
+					<!-- ghanshyam 12-sept-2013 New Requirement #2684 Introducing a field at the time of registration to put Aadhar Card Number -->
+					<div id="validationMessage"></div>
 			</table></td>
 		</tr>
 
@@ -1144,6 +1147,9 @@ function checkAadharCardNumberr() {
 			<td class="cell"><input id="patientPhoneNumber"
 				name="person.attribute.16" style="width: 200px;" />
 			</td>
+			<td rowspan="1" class="border"><b>&nbsp;&nbsp;<font color="red">Temporary Categories: </font></b>&nbsp;&nbsp;&nbsp;
+			<input type="checkbox" name="temporary.attribute.22" value="MLC" />MLC  &nbsp;&nbsp;
+			<select id="freeCategory" name="temporary.attribute.22" style="width: 185px;"></select>
 		</tr>
 		<tr>
 			<td class="cell"><b>Relative Name <label style="color:red">*</label></b>

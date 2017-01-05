@@ -15,8 +15,12 @@
 		//ghanshyam 12-sept-2013 New Requirement #2684 Introducing a field at the time of registration to put Aadhar Card Number
 		jQuery("#aadharCardNo").html(MODEL.patientAttributes[20]);
 		jQuery("#category").html(MODEL.patientAttributes[14]);
+		if("RSBY" == MODEL.patientAttributes[14]){
 		jQuery("#RSBY").html(MODEL.patientAttributes[11]);
+		}
+		if("BPL" == MODEL.patientAttributes[14]){
 		jQuery("#BPL").html(MODEL.patientAttributes[10]);
+		}
 		if(MODEL.patientAttributes[14]=='Other Free'){
 		jQuery("#freeCategory").html(MODEL.selectedOtherFree);
 		}
