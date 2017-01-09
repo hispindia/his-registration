@@ -68,6 +68,7 @@ public class FindCreatePatientController {
 		model.addAttribute("patientIdentifier", RegistrationUtils.getNewIdentifier());
 		model.addAttribute("OPDs", RegistrationWebUtils.getSubConcepts(RegistrationConstants.CONCEPT_NAME_OPD_WARD));
 		model.addAttribute("OTHERFREE", RegistrationWebUtils.getSubConcepts(RegistrationConstants.CONCEPT_NAME_OTHER_FREE));
+		model.addAttribute("TEMPORARYCATEGORY", RegistrationWebUtils.getSubConcepts(RegistrationConstants.CONCEPT_NAME_TEMPORARY_CATEGORY));
 		model.addAttribute("referralHospitals",
 		    RegistrationWebUtils.getSubConcepts(RegistrationConstants.CONCEPT_NAME_PATIENT_REFERRED_FROM));
 		model.addAttribute("referralReasons",
@@ -218,6 +219,15 @@ public class FindCreatePatientController {
 		opdObs.setConcept(opdWardConcept);
 		opdObs.setValueCoded(selectedOPDConcept);
 		encounter.addObs(opdObs);
+		
+		
+		Concept temporaryCategoryConcept = Context.getConceptService().getConcept(RegistrationConstants.CONCEPT_NAME_TEMPORARY_CATEGORY);
+		Concept selectedTemporaryCategory = Context.getConceptService().getConcept(
+			    Integer.parseInt(parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_TEMPORARY_CATEGORY)));
+		Obs temporaryCategoryObs = new Obs();
+		temporaryCategoryObs.setConcept(temporaryCategoryConcept);
+		temporaryCategoryObs.setValueCoded(selectedTemporaryCategory);
+		encounter.addObs(temporaryCategoryObs);
 		
 		// Send patient to OPD Queue/bloodbank
 		

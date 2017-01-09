@@ -103,7 +103,10 @@ public class ShowPatientInfoController {
 		if (encounterId != null) {
 			Encounter encounter = Context.getEncounterService().getEncounter(encounterId);
 			for (Obs obs : encounter.getObs()) {
-				if (obs.getConcept().getName().getName().equalsIgnoreCase(RegistrationConstants.CONCEPT_NAME_OPD_WARD)) {
+				if (obs.getConcept().getName().getName().equalsIgnoreCase(RegistrationConstants.CONCEPT_NAME_TEMPORARY_CATEGORY)) {
+					model.addAttribute("selectedTemporaryCategory", obs.getValueCoded().getName().getName());
+				}
+				else if (obs.getConcept().getName().getName().equalsIgnoreCase(RegistrationConstants.CONCEPT_NAME_OPD_WARD)) {
 					model.addAttribute("selectedOPD", obs.getValueCoded().getConceptId());
 				}
 			}
@@ -124,7 +127,8 @@ public class ShowPatientInfoController {
 				for (Obs obs : encounter.getAllObs()) {
 					if (obs.getConcept().getDisplayString()
 					        .equalsIgnoreCase(RegistrationConstants.CONCEPT_NAME_TEMPORARY_CATEGORY)) {
-						model.addAttribute("tempCategoryId", obs.getConcept().getConceptId());
+						model.addAttribute("tempCategoryId", obs.getValueCoded().getConceptId());
+						model.addAttribute("tempCategoryConceptName", obs.getValueCoded().getName().getName());
 					} else if (obs.getConcept().getDisplayString()
 					        .equalsIgnoreCase(RegistrationConstants.CONCEPT_NAME_OPD_WARD)) {
 						model.addAttribute("opdWardId", obs.getConcept().getConceptId());

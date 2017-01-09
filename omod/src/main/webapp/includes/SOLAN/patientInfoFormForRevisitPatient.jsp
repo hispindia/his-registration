@@ -9,9 +9,10 @@
 		jQuery("#rsbyNumber").hide();
 		jQuery("#bplNumber").hide();
 		//document.getElementById("freeCategory").style.visibility = "hidden";
-		jQuery("#freeField").hide();
+		jQuery("#freeCategory").hide();
 		document.getElementById("patCat").style.visibility = "hidden";
 		document.getElementById("patCatt").style.visibility = "hidden";
+		jQuery("#temporaryCategory").hide();
 		
 		jQuery("#patCatGeneral").click(function() {
 		VALIDATORS.generalCheck();
@@ -33,6 +34,9 @@
 		});
 		jQuery("#patCatOtherFree").click(function() {
 		VALIDATORS.patCatOtherFreeCheck();
+		});
+		jQuery("#temporaryCategoryCheckBox").click(function() {
+		VALIDATORS.temporaryCategory();
 		});
 		
 		PAGE.fillOptions("#freeCategory", {
@@ -86,7 +90,6 @@
 					jQuery("#bplNumber").hide();
 				}
 		
-				///////////////////////
 
 		jQuery("#phoneNumber").html(MODEL.patientAttributes[16]);
 		jQuery("#gender").html(MODEL.patientGender);
@@ -100,25 +103,18 @@
 			optionDelimiter: "|"
 		});
 		
-		// Set the selected OPD
-		if(!StringUtils.isBlank(MODEL.selectedOPD)){			
-			jQuery("#opdWard").val(MODEL.selectedOPD);
-			jQuery("#opdWard").attr("disabled", "disabled");
-		}
+		MODEL.TEMPORARYCATEGORY = " ,select temporary category|"
+						+ MODEL.TEMPORARYCATEGORY;
+				PAGE.fillOptions("#temporaryCategory", {
+					data : MODEL.TEMPORARYCATEGORY,
+					delimiter : ",",
+					optionDelimiter : "|"
+				});
 		
 		jQuery("#buySlip").hide();
 		
 		// Set data for reprint page
 		if(MODEL.reprint=="true"){
-			var opdWardId=MODEL.opdWardId;
-		jQuery("#opdWard").val(MODEL.observations[opdWardId]);
-			// 26/05/12: Marta, avoid error from empty string. Bug #219
-			
-			//ghanshyam 15-may-2013 Bug #1614 Reprint Slip: Solan, DDU, Mandi
-			jQuery("#opdWard").attr("disabled", "disabled");
-			jQuery("input[name='temporary.attribute.22']").attr("disabled", "disabled");
-		
-			jQuery("#temporaryCategories").html(MODEL.patientAttributes[22]);
 			jQuery("#printSlip").hide();
 			jQuery("#save").hide();
 			// Sagar Bele : Date: 23-1-2013 : Issue #791
@@ -215,21 +211,11 @@
 				}
 				
 				jQuery("#patCat1").hide();
-				jQuery("#patCat2").hide();
-				jQuery("#patCat3").hide();
-				jQuery("#patCat4").hide();
-				jQuery("#patCat5").hide();
-
-				// Convert temporary categories to printable format
-				jQuery("#temporaryCategories input").each(function(index, value){				
-					if(jQuery(value).is(":checked")){
-						jQuery("#printableTemporaryCategories").append("<span style='margin:5px;'>" + jQuery(value).val() + "</span>");
-						// Sagar Bele : Date 23-1-2013 Issue 792
-						jQuery("#tempCat").show();
-					}
-				});
-					
+				
+				// Convert temporary category dropdown to printable format
 				jQuery("#temporaryCategories").hide();
+				var temporaryCategory=jQuery("#temporaryCategory option:checked");	
+				jQuery("#printableTemporaryCategories").html(temporaryCategory);
 				
 				// submit form and print		
 				if(!reprint){
@@ -420,7 +406,7 @@
 				if (jQuery("#patCatOtherFree").is(":checked")) {
 					jQuery("#patCatOtherFree").removeAttr("checked");
 					jQuery("#freeCategory").val("");
-					jQuery("#freeField").hide();
+					jQuery("#freeCategory").hide();
 				}
 				// 17/05/2012: Marta added for Solan new categories validation - Bug #188
 				if (jQuery("#patCatStaff").is(":checked"))
@@ -449,7 +435,7 @@
 				if (jQuery("#patCatOtherFree").is(":checked")) {
 					jQuery("#patCatOtherFree").removeAttr("checked");
 					jQuery("#freeCategory").val("");
-					jQuery("#freeField").hide();
+					jQuery("#freeCategory").hide();
 				}
 			} else {
 				jQuery("#bplNumber").val("");
@@ -475,7 +461,7 @@
 				if (jQuery("#patCatOtherFree").is(":checked")) {
 					jQuery("#patCatOtherFree").removeAttr("checked");
 					jQuery("#freeCategory").val("");
-					jQuery("#freeField").hide();
+					jQuery("#freeCategory").hide();
 				}
 			} else {
 				jQuery("#rsbyNumber").val("");
@@ -509,7 +495,7 @@
 				if (jQuery("#patCatOtherFree").is(":checked")) {
 					jQuery("#patCatOtherFree").removeAttr("checked");
 					jQuery("#freeCategory").val("");
-					jQuery("#freeField").hide();
+					jQuery("#freeCategory").hide();
 				}
 				// 17/05/2012: Marta added for Solan new categories validation - Bug #188
 				// 26/5/2012 Marta: Changing categories to match with requirements on #240
@@ -547,7 +533,7 @@
 				if (jQuery("#patCatOtherFree").is(":checked")) {
 					jQuery("#patCatOtherFree").removeAttr("checked");
 					jQuery("#freeCategory").val("");
-					jQuery("#freeField").hide();
+					jQuery("#freeCategory").hide();
 				}
 				if (jQuery("#patCatStaff").is(":checked"))
 					jQuery("#patCatStaff").removeAttr("checked");
@@ -585,7 +571,7 @@
 				if (jQuery("#patCatOtherFree").is(":checked")) {
 					jQuery("#patCatOtherFree").removeAttr("checked");
 					jQuery("#freeCategory").val("");
-					jQuery("#freeField").hide();
+					jQuery("#freeCategory").hide();
 				}
 				if (jQuery("#patCatStaff").is(":checked"))
 					jQuery("#patCatStaff").removeAttr("checked");
@@ -600,7 +586,7 @@
 		patCatOtherFreeCheck : function() {
 			if (jQuery("#patCatOtherFree").is(':checked')) {
 				//document.getElementById("freeCategory").style.visibility = "visible";
-				jQuery("#freeField").show();
+				jQuery("#freeCategory").show();
 				if (jQuery("#bpl").is(":checked")) {
 					jQuery("#bpl").removeAttr("checked");
 					jQuery("#bplNumber").val("");
@@ -632,8 +618,17 @@
 
 			} else {
 				jQuery("#freeCategory").val("");
-				jQuery("#freeField").hide();
+				jQuery("#freeCategory").hide();
 			}
+		},
+		
+		temporaryCategory : function() {
+		if (jQuery("#temporaryCategoryCheckBox").is(':checked')) {
+				jQuery("#temporaryCategory").show();
+		}
+		else{
+		jQuery("#temporaryCategory").hide();
+		 }
 		}
 	};
 </script>
@@ -689,45 +684,52 @@
 					<td colspan="1"><b>Aadhar Card Number:</b></td>
 					<td colspan="2"><span id="aadharCardNo"></span></td>
 				</tr>
+				
 				<tr id="patCat1">
-					<td colspan="1"><b>Patient Category:</b></td>
-					<td colspan="2"><input id="patCatGeneral" type="checkbox" name="person.attribute.14" value="General" /> General&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					<input id="rsby" type="checkbox" name="person.attribute.14" value="RSBY"/> RSBY
-					<input id="rsbyNumber" name="person.attribute.11" /></td>
+				<td colspan="1" rowspan="1"><b>Patient Category:</b></td>
+				<td colspan="5">
+						<table>
+							<tr>
+								<td><input id="patCatGeneral" type="checkbox" name="person.attribute.14" value="General" /> General</td>
+								<td><input id="rsby" type="checkbox" name="person.attribute.14" value="RSBY"/> RSBY
+								<input id="rsbyNumber" name="person.attribute.11" /></td>
+							</tr>
+							<tr>
+							    <td><input id="patCatStaff" type="checkbox" name="person.attribute.14" value="Staff" /> Staff</td>
+							    <td><input id="bpl" type="checkbox" name="person.attribute.14" value="BPL"/> BPL&nbsp;&nbsp;
+							    <input id="bplNumber" name="person.attribute.10" /></td>
+							</tr>
+							<tr>
+								<td></td>
+								<td><input id="patCatAntenatal" type="checkbox" name="person.attribute.14" value="Antenatal" /> Antenatal Patient</td>
+							</tr>
+							<tr>
+								<td></td>
+								<td><input id="patCatChildLessThan1yr" type="checkbox" name="person.attribute.14" value="Child Less Than 1yr" /> Child Less Than 1 Year</td>
+							</tr>
+							<tr>
+								<td></td>
+								<td><input id="patCatOtherFree" type="checkbox" name="person.attribute.14" value="Other Free" /> Other Free
+								<select id="freeCategory" name="person.attribute.19" style="width: 185px;"></select></td>
+							</tr>
+							</table>
+							</td>
 				</tr>
-				<tr id="patCat2">
-					<td colspan="1"></td>
-					<td colspan="2"><input id="patCatStaff" type="checkbox" name="person.attribute.14" value="Staff" /> Staff&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					<input id="bpl" type="checkbox" name="person.attribute.14" value="BPL"/> BPL
-					<input id="bplNumber" name="person.attribute.10" /></td>
-				</tr>
-				<tr id="patCat3">
-				<td colspan="1"></td>
-				<td colspan="4">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				<input id="patCatAntenatal" type="checkbox" name="person.attribute.14" value="Antenatal" /> Antenatal Patient</td>
-				</tr>
-				<tr id="patCat4">
-				<td colspan="1"></td>
-				<td colspan="4">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				<input id="patCatChildLessThan1yr" type="checkbox" name="person.attribute.14" value="Child Less Than 1yr" /> Child Less Than 1 Year</td>
-				</tr>
-				<tr id="patCat5">
-				<td colspan="1"></td>
-				<td colspan="3">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				<input id="patCatOtherFree" type="checkbox" name="person.attribute.14" value="Other Free" /> Other Free</td>
-				<td colspan="4"><span id="freeField"> <select id="freeCategory" name="person.attribute.19" style="width: 185px;">
-			    </select></span></td>
-				</tr>
+				
 				<tr id="temporaryCategories">
-					<!-- 01/05/12: Marta, Painting Temporary Category in red. Bug #182  -->
-					<td colspan="1" valign="top"><b> <font color="red">Temporary
-								Categories: </font></b></td>
+					<td colspan="1"><b>Temporary Categories:</b></td>
 					<td colspan="5">
-						<!-- 28/04/12: Changed MODEL.observations[11] for MODEL.observations[8058] by Marta - Bug #160 -->
-						<input type="checkbox" name="temporary.attribute.22" value="MLC" />MLC <br /> <input type="checkbox" name="temporary.attribute.22"
-						value="Accident" />Accident <br />
-					</td>
+						<table>
+							<tr>
+								<td>
+									<input type="checkbox" id="temporaryCategoryCheckBox" name="temporaryCategoryCheckBox" value="MLC" />MLC&nbsp;&nbsp;			
+								</td>
+								<td><select id="temporaryCategory" name="temporaryCategory" style="width: 185px;"></select></td>			
+							</tr>
+						</table>
+					</td>	
 				</tr>
+				
 			    <tr id="patCat">
 					<td colspan="1" valign="top"><b>Patient Category:</b></td>
 					<td colspan="5">

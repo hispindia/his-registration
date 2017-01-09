@@ -50,6 +50,7 @@
 		tehsils: _tehsils,
 		OPDs: "${OPDs}",
 		OTHERFREE: "${OTHERFREE}",
+		TEMPORARYCATEGORY: "${TEMPORARYCATEGORY}",
 		referralHospitals: "${referralHospitals}",
 		referralReasons: "${referralReasons}"
 	}

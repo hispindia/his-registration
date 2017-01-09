@@ -24,7 +24,11 @@
 		if(MODEL.patientAttributes[14]=='Other Free'){
 		jQuery("#freeCategory").html(MODEL.selectedOtherFree);
 		}
-		jQuery("#temporaryCategories").html(MODEL.patientAttributes[22]);
+		
+		if(!StringUtils.isBlank(MODEL.selectedTemporaryCategory)){
+		jQuery("#temporaryCategories").html(MODEL.selectedTemporaryCategory);
+		}
+		
 		MODEL.OPDs = " ,Please select an OPD room to visit|" + MODEL.OPDs;
 		PAGE.fillOptions("#opdWard", {
 			data:MODEL.OPDs,
@@ -48,15 +52,12 @@
 			
 			//ghanshyam 15-may-2013 Bug #1614 Reprint Slip: Solan, DDU, Mandi
 			jQuery("#opdWard").attr("disabled", "disabled");
-			jQuery("input[name='temporary.attribute.11']").attr("disabled", "disabled");
-		
-			// 2/7/2012: harsh removed dependency on hardcoded id for temp cat and opd ward.
-			var tempCategoryId=MODEL.tempCategoryId;
-			if(!StringUtils.isBlank(MODEL.observations[tempCategoryId])){
 			
-				jQuery.each(MODEL.observations[tempCategoryId].split(","), function(index, value){
-					jQuery("input[name=temporary.attribute.11][value='" + value + "']").attr("checked", "checked");
-				});	}
+			var tempCategoryId=MODEL.tempCategoryId;
+		    if(!StringUtils.isBlank(MODEL.tempCategoryId)){
+		    jQuery("#temporaryCategories").html(MODEL.tempCategoryConceptName);
+		    }
+				
 			jQuery("#printSlip").hide();
 			jQuery("#save").hide();
 			// Sagar Bele : Date: 23-1-2013 : Issue #791

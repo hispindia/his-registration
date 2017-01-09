@@ -43,6 +43,13 @@ td.border {
 					delimiter : ",",
 					optionDelimiter : "|"
 				});
+				MODEL.TEMPORARYCATEGORY = " ,select temporary category|"
+						+ MODEL.TEMPORARYCATEGORY;
+				PAGE.fillOptions("#temporaryCategory", {
+					data : MODEL.TEMPORARYCATEGORY,
+					delimiter : ",",
+					optionDelimiter : "|"
+				});
 				MODEL.referralHospitals = " , Select referral Hospitals|"
 					+ MODEL.referralHospitals;
 				PAGE.fillOptions("#referralHospitals", {
@@ -76,6 +83,7 @@ td.border {
 				//17/05/2012 Marta: hide free category description field #188
 				jQuery("#freeField").hide();
 				//document.getElementById("freeCategory").style.visibility = "hidden";
+				jQuery("#temporaryCategory").hide();
 
 				// binding
 				jQuery("#bpl").click(function() {
@@ -124,6 +132,9 @@ td.border {
 				});
 				jQuery("#patCatOtherFree").click(function() {
 					VALIDATORS.patCatOtherFreeCheck();
+				});
+				jQuery("#temporaryCategoryCheckBox").click(function() {
+					VALIDATORS.temporaryCategory();
 				});
 				
 				//ghanshyam 07-sept-2013 Support #2686 GUI Changes (spellings/ fonts/ alignments)
@@ -938,6 +949,15 @@ td.border {
 				jQuery("#freeCategory").val("");
 				jQuery("#freeField").hide();
 			}
+		},
+		
+		temporaryCategory : function() {
+		if (jQuery("#temporaryCategoryCheckBox").is(':checked')) {
+				jQuery("#temporaryCategory").show();
+		}
+		else{
+		jQuery("#temporaryCategory").hide();
+		 }
 		}
 
 	};
@@ -1147,9 +1167,9 @@ function checkAadharCardNumberr() {
 			<td class="cell"><input id="patientPhoneNumber"
 				name="person.attribute.16" style="width: 200px;" />
 			</td>
-			<td rowspan="1" class="border"><b>&nbsp;&nbsp;<font color="red">Temporary Categories: </font></b>&nbsp;&nbsp;&nbsp;
-			<input type="checkbox" name="temporary.attribute.22" value="MLC" />MLC  &nbsp;&nbsp;
-			<select id="freeCategory" name="temporary.attribute.22" style="width: 185px;"></select>
+			<td rowspan="1" class="border"><b>&nbsp;&nbsp;<font color="red">Temporary Categories: </font></b>&nbsp;
+			<input type="checkbox" id="temporaryCategoryCheckBox" name="temporaryCategoryCheckBox" value="MLC" />MLC  &nbsp;&nbsp;
+			<select id="temporaryCategory" name="temporaryCategory" style="width: 215px;"></select>
 		</tr>
 		<tr>
 			<td class="cell"><b>Relative Name <label style="color:red">*</label></b>

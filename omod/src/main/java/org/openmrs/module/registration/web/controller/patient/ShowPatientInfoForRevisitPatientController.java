@@ -80,6 +80,7 @@ public class ShowPatientInfoForRevisitPatientController {
 		PatientModel patientModel = new PatientModel(patient);
 		model.addAttribute("patient", patientModel);
 		model.addAttribute("OPDs", RegistrationWebUtils.getSubConcepts(RegistrationConstants.CONCEPT_NAME_OPD_WARD));
+		model.addAttribute("TEMPORARYCATEGORY", RegistrationWebUtils.getSubConcepts(RegistrationConstants.CONCEPT_NAME_TEMPORARY_CATEGORY));
 		
 		// Get current date
 		SimpleDateFormat sdf = new SimpleDateFormat("EEE dd/MM/yyyy kk:mm");
@@ -103,7 +104,10 @@ public class ShowPatientInfoForRevisitPatientController {
 		if (encounterId != null) {
 			Encounter encounter = Context.getEncounterService().getEncounter(encounterId);
 			for (Obs obs : encounter.getObs()) {
-				if (obs.getConcept().getName().getName().equalsIgnoreCase(RegistrationConstants.CONCEPT_NAME_OPD_WARD)) {
+				if (obs.getConcept().getName().getName().equalsIgnoreCase(RegistrationConstants.CONCEPT_NAME_TEMPORARY_CATEGORY)) {
+					model.addAttribute("selectedTemporaryCategory", obs.getValueCoded().getName().getName());
+				}
+				else if (obs.getConcept().getName().getName().equalsIgnoreCase(RegistrationConstants.CONCEPT_NAME_OPD_WARD)) {
 					model.addAttribute("selectedOPD", obs.getValueCoded().getConceptId());
 				}
 			}
@@ -124,7 +128,8 @@ public class ShowPatientInfoForRevisitPatientController {
 				for (Obs obs : encounter.getAllObs()) {
 					if (obs.getConcept().getDisplayString()
 					        .equalsIgnoreCase(RegistrationConstants.CONCEPT_NAME_TEMPORARY_CATEGORY)) {
-						model.addAttribute("tempCategoryId", obs.getConcept().getConceptId());
+						model.addAttribute("tempCategoryId", obs.getValueCoded().getConceptId());
+						model.addAttribute("tempCategoryConceptName", obs.getValueCoded().getName().getName());
 					} else if (obs.getConcept().getDisplayString()
 					        .equalsIgnoreCase(RegistrationConstants.CONCEPT_NAME_OPD_WARD)) {
 						model.addAttribute("opdWardId", obs.getConcept().getConceptId());
@@ -220,7 +225,7 @@ public class ShowPatientInfoForRevisitPatientController {
 			}
 		}
 		
-		// create temporary attributes
+		
 		for (String name : parameters.keySet()) {
 			if ((name.contains(".attribute.")) && (!StringUtils.isBlank(parameters.get(name)))) {
 				String[] parts = name.split("\\.");
@@ -229,17 +234,16 @@ public class ShowPatientInfoForRevisitPatientController {
 				PersonAttribute attribute = RegistrationUtils.getPersonAttribute(id, parameters.get(name));
 				patient.addAttribute(attribute);
 				patient = Context.getPatientService().savePatient(patient);
-				Concept tempCatConcept = Context.getConceptService().getConceptByName("TEMPORARY CATEGORY");
-				
-				Concept temporaryAttributeConcept = Context.getConceptService().getConcept(tempCatConcept.getConceptId());
-				Obs temporaryAttribute = new Obs();
-				temporaryAttribute.setConcept(temporaryAttributeConcept);
-				logger.info("concept: " + temporaryAttributeConcept);
-				logger.info("value: " + parameters.get(name));
-				temporaryAttribute.setValueAsString(parameters.get(name));
-				encounter.addObs(temporaryAttribute);
 			}
 		}
+		
+		Concept temporaryCategoryConcept = Context.getConceptService().getConcept(RegistrationConstants.CONCEPT_NAME_TEMPORARY_CATEGORY);
+		Concept selectedTemporaryCategory = Context.getConceptService().getConcept(
+		Integer.parseInt(parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_TEMPORARY_CATEGORY)));
+		Obs temporaryCategoryObs = new Obs();
+		temporaryCategoryObs.setConcept(temporaryCategoryConcept);
+		temporaryCategoryObs.setValueCoded(selectedTemporaryCategory);
+		encounter.addObs(temporaryCategoryObs);
 		
 		// save encounter
 		Context.getEncounterService().saveEncounter(encounter);

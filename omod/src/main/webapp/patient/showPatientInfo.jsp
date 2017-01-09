@@ -48,11 +48,13 @@
 		observations: _observations,
 		currentDateTime: "${currentDateTime}",	
 		selectedOPD: "${selectedOPD}",
+		selectedTemporaryCategory: "${selectedTemporaryCategory}",
 		OPDs: "${OPDs}",
 		dueDate: "${dueDate}",
 		daysLeft: "${daysLeft}",
 		reprint: "${param.reprint eq 'true'}",
 		tempCategoryId: "${tempCategoryId}",
+		tempCategoryConceptName: "${tempCategoryConceptName}",
 		opdWardId: "${opdWardId}",
 		selectedOtherFree: "${selectedOtherFree}"
 	};
