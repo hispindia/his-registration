@@ -33,6 +33,8 @@ border-style: solid;
 				PAGE.fillOptions("#tehsils", {
 					data : MODEL.tehsils[0].split(',')
 				});
+				MODEL.OTHERFREE = " ,Please select other free category|"
+						+ MODEL.OTHERFREE;
 				PAGE.fillOptions("#freeCategory", {
 					data : MODEL.OTHERFREE,
 					delimiter : ",",
