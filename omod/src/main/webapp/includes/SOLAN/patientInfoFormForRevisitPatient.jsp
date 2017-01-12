@@ -39,6 +39,8 @@
 		VALIDATORS.temporaryCategory();
 		});
 		
+		MODEL.OTHERFREE = " ,Please select other free category|"
+						+ MODEL.OTHERFREE;
 		PAGE.fillOptions("#freeCategory", {
 					data : MODEL.OTHERFREE,
 					delimiter : ",",

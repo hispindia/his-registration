@@ -238,12 +238,15 @@ public class ShowPatientInfoForRevisitPatientController {
 		}
 		
 		Concept temporaryCategoryConcept = Context.getConceptService().getConcept(RegistrationConstants.CONCEPT_NAME_TEMPORARY_CATEGORY);
-		Concept selectedTemporaryCategory = Context.getConceptService().getConcept(
+		String selectedTemporaryCategory=parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_TEMPORARY_CATEGORY);
+		if(!selectedTemporaryCategory.equals(" ")){
+		Concept selectedTemporaryCategoryCon = Context.getConceptService().getConcept(
 		Integer.parseInt(parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_TEMPORARY_CATEGORY)));
 		Obs temporaryCategoryObs = new Obs();
 		temporaryCategoryObs.setConcept(temporaryCategoryConcept);
-		temporaryCategoryObs.setValueCoded(selectedTemporaryCategory);
+		temporaryCategoryObs.setValueCoded(selectedTemporaryCategoryCon);
 		encounter.addObs(temporaryCategoryObs);
+		}
 		
 		// save encounter
 		Context.getEncounterService().saveEncounter(encounter);
