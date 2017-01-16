@@ -208,16 +208,20 @@
 				}
 				else if(jQuery("#patCatOtherFree").is(':checked')){
 				var otherFree="Other Free";
-				jQuery("#printablePatientCategory").append("<span style='margin:5px;'>" + otherFree + "</span>");
+				var freeCategory=jQuery("#freeCategory option:checked").html();
+				jQuery("#printablePatientCategory").append("<span style='margin:5px;'>" + otherFree + " "+ freeCategory + "</span>");
 				document.getElementById("patCat").style.visibility = "visible";
 				}
 				
 				jQuery("#patCat1").hide();
 				
 				// Convert temporary category dropdown to printable format
+				if(jQuery("#temporaryCategoryCheckBox").is(':checked')){
+				var temporaryCategory=jQuery("#temporaryCategory option:checked").html();	
+				jQuery("#tempCat").show();
+				jQuery("#printableTemporaryCategories").append("<span style='margin:5px;'>" + temporaryCategory + "</span>");
+				}
 				jQuery("#temporaryCategories").hide();
-				var temporaryCategory=jQuery("#temporaryCategory option:checked");	
-				jQuery("#printableTemporaryCategories").html(temporaryCategory);
 				
 				// submit form and print		
 				if(!reprint){
