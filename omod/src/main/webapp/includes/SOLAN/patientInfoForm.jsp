@@ -5,21 +5,26 @@
 		jQuery("#identifier").html(MODEL.patientIdentifier);
 		jQuery("#age").html(MODEL.patientAge);
 		jQuery("#name").html(MODEL.patientName);
-		
-		
-
-
 		jQuery("#phoneNumber").html(MODEL.patientAttributes[16]);
 		jQuery("#gender").html(MODEL.patientGender);
 		jQuery("#datetime").html(MODEL.currentDateTime);
 		//ghanshyam 12-sept-2013 New Requirement #2684 Introducing a field at the time of registration to put Aadhar Card Number
+		if (!StringUtils.isBlank(MODEL.patientAttributes[20])){
 		jQuery("#aadharCardNo").html(MODEL.patientAttributes[20]);
+		}
+		else{
+		jQuery("#aadharCardRow").hide();
+		}
 		jQuery("#category").html(MODEL.patientAttributes[14]);
 		if("RSBY" == MODEL.patientAttributes[14]){
 		jQuery("#RSBY").html(MODEL.patientAttributes[11]);
 		}
 		if("BPL" == MODEL.patientAttributes[14]){
 		jQuery("#BPL").html(MODEL.patientAttributes[10]);
+		}
+		if("RSBY,BPL" == MODEL.patientAttributes[14]){
+		jQuery("#RSBY").html(MODEL.patientAttributes[11]);
+		//jQuery("#BPL").html(MODEL.patientAttributes[10]);
 		}
 		if(MODEL.patientAttributes[14]=='Other Free'){
 		jQuery("#freeCategory").html(MODEL.selectedOtherFree);
@@ -48,7 +53,6 @@
 		if(MODEL.reprint=="true"){
 			var opdWardId=MODEL.opdWardId;
 		jQuery("#opdWard").val(MODEL.observations[opdWardId]);
-			// 26/05/12: Marta, avoid error from empty string. Bug #219
 			
 			//ghanshyam 15-may-2013 Bug #1614 Reprint Slip: Solan, DDU, Mandi
 			jQuery("#opdWard").attr("disabled", "disabled");
@@ -57,14 +61,22 @@
 		    if(!StringUtils.isBlank(MODEL.tempCategoryId)){
 		    jQuery("#temporaryCategories").html(MODEL.tempCategoryConceptName);
 		    }
+		    else{
+			jQuery("#tempCat1").hide();
+			jQuery("#tempCat2").hide();
+			}
 				
 			jQuery("#printSlip").hide();
 			jQuery("#save").hide();
-			// Sagar Bele : Date: 23-1-2013 : Issue #791
-			jQuery("#tempCat").hide();
 		} else {
 			jQuery("#reprint").hide();
-			jQuery("#tempCat").hide();
+			if(!StringUtils.isBlank(MODEL.selectedTemporaryCategory)){
+		    jQuery("#temporaryCategories").html(MODEL.selectedTemporaryCategory);
+		    }
+		    else{
+			jQuery("#tempCat1").hide();
+			jQuery("#tempCat2").hide();
+			}
 		}
 		
 		/*
@@ -230,58 +242,45 @@
 <div id="patientInfoPrintArea">
 	<center>
 		<form id="patientInfoForm" method="POST">
-			<table border=0 width="600">
+			<table border=0 width="710" style="font-size: 14px;">
 				<tr>
 
 				</tr>
 				<tr>
 					<td colspan="1""><b>ID.No:</b></td>
-					<td colspan="5""><span id="identifier" /></td>
+					<td colspan="2""><span id="identifier" /></td>
+					<td colspan="3"><b>Age:</b></td>
+					<td colspan="4"><span id="age" /></td>
 				</tr>
 				<tr>
-					<td colspan="1"><b>Name:</b></td>
-					<td colspan="5"><span id="name" /></td>
-				</tr>
-				<tr>
-					<td colspan="1"><b>Age:</b></td>
-					<td colspan="5"><span id="age" /></td>
-				</tr>
-				<tr>
-					<td colspan="1"><b>Gender:</b></td>
-					<td colspan="5"><span id="gender" /></td>
-				</tr>
-				<tr>
-					<td colspan="1" valign="top"><b>Phone number:</b></td>
-					<td colspan="5"><span id="phoneNumber" /></td>
-				</tr>
-				<!-- 03/05/2012 Thai Chuong: Supported issue #182 -->
-				<tr id="opdWardLabel">
-					<td colspan="1"><b>OPD room to visit:</b></td>
-					<td colspan="5"><select id="opdWard" name="patient.opdWard">
-					</select></td>
+					<td colspan="1"><b>Patient Name:</b></td>
+					<td colspan="2"><span id="name" /></td>
+					<td colspan="3"><b>Gender:</b></td>
+					<td colspan="4"><span id="gender" /></td>
 				</tr>
 				<tr>
 					<td colspan="1"><b>Date/Time:</b></td>
-					<td colspan="5"><span id="datetime" /></td>
+					<td colspan="2"><span id="datetime" /></td>
+					<td colspan="3" id="tempCat1"><b>Temp Categ:</b></td>
+					<td colspan="4" id="tempCat2"><span id="temporaryCategories"></span></td>
 				</tr>
-				<!--  11/06/12: Kesavulu: added BPL/RSBY number on registration slip Bug #208 -->
+				<tr id="opdWardLabel">
+					<td colspan="1"><b>OPD room:</b></td>
+					<td colspan="3"><select id="opdWard" name="patient.opdWard">
+					</select></td>
+				</tr>
+				
 				<tr>
 					<td colspan="1"><b>Category:</b></td>
-					
 					<td colspan="2"><span id="category" /></td>
 					<td><span id="RSBY" /></td>
 					<td><span id="BPL" /></td>
 					<td><span id="freeCategory" /></td>
 				</tr>
 				
-				<tr>
-					<td colspan="1"><b>Aadhar Card Number:</b></td>
+				<tr id="aadharCardRow">
+					<td colspan="1"><b>Aadhar No:</b></td>
 					<td colspan="2"><span id="aadharCardNo"></span></td>
-				</tr>
-				
-				<tr>
-					<td colspan="1"><b>Temporary Categories:</b></td>
-					<td colspan="2"><span id="temporaryCategories"></span></td>
 				</tr>
 			</table>
 		</form>

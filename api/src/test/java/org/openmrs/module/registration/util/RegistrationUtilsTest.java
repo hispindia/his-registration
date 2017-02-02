@@ -20,7 +20,7 @@ public class RegistrationUtilsTest
     
     @Test
     public void estimateAgeTest() throws ParseException{
-        Assert.assertEquals( "~0 day ", RegistrationUtils.estimateAge( date ) );
+        Assert.assertEquals( "~0 D ", RegistrationUtils.estimateAge( date ) );
 }
     
    

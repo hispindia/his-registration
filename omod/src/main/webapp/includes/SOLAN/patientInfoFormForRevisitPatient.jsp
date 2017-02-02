@@ -3,15 +3,17 @@
 		jQuery("#patientId").val(MODEL.patientId);
 		jQuery("#revisit").val(MODEL.revisit);
 		jQuery("#identifier").html(MODEL.patientIdentifier);
+		jQuery("#identifierr").html(MODEL.patientIdentifier);
 		jQuery("#age").html(MODEL.patientAge);
+		jQuery("#agee").html(MODEL.patientAge);
 		jQuery("#name").html(MODEL.patientName);
+		jQuery("#namee").html(MODEL.patientName);
+		jQuery("#patientInfoPrintAreaa").hide();
 		
 		jQuery("#rsbyNumber").hide();
 		jQuery("#bplNumber").hide();
 		//document.getElementById("freeCategory").style.visibility = "hidden";
 		jQuery("#freeCategory").hide();
-		document.getElementById("patCat").style.visibility = "hidden";
-		document.getElementById("patCatt").style.visibility = "hidden";
 		jQuery("#temporaryCategory").hide();
 		
 		jQuery("#patCatGeneral").click(function() {
@@ -95,9 +97,17 @@
 
 		jQuery("#phoneNumber").html(MODEL.patientAttributes[16]);
 		jQuery("#gender").html(MODEL.patientGender);
+		jQuery("#genderr").html(MODEL.patientGender);
 		jQuery("#datetime").html(MODEL.currentDateTime);
+		jQuery("#datetimee").html(MODEL.currentDateTime);
 		//ghanshyam 12-sept-2013 New Requirement #2684 Introducing a field at the time of registration to put Aadhar Card Number
+		if (!StringUtils.isBlank(MODEL.patientAttributes[20])){
 		jQuery("#aadharCardNo").html(MODEL.patientAttributes[20]);
+		jQuery("#aadharCardNoo").html(MODEL.patientAttributes[20]);
+		}
+		else{
+		jQuery("#aadharCardRow").hide();
+		}
 		MODEL.OPDs = " ,Please select an OPD room to visit|" + MODEL.OPDs;
 		PAGE.fillOptions("#opdWard", {
 			data:MODEL.OPDs,
@@ -119,11 +129,16 @@
 		if(MODEL.reprint=="true"){
 			jQuery("#printSlip").hide();
 			jQuery("#save").hide();
-			// Sagar Bele : Date: 23-1-2013 : Issue #791
-			jQuery("#tempCat").hide();
+			var tempCategoryId=MODEL.tempCategoryId;
+		    if(!StringUtils.isBlank(MODEL.tempCategoryId)){
+		    jQuery("#temporaryCategories").html(MODEL.tempCategoryConceptName);
+		    }
+			else{
+			jQuery("#tempCat1").hide();
+			jQuery("#tempCat2").hide();
+			}
 		} else {
 			jQuery("#reprint").hide();
-			jQuery("#tempCat").hide();
 		}
 		
 		/*
@@ -160,7 +175,8 @@
 				
 				// Convert OPDWard dropdown to printable format
 				jQuery("#opdWard").hide();
-				jQuery("#opdWard").after("<span>" + jQuery("#opdWard option:checked").html() +  "</span>");		
+				jQuery("#opdWard").after("<span>" + jQuery("#opdWard option:checked").html() +  "</span>");	
+				jQuery("#opdWardd").after("<span>" + jQuery("#opdWard option:checked").html() +  "</span>");	
 				
 				if (jQuery("#rsby").is(':checked') && jQuery("#bpl").is(':checked')) {
 				var rsbyNo=document.getElementById('rsbyNumber').value;
@@ -169,48 +185,37 @@
 				var bpl="BPL"+" "+bplNo;
 				jQuery("#printablePatientCategory").append("<span style='margin:5px;'>" + rsby + "</span>");
 				jQuery("#printablePatientCategoryy").append("<span style='margin:5px;'>" + bpl + "</span>");
-				jQuery("#patCat").show();
-				jQuery("#patCatt").show();
-				document.getElementById("patCat").style.visibility = "visible";
-				document.getElementById("patCatt").style.visibility = "visible";
 				}
 				else if(jQuery("#rsby").is(':checked')){
 				var rsbyNo=document.getElementById('rsbyNumber').value;
 				var rsby="RSBY"+" "+rsbyNo;
 				jQuery("#printablePatientCategory").append("<span style='margin:5px;'>" + rsby + "</span>");
-				document.getElementById("patCat").style.visibility = "visible";
 				}
 				else if(jQuery("#bpl").is(':checked')){
 				var bplNo=document.getElementById('bplNumber').value;
 				var bpl="BPL"+" "+bplNo;
 				jQuery("#printablePatientCategory").append("<span style='margin:5px;'>" + bpl + "</span>");
-				document.getElementById("patCat").style.visibility = "visible";
 				}
 				else if(jQuery("#patCatGeneral").is(':checked')){
 				var general="General";
 				jQuery("#printablePatientCategory").append("<span style='margin:5px;'>" + general + "</span>");
-				document.getElementById("patCat").style.visibility = "visible";
 				}
 				else if(jQuery("#patCatStaff").is(':checked')){
 				var staff="Staff";
 				jQuery("#printablePatientCategory").append("<span style='margin:5px;'>" + staff + "</span>");
-				document.getElementById("patCat").style.visibility = "visible";
 				}
 				else if(jQuery("#patCatAntenatal").is(':checked')){
 				var antenatal="Antenatal";
 				jQuery("#printablePatientCategory").append("<span style='margin:5px;'>" + antenatal + "</span>");
-				document.getElementById("patCat").style.visibility = "visible";
 				}
 				else if(jQuery("#patCatChildLessThan1yr").is(':checked')){
 				var childLessThanOneYr="Child Less Than 1 Year";
 				jQuery("#printablePatientCategory").append("<span style='margin:5px;'>" + childLessThanOneYr + "</span>");
-				document.getElementById("patCat").style.visibility = "visible";
 				}
 				else if(jQuery("#patCatOtherFree").is(':checked')){
 				var otherFree="Other Free";
 				var freeCategory=jQuery("#freeCategory option:checked").html();
 				jQuery("#printablePatientCategory").append("<span style='margin:5px;'>" + otherFree + " "+ freeCategory + "</span>");
-				document.getElementById("patCat").style.visibility = "visible";
 				}
 				
 				jQuery("#patCat1").hide();
@@ -220,6 +225,9 @@
 				var temporaryCategory=jQuery("#temporaryCategory option:checked").html();	
 				jQuery("#tempCat").show();
 				jQuery("#printableTemporaryCategories").append("<span style='margin:5px;'>" + temporaryCategory + "</span>");
+				}
+				else{
+				jQuery("#temporaryCategoryRow").hide();
 				}
 				jQuery("#temporaryCategories").hide();
 				
@@ -244,7 +252,7 @@
 		
 		// Print the slip
 		print: function(){
-			jQuery("#patientInfoPrintArea").printArea({
+			jQuery("#patientInfoPrintAreaa").printArea({
 				mode : "popup",
 				popClose : true
 			});
@@ -639,7 +647,7 @@
 	};
 </script>
 <input id="printSlip" type="button" value="Print"
-	onClick="PAGE.submit(false);" /> <!-- Sept 22,2012 -- Sagar Bele -- Issue 387 --Change case of word Reprint-->
+	onClick="PAGE.submit(false);" />
 <input id="reprint" type="button" value="Reprint"
 	onClick="PAGE.submit(true);" />
 <!--
@@ -735,26 +743,48 @@
 						</table>
 					</td>	
 				</tr>
-				
-			    <tr id="patCat">
-					<td colspan="1" valign="top"><b>Patient Category:</b></td>
-					<td colspan="5">
-						<div id="printablePatientCategory"></div>
-					</td>
-				</tr>
-				<tr id="patCatt">
-					<td colspan="1" valign="top"></td>
-					<td colspan="5">
-						<div id="printablePatientCategoryy"></div>
-					</td>
-				</tr>
-				<tr id="tempCat">
-					<td colspan="1" valign="top"><b>Temporary Categories:</b></td>
-					<td colspan="5">
-						<div id="printableTemporaryCategories"></div>
-					</td>
-				</tr>
 			</table>
 		</form>
 	</center>
+</div>
+
+<div id="patientInfoPrintAreaa">
+<center>
+<table border=0 width="710" style="font-size: 14px;">
+                <tr>
+					<td colspan="1""><b>ID.No:</b></td>
+					<td colspan="2""><span id="identifierr" /></td>
+					<td colspan="3"><b>Age:</b></td>
+					<td colspan="4"><span id="agee" /></td>
+				</tr>
+				<tr>
+					<td colspan="1"><b>Patient Name:</b></td>
+					<td colspan="2"><span id="namee" /></td>
+					<td colspan="3"><b>Gender:</b></td>
+					<td colspan="4"><span id="genderr" /></td>
+				</tr>
+				<tr>
+					<td colspan="1"><b>Date/Time:</b></td>
+					<td colspan="2"><span id="datetimee" /></td>
+					<td colspan="3" id="tempCat1"><b>Temp Categ:</b></td>
+					<td colspan="4" id="tempCat2"><span id="printableTemporaryCategories"></span></td>
+				</tr>
+				<tr id="opdWardLabel">
+					<td colspan="1"><b>OPD room:</b></td>
+					<td colspan="3"><span id="opdWardd"></span>
+					</td>
+				</tr>
+				
+				<tr>
+					<td colspan="1"><b>Category:</b></td>
+					<td colspan="2"><span id="printablePatientCategory" /></td>
+					<td colspan="4"><span id="printablePatientCategoryy" /></td>
+				</tr>
+				
+				<tr id="aadharCardRow">
+					<td colspan="1"><b>Aadhar No:</b></td>
+					<td colspan="2"><span id="aadharCardNoo"></span></td>
+				</tr>
+</table>
+</center>
 </div>
