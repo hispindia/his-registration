@@ -275,7 +275,7 @@
 					<td colspan="2"><span id="category" /></td>
 					<td><span id="RSBY" /></td>
 					<td><span id="BPL" /></td>
-					<td><span id="freeCategory" /></td>
+					<td colspan="3"><span id="freeCategory" /></td>
 				</tr>
 				
 				<tr id="aadharCardRow">

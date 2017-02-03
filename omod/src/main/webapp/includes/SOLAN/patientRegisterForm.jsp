@@ -396,11 +396,24 @@ td.border {
 				}
 			}
 
+			if (jQuery("#patCatOtherFree").is(':checked')) {
+			if (StringUtils.isBlank(jQuery("#freeCategory").val())) {
+			alert("please select other free");
+			return false;
+			}
+			}
+			
+			if (jQuery("#temporaryCategoryCheckBox").is(':checked')) {
+		    if (StringUtils.isBlank(jQuery("#temporaryCategory").val())) {
+		    alert("please select Temporary Category");
+		    return false;
+		    }
+			}
+			
 			if (StringUtils.isBlank(jQuery("#opdWard").val())) {
 				alert("Please select OPD ward");
 				return false;
 			}
-			;
 
 			if (!VALIDATORS.validatePatientCategory()) {
 				return false;
