@@ -28,31 +28,37 @@
 		
 		/** Click to view patient info */
 		//ghanshyam,22-oct-2013,New Requirement #2940 Dealing with dead patient
-		visit: function(patientId,deadInfo){
+		visit: function(patientId,deadInfo,admittedInfo){
 		if(deadInfo=="true"){
-		alert("This Patient is Dead");
-		return false;
-		}		
-			//window.location.href = openmrsContextPath + "/module/registration/showPatientInfo.form?patientId=" + patientId;
+        alert("This Patient is Dead");
+        return false;
+        }
+        if(admittedInfo=="true"){
+        alert("This Patient is admitted");
+        return false;
+        }							
+			window.location.href = openmrsContextPath + "/module/registration/showPatientInfoForRevisitPatient.form?patientId=" + patientId + "&revisit=true";
 		},
 		
 		/** Edit a patient */
 		editPatient: function(patientId,deadInfo){
 		if(deadInfo=="true"){
-		alert("This Patient is Dead");
-		return false;
-		}
-			//window.location.href = openmrsContextPath + "/module/registration/editPatient.form?patientId=" + patientId;
+        alert("This Patient is Dead");
+        return false;
+        }		
+			window.location.href = openmrsContextPath + "/module/registration/editPatient.form?patientId=" + patientId;
 		},
 	
 		reprint: function(patientId,deadInfo){
 		if(deadInfo=="true"){
-		alert("This Patient is Dead");
-		return false;
+        alert("This Patient is Dead");
+        return false;
+        }		
+			window.location.href = openmrsContextPath + "/module/registration/showPatientInfo.form?patientId=" + patientId + "&reprint=true";
 		}
-			//window.location.href = openmrsContextPath + "/module/registration/showPatientInfo.form?patientId=" + patientId + "&reprint=true";
-		}
-			};
+	};
+	jQuery(document).ready(function(){
+	// hover rows
 	jQuery(".patientSearchRow").hover(
 			function(event){					
 				obj = event.target;
@@ -159,23 +165,23 @@
 	                <openmrs:formatDate date="${lastVisitTime[patient.patientId]}"/>              	
                 </td>
                <openmrs:hasPrivilege privilege="Edit Patients">
-               	<td align="center">
+               	<td align="center" onclick="PATIENTSEARCHRESULT.visit(${patient.patientId},'${patient.dead}','${patient.voided}');">
                	<div> 
-					<img type="image" title="Revisit" src="../../moduleResources/registration/revisit.gif" onclick="javascript:window.location.href=openmrsContextPath+'/module/registration/showPatientInfoForRevisitPatient.form?patientId=${patient.patientId}'"/>     
+					<img type="image" title="Revisit" src="../../moduleResources/registration/revisit.gif">     
 				</div>
 				</td>
-               <td align="center"> 
+               <td align="center" onclick="PATIENTSEARCHRESULT.editPatient(${patient.patientId},'${patient.dead}');"> 
                <div style="float:center;"> 
                <form>
-			   <img type="image" title="Edit"  src="../../moduleResources/registration/edit.gif"  onclick="javascript:window.location.href=openmrsContextPath +'/module/registration/editPatient.form?patientId=${patient.patientId}'"/>
+			   <img type="image" title="Edit"  src="../../moduleResources/registration/edit.gif"/>
 							<!--<img src="${pageContext.request.contextPath}/Downloads/edit.gif"/>-->
 				</form>
 				</div>
 				</td>
-				 <td align="center">
+				 <td align="center" onclick="PATIENTSEARCHRESULT.reprint(${patient.patientId},'${patient.dead}');">
 						<div> 
 						<form>
-						<img type="image" title="Reprint" src="../../moduleResources/registration/print.gif"  onclick="javascript:window.location.href=openmrsContextPath+'/module/registration/showPatientInfo.form?patientId=${patient.patientId}'+'&reprint=true'" />
+						<img type="image" title="Reprint" src="../../moduleResources/registration/print.gif"/>
 				          </form>     
 					</div>
 					</td>
