@@ -780,7 +780,7 @@ border-style: solid;
 			checkPatientAgeForChildLessThan1yr : function() { 
 				// check whether patient age less than one year
 				estAge = jQuery("#estimatedAge").html();				
-				var digitPattern = /year/;
+				var digitPattern = /Y/;
 				var age = digitPattern.exec(estAge);
 				if (age) {
 					if (jQuery("#patCatChildLessThan1yr").is(':checked')) {
