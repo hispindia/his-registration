@@ -1041,7 +1041,7 @@ function checkAadharCardNumberr() {
 			</td>
 			<%-- Sagar Bele,Ghanshyam Kumar - 12-12-2012 - Bug #467 [Registration]Duplicate Identifier --%>
 			<td class="cell"><b>ID Number<label style="color:red">*</label></b> <input readonly
-						name="patient.identifier" style="border: none;" />
+						name="patient.identifier" size="23" style="border: none;" />
 			
 			</td>
 

@@ -978,7 +978,7 @@ function checkAadharCardNumberrForEdit() {
 			<td valign="top" class="cell"><b>Name *</b></td>
 			<td class="cell"><input id="patientName" name="patient.name"
 				style="width: 300px;" /></td>
-				<td class="cell"><b>ID Number *  &nbsp;&nbsp; <input name="patient.identifier" style="border: none;" /></b></td>
+				<td class="cell"><b>ID Number *  &nbsp;&nbsp; <input name="patient.identifier" size="23" style="border: none;" /></b></td>
 		</tr>
 		<tr>
 			<td class="cell"><b>Demographics *</b></td>
