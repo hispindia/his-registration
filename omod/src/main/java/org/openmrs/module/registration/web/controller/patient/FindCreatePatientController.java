@@ -243,8 +243,10 @@ public class FindCreatePatientController {
 		
 		 //ghanshyam 03-sept-2013 Bug #394 [Blood bank]queue
 		 String socn=new String(selectedOPDConcept.getName().toString());
-		 String substringofsocn=socn.substring(0,15);
+		 //String substringofsocn=socn.substring(0,15);
+		 RegistrationWebUtils.sendPatientToOPDQueue(patient, selectedOPDConcept, false);
 		
+		 /*
 		 if (!substringofsocn.equalsIgnoreCase(bloodBankWardName)) {
 			RegistrationWebUtils.sendPatientToOPDQueue(patient, selectedOPDConcept, false);
 		} else {
@@ -263,7 +265,7 @@ public class FindCreatePatientController {
 			order.setOrderType(orderType);
 			order.setEncounter(encounter);
 			encounter.addOrder(order);
-		}
+		}*/
 		
 		/*
 		 * REFERRAL INFORMATION
