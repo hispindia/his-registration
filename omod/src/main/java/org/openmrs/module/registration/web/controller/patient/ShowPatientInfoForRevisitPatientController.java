@@ -203,7 +203,7 @@ public class ShowPatientInfoForRevisitPatientController {
 			 //ghanshyam 03-sept-2013 Bug #394 [Blood bank]queue
 			 String socn=new String(selectedOPDConcept.getName().toString());
 			 //String substringofsocn=socn.substring(0,15);
-			 RegistrationWebUtils.sendPatientToOPDQueue(patient, selectedOPDConcept, false);
+			 RegistrationWebUtils.sendPatientToOPDQueue(patient, selectedOPDConcept, true);
 			
 			 /*
 			 if (!substringofsocn.equalsIgnoreCase(bloodBankWardName)) {
