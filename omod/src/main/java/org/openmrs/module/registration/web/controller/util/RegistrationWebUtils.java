@@ -132,29 +132,29 @@ public class RegistrationWebUtils {
 	 * @throws JaxenException
 	 */
 	public static void getAddressData(Model model) throws MalformedURLException, DocumentException, JaxenException {
-		File addressFile = new File(OpenmrsUtil.getApplicationDataDirectory() + "addresshierarchy.xml");
+		File addressFile = new File(OpenmrsUtil.getApplicationDataDirectory() + "tvhaddresshierarchy.xml");
 		if (addressFile.exists()) {
 			SAXReader reader = new SAXReader();
 			Document document = reader.read(addressFile.toURI().toURL());
-			XPath distSelector = new Dom4jXPath("//state/district");
+			XPath townSelector = new Dom4jXPath("//town");
 			@SuppressWarnings("rawtypes")
-			List distList = distSelector.selectNodes(document);
-			String[] distArr = new String[distList.size()];
-			String[] tehsilArr = new String[distList.size()];
-			if (distList.size() > 0) {
-				for (int i = 0; i < distList.size(); i++) {
-					distArr[i] = ((Element) distList.get(i)).attributeValue("name");
+			List townList = townSelector.selectNodes(document);
+			String[] townArr = new String[townList.size()];
+			String[] settlementArr = new String[townList.size()];
+			if (townList.size() > 0) {
+				for (int i = 0; i < townList.size(); i++) {
+					townArr[i] = ((Element) townList.get(i)).attributeValue("name");
 					@SuppressWarnings("rawtypes")
-					List tehsilList = ((Element) distList.get(i)).elements("tehsil");
-					tehsilArr[i] = ((Element) tehsilList.get(0)).attributeValue("name") + ",";
-					for (int j = 1; j < (tehsilList.size() - 1); j++) {
-						tehsilArr[i] += ((Element) tehsilList.get(j)).attributeValue("name") + ",";
+					List settlementList = ((Element) townList.get(i)).elements("settlement");
+					settlementArr[i] = ((Element) settlementList.get(0)).attributeValue("name") + ",";
+					for (int j = 1; j < (settlementList.size() - 1); j++) {
+						settlementArr[i] += ((Element) settlementList.get(j)).attributeValue("name") + ",";
 					}
-					tehsilArr[i] += ((Element) tehsilList.get(tehsilList.size() - 1)).attributeValue("name");
+					settlementArr[i] += ((Element) settlementList.get(settlementList.size() - 1)).attributeValue("name");
 				}
 			}
-			model.addAttribute("districts", distArr);
-			model.addAttribute("tehsils", tehsilArr);
+			model.addAttribute("towns", townArr);
+			model.addAttribute("settlements", settlementArr);
 		}
 	}
 	

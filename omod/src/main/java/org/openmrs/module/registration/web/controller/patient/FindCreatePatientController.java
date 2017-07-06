@@ -23,6 +23,8 @@ package org.openmrs.module.registration.web.controller.patient;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -66,13 +68,25 @@ public class FindCreatePatientController {
 	@RequestMapping(method = RequestMethod.GET)
 	public String showForm(HttpServletRequest request, Model model) throws JaxenException, DocumentException, IOException {
 		model.addAttribute("patientIdentifier", RegistrationUtils.getNewIdentifier());
+		model.addAttribute("occupations", RegistrationWebUtils.getSubConcepts(RegistrationConstants.CONCEPT_NAME_OCCUPATION));
+		model.addAttribute("bloodGroups", RegistrationWebUtils.getSubConcepts(RegistrationConstants.CONCEPT_NAME_BLOOD_GROUP));
+		model.addAttribute("nationalities", RegistrationWebUtils.getSubConcepts(RegistrationConstants.CONCEPT_NAME_NATIONALITY));
 		model.addAttribute("OPDs", RegistrationWebUtils.getSubConcepts(RegistrationConstants.CONCEPT_NAME_OPD_WARD));
 		model.addAttribute("OTHERFREE", RegistrationWebUtils.getSubConcepts(RegistrationConstants.CONCEPT_NAME_OTHER_FREE));
-		model.addAttribute("TEMPORARYCATEGORY", RegistrationWebUtils.getSubConcepts(RegistrationConstants.CONCEPT_NAME_TEMPORARY_CATEGORY));
+		model.addAttribute("TEMPORARYCAT", RegistrationWebUtils.getSubConcepts(RegistrationConstants.CONCEPT_NAME_TEMPORARY_CATEGORY));
 		model.addAttribute("referralHospitals",
 		    RegistrationWebUtils.getSubConcepts(RegistrationConstants.CONCEPT_NAME_PATIENT_REFERRED_FROM));
 		model.addAttribute("referralReasons",
 		    RegistrationWebUtils.getSubConcepts(RegistrationConstants.CONCEPT_NAME_REASON_FOR_REFERRAL));
+		model.addAttribute("paidCategories", RegistrationWebUtils.getSubConcepts(RegistrationConstants.CONCEPT_NAME_PAID_CATEGORY));
+		model.addAttribute("programs", RegistrationWebUtils.getSubConcepts(RegistrationConstants.CONCEPT_NAME_PROGRAMS));
+		String registrationFee=GlobalPropertyUtil.getString("registration.registrationFee", "0");
+		List<String> regFee=new LinkedList<String>();
+		regFee.add("Select");
+		regFee.add(registrationFee);
+		regFee.add("Free");
+		regFee.add("50% Discount");
+		model.addAttribute("regFees",regFee);
 		RegistrationWebUtils.getAddressData(model);
 		return "/module/registration/patient/findCreatePatient";
 	}
@@ -140,9 +154,10 @@ public class FindCreatePatientController {
 		Patient patient = new Patient();
 		
 		// get person name
-		if (!StringUtils.isBlank(parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_NAME))) {
+		if (!StringUtils.isBlank(parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_FIRSTNAME))
+				&& !StringUtils.isBlank(parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_LASTNAME))) {
 			PersonName personName = RegistrationUtils.getPersonName(null,
-			    parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_NAME));
+			    parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_FIRSTNAME),parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_LASTNAME));
 			patient.addName(personName);
 		}
 		
@@ -168,11 +183,11 @@ public class FindCreatePatientController {
 		}
 		
 		// get address
-		if (!StringUtils.isBlank(parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_ADDRESS_DISTRICT))) {
+		if (!StringUtils.isBlank(parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_ADDRESS_TOWN))) {
 			patient.addAddress(RegistrationUtils.getPersonAddress(null,
 			    parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_ADDRESS_POSTALADDRESS),
-			    parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_ADDRESS_DISTRICT),
-			    parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_ADDRESS_TEHSIL)));
+			    parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_ADDRESS_TOWN),
+			    parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_ADDRESS_SETTLEMENT)));
 		}
 		
 		// get custom person attribute

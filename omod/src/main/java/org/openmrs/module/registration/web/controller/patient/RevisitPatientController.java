@@ -46,9 +46,10 @@ private Patient generatePatient(Map<String, String> parameters) throws Exception
 		Patient patient = new Patient();
 		
 		// get person name
-		if (!StringUtils.isBlank(parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_NAME))) {
+		if (!StringUtils.isBlank(parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_FIRSTNAME))
+				&& !StringUtils.isBlank(parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_LASTNAME))) {
 			PersonName personName = RegistrationUtils.getPersonName(null,
-			    parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_NAME));
+			    parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_FIRSTNAME),parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_LASTNAME));
 			patient.addName(personName);
 		}
 		
@@ -72,11 +73,11 @@ private Patient generatePatient(Map<String, String> parameters) throws Exception
 		if (!StringUtils.isBlank(parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_GENDER))) {
 			patient.setGender(parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_GENDER));
 		}
-		if (!StringUtils.isBlank(parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_ADDRESS_DISTRICT))) {
+		if (!StringUtils.isBlank(parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_ADDRESS_TOWN))) {
 			patient.addAddress(RegistrationUtils.getPersonAddress(null,
 			    parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_ADDRESS_POSTALADDRESS),
-			    parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_ADDRESS_DISTRICT),
-			    parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_ADDRESS_TEHSIL)));
+			    parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_ADDRESS_TOWN),
+			    parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_ADDRESS_SETTLEMENT)));
 		}
 			
 		

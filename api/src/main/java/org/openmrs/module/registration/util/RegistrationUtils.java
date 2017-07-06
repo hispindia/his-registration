@@ -79,34 +79,12 @@ public class RegistrationUtils {
 	 * 
 	 * @return
 	 */
-	public static PersonName getPersonName(PersonName personName, String name) {
+	public static PersonName getPersonName(PersonName personName, String firstName, String lastName) {
 
 		if (personName == null)
 			personName = new PersonName();
-
-		personName.setGivenName("");
-		personName.setMiddleName("");
-		personName.setFamilyName("");
-
-		@SuppressWarnings("deprecation")
-		String fullname = StringUtils.capitaliseAllWords(name).trim();
-		String[] parts = fullname.split(" ");
-		if (parts.length == 1) {
-			personName.setGivenName(parts[0]);
-		} else if (parts.length == 2) {
-			personName.setGivenName(parts[0]);
-			personName.setFamilyName(parts[1]);
-		} else if (parts.length > 2) {
-			personName.setGivenName(parts[0]);
-			personName.setMiddleName(parts[1]);
-
-			String familyName = "";
-			for (int i = 2; i < parts.length; i++) {
-				familyName += parts[i] + " ";
-			}
-			familyName = familyName.trim();
-			personName.setFamilyName(familyName);
-		}
+		personName.setGivenName(firstName);
+		personName.setFamilyName(lastName);
 		personName.setPreferred(true);
 		return personName;
 	}

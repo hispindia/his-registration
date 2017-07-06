@@ -30,29 +30,38 @@
 	hospitalName = "${hospitalName}";
 
 	// Districts
-	var _districts = new Array();
-	<c:forEach var="district" items="${districts}" varStatus="status">
-		_districts[${status.index}] = "${district}";
+	var _towns = new Array();
+	<c:forEach var="town" items="${towns}" varStatus="status">
+		_towns[${status.index}] = "${town}";
 	</c:forEach>
 	
-	// Tehsils
-	var _tehsils = new Array();
-	<c:forEach var="tehsil" items="${tehsils}" varStatus="status">
-		_tehsils[${status.index}] = "${tehsil}";
-	</c:forEach>	
+	var _settlements = new Array();
+	<c:forEach var="settlement" items="${settlements}" varStatus="status">
+		_settlements[${status.index}] = "${settlement}";
+	</c:forEach>
+	
+	var _regFees = new Array();
+	<c:forEach var="regFee" items="${regFees}" varStatus="status">
+		_regFees[${status.index}] = "${regFee}";
+	</c:forEach>
 	
 	/**
 	 ** MODEL FROM CONTROLLER
 	 **/
 	MODEL = {
 		patientIdentifier: "${patientIdentifier}",
-		districts: _districts,
-		tehsils: _tehsils,
+		towns: _towns,
+		settlements: _settlements,
+		occupations: "${occupations}",
+		bloodGroups: "${bloodGroups}",
+		nationalities: "${nationalities}",
+		paidCategories: "${paidCategories}",
+		programs: "${programs}",
+		regFees: _regFees,
 		OPDs: "${OPDs}",
-		OTHERFREE: "${OTHERFREE}",
-		TEMPORARYCATEGORY: "${TEMPORARYCATEGORY}",
-		referralHospitals: "${referralHospitals}",
-		referralReasons: "${referralReasons}"
+		referredFrom: "${referralHospitals}",
+		referralType: "${referralReasons}",
+		TEMPORARYCAT: "${TEMPORARYCAT}",
 	}
 </script>
 <jsp:include page="../includes/${hospitalName}/patientRegisterForm.jsp"/>

@@ -1,16 +1,75 @@
+<%--
+ *  Copyright 2014 Society for Health Information Systems Programmes, India (HISP India)
+ *
+ *  This file is part of Registration module.
+ *
+ *  Registration module is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+
+ *  Registration module is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with Registration module.  If not, see <http://www.gnu.org/licenses/>.
+ *  
+ *  
+--%>
+
 <style>
 .cell {
-	border-top: 1px solid lightgrey;
+	border-top: 2px solid black;
 	padding: 20px;
 }
 
+
 td.border {
 	border-width: 1px;
-	border-right: 0px;
+	border-right: 1px;
+	border-left: 1px;
+	border-top: 1px;
 	border-bottom: 1px;
-	border-color: lightgrey;
+	border-color: black	;
 	border-style: solid;
 }
+
+.floatLeft {
+	width: 47%;
+	float: left;
+}
+
+.floatRight {
+	width: 52%;
+	float: right;
+}
+
+.floatBottom {
+	position : absolute;
+    bottom : 0;
+    height : 100px;
+    margin-top : 100px;
+	right : 50%;
+}
+
+.container {
+	overflow: hidden;
+}
+
+input, select, textarea {
+
+	border-width: 1px;
+	border-right: 1px;
+	border-left: 1px;
+	border-top: 1px;
+	border-bottom: 1px;
+	border-color: black;
+	border-style: solid;
+
+}
+
 </style>
 <script type="text/javascript">
 	jQuery(document).ready(
@@ -23,46 +82,90 @@ td.border {
 					changeMonth : true,
 					changeYear : true
 				});
+				jQuery('#movedToAreaDate').datepicker({
+					yearRange : 'c-100:c+100',
+					dateFormat : 'dd/mm/yy',
+					changeMonth : true,
+					changeYear : true
+				});
+				
+				MODEL.occupations = " , |"
+						+ MODEL.occupations;
+				PAGE.fillOptions("#occupation", {
+					data : MODEL.occupations,
+					delimiter : ",",
+					optionDelimiter : "|"
+				});
+				
 				jQuery('#birthdate').change(PAGE.checkBirthDate);
-				PAGE.fillOptions("#districts", {
-					data : MODEL.districts
+				MODEL.bloodGroups = " , |"
+						+ MODEL.bloodGroups;
+				PAGE.fillOptions("#bloodGroup", {
+					data : MODEL.bloodGroups,
+					delimiter : ",",
+					optionDelimiter : "|"
 				});
-				PAGE.fillOptions("#tehsils", {
-					data : MODEL.tehsils[0].split(',')
+				MODEL.nationalities = " , |"
+						+ MODEL.nationalities;
+				PAGE.fillOptions("#patientNation", {
+					data : MODEL.nationalities,
+					delimiter : ",",
+					optionDelimiter : "|"
 				});
-
-				MODEL.OPDs = " ,Please select an OPD room to visit|"
+				PAGE.fillOptions("#towns", {
+					data : MODEL.towns
+				});
+				PAGE.fillOptions("#settlements", {
+					data : MODEL.settlements[0].split(',')
+				});
+		  
+				MODEL.paidCategories = " , |"
+						+ MODEL.paidCategories;
+				PAGE.fillOptions("#paidCategory", {
+					data : MODEL.paidCategories,
+					delimiter : ",",
+					optionDelimiter : "|"
+				});
+				
+				MODEL.programs = " , |"
+						+ MODEL.programs;
+				PAGE.fillOptions("#program", {
+					data : MODEL.programs,
+					delimiter : ",",
+					optionDelimiter : "|"
+				});
+				
+				PAGE.fillOptions("#regFee", {
+					data : MODEL.regFees
+				});
+		
+				MODEL.OPDs = " , |"
 						+ MODEL.OPDs;
 				PAGE.fillOptions("#opdWard", {
 					data : MODEL.OPDs,
 					delimiter : ",",
 					optionDelimiter : "|"
 				});
-				MODEL.OTHERFREE = " ,Please select other free category|"
-						+ MODEL.OTHERFREE;
-				PAGE.fillOptions("#freeCategory", {
-					data : MODEL.OTHERFREE,
+				
+				MODEL.TEMPORARYCAT = " , |"
+						+ MODEL.TEMPORARYCAT;
+				PAGE.fillOptions("#mlc", {
+					data : MODEL.TEMPORARYCAT,
 					delimiter : ",",
 					optionDelimiter : "|"
 				});
-				MODEL.TEMPORARYCATEGORY = " ,select temporary category|"
-						+ MODEL.TEMPORARYCATEGORY;
-				PAGE.fillOptions("#temporaryCategory", {
-					data : MODEL.TEMPORARYCATEGORY,
+							
+				MODEL.referredFrom = " ,Referred From|"
+						+ MODEL.referredFrom;
+				PAGE.fillOptions("#referredFrom", {
+					data : MODEL.referredFrom,
 					delimiter : ",",
 					optionDelimiter : "|"
 				});
-				MODEL.referralHospitals = " , Select referral Hospitals|"
-					+ MODEL.referralHospitals;
-				PAGE.fillOptions("#referralHospitals", {
-					data : MODEL.referralHospitals,
-					delimiter : ",",
-					optionDelimiter : "|"
-				});
-				MODEL.referralReasons = " , Select referral Reasons|"
-					+ MODEL.referralReasons;
-				PAGE.fillOptions("#referralReasons	", {
-					data : MODEL.referralReasons,
+				MODEL.referralType = " ,Referral Type|"
+						+ MODEL.referralType;
+				PAGE.fillOptions("#referralType	", {
+					data : MODEL.referralType,
 					delimiter : ",",
 					optionDelimiter : "|"
 				});
@@ -78,36 +181,47 @@ td.border {
 							beforeNewSearch : PAGE.searchPatientBefore
 						});
 
-				// hide bpl and rsby number
-				jQuery("#bplField").hide();
-				jQuery("#rsbyField").hide();
-				jQuery("#patCatGeneral").attr("checked", "checked");
-				//17/05/2012 Marta: hide free category description field #188
-				jQuery("#freeField").hide();
-				//document.getElementById("freeCategory").style.visibility = "hidden";
-				jQuery("#temporaryCategory").hide();
 
+		
+				jQuery("#paidCategoryField").hide();
+                jQuery("#programField").hide();
+				jQuery("#mlc").hide();
+				jQuery("#referredFromColumn").hide();
+				jQuery("#referralTypeRow").hide();
+				jQuery("#referralDescriptionRow").hide();
+				jQuery("#opdWardField").hide();
+				
 				// binding
-				jQuery("#bpl").click(function() {
-					VALIDATORS.bplCheck();
+				jQuery("#paidCategoryChecked").click(function() {
+					VALIDATORS.payingCheck();
 				});
-				jQuery("#rsby").click(function() {
-					VALIDATORS.rsbyCheck();
+				jQuery("#programChecked").click(function() {
+					VALIDATORS.programCheck();
 				});
-				jQuery("#patCatStaff").click(function() {
-					VALIDATORS.staffCheck();
+
+				jQuery("#mlcCaseYes").click(function() {
+					VALIDATORS.mlcYesCheck();
 				});
-				//17/05/2012 Marta: Delete Poor and Governement Employee Categories #188
-				/*jQuery("#patCatPoor").click(function() {
-					VALIDATORS.poorCheck();
-				});*/
-				jQuery("#patCatGeneral").click(function() {
-					VALIDATORS.generalCheck();
+				
+				jQuery("#mlcCaseNo").click(function() {
+					VALIDATORS.mlcNoCheck();
 				});
-				//17/05/2012 Marta: Delete Poor and Governement Employee Categories #188
-				/*jQuery("#patCatGovEmp").click(function() {
-					VALIDATORS.governmentCheck();
-				});*/
+				
+				jQuery("#referredYes").click(function() {
+					VALIDATORS.referredYesCheck();
+				});
+				
+				jQuery("#referredNo").click(function() {
+					VALIDATORS.referredNoCheck();
+				});
+				
+				jQuery("#opdRoom").click(function() {
+					VALIDATORS.opdRoomCheck();
+				});
+
+				
+				// hide free reason
+				
 				jQuery("#calendarButton").click(function() {
 					jQuery("#calendar").datepicker("show");
 				});
@@ -118,31 +232,9 @@ td.border {
 				jQuery("#birthdate").click(function() {
 					jQuery("#birthdate").select();
 				});
-				// 26/5/2012 Marta: Changing categories to match with requirements on #240 
-				/*jQuery("#patCatSeniorCitizen").click(function() {
-					VALIDATORS.seniorCitizenCheck();
-				});*/
 				jQuery("#patientGender").change(function() {
 					VALIDATORS.genderCheck();
 				});
-				// 11/05/2012: Thai Chuong added for Solan new categories validation - Bug #188
-				jQuery("#patCatAntenatal").click(function() {
-					VALIDATORS.patCatAntenatalCheck();
-				});
-				jQuery("#patCatChildLessThan1yr").click(function() {
-					VALIDATORS.patCatChildLessThan1yrCheck();
-				});
-				jQuery("#patCatOtherFree").click(function() {
-					VALIDATORS.patCatOtherFreeCheck();
-				});
-				jQuery("#temporaryCategoryCheckBox").click(function() {
-					VALIDATORS.temporaryCategory();
-				});
-				
-				//ghanshyam 07-sept-2013 Support #2686 GUI Changes (spellings/ fonts/ alignments)
-				jQuery("#bh").hide();
-				//ghanshyam 12-sept-2013 New Requirement #2684 Introducing a field at the time of registration to put Aadhar Card Number
-				jQuery("#aadharCardReason").hide();
 
 			});
 
@@ -154,16 +246,8 @@ td.border {
 		submit : function() {
 
 			// Capitalize fullname and relative name
-			fullNameInCapital = StringUtils.capitalize(jQuery(
-					"#nameOrgivenNameOrmiddleNameOrfamilyNameOrIdentifier", jQuery("#patientSearchForm")).val());
-			jQuery("#patientName", jQuery("#patientRegistrationForm")).val(
-					fullNameInCapital);
-			jQuery("#nameOrgivenNameOrmiddleNameOrfamilyNameOrIdentifier", jQuery("#patientSearchForm")).val(
-					fullNameInCapital);
-			jQuery("#patientName", jQuery("#patientRegistrationForm")).val(
-					fullNameInCapital);
-			relativeNameInCaptital = StringUtils.capitalize(jQuery(
-					"#patientRelativeName").val());
+			relativeNameInCaptital = StringUtils.capitalize(jQuery("#patientRelativeName").val());
+			alert(relativeNameInCaptital);
 			jQuery("#patientRelativeName").val(relativeNameInCaptital);
 
 			// Validate and submit
@@ -193,22 +277,54 @@ td.border {
 			}
 		},
 		
-		//ghanshyam 12-sept-2013 New Requirement #2684 Introducing a field at the time of registration to put Aadhar Card Number
-		checkAadharCardNumber : function() {
-		        aadharCardNo=jQuery("#aadharCardNo").val();
-				jQuery.ajax({
-				type : "GET",
-				url : getContextPath() + "/module/registration/validateaadharcardnoreg.form",
-				data : ({
-					aadharCardNo			: aadharCardNo
+		checkNationalID : function() {	
+		nationalId=jQuery("#patientNationalId").val();
+		jQuery.ajax({
+		type : "GET",
+		url : getContextPath() + "/module/registration/validatenationalidandpassportnumber.form",
+		data : ({
+			nationalId			: nationalId
 				}),
-				success : function(data) {	
-				    jQuery("#validationMessage").html(data);	
-					 
-		           } 
-               });
-			},	
-
+		success : function(data) {	
+		jQuery("#divForNationalId").html(data);
+		validateNationalID();
+		   } 
+         });
+	   },
+	   
+	    checkPassportNumber : function() {	
+		passportNumber=jQuery("#passportNumber").val();
+		jQuery.ajax({
+		type : "GET",
+		url : getContextPath() + "/module/registration/validatenationalidandpassportnumber.form",
+		data : ({
+			passportNumber			: passportNumber
+				}),
+		success : function(data) {	
+		jQuery("#divForpassportNumber").html(data);
+		validatePassportNumber();
+		   } 
+         });
+	   },
+	   
+	   //This function is not used.left for future use if required
+	   checkNationalIDAndPassportNumber : function() {	
+		nationalId=jQuery("#patientNationalId").val();
+		passportNumber=jQuery("#passportNumber").val();
+		jQuery.ajax({
+		type : "GET",
+		url : getContextPath() + "/module/registration/validatenationalidandpassportnumber.form",
+		data : ({
+			nationalId			: nationalId,
+			passportNumber		: passportNumber
+				}),
+		success : function(data) {	
+		jQuery("#validationMessage").html(data);
+		validateNationalIDAndPassportNumber();
+		   } 
+         });
+	   },
+		
 		/** VALIDATE BIRTHDATE */
 		checkBirthDate : function() {
 			jQuery
@@ -223,22 +339,17 @@ td.border {
 						success : function(json) {
 							if (json.error == undefined) {
 								if (json.estimated == "true") {
-									jQuery("#birthdateEstimated").val("true");
-									//ghanshyam 07-sept-2013 Support #2686 GUI Changes (spellings/ fonts/ alignments)
-									jQuery("#birthdateh").hide();
-									jQuery("#birthdate").hide();
-									jQuery("#calendarButton").hide();
-									jQuery("#bh").show();
+									jQuery("#birthdateEstimated").val("true")
 								} else {
 									jQuery("#birthdateEstimated").val("false");
 								}
-
 								jQuery("#estimatedAge").html(json.age);
+								jQuery("#estimatedAgeInYear").val(json.ageInYear);
 								jQuery("#birthdate").val(json.birthdate);
 								jQuery("#calendar").val(json.birthdate);
+
 							} else {
 								alert(json.error);
-								// 09/05/12: Added by Thai Chuong to avoid commiting wrong birthdates - Bug #137
 								jQuery("#birthdate").val("");
 							}
 						},
@@ -294,20 +405,20 @@ td.border {
 		},
 
 		/** CHANGE DISTRICT */
-		changeDistrict : function() {
+		changeTown : function() {
 
-			// get the list of tehsils
-			tehsilList = "";
-			selectedDistrict = jQuery("#districts option:checked").val();
-			jQuery.each(MODEL.districts, function(index, value) {
-				if (value == selectedDistrict) {
-					tehsilList = MODEL.tehsils[index];
+			// get the list of upazilas
+			settlementList = "";
+			selectedTown = jQuery("#towns option:checked").val();
+			jQuery.each(MODEL.towns, function(index, value) {
+				if (value == selectedTown) {
+					settlementList = MODEL.settlements[index];
 				}
 			});
 
-			// fill tehsils into tehsil dropdown
-			this.fillOptions("#tehsils", {
-				data : tehsilList.split(",")
+			// fill upazilas into upazila dropdown
+			this.fillOptions("#settlements", {
+				data : settlementList.split(",")
 			});
 		},
 
@@ -325,9 +436,9 @@ td.border {
 		searchPatientSuccess : function(data) {
 			jQuery("#numberOfFoundPatients")
 					.html(
-							"Similar patients: "
+							"Similar Patients: "
 									+ data.totalRow
-									+ "(<a href='javascript:PAGE.togglePatientResult();'>show/hide</a>)");
+									+ "(<a href='javascript:PAGE.togglePatientResult();'>Show/Hide</a>)");
 		},
 
 		/** CALLBACK WHEN BEFORE SEARCHING PATIENT */
@@ -345,130 +456,136 @@ td.border {
 
 		/** VALIDATE FORM */
 		validateRegisterForm : function() {
-
-			if (StringUtils.isBlank(jQuery("#patientName").val())) {
-				alert("Please enter patient name");
+		
+			if (StringUtils.isBlank(jQuery("#firstName").val())) {
+				alert("Please enter the first name of the patient");
 				return false;
-			} // 09/05/2012: Thai Chuong, Added pattern checking to avoid special characters in patient name - Bug #135
-			else {
-				value = jQuery("#patientName").val();
-				value = value.toUpperCase();
-				pattern = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 -";
-				for (i = 0; i < value.length; i++) {
-					if (pattern.indexOf(value[i]) < 0) {
-						alert("Please enter patient name/identifier in correct format.");
-						return false;
-					}
-				}
 			}
-
-			if (StringUtils.isBlank(jQuery("#patientRelativeName").val())) {
-				alert("Please enter relative name");
-				return false;
-			} else {
-				if (jQuery("#patientGender").val() == "M"||jQuery("#patientGender").val() == "F") {
-					if (jQuery("#patientRegistrationForm input[name=person.attribute.15]:checked").length == 0) {
-						alert("Please select relative name type");
-						return false;
-					}
+			else{
+			    value = jQuery("#firstName").val();
+				value = value.substr(0, 1).toUpperCase() + value.substr(1);
+				jQuery("#firstName").val(value);
+				//if(/^[a-zA-Z0-9- ]*$/.test(value) == false) {
+				if(/^[a-zA-Z- ]*$/.test(value) == false) {
+					alert("Please enter firstname in correct format");
+					return false;
 				}
+				
+			}
+			
+			if (StringUtils.isBlank(jQuery("#lastName").val())) {
+				alert("Please enter the lastname of the patient");
+				return false;
+			}
+			else{
+			    value = jQuery("#lastName").val();
+				value = value.substr(0, 1).toUpperCase() + value.substr(1);
+				jQuery("#lastName").val(value);
+				//if(/^[a-zA-Z0-9- ]*$/.test(value) == false) {
+				if(/^[a-zA-Z- ]*$/.test(value) == false) {
+					alert('Please enter lastname in correct format');
+					return false;
+				}
+				
 			}
 
 			if (StringUtils.isBlank(jQuery("#birthdate").val())) {
-				alert("Please enter birthdate or age");
+				alert("Please enter age or DOB of the patient");
 				return false;
-			} // 26/5/2012 Marta: Changing categories to match with requirements on #240
-			else {
-				/*if (!VALIDATORS.checkPatientAgeForSeniorCitizen()) {
-					return false;*/
-				if (!VALIDATORS.checkPatientAgeForChildLessThan1yr()) {
-					return false;
-				}
-			}
-
+			} 
+			
 			if (jQuery("#patientGender").val() == "Any") {
-				alert("Please select gender");
+				alert("Please select gender of the patient");
 				return false;
-			} // 26/5/2012 Marta: Changing categories to match with requirements on #240
-			else {
-				if (!VALIDATORS.checkGenderForAntenatal()) {
-					return false;
-				}
 			}
-
-			if (jQuery("#patCatOtherFree").is(':checked')) {
-			if (StringUtils.isBlank(jQuery("#freeCategory").val())) {
-			alert("please select other free");
-			return false;
-			}
-			}
+			else{
+				
+	           }
 			
-			if (jQuery("#temporaryCategoryCheckBox").is(':checked')) {
-		    if (StringUtils.isBlank(jQuery("#temporaryCategory").val())) {
-		    alert("please select Temporary Category");
-		    return false;
-		    }
-			}
-			
-			if (StringUtils.isBlank(jQuery("#opdWard").val())) {
-				alert("Please select OPD ward");
+			if (StringUtils.isBlank(jQuery("#patientPostalAddress").val())) {
+				alert("Please enter the physical address of the patient");
 				return false;
 			}
-
-			if (!VALIDATORS.validatePatientCategory()) {
+			else{
+			if (jQuery("#patientPostalAddress").val().length>255) {
+			    alert("Physical Address should not exceed more than 255 characters");
 				return false;
+			  }
 			}
-
+ 
 			if (!StringUtils.isBlank(jQuery("#patientPhoneNumber").val())) {
 				if (!StringUtils.isDigit(jQuery("#patientPhoneNumber").val())) {
-					alert("Please enter phone number in correct format");
+					alert("Please enter the patient's contact number in correct format");
 					return false;
 				}
 			}
 			
-			//ghanshyam 12-sept-2013 New Requirement #2684 Introducing a field at the time of registration to put Aadhar Card Number
-			if (jQuery("#yes").attr('checked') == false
-					&& jQuery("#no").attr('checked') == false) {
-				alert('Please select Yes or No for  Aadhar Card Number!');
+			if (StringUtils.isBlank(jQuery("#patientRelativeName").val())) {
+				alert("Please enter the patient's relative name");
 				return false;
-			} else {
-			if (jQuery("#yes").attr('checked')) {
-					if (jQuery("#aadharCardNo").val().length <= 0 || jQuery("#aadharCardNo").val().length!=12) {
-						alert('Please enter 12 digit Aadhar Card');
-						return false;
-					} 
+			} 
+			else{
+			    value = jQuery("#patientRelativeName").val();
+				//value = value.substr(0, 1).toUpperCase() + value.substr(1);
+				//jQuery("#patientRelativeName").val(value);
+				if(/^[a-zA-Z- ]*$/.test(value) == false) {
+					alert("Please enter patient's relative name in correct format");
+					return false;
 				}
-			else if(jQuery("#no").attr('checked')){
-			       if (jQuery("#aadharCardReason").val().length <= 0) {
-						alert('Please enter Aadhar Card Reason');
-						return false;
-					} 
-			   }	
-			}	
+			}
 			
-			        //PAGE.checkAadharCardNumber();
-			        /*
-			        var patientCategoryDisabled=document.getElementById('patientCategory').disabled;
-			        if(patientCategoryDisabled==false){
-			        var patientCategory=document.getElementById('patientCategory');
-			        if(patientCategory.value==""){
-			        alert("Please select Patient Category");
-					return false
-			        }
-			        }*/
-		            //alert("click ok to proceed");
-		            //abc=jQuery("#abc").val();
-					//def=jQuery("#def").val();
-					aadharCardNo=jQuery("#aCardNo").val();
-				
-					if(typeof aadharCardNo!="undefined"){
-					if(aadharCardNo=="1"){
-		            alert("Patient already registered with this  Aadhar Card Number");
-					return false
-		            }
-		       
-		            }
-
+			if (jQuery("#mlcCaseYes").attr('checked') == false
+					&& jQuery("#mlcCaseNo").attr('checked') == false) {			
+			    alert("You did not choose any of the Medico Legal Case");
+				return false;
+			}
+			else{
+			 if (jQuery("#mlcCaseYes").is(':checked')) {
+				if (StringUtils.isBlank(jQuery("#mlc").val())){
+					alert("Please select the medico legal case");
+					return false;
+				}
+			  }
+			}
+			
+			if (jQuery("#referredYes").attr('checked') == false
+					&& jQuery("#referredNo").attr('checked') == false) {			
+			    alert("You did not choose any of the Referral Information");
+				return false;
+			} 
+			else{
+			
+			if (jQuery("#referredYes").attr('checked')) {
+			
+			if (StringUtils.isBlank(jQuery("#referredFrom").val())) {
+				alert("Please enter referral from of the patient");
+				return false;
+			   }
+			 else{
+			 
+			 if (StringUtils.isBlank(jQuery("#referralType").val())) {
+					alert("Please enter referral type of the patient");
+					return false;
+				} 
+			 } 
+			 
+			 }
+			  
+			}	
+				if (jQuery("#opdRoom").attr('checked')){
+				    if (StringUtils.isBlank(jQuery("#opdWard").val())) {
+						alert("Please select the OPD room to visit");
+						return false;
+					}
+				}
+            //submitNationalIDAndPassportNumber();
+            if(validateNationalIDAndPassportNumber()){
+            return true;
+            }
+            else{
+            return false;
+            }
+			
 			return true;
 		}
 	};
@@ -477,336 +594,79 @@ td.border {
 	 ** VALIDATORS
 	 **/
 	VALIDATORS = {
-
-		/** VALIDATE PATIENT CATEGORY */
-		validatePatientCategory : function() {
-			if (jQuery("#patCatGeneral").attr('checked') == false
-					//17/05/2012 Marta: Delete Poor and Governement Employee Categories #188
-					/* && jQuery("#patCatPoor").attr('checked') == false
-					&& jQuery("#patCatGovEmp").attr('checked') == false */
-					// 26/5/2012 Marta: Changing categories to match with requirements on #240
-					/*&& jQuery("#patCatGovEmp").attr('checked') == false
-					&& jQuery("#patCatSeniorCitizen").attr('checked') == false*/
-					&& jQuery("#rsby").attr('checked') == false
-					&& jQuery("#bpl").attr('checked') == false
-					// 15/05/2012: Marta added for Solan new categories validation - Bug #188
-					&& jQuery("#patCatAntenatal").attr('checked') == false
-					&& jQuery("#patCatChildLessThan1yr").attr('checked') == false
-					&& jQuery("#patCatOtherFree").attr('checked') == false
-					&& jQuery("#patCatStaff").attr('checked') == false) {
-				alert('You didn\'t choose any of the patient categories!');
-				return false;
-			} else {
-				if (jQuery("#rsby").attr('checked')) {
-					if (jQuery("#rsbyNumber").val().length <= 0) {
-						alert('Please enter RSBY number');
-						return false;
-					}
-				}
-				if (jQuery("#bpl").attr('checked')) {
-					if (jQuery("#bplNumber").val().length <= 0) {
-						alert('Please enter BPL number');
-						return false;
-					}
-				}
-				//17/05/2012 Marta: Delete Poor and Governement Employee Categories #188
-				if (jQuery("#patCatOtherFree").attr('checked')) {
-					if (jQuery("#freeCategory").val().length <= 0) {
-						alert('Please enter Other Free Category Description');
-						return false;
-					}
-				}
-				return true;
+		
+		/** CHECK WHEN PAYING CATEGORY IS SELECTED */
+		payingCheck : function() {
+			if (jQuery("#paidCategoryChecked").is(':checked')) {
+					jQuery("#programChecked").removeAttr("checked");
+					jQuery("#paidCategoryField").show();
+					//jQuery("#nonPayingCategory").val("");
+				    jQuery("#programField").hide();
+			}
+			else{
+			jQuery("#paidCategoryField").hide();
 			}
 		},
-
-		/** CHECK WHEN BPL CATEGORY IS SELECTED */
-		bplCheck : function() {
-			if (jQuery("#bpl").is(':checked')) {
-				jQuery("#bplField").show();
-				if (jQuery("#patCatGeneral").is(":checked"))
-					jQuery("#patCatGeneral").removeAttr("checked");
-				if (jQuery("#patCatStaff").is(":checked")) {
-					jQuery("#patCatStaff").removeAttr("checked");
-				}
-				//17/05/2012 Marta: Delete Poor and Governement Employee Categories #188
-				/*if (jQuery("#patCatGovEmp").is(":checked"))
-					jQuery("#patCatGovEmp").removeAttr("checked");
-				if (jQuery("#patCatPoor").is(":checked"))
-					jQuery("#patCatPoor").removeAttr("checked");*/
-				// 26/5/2012 Marta: Changing categories to match with requirements on #240
-				/*if (jQuery("#patCatSeniorCitizen").is(":checked"))
-					jQuery("#patCatSeniorCitizen").removeAttr("checked");*/
-				// 11/05/2012: Thai Chuong added for Solan new categories validation - Bug #188
-				if (jQuery("#patCatAntenatal").is(":checked"))
-					jQuery("#patCatAntenatal").removeAttr("checked");
-				if (jQuery("#patCatChildLessThan1yr").is(":checked"))
-					jQuery("#patCatChildLessThan1yr").removeAttr("checked");
-				//17/05/2012 Marta: Add Free Category text field #188
-				if (jQuery("#patCatOtherFree").is(":checked")) {
-					jQuery("#patCatOtherFree").removeAttr("checked");
-					jQuery("#freeCategory").val("");
-					jQuery("#freeField").hide();
-				}
-			} else {
-				jQuery("#bplNumber").val("");
-				jQuery("#bplField").hide();
+		
+		/** CHECK WHEN NONPAYING CATEGORY IS SELECTED */
+		programCheck : function() {
+			if (jQuery("#programChecked").is(':checked')) {
+					jQuery("#paidCategoryChecked").removeAttr("checked");
+				    jQuery("#programField").show();
+				    jQuery("#paidCategoryField").hide();
+			}
+			else{
+			jQuery("#programField").hide();
 			}
 		},
-
-		/** CHECK WHEN RSBY CATEGORY IS SELECTED */
-		rsbyCheck : function() {
-			if (jQuery("#rsby").is(':checked')) {
-				jQuery("#rsbyField").show();
-				if (jQuery("#patCatGeneral").is(":checked"))
-					jQuery("#patCatGeneral").removeAttr("checked");
-				if (jQuery("#patCatStaff").is(":checked")) {
-					jQuery("#patCatStaff").removeAttr("checked");
-				}
-				//17/05/2012 Marta: Delete Poor and Governement Employee Categories #188
-				/*if (jQuery("#patCatGovEmp").is(":checked"))
-					jQuery("#patCatGovEmp").removeAttr("checked");
-				if (jQuery("#patCatPoor").is(":checked"))
-					jQuery("#patCatPoor").removeAttr("checked");*/
-				// 26/5/2012 Marta: Changing categories to match with requirements on #240
-				/*if (jQuery("#patCatSeniorCitizen").is(":checked"))
-					jQuery("#patCatSeniorCitizen").removeAttr("checked");*/
-				// 11/05/2012: Thai Chuong added for Solan new categories validation - Bug #188
-				if (jQuery("#patCatAntenatal").is(":checked"))
-					jQuery("#patCatAntenatal").removeAttr("checked");
-				if (jQuery("#patCatChildLessThan1yr").is(":checked"))
-					jQuery("#patCatChildLessThan1yr").removeAttr("checked");
-				//17/05/2012 Marta: Add Free Category text field #188
-				if (jQuery("#patCatOtherFree").is(":checked")) {
-					jQuery("#patCatOtherFree").removeAttr("checked");
-					jQuery("#freeCategory").val("");
-					jQuery("#freeField").hide();
-				}
-			} else {
-				jQuery("#rsbyNumber").val("");
-				jQuery("#rsbyField").hide();
+		
+		mlcYesCheck : function () {
+			if (jQuery("#mlcCaseYes").is(':checked')) {
+			        jQuery("#mlcCaseNo").removeAttr("checked");
+					jQuery("#mlc").show();	
+			}
+			else{
+			jQuery("#mlc").hide();	
 			}
 		},
-
-		/** CHECK WHEN STAFF CATEGORY IS SELECTED */
-		staffCheck : function() {
-			if (jQuery("#patCatStaff").is(':checked')) {
-				if (jQuery("#bpl").is(":checked")) {
-					jQuery("#bpl").removeAttr("checked");
-					jQuery("#bplNumber").val("");
-					jQuery("#bplField").hide();
-				}
-				if (jQuery("#rsby").is(":checked")) {
-					jQuery("#rsby").removeAttr("checked");
-					jQuery("#rsbyNumber").val("");
-					jQuery("#rsbyField").hide();
-				}
-				//17/05/2012 Marta: Delete Poor and Governement Employee Categories #188
-				/*if (jQuery("#patCatPoor").is(":checked"))
-					jQuery("#patCatPoor").removeAttr("checked");
-				if (jQuery("#patCatGovEmp").is(":checked"))
-					jQuery("#patCatGovEmp").removeAttr("checked");*/
-				// 11/05/2012: Thai Chuong added for Solan new categories validation - Bug #188
-				if (jQuery("#patCatAntenatal").is(":checked"))
-					jQuery("#patCatAntenatal").removeAttr("checked");
-				if (jQuery("#patCatChildLessThan1yr").is(":checked"))
-					jQuery("#patCatChildLessThan1yr").removeAttr("checked");
-				//17/05/2012 Marta: Add Free Category text field #188
-				if (jQuery("#patCatOtherFree").is(":checked")) {
-					jQuery("#patCatOtherFree").removeAttr("checked");
-					jQuery("#freeCategory").val("");
-					jQuery("#freeField").hide();
-				}
-				// 17/05/2012: Marta added for Solan new categories validation - Bug #188
-				// 26/5/2012 Marta: Changing categories to match with requirements on #240
-				/*if (jQuery("#patCatSeniorCitizen").is(":checked"))
-					jQuery("#patCatSeniorCitizen").removeAttr("checked");
-				 */if (jQuery("#patCatGeneral").is(":checked"))
-					jQuery("#patCatGeneral").removeAttr("checked");
+		
+		mlcNoCheck : function () {
+			if (jQuery("#mlcCaseNo").is(':checked')) {
+			    jQuery("#mlcCaseYes").removeAttr("checked");	
+				jQuery("#mlc").hide();	
 			}
 		},
-
-		//17/05/2012 Marta: Delete Poor and Governement Employee Categories #188	
-		/** CHECK WHEN POOR CATEGORY IS SELECTED */
-		/*poorCheck : function() {
-			if (jQuery("#patCatPoor").is(':checked')) {
-				if (jQuery("#patCatGeneral").is(":checked"))
-					jQuery("#patCatGeneral").removeAttr("checked");
-				if (jQuery("#patCatStaff").is(":checked"))
-					jQuery("#patCatStaff").removeAttr("checked");
-				if (jQuery("#patCatGovEmp").is(":checked"))
-					jQuery("#patCatGovEmp").removeAttr("checked");
-
-				if (jQuery("#bpl").is(":checked")) {
-					jQuery("#bpl").removeAttr("checked");
-					jQuery("#bplNumber").val("");
-					jQuery("#bplField").hide();
-				}
-				if (jQuery("#rsby").is(":checked")) {
-					jQuery("#rsby").removeAttr("checked");
-					jQuery("#rsbyNumber").val("");
-					jQuery("#rsbyField").hide();
-				}
-				// 11/05/2012: Thai Chuong added for Solan new categories validation - Bug #188
-				if (jQuery("#patCatAntenatal").is(":checked"))
-					jQuery("#patCatAntenatal").removeAttr("checked");
-				if (jQuery("#patCatChildLessThan1yr").is(":checked"))
-					jQuery("#patCatChildLessThan1yr").removeAttr("checked");
-				if (jQuery("#patCatOtherFree").is(":checked"))
-					jQuery("#patCatOtherFree").removeAttr("checked");
-				// 17/05/2012: Marta added for Solan new categories validation - Bug #188
-				if (jQuery("#patCatSeniorCitizen").is(":checked"))
-					jQuery("#patCatSeniorCitizen").removeAttr("checked");
+		
+		referredYesCheck : function () {
+			if (jQuery("#referredYes").is(':checked')) {
+			        jQuery("#referredNo").removeAttr("checked");
+					jQuery("#referredFromColumn").show();
+				    jQuery("#referralTypeRow").show();
+				    jQuery("#referralDescriptionRow").show();	
 			}
-		},*/
-
-		/** CHECK WHEN GENERAL CATEGORY IS SELECTED */
-		generalCheck : function(obj) {
-			if (jQuery("#patCatGeneral").is(':checked')) {
-				if (jQuery("#bpl").is(":checked")) {
-					jQuery("#bpl").removeAttr("checked");
-					jQuery("#bplNumber").val("");
-					jQuery("#bplField").hide();
-				}
-				if (jQuery("#rsby").is(":checked")) {
-					jQuery("#rsby").removeAttr("checked");
-					jQuery("#rsbyNumber").val("");
-					jQuery("#rsbyField").hide();
-				}
-				//17/05/2012 Marta: Delete Poor and Governement Employee Categories #188
-				/*if (jQuery("#patCatPoor").is(":checked"))
-					jQuery("#patCatPoor").removeAttr("checked");*/
-				// 26/5/2012 Marta: Changing categories to match with requirements on #215
-				/*if (jQuery("#patCatSeniorCitizen").is(":checked"))
-					jQuery("#patCatSeniorCitizen").removeAttr("checked");*/
-				// 11/05/2012: Thai Chuong added for Solan new categories validation - Bug #188
-				if (jQuery("#patCatAntenatal").is(":checked"))
-					jQuery("#patCatAntenatal").removeAttr("checked");
-				if (jQuery("#patCatChildLessThan1yr").is(":checked"))
-					jQuery("#patCatChildLessThan1yr").removeAttr("checked");
-				//17/05/2012 Marta: Add Free Category text field #188
-				if (jQuery("#patCatOtherFree").is(":checked")) {
-					jQuery("#patCatOtherFree").removeAttr("checked");
-					jQuery("#freeCategory").val("");
-					jQuery("#freeField").hide();
-				}
-				// 17/05/2012: Marta added for Solan new categories validation - Bug #188
-				if (jQuery("#patCatStaff").is(":checked"))
-					jQuery("#patCatStaff").removeAttr("checked");
-				//17/05/2012 Marta: Delete Poor and Governement Employee Categories #188
-				/*if (jQuery("#patCatGovEmp").is(":checked"))
-					jQuery("#patCatGovEmp").removeAttr("checked");*/
+			else{
+			jQuery("#referredFromColumn").hide();
+			jQuery("#referralTypeRow").hide();
+			jQuery("#referralDescriptionRow").hide();
 			}
 		},
-
-		//17/05/2012 Marta: Delete Poor and Governement Employee Categories #188
-		/** CHECK WHEN GOVERNMENT CATEGORY IS SELECTED */
-		/*governmentCheck : function() {
-			if (jQuery("#patCatGovEmp").is(':checked')) {
-				if (jQuery("#bpl").is(":checked")) {
-					jQuery("#bpl").removeAttr("checked");
-					jQuery("#bplNumber").val("");
-					jQuery("#bplField").hide();
-				}
-				if (jQuery("#rsby").is(":checked")) {
-					jQuery("#rsby").removeAttr("checked");
-					jQuery("#rsbyNumber").val("");
-					jQuery("#rsbyField").hide();
-				}
-				if (jQuery("#patCatPoor").is(":checked"))
-					jQuery("#patCatPoor").removeAttr("checked");
-				if (jQuery("#patCatStaff").is(":checked"))
-					jQuery("#patCatStaff").removeAttr("checked");
-				// 11/05/2012: Thai Chuong added for Solan new categories validation - Bug #188
-				if (jQuery("#patCatAntenatal").is(":checked"))
-					jQuery("#patCatAntenatal").removeAttr("checked");
-				if (jQuery("#patCatChildLessThan1yr").is(":checked"))
-					jQuery("#patCatChildLessThan1yr").removeAttr("checked");
-				if (jQuery("#patCatOtherFree").is(":checked"))
-					jQuery("#patCatOtherFree").removeAttr("checked");
-				// 17/05/2012: Marta added for Solan new categories validation - Bug #188
-				if (jQuery("#patCatSeniorCitizen").is(":checked"))
-					jQuery("#patCatSeniorCitizen").removeAttr("checked");
-				if (jQuery("#patCatGeneral").is(":checked"))
-					jQuery("#patCatGeneral").removeAttr("checked");
+		
+		referredNoCheck : function () {
+			if (jQuery("#referredNo").is(':checked')) {
+			    jQuery("#referredYes").removeAttr("checked");	
+				jQuery("#referredFromColumn").hide();
+				jQuery("#referralTypeRow").hide();
+				jQuery("#referralDescriptionRow").hide();	
 			}
-		},*/
-
-		// 26/5/2012 Marta: Changing categories to match with requirements on #215
-		/** CHECK WHEN SENIOR CITIZEN CATEGORY IS SELECTED */
-		/*seniorCitizenCheck : function() {
-			if (jQuery("#patCatSeniorCitizen").is(':checked')) {
-				if (jQuery("#bpl").is(":checked")) {
-					jQuery("#bpl").removeAttr("checked");
-					jQuery("#bplNumber").val("");
-					jQuery("#bplField").hide();
-				}
-				if (jQuery("#rsby").is(":checked")) {
-					jQuery("#rsby").removeAttr("checked");
-					jQuery("#rsbyNumber").val("");
-					jQuery("#rsbyField").hide();
-				}
-				//17/05/2012 Marta: Delete Poor and Governement Employee Categories #188
-				/*if (jQuery("#patCatPoor").is(":checked"))
-					jQuery("#patCatPoor").removeAttr("checked");
-				if (jQuery("#patCatGovEmp").is(":checked"))
-					jQuery("#patCatGovEmp").removeAttr("checked");*/
-		/*if (jQuery("#patCatGeneral").is(":checked"))
-			jQuery("#patCatGeneral").removeAttr("checked");
-		// 11/05/2012: Thai Chuong added for Solan new categories validation - Bug #188
-		if (jQuery("#patCatAntenatal").is(":checked"))
-			jQuery("#patCatAntenatal").removeAttr("checked");
-		if (jQuery("#patCatChildLessThan1yr").is(":checked"))
-			jQuery("#patCatChildLessThan1yr").removeAttr("checked");
-		//17/05/2012 Marta: Add Free Category text field #188
-		if (jQuery("#patCatOtherFree").is(":checked")){
-			jQuery("#patCatOtherFree").removeAttr("checked");
-			jQuery("#freeCategory").val("");
-			jQuery("#freeField").hide();
-		}
-		// 17/05/2012: Marta added for Solan new categories validation - Bug #188
-		if (jQuery("#patCatStaff").is(":checked"))
-			jQuery("#patCatStaff").removeAttr("checked");
-			if (!VALIDATORS.checkPatientAgeForSeniorCitizen()) {
-			jQuery("#patCatSeniorCitizen").removeAttr("checked");
-		}
-		;
-		}
-		},*/
-
-		// 26/5/2012 Marta: Changing categories to match with requirements on #215
-		/*
-		 * Check patient age for senior citizen
-		 */
-		// 11/05/2012: Thai Chuong modified for Solan new categories validation - Bug #188
-		/*checkPatientAgeForSeniorCitizen : function() {
-			// check whether patient age is more than 75
-			estAge = jQuery("#estimatedAge").html();
-			var digitPattern = /[0-9]+/;
-			var age = digitPattern.exec(estAge);
-			if (age < 75) {
-				if (jQuery("#patCatSeniorCitizen").is(':checked')) {
-					alert("Senior citizen category is only for patient over 75 years old!");
-					return false;
-				}
+		},
+		
+		opdRoomCheck : function () {
+			if (jQuery("#opdRoom").is(':checked')) {
+					jQuery("#opdWardField").show();	
 			}
-			return true;
-		},*/
-
-		// 26/5/2012 Marta: Changing categories to match with requirements on #240
-		checkPatientAgeForChildLessThan1yr : function() {
-			// check whether patient age less than one year
-			estAge = jQuery("#estimatedAge").html();
-			// 6/6/2012 harsh : changed reg ex mapping on bug #243
-			var digitPattern = /Y/;
-			var age = digitPattern.exec(estAge);
-			if (age) {
-				if (jQuery("#patCatChildLessThan1yr").is(':checked')) {
-					alert("Child less than one year is only for patient under 1 year!");
-					return false;
-				}
+			else{
+			jQuery("#opdWardField").hide();	
 			}
-			return true;
 		},
 
 		/*
@@ -823,418 +683,321 @@ td.border {
 				jQuery("#patientRelativeNameSection")
 						.html(
 								'<input type="radio" name="person.attribute.15" value="Daughter of"/> Daughter of <input type="radio" name="person.attribute.15" value="Wife of"/> Wife of');
-			}else if(jQuery("#patientGender").val() == "O"){
+			}
+			else if(jQuery("#patientGender").val() == "O"){
 				jQuery("#patientRelativeNameSection")
 				.html(
 				'<input hidden type="radio" name="person.attribute.15" value="Relative of" checked="checked"/>');
 			}
-		},
-
-		// 26/5/2012 Marta: Changing categories to match with requirements on #240
-		checkGenderForAntenatal : function() {
-			// check whether patient age less than one year
-			if (jQuery("#patientGender").val() == "M") {
-				if (jQuery("#patCatAntenatal").is(':checked')) {
-					alert("Antenatal Patient is for Female patients!");
-					return false;
-				}
-			}
-			return true;
-		},
-		// 11/05/2012: Thai Chuong added for Solan new categories validation - Bug #188
-		/** CHECK WHEN ANTENATAL PATIENT CATEGORY IS SELECTED */
-		patCatAntenatalCheck : function() {
-			if (jQuery("#patCatAntenatal").is(':checked')) {
-				if (jQuery("#bpl").is(":checked")) {
-					jQuery("#bpl").removeAttr("checked");
-					jQuery("#bplNumber").val("");
-					jQuery("#bplField").hide();
-				}
-				if (jQuery("#rsby").is(":checked")) {
-					jQuery("#rsby").removeAttr("checked");
-					jQuery("#rsbyNumber").val("");
-					jQuery("#rsbyField").hide();
-				}
-				//17/05/2012 Marta: Delete Poor and Governement Employee Categories #188
-				/*if (jQuery("#patCatPoor").is(":checked"))
-					jQuery("#patCatPoor").removeAttr("checked");
-				if (jQuery("#patCatGovEmp").is(":checked"))
-					jQuery("#patCatGovEmp").removeAttr("checked");*/
-				if (jQuery("#patCatGeneral").is(":checked"))
-					jQuery("#patCatGeneral").removeAttr("checked");
-				// 11/05/2012: Thai Chuong modified for Solan new categories validation - Bug #188
-				if (jQuery("#patCatChildLessThan1yr").is(":checked"))
-					jQuery("#patCatChildLessThan1yr").removeAttr("checked");
-				//17/05/2012 Marta: Add Free Category text field #188
-				if (jQuery("#patCatOtherFree").is(":checked")) {
-					jQuery("#patCatOtherFree").removeAttr("checked");
-					jQuery("#freeCategory").val("");
-					jQuery("#freeField").hide();
-				}
-				if (jQuery("#patCatStaff").is(":checked"))
-					jQuery("#patCatStaff").removeAttr("checked");
-				// 17/05/2012: Marta added for Solan new categories validation - Bug #188
-				// 26/5/2012 Marta: Changing categories to match with requirements on #240
-				/*if (jQuery("#patCatSeniorCitizen").is(":checked"))
-					jQuery("#patCatSeniorCitizen").removeAttr("checked");
-				 */
-				if (!VALIDATORS.checkGenderForAntenatal()) {
-					jQuery("#patCatAntenatal").removeAttr("checked");
-				}
-			}
-		},
-
-		/** CHECK WHEN CHILD LESS THAN 1YR CATEGORY IS SELECTED */
-		patCatChildLessThan1yrCheck : function() {
-			if (jQuery("#patCatChildLessThan1yr").is(':checked')) {
-				if (jQuery("#bpl").is(":checked")) {
-					jQuery("#bpl").removeAttr("checked");
-					jQuery("#bplNumber").val("");
-					jQuery("#bplField").hide();
-				}
-				if (jQuery("#rsby").is(":checked")) {
-					jQuery("#rsby").removeAttr("checked");
-					jQuery("#rsbyNumber").val("");
-					jQuery("#rsbyField").hide();
-				}
-				//17/05/2012 Marta: Delete Poor and Governement Employee Categories #188
-				/*if (jQuery("#patCatPoor").is(":checked"))
-					jQuery("#patCatPoor").removeAttr("checked");
-				if (jQuery("#patCatGovEmp").is(":checked"))
-					jQuery("#patCatGovEmp").removeAttr("checked");*/
-				if (jQuery("#patCatGeneral").is(":checked"))
-					jQuery("#patCatGeneral").removeAttr("checked");
-				// 11/05/2012: Thai Chuong modified for Solan new categories validation - Bug #188
-				if (jQuery("#patCatAntenatal").is(":checked"))
-					jQuery("#patCatAntenatal").removeAttr("checked");
-				//17/05/2012 Marta: Add Free Category text field #188
-				if (jQuery("#patCatOtherFree").is(":checked")) {
-					jQuery("#patCatOtherFree").removeAttr("checked");
-					jQuery("#freeCategory").val("");
-					jQuery("#freeField").hide();
-				}
-				if (jQuery("#patCatStaff").is(":checked"))
-					jQuery("#patCatStaff").removeAttr("checked");
-				// 17/05/2012: Marta added for Solan new categories validation - Bug #188
-				// 26/5/2012 Marta: Changing categories to match with requirements on #240
-				/*if (jQuery("#patCatSeniorCitizen").is(":checked"))
-					jQuery("#patCatSeniorCitizen").removeAttr("checked");
-				 */
-				if (!VALIDATORS.checkPatientAgeForChildLessThan1yr()) {
-					jQuery("#patCatChildLessThan1yr").removeAttr("checked");
-				}
-				;
-			}
-		},
-
-		/** CHECK WHEN OTHER FREE CATEGORY IS SELECTED */
-		patCatOtherFreeCheck : function() {
-			if (jQuery("#patCatOtherFree").is(':checked')) {
-				jQuery("#freeField").show();
-				if (jQuery("#bpl").is(":checked")) {
-					jQuery("#bpl").removeAttr("checked");
-					jQuery("#bplNumber").val("");
-					jQuery("#bplField").hide();
-				}
-				if (jQuery("#rsby").is(":checked")) {
-					jQuery("#rsby").removeAttr("checked");
-					jQuery("#rsbyNumber").val("");
-					jQuery("#rsbyField").hide();
-				}
-				//17/05/2012 Marta: Delete Poor and Governement Employee Categories #188
-				/*if (jQuery("#patCatPoor").is(":checked"))
-					jQuery("#patCatPoor").removeAttr("checked");
-				if (jQuery("#patCatGovEmp").is(":checked"))
-					jQuery("#patCatGovEmp").removeAttr("checked");*/
-				if (jQuery("#patCatGeneral").is(":checked"))
-					jQuery("#patCatGeneral").removeAttr("checked");
-				if (jQuery("#patCatStaff").is(":checked"))
-					jQuery("#patCatStaff").removeAttr("checked");
-				// 11/05/2012: Thai Chuong modified for Solan new categories validation - Bug #188
-				if (jQuery("#patCatAntenatal").is(":checked"))
-					jQuery("#patCatAntenatal").removeAttr("checked");
-				if (jQuery("#patCatChildLessThan1yr").is(":checked"))
-					jQuery("#patCatChildLessThan1yr").removeAttr("checked");
-				// 17/05/2012: Marta added for Solan new categories validation - Bug #188
-				// 26/5/2012 Marta: Changing categories to match with requirements on #240
-				// if (jQuery("#patCatSeniorCitizen").is(":checked"))
-				//	jQuery("#patCatSeniorCitizen").removeAttr("checked");
-
-			} else {
-				jQuery("#freeCategory").val("");
-				jQuery("#freeField").hide();
-			}
-		},
+		}
 		
-		temporaryCategory : function() {
-		if (jQuery("#temporaryCategoryCheckBox").is(':checked')) {
-				jQuery("#temporaryCategory").show();
-		}
-		else{
-		jQuery("#temporaryCategory").hide();
-		 }
-		}
-
 	};
+	
+	function submitNationalID(){
+	PAGE.checkNationalID();
+   }
+	
+	function validateNationalID(){
+	var nId=jQuery("#nId").val();
+	if(nId=="1"){
+	document.getElementById("nationalIdValidationMessage").innerHTML="Patient already registered with this National ID";
+	jQuery("#nationalIdValidationMessage").show();
+    return false;					
+    }
+    else{
+    jQuery("#nationalIdValidationMessage").hide();
+    }  
+   }
+		          
+		       
+   function submitPassportNumber(){
+   PAGE.checkPassportNumber();
+   }
+   
+   function validatePassportNumber(){
+   var pNum=jQuery("#pNum").val();
+   if(pNum=="1"){
+   document.getElementById("passportNumberValidationMessage").innerHTML="Patient already registered with this Passport Number";
+   jQuery("#passportNumberValidationMessage").show();
+   return false;
+	}
+	else{
+	jQuery("#passportNumberValidationMessage").hide();
+	}
+   }
+   
+   function submitNationalIDAndPassportNumber(){
+   PAGE.checkNationalIDAndPassportNumber();
+   }
+   
+   function validateNationalIDAndPassportNumber(){
+   var nId=jQuery("#nId").val();
+   var pNum=jQuery("#pNum").val();
+   if(nId=="1" && pNum=="1"){
+   //alert("Patient already registered with the same National ID and Passport Number");	
+   document.getElementById("nationalIdValidationMessage").innerHTML="Patient already registered with this National ID";
+   document.getElementById("passportNumberValidationMessage").innerHTML="Patient already registered with this Passport Number";
+   jQuery("#nationalIdValidationMessage").show();
+   jQuery("#passportNumberValidationMessage").show();
+   return false;
+	}
+   else if(nId=="1"){
+   //alert("Patient already registered with the same National ID");
+   document.getElementById("nationalIdValidationMessage").innerHTML="Patient already registered with this National ID";
+   jQuery("#nationalIdValidationMessage").show();
+   jQuery("#passportNumberValidationMessage").hide();
+   return false;					
+    }  
+   else if(pNum=="1"){
+   //alert("Patient already registered with the same Passport Number");	
+   jQuery("#nationalIdValidationMessage").hide();
+   jQuery("#passportNumberValidationMessage").show();
+   return false;
+	}
+   else{
+   jQuery("#nationalIdValidationMessage").hide();
+   jQuery("#passportNumberValidationMessage").hide();
+   return true;
+	}
+   }
+	
+	function abc(){
+	document.getElementById("movedToAreaDate").disabled = true;
+	}
+	
+	function def(){
+	document.getElementById("movedToAreaDate").disabled = false;
+	}
 </script>
-
-<!-- ghanshyam 12-sept-2013 New Requirement #2684 Introducing a field at the time of registration to put Aadhar Card Number -->
-<script type="text/javascript">
-function yesClick(){
-if (jQuery("#yes").attr('checked') == true){
-jQuery("#aadharCardNo").show();
-jQuery("#aadharCardReason").val('');
-jQuery("#aadharCardReason").hide();
-jQuery("#no").removeAttr("checked");
-}
-else{
-jQuery("#aadharCardNo").val('');
-jQuery("#aadharCardNo").hide();
-}
-}
-
-function noClick(){
-if (jQuery("#no").attr('checked') == true){
-jQuery("#aadharCardNo").val('');
-jQuery("#aadharCardNo").hide();
-jQuery("#aadharCardReason").show();
-jQuery("#yes").removeAttr("checked");
-}
-else{
-jQuery("#aadharCardReason").val('');
-jQuery("#aadharCardReason").hide();
-}
-}
-
-function checkAadharCardNumberr() {
-		        aadharCardNo=jQuery("#aadharCardNo").val();
-		        if(aadharCardNo.length==12){
-				jQuery.ajax({
-				type : "GET",
-				url : getContextPath() + "/module/registration/validateaadharcardnoreg.form",
-				data : ({
-					aadharCardNo			: aadharCardNo
-				}),
-				success : function(data) {	
-				    jQuery("#validationMessage").html(data);	
-					 
-		           } 
-               });
-             }
-		  }
-</script>
-
-
-<h2>Patient Registration</h2>
-<!-- ghanshyam 07-sept-2013 Support #2686 GUI Changes (spellings/ fonts/ alignments) -->
-<b>Visit Information</b> <br />
-<div id="patientSearchResult"></div>
+<h3 align="center" style="color:black">PATIENT REGISTRATION<br></h3>
+<!--  
+<h4 align="center" style="color:black">Patient Identifier<label style="color:red">*</label>&nbsp;&nbsp;&nbsp;&nbsp;${patientIdentifier}<br></h4>
+-->
 <form id="patientRegistrationForm" method="POST">
-	<table cellspacing="0">
+		<table width="100%">
 		<tr>
-			<td valign="top" class="cell"><b>Name <label style="color:red">*</label> </b>
-			</td>
-			<td class="cell"><input id="patientName" type="hidden"
-				name="patient.name" />
-				<div id="searchbox"></div>
-				<div id="numberOfFoundPatients"></div>
-			</td>
-			<%-- Sagar Bele,Ghanshyam Kumar - 12-12-2012 - Bug #467 [Registration]Duplicate Identifier --%>
-			<td class="cell"><b>ID Number<label style="color:red">*</label></b> <input readonly
-						name="patient.identifier" size="23" style="border: none;" />
-			
-			</td>
-
+		<td width="48%" align="right"><b>Patient Identifier</b><label style="color:red">*</label>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+		<td><b><input readonly name="patient.identifier" style="border: none; width: 250px; background-color:white; font-weight:bold" /></b></td>
 		</tr>
-		<tr>
-			<td class="cell"><b>Demographics <label style="color:red">*</label></b>
-			</td>
-			<td class="cell">dd/mm/yyyy<br />
-				<table>
-					<tr>
-						<td>Age</td>
-						<!-- ghanshyam 07-sept-2013 Support #2686 GUI Changes (spellings/ fonts/ alignments) -->
-						<td id="birthdateh">Birthdate</td>
-						<td id="bh"></td>
-						<td>Gender</td>
-					</tr>
-					<tr>
-						<td><span id="estimatedAge" />
-						</td>
-						<td><input type="hidden" id="calendar" /> <input
-							id="birthdate" name="patient.birthdate" /> <img
+		<tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr>
+		</table>
+		
+		<div class="floatLeft">
+		<table>
+			<tr>
+				<td valign="top"><b>Patient Name</b><label style="color:red">*</label>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+				<td>First Name<label style="color:red">*</label>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+				<td><input type="text" id="firstName" name="patient.firstName" style='width: 152px; 	border-width: 1px;
+	border-right: 1px;
+	border-left: 1px;
+	border-top: 1px;
+	border-bottom: 1px;
+	border-color: black;
+	border-style: solid;'>
+				</td>
+			</tr>
+			<tr>
+				<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+				<td valign="top">Last name<label style="color:red">*</label>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+				<td><input type="text" id="lastName" name="patient.lastName" style='width: 152px; 	border-width: 1px;
+	border-right: 1px;
+	border-left: 1px;
+	border-top: 1px;
+	border-bottom: 1px;
+	border-color: black;
+	border-style: solid;'>
+				</td>
+			</tr>
+			<tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr>
+			<tr>
+				<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+				<td>Occupation&nbsp;&nbsp;&nbsp;&nbsp;</td>
+				<td><select id="occupation" name="person.attribute.23" style='width: 152px;'>	</select></td>
+		</tr>
+			<tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr>
+			<tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr>
+			<tr>
+				<td><b>Demographics</b><label style="color:red">*</label>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+				<td>Age or DOB<label style="color:red">*</label>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+				<td><input type="hidden" id="calendar" /> <input
+							id="birthdate" name="patient.birthdate" style='width: 152px;'/> <img
 							id="calendarButton"
-							src="../../moduleResources/registration/calendar.gif" /> <input
+							src="moduleResources/registration/calendar.gif" /> <input
 							id="birthdateEstimated" type="hidden"
 							name="patient.birthdateEstimate" value="true" />
-						</td>
-						<td><select id="patientGender" name="patient.gender">
+							<input type="hidden" id="estimatedAgeInYear" name="estimatedAgeInYear"/>
+							<span id="estimatedAge" />
+				</td>
+			</tr>
+			<tr>
+				<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+				<td>Gender<label style="color:red">*</label>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+				<td><select id="patientGender" name="patient.gender" style='width: 152px;'>
 								<option value="Any"></option>
 								<option value="M">Male</option>
 								<option value="F">Female</option>
-								<option value="O">Others</option>
-								
+								<option value="O">Other</option>
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+				<td>Blood Group</td>
+				<td><select id="bloodGroup" name="person.attribute.24" style='width: 152px;'>	
+					</select>
+				</td>
+			</tr>
+			<tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr>
+			<tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr>
+            <tr>
+				<td><b>Address</b><label style="color:red">*</label>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+				<td>Lived In area&nbsp;&nbsp;&nbsp;&nbsp;</td>
+				<td><input type="radio" id="livediny" name="livedin" value="YES" onclick="abc();">Yes&nbsp;&nbsp;
+				<input type="radio" id="livedinn" name="livedin" value="NO" onclick="def();">No
+				</td>
+				
+			</tr>
+			<tr>
+				<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+				<td>Moved to Area Date&nbsp;&nbsp;&nbsp;&nbsp;</td>
+				<td><input id="movedToAreaDate" name="person.attribute.25" style='width: 152px;' disabled="disabled" />
+				</td>
+			</tr>
+			<tr>
+				<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+				<td>Postal Address&nbsp;&nbsp;&nbsp;&nbsp;</td>
+				<td><input id="patientPostalAddress" name="patient.address.postalAddress" style='width: 152px;' />
+				</td>
+			</tr>
+			<tr>
+				<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+				<td>Town&nbsp;&nbsp;&nbsp;&nbsp;</td>
+				<td><select id="towns" name="patient.address.town"
+							onChange="PAGE.changeTown();" style="width: 152px;">
 						</select>
-						</td>
-					</tr>
-				</table>
-			</td>
-			<td rowspan="3" class="border">
-			<!-- ghanshyam 12-sept-2013 New Requirement #2684 Introducing a field at the time of registration to put Aadhar Card Number -->
-			<b>&nbsp;&nbsp;Aadhar Card Number:</b> 
-			Yes &nbsp;<input type="checkbox" checked="checked" id="yes" name="yes" onClick="yesClick();"> &nbsp;
-			No &nbsp;<input type="checkbox" id="no" name="no" onClick="noClick();">
-			<input id="aadharCardNo" name="patient.attribute.20" placeholder="Aadhar Card No"/ onblur="checkAadharCardNumberr();">
-			<input id="aadharCardReason" name="patient.attribute.21" placeholder="Reason"/> <br />
-			<!-- ghanshyam 07-sept-2013 Support #2686 GUI Changes (spellings/ fonts/ alignments) -->
-				 <b>&nbsp;&nbsp;Patient Category</b><br />
-				<table cellspacing="10">
-					<!-- <b>Paid Categories		Free Categories</b><br /> -->
-
-					<!-- 17/5/2012 Marta: Delete Poor and Government Employee categories for new requirements and reestructure layout #188 -->
-
-					<tr>
-						<td><input id="patCatGeneral" type="checkbox"
-							name="person.attribute.14" value="General" /> General</td>
-						<td><input id="rsby" type="checkbox"
-							name="person.attribute.14" value="RSBY" /> RSBY</td>
-						<td><span id="rsbyField">RSBY Number <input
-								id="rsbyNumber" name="person.attribute.11" />
-						</span>
-						</td>
-					</tr>
-					<tr>
-						<td><input id="patCatStaff" type="checkbox"
-							name="person.attribute.14" value="Staff" /> Staff</td>
-						<td><input id="bpl" type="checkbox"
-							name="person.attribute.14" value="BPL" /> BPL</td>
-						<td><span id="bplField">BPL Number <input
-								id="bplNumber" name="person.attribute.10" />
-						</span>
-						</td>
-					</tr>
-					<tr>
-						<!-- 26/5/2012 Marta: Changing categories to match with requirements on #240 
-						<td><input id="patCatSeniorCitizen" type="checkbox"
-							name="person.attribute.14" value="Senior Citizen" /> Senior
-							Citizen</td> -->
-						<!-- 11/05/12: Thai Chuong, Added categories Antenatal, Child Less Than 1yr, Other Free. - Bug #188 -->
-						<td></td>
-						<td><input id="patCatAntenatal" type="checkbox"
-							name="person.attribute.14" value="Antenatal" /> Antenatal
-							Patient</td>
-					</tr>
-					<tr>
-						<td></td>
-						<!-- ghanshyam 07-sept-2013 Support #2686 GUI Changes (spellings/ fonts/ alignments) -->
-						<td><input id="patCatChildLessThan1yr" type="checkbox"
-							name="person.attribute.14" value="Child Less Than 1yr" /> Child
-							Less Than 1 Year</td>
-					</tr>
-					<tr>
-						<td></td>
-						<td><input id="patCatOtherFree" type="checkbox"
-							name="person.attribute.14" value="Other Free" /> Other Free</td>
-						<!-- 17/5/2012 Marta: Add text field to capture the free category description #188 -->
-						<td><span id="freeField"> <select id="freeCategory" name="person.attribute.19" style="width: 185px;">
-			            </select></span></td>
-					</tr>
-					<!-- ghanshyam 12-sept-2013 New Requirement #2684 Introducing a field at the time of registration to put Aadhar Card Number -->
-					<div id="validationMessage"></div>
-			</table></td>
-		</tr>
-
-		<tr>
-		</tr>
-
-		<tr>
-			<td valign="top" class="cell"><b>Address</b>&nbsp;&nbsp;&nbsp;&nbsp;</td>
-			<td class="cell">
-				<table>
-					
-						<!--  10/05/2012: Thai Chuong, adding a field for address. Feature #211   -->
-						<td>Postal Address:</td>
-						<td> <!-- <input id="patientPostalAddress" name="person.attribute.18" style="width: 300px;" />  -->
-						<!-- 26-6-2012 Marta - to store address in the openmrs patient_address table-->
-							<input id="patientPostalAddress" name="patient.address.postalAddress" style="width: 300px;" />
-						</td>
-					
-					<tr>
-						<td>District:</td>
-						<td><select id="districts" name="patient.address.district"
-							onChange="PAGE.changeDistrict();" style="width: 200px;">
+				</td>
+			</tr>
+			<tr>
+				<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+				<td>Settlement&nbsp;&nbsp;&nbsp;&nbsp;</td>
+				<td><select id="settlements" name="patient.address.settlement"
+							style="width: 152px;">
 						</select>
-						</td>
-					</tr>
-					<tr>
-						<td>Tehsil:</td>
-						<td><select id="tehsils" name="patient.address.tehsil"
-							style="width: 200px;">
-						</select>
-						</td>
-					</tr>
-				</table></td>
+				</td>
+			</tr>
+			<tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr>
+			<tr>
+				<td><b>Phone Number&nbsp;&nbsp;&nbsp;&nbsp;</b></td>
+				<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+				<td><input id="patientPhoneNumber"
+				name="person.attribute.16" style='width: 152px;' />
+				</td>
+			</tr>
+			<tr></tr><tr></tr><tr></tr><tr></tr><tr></tr>
+			<tr>
+				<td><b>National ID&nbsp;&nbsp;&nbsp;&nbsp;</b></td>
+				<td>Nationality&nbsp;&nbsp;&nbsp;&nbsp;</td>
+				<td><select id="patientNation" name="person.attribute.26" style="width: 152px;">
+					</select></td>
+		    </tr>
+		     <tr>
+				<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+				<td>Green Book No&nbsp;&nbsp;&nbsp;&nbsp;</td>
+				<td><input id="greenBookNo" name="person.attribute.27" style='width: 152px;' /></td>
+		    </tr>
+		    <tr>
+				<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+				<td>Adhaar No&nbsp;&nbsp;&nbsp;&nbsp;</td>
+				<td><input id="adhaarNo" name="person.attribute.20" style='width: 152px;' /></td>
+		    </tr>
+		</table>
+		</div>
+		
+		<div class="floatRight">
+		<table>
+		<tr>
+				<td><b>Patient Category <label style="color:red">*</label></b>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+				<td><input id="paidCategoryChecked" type="checkbox" name="paidCategoryChecked"/> Paid Category&nbsp;&nbsp;&nbsp;&nbsp;</td>
+				<td id="paidCategoryField"><select id="paidCategory" name="person.attribute.14" style="width: 152px;">
+						</select></td>
+		    </tr>
+		    <tr>
+				<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+				<td><input id="programChecked" type="checkbox" name="programChecked"/> Programs&nbsp;&nbsp;&nbsp;&nbsp;</td>
+				<td id="programField"><select id="program" name="person.attribute.14" style="width: 152px;">
+						</select></td>
+		    </tr>
+		    
+		    <tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr>
+		    
+		     <tr>
+				<td><b>Registration Fee <label style="color:red">*</label></b>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+				<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+				<td><select id="regFee" name="person.attribute.28" style='width: 152px;'>
+					</select></td>
+		    </tr>
+		    
+		    <tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr>
+		    
+		    <tr>
+				<td><b>Relative Name <label style="color:red">*</label></b>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+				<td id="patientRelativeNameSection">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+				<td><input id="patientRelativeName" name="person.attribute.8" style='width: 152px;'/></td>
+		    </tr>
+		
+		<tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr>
+		<tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr>
+		<tr>
+				<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+				<td><b>Visit Information&nbsp;&nbsp;&nbsp;&nbsp;</b></td>
+		</tr>
+		<tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr>
+		<tr>
+				<td><b>Medico Legal Case</b><label style="color:red">*</label>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+				<td><input id="mlcCaseYes" type="checkbox" name="mlcCaseYes"/> Yes&nbsp;&nbsp;&nbsp;&nbsp;</td>
+				<td><select id="mlc" name="patient.mlc" style='width: 152px;'></select></td>
 		</tr>
 		<tr>
-			<!-- ghanshyam 07-sept-2013 Support #2686 GUI Changes (spellings/ fonts/ alignments) -->
-			<td class="cell"><b>Phone Number</b>
-			</td>
-			<td class="cell"><input id="patientPhoneNumber"
-				name="person.attribute.16" style="width: 200px;" />
-			</td>
-			<td rowspan="1" class="border"><b>&nbsp;&nbsp;<font color="red">Temporary Categories: </font></b>&nbsp;
-			<input type="checkbox" id="temporaryCategoryCheckBox" name="temporaryCategoryCheckBox" value="MLC" />MLC  &nbsp;&nbsp;
-			<select id="temporaryCategory" name="temporaryCategory" style="width: 215px;"></select>
+				<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+				<td><input id="mlcCaseNo" type="checkbox" name="mlcCaseNo"/> No&nbsp;&nbsp;&nbsp;&nbsp;</td>
+		</tr>
+		<tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr>
+		<tr>
+				<td><b>Referral Information</b><label style="color:red">*&nbsp;&nbsp;&nbsp;&nbsp;</label></td>
+				<td><input id="referredYes" type="checkbox" name="referredYes"/> Yes&nbsp;&nbsp;&nbsp;&nbsp;</td>
+				<td id="referredFromColumn"><select id="referredFrom" name="patient.referred.from" style="width: 152px;"></select></td>
+		</tr>
+		<tr id="referralTypeRow">
+				<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+				<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+				<td><select id="referralType" name="patient.referred.reason" style="width: 152px;"></select></td>
+		</tr>
+		<tr id="referralDescriptionRow">
+				<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+				<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+				<td><input id="referralDescription" name="patient.referred.description" placeholder="Comments" style="width: 152px;"/></td>
 		</tr>
 		<tr>
-			<td class="cell"><b>Relative Name <label style="color:red">*</label></b>
-			</td>
-			<td class="cell">
-				<div id="patientRelativeNameSection"></div> <input
-				id="patientRelativeName" name="person.attribute.8"
-				style="width: 200px;" /></td>
-
-			<!-- ghanshyam 07-sept-2013 Support #2686 GUI Changes (spellings/ fonts/ alignments) -->
-			<td class="cell"><b>Referral Information </b><input
-				type="checkbox" id="referred"
-				onClick="PAGE.toogleReferralInfo(this);" name="patient.referred"
-				value="referred" /> Referred<br />
-				<div id="referralDiv" style="display: none;">
-					<table>
-						<tr>
-							<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Referred
-								From</td>
-							<td><select id="referralHospitals"
-								name="patient.referred.from" style="width: 200px;">
-							</select>
-							</td>
-						</tr>
-						<tr>
-							<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Referral
-								Type</td>
-							<td><select id="referralReasons"
-								name="patient.referred.reason" style="width: 200px;">
-							</select>
-							</td>
-						</tr>
-					</table>
-				</div> <b>OPD Room to Visit: <label style="color:red">*</label></b> <select id="opdWard"
-				name="patient.opdWard">
-			</select>
-			</td>
-
-
+				<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+				<td><input id="referredNo" type="checkbox" name="referredNo"/> No&nbsp;&nbsp;&nbsp;&nbsp;</td>
 		</tr>
+		<tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr>
 		<tr>
-			<td colspan="3" style="padding: 0em 30em 0em 30em;"><input
-				type="button" value="Save" onclick="PAGE.submit();" /> <input
-				type="button" value="Reset"
-				onclick="window.location.href=window.location.href" /></td>
+				<td><b>OPD Room to Visit</b><label style="color:red">*&nbsp;&nbsp;&nbsp;&nbsp;</label></td>
+				<td><input id="opdRoom" type="checkbox" name="opdRoom"/>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+				<td><span id="opdWardField"><select id="opdWard" name="patient.opdWard" style='width: 152px;'>	</select></span></td>
 		</tr>
-	</table>
-</form>
+		</table>
+		</div>
+		
+		<div class="floatBottom">
+		<table>
+		<tr valign="bottom">
+		<td valign="bottom"><input type="button" value="Next" onclick="PAGE.submit();" style="font-weight:bold"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		                    <input type="button" value="Reset" onclick="window.location.href=window.location.href" style="font-weight:bold"/>
+		</td>
+		</tr>
+		</table>
+		</div>
 
-<!-- ghanshyam 07-sept-2013 Support #2686 GUI Changes (spellings/ fonts/ alignments) -->
-<font size="3" color="red">Fields marked with * are mandatory!</font>
+	</form>

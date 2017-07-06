@@ -35,6 +35,7 @@ import org.jaxen.JaxenException;
 import org.openmrs.Patient;
 import org.openmrs.PersonAttribute;
 import org.openmrs.PersonAttributeType;
+import org.openmrs.PersonName;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.hospitalcore.HospitalCoreService;
 import org.openmrs.module.hospitalcore.util.HospitalCoreUtils;
@@ -115,9 +116,11 @@ public class EditPatientController {
 	private Patient generatePatient(Patient patient, Map<String, String> parameters) throws ParseException {
 		
 		// get person name
-		if (!StringUtils.isBlank(parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_NAME))) {
-			RegistrationUtils.getPersonName(patient.getPersonName(),
-			    parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_NAME));
+		if (!StringUtils.isBlank(parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_FIRSTNAME))
+				&& !StringUtils.isBlank(parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_LASTNAME))) {
+			PersonName personName = RegistrationUtils.getPersonName(null,
+			    parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_FIRSTNAME),parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_LASTNAME));
+			patient.addName(personName);
 		}
 		
 		// get birthdate
@@ -135,11 +138,11 @@ public class EditPatientController {
 		}
 		
 		// get address
-		if (!StringUtils.isBlank(parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_ADDRESS_DISTRICT))) {
-			RegistrationUtils.getPersonAddress(patient.getPersonAddress(),
-				parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_ADDRESS_POSTALADDRESS),
-			    parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_ADDRESS_DISTRICT),
-			    parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_ADDRESS_TEHSIL));
+		if (!StringUtils.isBlank(parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_ADDRESS_TOWN))) {
+			patient.addAddress(RegistrationUtils.getPersonAddress(null,
+			    parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_ADDRESS_POSTALADDRESS),
+			    parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_ADDRESS_TOWN),
+			    parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_ADDRESS_SETTLEMENT)));
 		}
 		
 		return patient;

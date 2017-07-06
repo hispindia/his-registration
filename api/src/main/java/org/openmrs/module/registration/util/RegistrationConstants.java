@@ -49,16 +49,18 @@ public class RegistrationConstants {
 	
 	// field names
 	public static final String FORM_FIELD_PATIENT_NAME = "patient.name";
+	public static final String FORM_FIELD_PATIENT_FIRSTNAME = "patient.firstName";
+	public static final String FORM_FIELD_PATIENT_LASTNAME = "patient.lastName";
 	public static final String FORM_FIELD_PATIENT_IDENTIFIER = "patient.identifier";
 	public static final String FORM_FIELD_PATIENT_BIRTHDATE = "patient.birthdate";
 	public static final String FORM_FIELD_PATIENT_BIRTHDATE_ESTIMATED = "patient.birthdateEstimate";
 	public static final String FORM_FIELD_PATIENT_GENDER = "patient.gender";
 	public static final String FORM_FIELD_PATIENT_ADDRESS_POSTALADDRESS = "patient.address.postalAddress";
-	public static final String FORM_FIELD_PATIENT_ADDRESS_DISTRICT = "patient.address.district";
-	public static final String FORM_FIELD_PATIENT_ADDRESS_TEHSIL = "patient.address.tehsil";
+	public static final String FORM_FIELD_PATIENT_ADDRESS_TOWN = "patient.address.town";
+	public static final String FORM_FIELD_PATIENT_ADDRESS_SETTLEMENT = "patient.address.settlement";
 	public static final String FORM_FIELD_PATIENT_TEMPORARY_ATTRIBUTE = "patient.temporary.attribute";
 	public static final String FORM_FIELD_PATIENT_OPD_WARD = "patient.opdWard";
-	public static final String FORM_FIELD_PATIENT_TEMPORARY_CATEGORY = "temporaryCategory";
+	public static final String FORM_FIELD_PATIENT_TEMPORARY_CATEGORY = "patient.mlc";
 	public static final String FORM_FIELD_PATIENT_REFERRED = "patient.referred";
 	public static final String FORM_FIELD_PATIENT_REFERRED_FROM = "patient.referred.from";
 	public static final String FORM_FIELD_PATIENT_REFERRED_REASON = "patient.referred.reason";
@@ -72,6 +74,11 @@ public class RegistrationConstants {
 	public static final String CONCEPT_REVISIT = "Revisit";
 	public static final String CONCEPT_NAME_TEMPORARY_CATEGORY = "TEMPORARY CATEGORY";
 	public static final String CONCEPT_NAME_OTHER_FREE = "OTHER FREE";
+	public static final String CONCEPT_NAME_OCCUPATION = "OCCUPATION";
+	public static final String CONCEPT_NAME_BLOOD_GROUP = "BLOOD GROUP";
+	public static final String CONCEPT_NAME_NATIONALITY = "Nationality";
+	public static final String CONCEPT_NAME_PAID_CATEGORY = "Paid Category";
+	public static final String CONCEPT_NAME_PROGRAMS = "Programs";
 	
 
 }
