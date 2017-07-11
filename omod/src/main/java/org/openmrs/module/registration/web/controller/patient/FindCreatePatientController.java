@@ -44,6 +44,10 @@ import org.openmrs.PatientIdentifier;
 import org.openmrs.PersonAttribute;
 import org.openmrs.PersonName;
 import org.openmrs.api.context.Context;
+import org.openmrs.module.hospitalcore.PatientQueueService;
+import org.openmrs.module.hospitalcore.model.PatientDrugHistory;
+import org.openmrs.module.hospitalcore.model.PatientFamilyHistory;
+import org.openmrs.module.hospitalcore.model.PatientPersonalHistory;
 import org.openmrs.module.hospitalcore.util.GlobalPropertyUtil;
 import org.openmrs.module.hospitalcore.util.HospitalCoreConstants;
 import org.openmrs.module.hospitalcore.util.HospitalCoreUtils;
@@ -296,6 +300,21 @@ public class FindCreatePatientController {
 			order.setEncounter(encounter);
 			encounter.addOrder(order);
 		}
+		 //Patient history
+			PatientQueueService queueService = (PatientQueueService) Context.getService(PatientQueueService.class);
+
+			PatientDrugHistory patientdrug= new PatientDrugHistory();
+			patientdrug.setCreatedOn(new Date());
+			patientdrug.setPatientId(patient.getPatientId());
+			queueService.savePatientDrugHistory(patientdrug);
+			PatientFamilyHistory patientfamily= new PatientFamilyHistory();
+		    patientfamily.setCreatedOn(new Date());
+			patientfamily.setPatientId(patient.getPatientId());
+			queueService.savePatientFamilyHistory(patientfamily);
+			PatientPersonalHistory patientperson= new PatientPersonalHistory();
+			patientperson.setCreatedOn(new Date());
+			patientperson.setPatientId(patient.getPatientId());
+			queueService.savePatientPersonalHistory(patientperson);
 		
 		/*
 		 * REFERRAL INFORMATION
