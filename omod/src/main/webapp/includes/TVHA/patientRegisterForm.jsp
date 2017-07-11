@@ -247,7 +247,6 @@ input, select, textarea {
 
 			// Capitalize fullname and relative name
 			relativeNameInCaptital = StringUtils.capitalize(jQuery("#patientRelativeName").val());
-			alert(relativeNameInCaptital);
 			jQuery("#patientRelativeName").val(relativeNameInCaptital);
 
 			// Validate and submit
@@ -430,28 +429,6 @@ input, select, textarea {
 			} else {
 				jQuery("#referralDiv").hide();
 			}
-		},
-
-		/** CALLBACK WHEN SEARCH PATIENT SUCCESSFULLY */
-		searchPatientSuccess : function(data) {
-			jQuery("#numberOfFoundPatients")
-					.html(
-							"Similar Patients: "
-									+ data.totalRow
-									+ "(<a href='javascript:PAGE.togglePatientResult();'>Show/Hide</a>)");
-		},
-
-		/** CALLBACK WHEN BEFORE SEARCHING PATIENT */
-		searchPatientBefore : function(data) {
-			jQuery("#numberOfFoundPatients")
-					.html(
-							"<center><img src='" + openmrsContextPath + "/moduleResources/hospitalcore/ajax-loader.gif" + "'/></center>");
-			jQuery("#patientSearchResult").hide();
-		},
-
-		/** TOGGLE PATIENT RESULT */
-		togglePatientResult : function() {
-			jQuery("#patientSearchResult").toggle();
 		},
 
 		/** VALIDATE FORM */
@@ -918,13 +895,13 @@ input, select, textarea {
 		<tr>
 				<td><b>Patient Category <label style="color:red">*</label></b>&nbsp;&nbsp;&nbsp;&nbsp;</td>
 				<td><input id="paidCategoryChecked" type="checkbox" name="paidCategoryChecked"/> Paid Category&nbsp;&nbsp;&nbsp;&nbsp;</td>
-				<td id="paidCategoryField"><select id="paidCategory" name="person.attribute.14" style="width: 152px;">
+				<td id="paidCategoryField"><select id="paidCategory" name="patient.paidCategory" style="width: 152px;">
 						</select></td>
 		    </tr>
 		    <tr>
 				<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
 				<td><input id="programChecked" type="checkbox" name="programChecked"/> Programs&nbsp;&nbsp;&nbsp;&nbsp;</td>
-				<td id="programField"><select id="program" name="person.attribute.14" style="width: 152px;">
+				<td id="programField"><select id="program" name="patient.program" style="width: 152px;">
 						</select></td>
 		    </tr>
 		    

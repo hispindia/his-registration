@@ -37,6 +37,10 @@ public class PatientModel {
 	
 	private String fullname;
 	
+	private String firstName;
+	
+	private String lastName;
+	
 	private String age;
 	
 	private String gender;
@@ -44,6 +48,12 @@ public class PatientModel {
 	private String category;
 	
 	private String address;
+	
+	private String postalAddress;
+	
+	private String town;
+	
+	private String settlement;
 	
 	private String birthdate;
 	
@@ -53,6 +63,8 @@ public class PatientModel {
 		setPatientId(patient.getPatientId().toString());
 		setIdentifier(patient.getPatientIdentifier().getIdentifier());
 		setFullname(PatientUtils.getFullName(patient));
+		setLastName(patient.getFamilyName());
+		setFirstName(patient.getGivenName());
 		
 		setAge(String.format("%s, %s", PatientUtils.estimateAge(patient.getBirthdate()),
 		    PatientUtils.getAgeCategory(patient)));
@@ -64,10 +76,10 @@ public class PatientModel {
 		} else if(patient.getGender().equalsIgnoreCase("O")){
 			setGender("Others");
 		}
-		
-		setAddress(patient.getPersonAddress().getAddress1() + ", " + 
-				   patient.getPersonAddress().getCityVillage() + ", " + 
-				   patient.getPersonAddress().getCountyDistrict());
+	
+		setPostalAddress(patient.getPersonAddress().getAddress1());
+		setTown(patient.getPersonAddress().getCountyDistrict());
+		setSettlement(patient.getPersonAddress().getCityVillage());
 		
 		setBirthdate(RegistrationUtils.formatDate(patient.getBirthdate()));
 		
@@ -85,6 +97,22 @@ public class PatientModel {
 		this.fullname = fullname;
 	}
 	
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
 	public String getAge() {
 		return age;
 	}
@@ -117,6 +145,30 @@ public class PatientModel {
 		this.address = address;
 	}
 	
+	public String getPostalAddress() {
+		return postalAddress;
+	}
+
+	public void setPostalAddress(String postalAddress) {
+		this.postalAddress = postalAddress;
+	}
+
+	public String getTown() {
+		return town;
+	}
+
+	public void setTown(String town) {
+		this.town = town;
+	}
+
+	public String getSettlement() {
+		return settlement;
+	}
+
+	public void setSettlement(String settlement) {
+		this.settlement = settlement;
+	}
+
 	public Map<Integer, String> getAttributes() {
 		return attributes;
 	}

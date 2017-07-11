@@ -22,6 +22,8 @@ package org.openmrs.module.registration.web.controller.patient;
 
 import java.io.IOException;
 import java.text.ParseException;
+import java.util.Date;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -32,6 +34,8 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.dom4j.DocumentException;
 import org.jaxen.JaxenException;
+import org.openmrs.Concept;
+import org.openmrs.ConceptAnswer;
 import org.openmrs.Patient;
 import org.openmrs.PersonAttribute;
 import org.openmrs.PersonAttributeType;
@@ -60,6 +64,9 @@ public class EditPatientController {
 	public String showForm(@RequestParam("patientId") Integer patientId, Model model) throws JaxenException,
 	    DocumentException, IOException, ParseException {
 		HospitalCoreService hcs = Context.getService(HospitalCoreService.class);
+		model.addAttribute("occupations", RegistrationWebUtils.getSubConcepts(RegistrationConstants.CONCEPT_NAME_OCCUPATION));
+		model.addAttribute("bloodGroups", RegistrationWebUtils.getSubConcepts(RegistrationConstants.CONCEPT_NAME_BLOOD_GROUP));
+		model.addAttribute("nationalities", RegistrationWebUtils.getSubConcepts(RegistrationConstants.CONCEPT_NAME_NATIONALITY));
 		Patient patient = Context.getPatientService().getPatient(patientId);
 		PatientModel patientModel = new PatientModel(patient);
 		model.addAttribute("patient", patientModel);
@@ -72,6 +79,20 @@ public class EditPatientController {
 				model.addAttribute("selectedOtherFree", pa.getValue());
 			}
 		}
+		model.addAttribute("paidCategories", RegistrationWebUtils.getSubConcepts(RegistrationConstants.CONCEPT_NAME_PAID_CATEGORY));
+		model.addAttribute("programs", RegistrationWebUtils.getSubConcepts(RegistrationConstants.CONCEPT_NAME_PROGRAMS));
+		Map<String, String> paidCategoryMap = new LinkedHashMap<String, String>();
+		Concept paidCategory = Context.getConceptService().getConcept(RegistrationConstants.CONCEPT_NAME_PAID_CATEGORY);
+		for (ConceptAnswer ca : paidCategory.getAnswers()) {
+			paidCategoryMap.put(ca.getAnswerConcept().getConceptId().toString(), ca.getAnswerConcept().getName().getName());
+		}
+		Map<String, String> programMap = new LinkedHashMap<String, String>();
+		Concept program = Context.getConceptService().getConcept(RegistrationConstants.CONCEPT_NAME_PROGRAMS);
+		for (ConceptAnswer ca : program.getAnswers()) {
+			programMap.put(ca.getAnswerConcept().getConceptId().toString(), ca.getAnswerConcept().getName().getName());
+		}
+		model.addAttribute("paidCategoryMap", paidCategoryMap);
+		model.addAttribute("programMap", programMap);
 		return "/module/registration/patient/editPatient";
 	}
 	
@@ -144,6 +165,24 @@ public class EditPatientController {
 			    parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_ADDRESS_TOWN),
 			    parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_ADDRESS_SETTLEMENT)));
 		}
+		
+		PersonAttribute perAttr=new PersonAttribute();
+		if (!StringUtils.isBlank(parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_PAID_CATEGORY))) {
+			perAttr.setPerson(patient);	
+			perAttr.setValue(parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_PAID_CATEGORY));
+			perAttr.setAttributeType(Context.getPersonService().getPersonAttributeType(14));
+			perAttr.setCreator(Context.getUserContext().getAuthenticatedUser());
+			perAttr.setDateCreated(new Date());
+		}
+		else if (!StringUtils.isBlank(parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_PROGRAM_CATEGORY))) {
+			perAttr.setPerson(patient);	
+			perAttr.setValue(parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_PROGRAM_CATEGORY));
+			perAttr.setAttributeType(Context.getPersonService().getPersonAttributeType(14));
+			perAttr.setCreator(Context.getUserContext().getAuthenticatedUser());
+			perAttr.setDateCreated(new Date());
+		}
+		
+		patient.addAttribute(perAttr);
 		
 		return patient;
 	}

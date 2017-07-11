@@ -58,6 +58,8 @@ public class RegistrationConstants {
 	public static final String FORM_FIELD_PATIENT_ADDRESS_POSTALADDRESS = "patient.address.postalAddress";
 	public static final String FORM_FIELD_PATIENT_ADDRESS_TOWN = "patient.address.town";
 	public static final String FORM_FIELD_PATIENT_ADDRESS_SETTLEMENT = "patient.address.settlement";
+	public static final String FORM_FIELD_PATIENT_PAID_CATEGORY = "patient.paidCategory";
+	public static final String FORM_FIELD_PATIENT_PROGRAM_CATEGORY = "patient.program";
 	public static final String FORM_FIELD_PATIENT_TEMPORARY_ATTRIBUTE = "patient.temporary.attribute";
 	public static final String FORM_FIELD_PATIENT_OPD_WARD = "patient.opdWard";
 	public static final String FORM_FIELD_PATIENT_TEMPORARY_CATEGORY = "patient.mlc";

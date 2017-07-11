@@ -29,7 +29,7 @@
 	// Hospital name
 	hospitalName = "${hospitalName}";
 
-	// Districts
+	// Towns
 	var _towns = new Array();
 	<c:forEach var="town" items="${towns}" varStatus="status">
 		_towns[${status.index}] = "${town}";

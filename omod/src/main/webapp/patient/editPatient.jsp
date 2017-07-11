@@ -26,22 +26,32 @@
 
 <script type="text/javascript">
 
-	// Districts
-	var _districts = new Array();
-	<c:forEach var="district" items="${districts}" varStatus="status">
-		_districts[${status.index}] = "${district}";
+	// Towns
+	var _towns = new Array();
+	<c:forEach var="town" items="${towns}" varStatus="status">
+		_towns[${status.index}] = "${town}";
 	</c:forEach>
 	
-	// Tehsils
-	var _tehsils = new Array();
-	<c:forEach var="tehsil" items="${tehsils}" varStatus="status">
-		_tehsils[${status.index}] = "${tehsil}";
-	</c:forEach>	
+	var _settlements = new Array();
+	<c:forEach var="settlement" items="${settlements}" varStatus="status">
+		_settlements[${status.index}] = "${settlement}";
+	</c:forEach>
 	
 	// Patient Attribute
 	var _attributes = new Array();
 	<c:forEach var="entry" items="${patient.attributes}">
 		_attributes[${entry.key}] = "${entry.value}";
+	</c:forEach>
+	
+	
+	var _paidCategoryMap = new Array();
+	<c:forEach var="entry" items="${paidCategoryMap}">
+		_paidCategoryMap[${entry.key}] = "${entry.value}";
+	</c:forEach>
+	
+	var _programMap = new Array();
+	<c:forEach var="entry" items="${programMap}">
+		_programMap[${entry.key}] = "${entry.value}";
 	</c:forEach>
 	
 	/**
@@ -51,15 +61,24 @@
 		patientId: "${patient.patientId}",
 		patientIdentifier: "${patient.identifier}",
 		patientName: "${patient.fullname}",
+		lastName: "${patient.lastName}",
+		firstName: "${patient.firstName}",
 		patientAge: "${patient.age}",
 		patientGender: "${patient.gender}",
-		patientAddress: "${patient.address}",
+		postalAddress: "${patient.postalAddress}",
+		town: "${patient.town}",
+		settlement: "${patient.settlement}",
 		patientBirthdate: "${patient.birthdate}",
 		patientAttributes: _attributes,
-		districts: _districts,
-		tehsils: _tehsils,
-		OTHERFREE: "${OTHERFREE}",
-		selectedOtherFree: "${selectedOtherFree}"
+		towns: _towns,
+		settlements: _settlements,
+		occupations: "${occupations}",
+		bloodGroups: "${bloodGroups}",
+		nationalities: "${nationalities}",
+		paidCategories: "${paidCategories}",
+		programs: "${programs}",
+		paidCategoryMap : _paidCategoryMap,
+		programMap : _programMap
 	};
 </script>
 

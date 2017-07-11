@@ -72,7 +72,6 @@ public class FindCreatePatientController {
 		model.addAttribute("bloodGroups", RegistrationWebUtils.getSubConcepts(RegistrationConstants.CONCEPT_NAME_BLOOD_GROUP));
 		model.addAttribute("nationalities", RegistrationWebUtils.getSubConcepts(RegistrationConstants.CONCEPT_NAME_NATIONALITY));
 		model.addAttribute("OPDs", RegistrationWebUtils.getSubConcepts(RegistrationConstants.CONCEPT_NAME_OPD_WARD));
-		model.addAttribute("OTHERFREE", RegistrationWebUtils.getSubConcepts(RegistrationConstants.CONCEPT_NAME_OTHER_FREE));
 		model.addAttribute("TEMPORARYCAT", RegistrationWebUtils.getSubConcepts(RegistrationConstants.CONCEPT_NAME_TEMPORARY_CATEGORY));
 		model.addAttribute("referralHospitals",
 		    RegistrationWebUtils.getSubConcepts(RegistrationConstants.CONCEPT_NAME_PATIENT_REFERRED_FROM));
@@ -209,6 +208,24 @@ public class FindCreatePatientController {
 		} else {
 			throw new Exception(validateResult);
 		}
+		
+		PersonAttribute perAttr=new PersonAttribute();
+		if (!StringUtils.isBlank(parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_PAID_CATEGORY))) {
+			perAttr.setPerson(patient);	
+			perAttr.setValue(parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_PAID_CATEGORY));
+			perAttr.setAttributeType(Context.getPersonService().getPersonAttributeType(14));
+			perAttr.setCreator(Context.getUserContext().getAuthenticatedUser());
+			perAttr.setDateCreated(new Date());
+		}
+		else if (!StringUtils.isBlank(parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_PROGRAM_CATEGORY))) {
+			perAttr.setPerson(patient);	
+			perAttr.setValue(parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_PROGRAM_CATEGORY));
+			perAttr.setAttributeType(Context.getPersonService().getPersonAttributeType(14));
+			perAttr.setCreator(Context.getUserContext().getAuthenticatedUser());
+			perAttr.setDateCreated(new Date());
+		}
+		
+		patient.addAttribute(perAttr);
 		
 		return patient;
 	}
