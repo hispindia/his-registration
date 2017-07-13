@@ -27,6 +27,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -38,6 +39,7 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openmrs.Concept;
+import org.openmrs.ConceptAnswer;
 import org.openmrs.Encounter;
 import org.openmrs.Obs;
 import org.openmrs.Order;
@@ -140,13 +142,19 @@ public class ShowPatientInfoController {
 		}
 		
 		List<PersonAttribute> pas = hcs.getPersonAttributes(patientId);
-		for (PersonAttribute pa : pas) {
-			PersonAttributeType attributeType = pa.getAttributeType();
-			if (attributeType.getPersonAttributeTypeId() == 19) {
-				Concept con=Context.getConceptService().getConcept(Integer.parseInt(pa.getValue()));
-				model.addAttribute("selectedOtherFree", con.getName().getName());
-			}
+		
+		Map<String, String> paidCategoryMap = new LinkedHashMap<String, String>();
+		Concept paidCategory = Context.getConceptService().getConcept(RegistrationConstants.CONCEPT_NAME_PAID_CATEGORY);
+		for (ConceptAnswer ca : paidCategory.getAnswers()) {
+			paidCategoryMap.put(ca.getAnswerConcept().getConceptId().toString(), ca.getAnswerConcept().getName().getName());
 		}
+		Map<String, String> programMap = new LinkedHashMap<String, String>();
+		Concept program = Context.getConceptService().getConcept(RegistrationConstants.CONCEPT_NAME_PROGRAMS);
+		for (ConceptAnswer ca : program.getAnswers()) {
+			programMap.put(ca.getAnswerConcept().getConceptId().toString(), ca.getAnswerConcept().getName().getName());
+		}
+		model.addAttribute("paidCategoryMap", paidCategoryMap);
+		model.addAttribute("programMap", programMap);
 		
 		return "/module/registration/patient/showPatientInfo";
 	}

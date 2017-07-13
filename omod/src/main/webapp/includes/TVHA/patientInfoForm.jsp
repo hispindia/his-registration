@@ -15,20 +15,7 @@
 		else{
 		jQuery("#aadharCardRow").hide();
 		}
-		jQuery("#category").html(MODEL.patientAttributes[14]);
-		if("RSBY" == MODEL.patientAttributes[14]){
-		jQuery("#RSBY").html(MODEL.patientAttributes[11]);
-		}
-		if("BPL" == MODEL.patientAttributes[14]){
-		jQuery("#BPL").html(MODEL.patientAttributes[10]);
-		}
-		if("RSBY,BPL" == MODEL.patientAttributes[14]){
-		jQuery("#RSBY").html(MODEL.patientAttributes[11]);
-		//jQuery("#BPL").html(MODEL.patientAttributes[10]);
-		}
-		if(MODEL.patientAttributes[14]=='Other Free'){
-		jQuery("#freeCategory").html(MODEL.selectedOtherFree);
-		}
+		jQuery("#category").html(MODEL.paidCategoryMap[MODEL.patientAttributes[14]]);
 		
 		if(!StringUtils.isBlank(MODEL.selectedTemporaryCategory)){
 		jQuery("#temporaryCategories").html(MODEL.selectedTemporaryCategory);
@@ -231,7 +218,7 @@
 	};
 </script>
 <input id="printSlip" type="button" value="Print"
-	onClick="PAGE.submit(false);" /> <!-- Sept 22,2012 -- Sagar Bele -- Issue 387 --Change case of word Reprint-->
+	onClick="PAGE.submit(false);" />
 <input id="reprint" type="button" value="Reprint"
 	onClick="PAGE.submit(true);" />
 <input id="buySlip" type="button" value="Buy a new slip"
@@ -273,9 +260,6 @@
 				<tr>
 					<td colspan="1"><b>Category:</b></td>
 					<td colspan="2"><span id="category" /></td>
-					<td><span id="RSBY" /></td>
-					<td><span id="BPL" /></td>
-					<td colspan="3"><span id="freeCategory" /></td>
 				</tr>
 				
 				<tr id="aadharCardRow">

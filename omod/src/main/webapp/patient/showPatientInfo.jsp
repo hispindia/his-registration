@@ -34,6 +34,16 @@
 		_observations[${entry.key}] = "${entry.value}";
 	</c:forEach>
 	
+	var _paidCategoryMap = new Array();
+	<c:forEach var="entry" items="${paidCategoryMap}">
+		_paidCategoryMap[${entry.key}] = "${entry.value}";
+	</c:forEach>
+	
+	var _programMap = new Array();
+	<c:forEach var="entry" items="${programMap}">
+		_programMap[${entry.key}] = "${entry.value}";
+	</c:forEach>
+	
 	/**
 	 ** VALUES FROM MODEL
 	 **/
@@ -56,7 +66,8 @@
 		tempCategoryId: "${tempCategoryId}",
 		tempCategoryConceptName: "${tempCategoryConceptName}",
 		opdWardId: "${opdWardId}",
-		selectedOtherFree: "${selectedOtherFree}"
+		paidCategoryMap : _paidCategoryMap,
+		programMap : _programMap
 	};
 </script>
 

@@ -57,8 +57,8 @@
 		tempCategoryId: "${tempCategoryId}",
 		tempCategoryConceptName: "${tempCategoryConceptName}",
 		opdWardId: "${opdWardId}",
-		OTHERFREE: "${OTHERFREE}",
-		selectedOtherFree: "${selectedOtherFree}"
+		paidCategories: "${paidCategories}",
+		programs: "${programs}"
 	};
 </script>
 

@@ -27,6 +27,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -38,6 +39,7 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openmrs.Concept;
+import org.openmrs.ConceptAnswer;
 import org.openmrs.Encounter;
 import org.openmrs.Obs;
 import org.openmrs.Order;
@@ -149,6 +151,9 @@ public class ShowPatientInfoForRevisitPatientController {
 			}
 		}
 		
+		model.addAttribute("paidCategories", RegistrationWebUtils.getSubConcepts(RegistrationConstants.CONCEPT_NAME_PAID_CATEGORY));
+		model.addAttribute("programs", RegistrationWebUtils.getSubConcepts(RegistrationConstants.CONCEPT_NAME_PROGRAMS));
+		
 		return "/module/registration/patient/showPatientInfoForRevisitPatient";
 	}
 	
@@ -224,6 +229,24 @@ public class ShowPatientInfoForRevisitPatientController {
 				encounter.addOrder(order);
 			}
 		}
+		
+		PersonAttribute perAttr=new PersonAttribute();
+		if (!StringUtils.isBlank(parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_PAID_CATEGORY))) {
+			perAttr.setPerson(patient);	
+			perAttr.setValue(parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_PAID_CATEGORY));
+			perAttr.setAttributeType(Context.getPersonService().getPersonAttributeType(14));
+			perAttr.setCreator(Context.getUserContext().getAuthenticatedUser());
+			perAttr.setDateCreated(new Date());
+		}
+		else if (!StringUtils.isBlank(parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_PROGRAM_CATEGORY))) {
+			perAttr.setPerson(patient);	
+			perAttr.setValue(parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_PROGRAM_CATEGORY));
+			perAttr.setAttributeType(Context.getPersonService().getPersonAttributeType(14));
+			perAttr.setCreator(Context.getUserContext().getAuthenticatedUser());
+			perAttr.setDateCreated(new Date());
+		}
+		
+		patient.addAttribute(perAttr);
 		
 		
 		for (String name : parameters.keySet()) {

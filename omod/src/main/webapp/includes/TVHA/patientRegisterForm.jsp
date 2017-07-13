@@ -572,7 +572,6 @@ input, select, textarea {
 	 **/
 	VALIDATORS = {
 		
-		/** CHECK WHEN PAYING CATEGORY IS SELECTED */
 		payingCheck : function() {
 			if (jQuery("#paidCategoryChecked").is(':checked')) {
 					jQuery("#programChecked").removeAttr("checked");
@@ -585,7 +584,6 @@ input, select, textarea {
 			}
 		},
 		
-		/** CHECK WHEN NONPAYING CATEGORY IS SELECTED */
 		programCheck : function() {
 			if (jQuery("#programChecked").is(':checked')) {
 					jQuery("#paidCategoryChecked").removeAttr("checked");
