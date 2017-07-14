@@ -15,7 +15,12 @@
 		else{
 		jQuery("#aadharCardRow").hide();
 		}
+		if(MODEL.paidCategoryMap[MODEL.patientAttributes[14]]!=undefined){
 		jQuery("#category").html(MODEL.paidCategoryMap[MODEL.patientAttributes[14]]);
+		}
+		else{
+		jQuery("#category").html(MODEL.programMap[MODEL.patientAttributes[14]]);
+		}
 		
 		if(!StringUtils.isBlank(MODEL.selectedTemporaryCategory)){
 		jQuery("#temporaryCategories").html(MODEL.selectedTemporaryCategory);

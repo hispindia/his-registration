@@ -67,6 +67,10 @@
 					optionDelimiter : "|"
 				});
 		
+		PAGE.fillOptions("#regFee", {
+					data : MODEL.regFees
+				});
+		
 		jQuery("#buySlip").hide();
 		
 		// Set data for reprint page
@@ -139,6 +143,8 @@
 				}
 				jQuery("#patCat1").hide();
 				jQuery("#patCat2").hide();
+				
+				jQuery("#regFeeRow").hide();
 				
 				// submit form and print		
 				if(!reprint){
@@ -369,6 +375,7 @@
 				</tr>
 				</table>
 				</td>
+				</tr>
 				
 				<tr id="patCat2">
 				<td colspan="1" rowspan="1"></td>     
@@ -383,6 +390,14 @@
 				</tr>
 				</table>
 				</td>
+				</tr>
+				
+				<tr id="regFeeRow">
+				<td><b>Registration Fee <label style="color:red">*</label></b>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+				<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+				<td><select id="regFee" name="person.attribute.28" style='width: 130px;'>
+					</select></td>
+		    </tr>
 				
 				<tr id="temporaryCategories">
 					<td colspan="1"><b>Temporary Categories:</b></td>

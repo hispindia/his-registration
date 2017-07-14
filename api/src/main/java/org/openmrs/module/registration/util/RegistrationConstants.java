@@ -63,6 +63,7 @@ public class RegistrationConstants {
 	public static final String FORM_FIELD_PATIENT_TEMPORARY_ATTRIBUTE = "patient.temporary.attribute";
 	public static final String FORM_FIELD_PATIENT_OPD_WARD = "patient.opdWard";
 	public static final String FORM_FIELD_PATIENT_TEMPORARY_CATEGORY = "patient.mlc";
+	public static final String FORM_FIELD_REGISTRATION_FEE = "person.attribute.28";
 	public static final String FORM_FIELD_PATIENT_REFERRED = "patient.referred";
 	public static final String FORM_FIELD_PATIENT_REFERRED_FROM = "patient.referred.from";
 	public static final String FORM_FIELD_PATIENT_REFERRED_REASON = "patient.referred.reason";

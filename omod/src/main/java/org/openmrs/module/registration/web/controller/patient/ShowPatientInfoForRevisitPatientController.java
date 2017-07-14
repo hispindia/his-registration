@@ -28,6 +28,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -154,6 +155,14 @@ public class ShowPatientInfoForRevisitPatientController {
 		model.addAttribute("paidCategories", RegistrationWebUtils.getSubConcepts(RegistrationConstants.CONCEPT_NAME_PAID_CATEGORY));
 		model.addAttribute("programs", RegistrationWebUtils.getSubConcepts(RegistrationConstants.CONCEPT_NAME_PROGRAMS));
 		
+		String registrationFee=GlobalPropertyUtil.getString("registration.registrationFee", "0");
+		List<String> regFee=new LinkedList<String>();
+		regFee.add("Select");
+		regFee.add(registrationFee);
+		regFee.add("Free");
+		regFee.add("50% Discount");
+		model.addAttribute("regFees",regFee);
+		
 		return "/module/registration/patient/showPatientInfoForRevisitPatient";
 	}
 	
@@ -255,6 +264,12 @@ public class ShowPatientInfoForRevisitPatientController {
 				String idText = parts[parts.length - 1];
 				Integer id = Integer.parseInt(idText);
 				PersonAttribute attribute = RegistrationUtils.getPersonAttribute(id, parameters.get(name));
+				if(attribute.getAttributeType().getId()==28 && parameters.get(RegistrationConstants.FORM_FIELD_REGISTRATION_FEE).equals("50% Discount")){
+					String regitFeeDefault=GlobalPropertyUtil.getString("registration.registrationFee", "0");
+					Integer regitFeeInInteger=Integer.parseInt(regitFeeDefault);
+					Float discountedRegFee=(float) (regitFeeInInteger/2);
+					attribute.setValue(discountedRegFee.toString(discountedRegFee));
+				}
 				patient.addAttribute(attribute);
 				patient = Context.getPatientService().savePatient(patient);
 			}

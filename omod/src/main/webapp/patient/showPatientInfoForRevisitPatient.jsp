@@ -34,6 +34,11 @@
 		_observations[${entry.key}] = "${entry.value}";
 	</c:forEach>
 	
+	var _regFees = new Array();
+	<c:forEach var="regFee" items="${regFees}" varStatus="status">
+		_regFees[${status.index}] = "${regFee}";
+	</c:forEach>
+	
 	/**
 	 ** VALUES FROM MODEL
 	 **/
@@ -58,7 +63,8 @@
 		tempCategoryConceptName: "${tempCategoryConceptName}",
 		opdWardId: "${opdWardId}",
 		paidCategories: "${paidCategories}",
-		programs: "${programs}"
+		programs: "${programs}",
+		regFees: _regFees
 	};
 </script>
 

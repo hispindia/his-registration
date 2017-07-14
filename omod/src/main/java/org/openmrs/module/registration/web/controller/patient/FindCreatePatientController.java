@@ -206,6 +206,12 @@ public class FindCreatePatientController {
 					String idText = parts[parts.length - 1];
 					Integer id = Integer.parseInt(idText);
 					PersonAttribute attribute = RegistrationUtils.getPersonAttribute(id, parameters.get(name));
+					if(attribute.getAttributeType().getId()==28 && parameters.get(RegistrationConstants.FORM_FIELD_REGISTRATION_FEE).equals("50% Discount")){
+						String regitFeeDefault=GlobalPropertyUtil.getString("registration.registrationFee", "0");
+						Integer regitFeeInInteger=Integer.parseInt(regitFeeDefault);
+						Float discountedRegFee=(float) (regitFeeInInteger/2);
+						attribute.setValue(discountedRegFee.toString(discountedRegFee));
+					}
 					patient.addAttribute(attribute);
 				}
 			}
