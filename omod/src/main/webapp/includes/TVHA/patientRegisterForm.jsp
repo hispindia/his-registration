@@ -82,6 +82,16 @@ input, select, textarea {
 					changeMonth : true,
 					changeYear : true
 				});
+				jQuery("#searchbox").showPatientSearchBox(
+						{
+							searchBoxView : hospitalName + "/relativeNameSearch",
+							resultView : "/module/registration/patientsearch/"
+									+ hospitalName + "/searchField",
+							success : function(data) {
+								PAGE.searchPatientSuccess(data);
+							},
+							beforeNewSearch : PAGE.searchPatientBefore
+						});
 				jQuery('#movedToAreaDate').datepicker({
 					yearRange : 'c-100:c+100',
 					dateFormat : 'dd/mm/yy',
@@ -169,20 +179,7 @@ input, select, textarea {
 					delimiter : ",",
 					optionDelimiter : "|"
 				});
-
-				jQuery("#searchbox").showPatientSearchBox(
-						{
-							searchBoxView : hospitalName + "/registration",
-							resultView : "/module/registration/patientsearch/"
-									+ hospitalName + "/findCreate",
-							success : function(data) {
-								PAGE.searchPatientSuccess(data);
-							},
-							beforeNewSearch : PAGE.searchPatientBefore
-						});
-
-
-		
+				
 				jQuery("#paidCategoryField").hide();
                 jQuery("#programField").hide();
 				jQuery("#mlc").hide();
@@ -275,6 +272,27 @@ input, select, textarea {
 								});
 			}
 		},
+		
+		searchPatientSuccess : function(data) {
+				jQuery("#numberOfFoundPatients")
+				.html(
+						"Similar patients: "
+								+ data.totalRow
+								+ "(<a href='javascript:PAGE.togglePatientResult();'>show/hide</a>)");
+	},
+
+	/** CALLBACK WHEN BEFORE SEARCHING PATIENT */
+	searchPatientBefore : function(data) {
+		jQuery("#numberOfFoundPatients")
+				.html(
+						"<center><img src='" + openmrsContextPath + "/moduleResources/hospitalcore/ajax-loader.gif" + "'/></center>");
+		jQuery("#patientSearchResult").hide();
+	},
+
+	/** TOGGLE PATIENT RESULT */
+	togglePatientResult : function() {
+		jQuery("#patientSearchResult").toggle();
+	},
 		
 		checkNationalID : function() {	
 		nationalId=jQuery("#patientNationalId").val();
@@ -648,7 +666,6 @@ input, select, textarea {
 		 * Check patient gender
 		 */
 		genderCheck : function() {
-
 			jQuery("#patientRelativeNameSection").empty();
 			if (jQuery("#patientGender").val() == "M") {
 				jQuery("#patientRelativeNameSection")
@@ -744,6 +761,9 @@ input, select, textarea {
 	document.getElementById("movedToAreaDate").disabled = false;
 	}
 </script>
+<script type="text/javascript">
+			
+				</script>
 <h3 align="center" style="color:black">PATIENT REGISTRATION<br></h3>
 <!--  
 <h4 align="center" style="color:black">Patient Identifier<label style="color:red">*</label>&nbsp;&nbsp;&nbsp;&nbsp;${patientIdentifier}<br></h4>
@@ -917,9 +937,21 @@ input, select, textarea {
 		    <tr>
 				<td><b>Relative Name <label style="color:red">*</label></b>&nbsp;&nbsp;&nbsp;&nbsp;</td>
 				<td id="patientRelativeNameSection">&nbsp;&nbsp;&nbsp;&nbsp;</td>
-				<td><input id="patientRelativeName" name="person.attribute.8" style='width: 152px;'/></td>
+				<td><div id="searchbox"></div></td>
+				<td><input id="patientRelativeName" name="person.attribute.8" type="hidden" 'width: 152px;'/></td>
 		    </tr>
-		
+		    <tr>
+		    <td></td>
+		    <td></td>
+		    <td colspan="2">
+				<div id="numberOfFoundPatients"></div>
+			</td>
+			</tr>
+			<tr>
+			<td></td>
+		    <td></td>
+			<td colspan="2"><div id="patientSearchResult"></div></td>
+		    </tr>
 		<tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr>
 		<tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr>
 		<tr>
