@@ -242,10 +242,6 @@ input, select, textarea {
 		/** SUBMIT */
 		submit : function() {
 
-			// Capitalize fullname and relative name
-			relativeNameInCaptital = StringUtils.capitalize(jQuery("#patientRelativeName").val());
-			jQuery("#patientRelativeName").val(relativeNameInCaptital);
-
 			// Validate and submit
 			if (this.validateRegisterForm()) {
 				jQuery("#patientRegistrationForm")
@@ -278,7 +274,7 @@ input, select, textarea {
 				.html(
 						"Similar patients: "
 								+ data.totalRow
-								+ "(<a href='javascript:PAGE.togglePatientResult();'>show/hide</a>)");
+								+ "(<a href='javascript:PAGE.popUpWindow();'>show/hide</a>)");
 	},
 
 	/** CALLBACK WHEN BEFORE SEARCHING PATIENT */
@@ -292,6 +288,10 @@ input, select, textarea {
 	/** TOGGLE PATIENT RESULT */
 	togglePatientResult : function() {
 		jQuery("#patientSearchResult").toggle();
+	},
+	popUpWindow : function() {
+	var url = "#TB_inline?height=400&width=400&inlineId=patientSearchResult";
+    tb_show("Patient Search List",url,false);	
 	},
 		
 		checkNationalID : function() {	
@@ -519,15 +519,7 @@ input, select, textarea {
 				alert("Please enter the patient's relative name");
 				return false;
 			} 
-			else{
-			    value = jQuery("#patientRelativeName").val();
-				//value = value.substr(0, 1).toUpperCase() + value.substr(1);
-				//jQuery("#patientRelativeName").val(value);
-				if(/^[a-zA-Z- ]*$/.test(value) == false) {
-					alert("Please enter patient's relative name in correct format");
-					return false;
-				}
-			}
+		
 			
 			if (jQuery("#mlcCaseYes").attr('checked') == false
 					&& jQuery("#mlcCaseNo").attr('checked') == false) {			
@@ -938,7 +930,8 @@ input, select, textarea {
 				<td><b>Relative Name <label style="color:red">*</label></b>&nbsp;&nbsp;&nbsp;&nbsp;</td>
 				<td id="patientRelativeNameSection">&nbsp;&nbsp;&nbsp;&nbsp;</td>
 				<td><div id="searchbox"></div></td>
-				<td><input id="patientRelativeName" name="person.attribute.8" type="hidden" 'width: 152px;'/></td>
+				<td><input id="patientRelativeName" name="patientRelativeName" type="hidden" style='width: 152px;'/></td>
+				<td><input id="patientRelativeId" name="patientRelativeId" type="hidden" style='width: 152px;'/></td>
 		    </tr>
 		    <tr>
 		    <td></td>

@@ -25,7 +25,9 @@
 <br/>
 
 <script type="text/javascript">
-
+    // Hospital name
+	hospitalName = "${hospitalName}";
+	
 	// Towns
 	var _towns = new Array();
 	<c:forEach var="town" items="${towns}" varStatus="status">
@@ -78,7 +80,9 @@
 		paidCategories: "${paidCategories}",
 		programs: "${programs}",
 		paidCategoryMap : _paidCategoryMap,
-		programMap : _programMap
+		programMap : _programMap,
+		relativeName : "${patSearch.relativeName}",
+		relativeId : "${patSearch.relativeId.patientId}"
 	};
 </script>
 

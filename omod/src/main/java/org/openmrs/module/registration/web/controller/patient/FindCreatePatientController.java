@@ -106,7 +106,9 @@ public class FindCreatePatientController {
 			// create patient
 			patient = generatePatient(parameters);
 			patient = Context.getPatientService().savePatient(patient);
-			RegistrationUtils.savePatientSearch(patient);
+			String relativeName=parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_RELATIVE_NAME);
+			String relativeId=parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_RELATIVE_ID);
+			RegistrationUtils.savePatientSearch(patient,relativeName,Integer.parseInt(relativeId));
 			logger.info(String.format("Saved new patient [id=%s]", patient.getId()));
 			
 			/**

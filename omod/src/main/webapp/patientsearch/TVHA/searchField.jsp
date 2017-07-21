@@ -27,8 +27,7 @@
 		oldBackgroundColor: "",
 		
 		/** Click to view patient info */
-		//ghanshyam,22-oct-2013,New Requirement #2940 Dealing with dead patient
-		visit: function(patientId,deadInfo,admittedInfo){
+		selectPatient: function(relativeName,relativeId,deadInfo,admittedInfo){
 		if(deadInfo=="true"){
         alert("This Patient is Dead");
         return false;
@@ -37,25 +36,20 @@
         alert("This Patient is admitted");
         return false;
         }							
-			window.location.href = openmrsContextPath + "/module/registration/showPatientInfoForRevisitPatient.form?patientId=" + patientId + "&revisit=true";
+			jQuery("#nameOrgivenNameOrmiddleNameOrfamilyNameOrIdentifier").val(relativeName);
+			jQuery("#patientRelativeName").val(relativeName);
+			jQuery("#patientRelativeId").val(relativeId);
 		},
 		
 		/** Edit a patient */
-		editPatient: function(patientId,deadInfo){
+		editPatient: function(relativeName,relativeId,deadInfo){
 		if(deadInfo=="true"){
         alert("This Patient is Dead");
         return false;
         }		
 			window.location.href = openmrsContextPath + "/module/registration/editPatient.form?patientId=" + patientId;
-		},
-	
-		reprint: function(patientId,deadInfo){
-		if(deadInfo=="true"){
-        alert("This Patient is Dead");
-        return false;
-        }		
-			window.location.href = openmrsContextPath + "/module/registration/showPatientInfo.form?patientId=" + patientId + "&reprint=true";
 		}
+	
 	};
 	jQuery(document).ready(function(){
 	// hover rows
@@ -83,11 +77,7 @@
 			
 		});	
 	});
-	
-	
 </script>
-
-
 
 <c:choose>
 	<c:when test="${not empty patients}" >		
@@ -104,17 +94,17 @@
 		<c:forEach items="${patients}" var="patient" varStatus="varStatus">
 			<tr class='${varStatus.index % 2 == 0 ? "oddRow" : "evenRow" } patientSearchRow'>
 			
-				<td align="center" onclick="PATIENTSEARCHRESULT.visit(${patient.patientId},'${patient.dead}');">
+				<td align="center" onclick="PATIENTSEARCHRESULT.selectPatient('${patient.givenName} ${patient.familyName}',${patient.patientId},'${patient.dead}');">
 					${patient.patientIdentifier.identifier}
 				</td>
-				<td  align="center" onclick="PATIENTSEARCHRESULT.visit(${patient.patientId},'${patient.dead}');">${patient.givenName} ${patient.middleName} ${patient.familyName}</td>
-				<td align="center" onclick="PATIENTSEARCHRESULT.visit (${patient.patientId},'${patient.dead}');"> 
+				<td  align="center" onclick="PATIENTSEARCHRESULT.selectPatient('${patient.givenName} ${patient.familyName}',${patient.patientId},'${patient.dead}');">${patient.givenName} ${patient.middleName} ${patient.familyName}</td>
+				<td align="center" onclick="PATIENTSEARCHRESULT.selectPatient('${patient.givenName} ${patient.familyName}',${patient.patientId},'${patient.dead}');"> 
                 	<c:choose>
                 		<c:when test="${patient.age == 0}"> &lt 1 </c:when>
                 		<c:otherwise >${patient.age}</c:otherwise>
                 	</c:choose>
                 </td>
-				<td align="center" onclick="PATIENTSEARCHRESULT.visit(${patient.patientId},'${patient.dead}');">
+				<td align="center" onclick="PATIENTSEARCHRESULT.selectPatient('${patient.givenName} ${patient.familyName}',${patient.patientId},'${patient.dead}');">
 					<c:choose>
                 		<c:when test="${patient.gender eq 'M'}">
 							<img src="${pageContext.request.contextPath}/images/male.gif"/>

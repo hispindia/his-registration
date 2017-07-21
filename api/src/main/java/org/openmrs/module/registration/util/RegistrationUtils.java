@@ -228,9 +228,9 @@ public class RegistrationUtils {
 	 * Save common information to patientSearch table to speed up search process
 	 * @param patient
 	 */
-	public static void savePatientSearch(Patient patient){
+	public static void savePatientSearch(Patient patient,String relativeName,Integer relativeId){
 		PatientSearch ps = new PatientSearch();
-		String fullname = PatientUtils.getFullName(patient).replace(" ", "");
+		String fullname = PatientUtils.getFullName(patient);
 		ps.setFullname(fullname);
 		ps.setPatientId(patient.getPatientId());
 		ps.setAge(patient.getAge());
@@ -241,6 +241,8 @@ public class RegistrationUtils {
 		ps.setMiddleName(patient.getMiddleName());
 		ps.setIdentifier(patient.getPatientIdentifier().getIdentifier());
 		ps.setPersonNameId(patient.getPersonName().getId());
+		ps.setRelativeName(relativeName);
+		ps.setRelativeId(Context.getPatientService().getPatient(relativeId));
 		
 		
 		Context.getService(HospitalCoreService.class).savePatientSearch(ps);

@@ -82,6 +82,16 @@ input, select, textarea {
 					changeMonth : true,
 					changeYear : true
 				});
+				jQuery("#searchbox").showPatientSearchBox(
+						{
+							searchBoxView : hospitalName + "/relativeNameSearch",
+							resultView : "/module/registration/patientsearch/"
+									+ hospitalName + "/searchField",
+							success : function(data) {
+								PAGE.searchPatientSuccess(data);
+							},
+							beforeNewSearch : PAGE.searchPatientBefore
+						});
 				jQuery('#movedToAreaDate').datepicker({
 					yearRange : 'c-100:c+100',
 					dateFormat : 'dd/mm/yy',
@@ -203,8 +213,12 @@ input, select, textarea {
 				 jQuery("#program").val(MODEL.patientAttributes[14]);
 				}
 				
-				formValues += "person.attribute.8=="
-						+ MODEL.patientAttributes[8] + "||";
+				//formValues += "person.attribute.8=="
+						//+ MODEL.patientAttributes[8] + "||";
+						
+				jQuery("#nameOrgivenNameOrmiddleNameOrfamilyNameOrIdentifier").val(MODEL.relativeName);
+			    jQuery("#patientRelativeName").val(MODEL.relativeName);
+			    jQuery("#patientRelativeId").val(MODEL.relativeId);
 				
 				jQuery("#patientRegistrationForm").fillForm(formValues);
 				
@@ -241,10 +255,6 @@ input, select, textarea {
 		/** SUBMIT */
 		submit : function() {
 
-			// Capitalize fullname and relative name
-			relativeNameInCaptital = StringUtils.capitalize(jQuery("#patientRelativeName").val());
-			jQuery("#patientRelativeName").val(relativeNameInCaptital);
-
 			// Validate and submit
 			if (this.validateRegisterForm()) {
 				jQuery("#patientRegistrationForm")
@@ -268,6 +278,31 @@ input, select, textarea {
 								});
 			}
 		},
+		
+		searchPatientSuccess : function(data) {
+				jQuery("#numberOfFoundPatients")
+				.html(
+						"Similar patients: "
+								+ data.totalRow
+								+ "(<a href='javascript:PAGE.popUpWindow();'>show/hide</a>)");
+	},
+
+	/** CALLBACK WHEN BEFORE SEARCHING PATIENT */
+	searchPatientBefore : function(data) {
+		jQuery("#numberOfFoundPatients")
+				.html(
+						"<center><img src='" + openmrsContextPath + "/moduleResources/hospitalcore/ajax-loader.gif" + "'/></center>");
+		jQuery("#patientSearchResult").hide();
+	},
+
+	/** TOGGLE PATIENT RESULT */
+	togglePatientResult : function() {
+		jQuery("#patientSearchResult").toggle();
+	},
+	popUpWindow : function() {
+	var url = "#TB_inline?height=400&width=400&inlineId=patientSearchResult";
+    tb_show("Patient Search List",url,false);	
+	},
 		
 		checkNationalID : function() {	
 		nationalId=jQuery("#patientNationalId").val();
@@ -499,15 +534,6 @@ input, select, textarea {
 				alert("Please enter the patient's relative name");
 				return false;
 			} 
-			else{
-			    value = jQuery("#patientRelativeName").val();
-				//value = value.substr(0, 1).toUpperCase() + value.substr(1);
-				//jQuery("#patientRelativeName").val(value);
-				if(/^[a-zA-Z- ]*$/.test(value) == false) {
-					alert("Please enter patient's relative name in correct format");
-					return false;
-				}
-			}
 			
             //submitNationalIDAndPassportNumber();
             if(validateNationalIDAndPassportNumber()){
@@ -812,7 +838,21 @@ input, select, textarea {
 		    <tr>
 				<td><b>Relative Name <label style="color:red">*</label></b>&nbsp;&nbsp;&nbsp;&nbsp;</td>
 				<td id="patientRelativeNameSection">&nbsp;&nbsp;&nbsp;&nbsp;</td>
-				<td><input id="patientRelativeName" name="person.attribute.8" style='width: 152px;'/></td>
+				<td><div id="searchbox"></div></td>
+				<td><input id="patientRelativeName" name="patientRelativeName" type="hidden" style='width: 152px;'/></td>
+				<td><input id="patientRelativeId" name="patientRelativeId" type="hidden" style='width: 152px;'/></td>
+		    </tr>
+		    <tr>
+		    <td></td>
+		    <td></td>
+		    <td colspan="2">
+				<div id="numberOfFoundPatients"></div>
+			</td>
+			</tr>
+			<tr>
+			<td></td>
+		    <td></td>
+			<td colspan="2"><div id="patientSearchResult"></div></td>
 		    </tr>
 		</table>
 		</div>

@@ -42,6 +42,7 @@ import org.openmrs.PersonAttributeType;
 import org.openmrs.PersonName;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.hospitalcore.HospitalCoreService;
+import org.openmrs.module.hospitalcore.model.PatientSearch;
 import org.openmrs.module.hospitalcore.util.HospitalCoreUtils;
 import org.openmrs.module.registration.includable.validator.attribute.PatientAttributeValidatorService;
 import org.openmrs.module.registration.util.RegistrationConstants;
@@ -69,7 +70,10 @@ public class EditPatientController {
 		model.addAttribute("nationalities", RegistrationWebUtils.getSubConcepts(RegistrationConstants.CONCEPT_NAME_NATIONALITY));
 		Patient patient = Context.getPatientService().getPatient(patientId);
 		PatientModel patientModel = new PatientModel(patient);
+		PatientSearch patSearch=hcs.getPatient(patientId);
 		model.addAttribute("patient", patientModel);
+		model.addAttribute("patSearch", patSearch);
+		System.out.println("XXXXXXXXXXXX"+patSearch.getRelativeId().getPatientId());
 		RegistrationWebUtils.getAddressData(model);
 		model.addAttribute("OTHERFREE", RegistrationWebUtils.getSubConcepts(RegistrationConstants.CONCEPT_NAME_OTHER_FREE));
 		List<PersonAttribute> pas = hcs.getPersonAttributes(patientId);
@@ -114,7 +118,9 @@ public class EditPatientController {
 			// update patient attribute
 			updatedPatient = setAttributes(patient, parameters);
 			patient = Context.getPatientService().savePatient(updatedPatient);
-			RegistrationUtils.savePatientSearch(patient);
+			String relativeName=parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_RELATIVE_NAME);
+			String relativeId=parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_RELATIVE_ID);
+			RegistrationUtils.savePatientSearch(patient,relativeName,Integer.parseInt(relativeId));
 			
 			model.addAttribute("status", "success");
 			logger.info(String.format("Updated patient [id=%s]", patient.getId()));
