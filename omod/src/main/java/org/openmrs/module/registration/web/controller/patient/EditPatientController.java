@@ -73,7 +73,6 @@ public class EditPatientController {
 		PatientSearch patSearch=hcs.getPatient(patientId);
 		model.addAttribute("patient", patientModel);
 		model.addAttribute("patSearch", patSearch);
-		System.out.println("XXXXXXXXXXXX"+patSearch.getRelativeId().getPatientId());
 		RegistrationWebUtils.getAddressData(model);
 		model.addAttribute("OTHERFREE", RegistrationWebUtils.getSubConcepts(RegistrationConstants.CONCEPT_NAME_OTHER_FREE));
 		List<PersonAttribute> pas = hcs.getPersonAttributes(patientId);

@@ -304,7 +304,6 @@ input, select, textarea {
 				}),
 		success : function(data) {	
 		jQuery("#divForGreenBookNumber").html(data);
-		//validateGreenBookNumber();
 		   } 
          });
 	   },
@@ -319,7 +318,6 @@ input, select, textarea {
 				}),
 		success : function(data) {	
 		jQuery("#divForAadharNumber").html(data);
-		//validateAadharNumber();
 		   } 
          });
 	   },
