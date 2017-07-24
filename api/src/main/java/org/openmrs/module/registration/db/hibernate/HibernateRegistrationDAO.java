@@ -127,11 +127,39 @@ public class HibernateRegistrationDAO implements RegistrationDAO {
 		return (Encounter) criteria.uniqueResult();
 	}
 	
-	//ghanshyam 12-sept-2013 New Requirement #2684 Introducing a field at the time of registration to put Aadhar Card Number
+	
+	/*
+	 * Validate Green Book Number
+	 */
+	public int getGreenBookNumber(String greenBookNo) {
+		String hql = "from PersonAttribute pa where pa.attributeType=27 AND pa.value like '"+ greenBookNo +"' ";
+		Session session = sessionFactory.getCurrentSession();
+		Query q = session.createQuery(hql);
+		List<PersonAttribute> list = q.list();
+		if (list.size()>0)
+			{return 1;}
+		else 
+			{return 0;}
+	}
+	
+	public int getGreenBookNumber(Integer patientId,String greenBookNo) {
+		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(PersonAttribute.class);
+		criteria.add(Restrictions.eq("attributeType.id", 27));
+		criteria.add(Restrictions.eq("value", greenBookNo));
+		criteria.add(Restrictions.eq("voided", false));
+		criteria.add(Restrictions.not(Restrictions.eq("person.id",patientId)));
+		List<PersonAttribute> list = criteria.list();
+		if (list.size()>0)
+		{return 1;}
+	    else 
+		{return 0;}
+		
+	}
+	
 	/*
 	 * Validate Aadhar Card Number
 	 */
-	public int getAadharCardNo(String aadharCardNo) {
+	public int getAadharCardNumber(String aadharCardNo) {
 		String hql = "from PersonAttribute pa where pa.attributeType=20 AND pa.value like '"+ aadharCardNo +"' ";
 		Session session = sessionFactory.getCurrentSession();
 		Query q = session.createQuery(hql);
@@ -142,7 +170,7 @@ public class HibernateRegistrationDAO implements RegistrationDAO {
 			{return 0;}
 	}
 	
-	public int getAadharCardNo(Integer patientId,String aadharCardNo) {
+	public int getAadharCardNumber(Integer patientId,String aadharCardNo) {
 		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(PersonAttribute.class);
 		criteria.add(Restrictions.eq("attributeType.id", 20));
 		criteria.add(Restrictions.eq("value", aadharCardNo));

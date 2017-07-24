@@ -293,51 +293,33 @@ input, select, textarea {
 	var url = "#TB_inline?height=400&width=400&inlineId=patientSearchResult";
     tb_show("Patient Search List",url,false);	
 	},
-		
-		checkNationalID : function() {	
-		nationalId=jQuery("#patientNationalId").val();
+	   
+	    checkGreenBookNumber : function() {	
+		greenBookNumber=jQuery("#greenBookNo").val();
 		jQuery.ajax({
 		type : "GET",
-		url : getContextPath() + "/module/registration/validatenationalidandpassportnumber.form",
+		url : getContextPath() + "/module/registration/validateGreenBookAndAadharNumber.form",
 		data : ({
-			nationalId			: nationalId
+			greenBookNumber			: greenBookNumber
 				}),
 		success : function(data) {	
-		jQuery("#divForNationalId").html(data);
-		validateNationalID();
+		jQuery("#divForGreenBookNumber").html(data);
+		//validateGreenBookNumber();
 		   } 
          });
 	   },
 	   
-	    checkPassportNumber : function() {	
-		passportNumber=jQuery("#passportNumber").val();
+	   checkAadharNumber : function() {	
+		aadharNumber=jQuery("#adhaarNo").val();
 		jQuery.ajax({
 		type : "GET",
-		url : getContextPath() + "/module/registration/validatenationalidandpassportnumber.form",
+		url : getContextPath() + "/module/registration/validateGreenBookAndAadharNumber.form",
 		data : ({
-			passportNumber			: passportNumber
+			aadharNumber			: aadharNumber
 				}),
 		success : function(data) {	
-		jQuery("#divForpassportNumber").html(data);
-		validatePassportNumber();
-		   } 
-         });
-	   },
-	   
-	   //This function is not used.left for future use if required
-	   checkNationalIDAndPassportNumber : function() {	
-		nationalId=jQuery("#patientNationalId").val();
-		passportNumber=jQuery("#passportNumber").val();
-		jQuery.ajax({
-		type : "GET",
-		url : getContextPath() + "/module/registration/validatenationalidandpassportnumber.form",
-		data : ({
-			nationalId			: nationalId,
-			passportNumber		: passportNumber
-				}),
-		success : function(data) {	
-		jQuery("#validationMessage").html(data);
-		validateNationalIDAndPassportNumber();
+		jQuery("#divForAadharNumber").html(data);
+		//validateAadharNumber();
 		   } 
          });
 	   },
@@ -515,6 +497,36 @@ input, select, textarea {
 				}
 			}
 			
+			if (!StringUtils.isBlank(jQuery("#greenBookNo").val())) {
+				 var input = jQuery("#greenBookNo").val();
+				 var regex = new RegExp(/^[a-z]{2}[0-9]{7}$/i);
+				 if(regex.test(input)==false){
+				 alert("please Enter Green Book No in correct Format");
+				 return false;
+				 }
+			}
+			
+			if (!StringUtils.isBlank(jQuery("#adhaarNo").val())) {
+				 var input = jQuery("#adhaarNo").val();
+				 var regex = new RegExp(/^[0-9]{12}$/);
+				 if(regex.test(input)==false){
+				 alert("please Enter Aadhar Number in correct Format");
+				 return false;
+				 }
+			}
+			
+           var gNum=jQuery("#gNum").val();
+           if(gNum=="1"){
+           alert("Entered Green Book Number already exit in the system");
+           return false;
+	       }
+   
+          var aCardNo=jQuery("#aCardNo").val();
+          if(aCardNo=="1"){
+          alert("Entered Aadhar Number already exit in the system");
+          return false;
+	      }
+			
 			if (StringUtils.isBlank(jQuery("#patientRelativeName").val())) {
 				alert("Please enter the patient's relative name");
 				return false;
@@ -565,14 +577,7 @@ input, select, textarea {
 						return false;
 					}
 				}
-            //submitNationalIDAndPassportNumber();
-            if(validateNationalIDAndPassportNumber()){
-            return true;
-            }
-            else{
-            return false;
-            }
-			
+      
 			return true;
 		}
 	};
@@ -677,74 +682,6 @@ input, select, textarea {
 		
 	};
 	
-	function submitNationalID(){
-	PAGE.checkNationalID();
-   }
-	
-	function validateNationalID(){
-	var nId=jQuery("#nId").val();
-	if(nId=="1"){
-	document.getElementById("nationalIdValidationMessage").innerHTML="Patient already registered with this National ID";
-	jQuery("#nationalIdValidationMessage").show();
-    return false;					
-    }
-    else{
-    jQuery("#nationalIdValidationMessage").hide();
-    }  
-   }
-		          
-		       
-   function submitPassportNumber(){
-   PAGE.checkPassportNumber();
-   }
-   
-   function validatePassportNumber(){
-   var pNum=jQuery("#pNum").val();
-   if(pNum=="1"){
-   document.getElementById("passportNumberValidationMessage").innerHTML="Patient already registered with this Passport Number";
-   jQuery("#passportNumberValidationMessage").show();
-   return false;
-	}
-	else{
-	jQuery("#passportNumberValidationMessage").hide();
-	}
-   }
-   
-   function submitNationalIDAndPassportNumber(){
-   PAGE.checkNationalIDAndPassportNumber();
-   }
-   
-   function validateNationalIDAndPassportNumber(){
-   var nId=jQuery("#nId").val();
-   var pNum=jQuery("#pNum").val();
-   if(nId=="1" && pNum=="1"){
-   //alert("Patient already registered with the same National ID and Passport Number");	
-   document.getElementById("nationalIdValidationMessage").innerHTML="Patient already registered with this National ID";
-   document.getElementById("passportNumberValidationMessage").innerHTML="Patient already registered with this Passport Number";
-   jQuery("#nationalIdValidationMessage").show();
-   jQuery("#passportNumberValidationMessage").show();
-   return false;
-	}
-   else if(nId=="1"){
-   //alert("Patient already registered with the same National ID");
-   document.getElementById("nationalIdValidationMessage").innerHTML="Patient already registered with this National ID";
-   jQuery("#nationalIdValidationMessage").show();
-   jQuery("#passportNumberValidationMessage").hide();
-   return false;					
-    }  
-   else if(pNum=="1"){
-   //alert("Patient already registered with the same Passport Number");	
-   jQuery("#nationalIdValidationMessage").hide();
-   jQuery("#passportNumberValidationMessage").show();
-   return false;
-	}
-   else{
-   jQuery("#nationalIdValidationMessage").hide();
-   jQuery("#passportNumberValidationMessage").hide();
-   return true;
-	}
-   }
-	
 	function abc(){
 	document.getElementById("movedToAreaDate").disabled = true;
 	}
@@ -752,6 +689,14 @@ input, select, textarea {
 	function def(){
 	document.getElementById("movedToAreaDate").disabled = false;
 	}
+	
+	function submitGreenBookNumber(){
+	PAGE.checkGreenBookNumber();
+   }
+   
+    function submitAadharNumber(){
+	PAGE.checkAadharNumber();
+   }
 </script>
 <script type="text/javascript">
 			
@@ -890,12 +835,12 @@ input, select, textarea {
 		     <tr>
 				<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
 				<td>Green Book No&nbsp;&nbsp;&nbsp;&nbsp;</td>
-				<td><input id="greenBookNo" name="person.attribute.27" style='width: 152px;' /></td>
+				<td><input id="greenBookNo" name="person.attribute.27" style='width: 152px;' onblur="submitGreenBookNumber();"/></td>
 		    </tr>
 		    <tr>
 				<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
 				<td>Adhaar No&nbsp;&nbsp;&nbsp;&nbsp;</td>
-				<td><input id="adhaarNo" name="person.attribute.20" style='width: 152px;' /></td>
+				<td><input id="adhaarNo" name="person.attribute.20" style='width: 152px;' onblur="submitAadharNumber();"></td>
 		    </tr>
 		</table>
 		</div>
@@ -989,6 +934,9 @@ input, select, textarea {
 		</tr>
 		</table>
 		</div>
+		
+		<div id="divForGreenBookNumber"></div>
+		<div id="divForAadharNumber"></div>
 		
 		<div class="floatBottom">
 		<table>

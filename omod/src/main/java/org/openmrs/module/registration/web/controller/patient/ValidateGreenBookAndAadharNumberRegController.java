@@ -16,8 +16,8 @@
  *  You should have received a copy of the GNU General Public License
  *  along with Registration module.  If not, see <http://www.gnu.org/licenses/>.
  *  author: Ghanshyam
- *  date:   12-september-2013
- *  issue no: #2684
+ *  date:   3-june-2013
+ *  issue no: #1962
  **/
 
 package org.openmrs.module.registration.web.controller.patient;
@@ -30,17 +30,25 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-@Controller("ValidateAadharCardNumberController")
-@RequestMapping("/module/registration/validateaadharcardnoreg.form")
-public class ValidateAadharCardNumberController {
+@Controller("ValidateGreenBookAndAadharNumberRegController")
+@RequestMapping("/module/registration/validateGreenBookAndAadharNumber.form")
+public class ValidateGreenBookAndAadharNumberRegController {
 	@RequestMapping(method = RequestMethod.GET)
 	public String main(
 			Model model,
-			@RequestParam(value = "aadharCardNo", required = false) String aadharCardNo) {
-		RegistrationService registrationService  = Context.getService(RegistrationService.class);
-		Integer acn=registrationService .getAadharCardNo(aadharCardNo);
-		model.addAttribute("acn", acn);
-		return "/module/registration/validateAadharCardNoReg";
+			@RequestParam(value = "greenBookNumber", required = false) String greenBookNumber,
+			@RequestParam(value = "aadharNumber", required = false) String aadharNumber) {
+		RegistrationService registrationService = Context
+				.getService(RegistrationService.class);
+		if (greenBookNumber != null) {
+			Integer gnum = registrationService.getGreenBookNumber(greenBookNumber);
+			model.addAttribute("gnum", gnum);
+			return "/module/registration/validateGreenBookNumberForReg";
+		} 
+		else {
+			Integer anum = registrationService.getAadharCardNumber(aadharNumber);
+			model.addAttribute("anum", anum);
+			return "/module/registration/validateAadharNumberForReg";
+		}
 	}
 }
-
