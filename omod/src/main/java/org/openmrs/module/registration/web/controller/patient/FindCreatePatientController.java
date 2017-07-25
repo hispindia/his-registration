@@ -214,6 +214,9 @@ public class FindCreatePatientController {
 						Float discountedRegFee=(float) (regitFeeInInteger/2);
 						attribute.setValue(discountedRegFee.toString(discountedRegFee));
 					}
+					else if(attribute.getAttributeType().getId()==28 && parameters.get(RegistrationConstants.FORM_FIELD_REGISTRATION_FEE).equals("Free")){
+						attribute.setValue("0");
+					}
 					patient.addAttribute(attribute);
 				}
 			}

@@ -100,32 +100,25 @@
 			<td align="center"><b>Name</b></td>
 			<td align="center"><b>Age</b></td>
 			<td align="center"><b>Gender</b></td>			
-		<!--	Sept 22,2012 -- Sagar Bele -- Issue 387 --Removed Birth date from column 
-		<td><b>Birthdate</b></td>  -->
 			<td align="center"><b>Relative Name</b></td>
 			<td align="center"><b>Last day of visit</b></td>
-			<!-- June 8th 2012 - Thai Chuong removed Phone Number field to match requirement:
-			 Feature: Search a patient on the basis of last day of visit
-			 UC 7: Advance search of patient
-			 -->
-			<!-- <td><b>Phone number</b></td> -->
 			<td align="center" colspan="8"><b>Action</b></td>
 			
 		</tr>
 		<c:forEach items="${patients}" var="patient" varStatus="varStatus">
 			<tr class='${varStatus.index % 2 == 0 ? "oddRow" : "evenRow" } patientSearchRow'>
 			
-				<td align="center" onclick="PATIENTSEARCHRESULT.visit(${patient.patientId},'${patient.dead}');">
+				<td align="center">
 					${patient.patientIdentifier.identifier}
 				</td>
-				<td  align="center" onclick="PATIENTSEARCHRESULT.visit(${patient.patientId},'${patient.dead}');">${patient.givenName} ${patient.middleName} ${patient.familyName}</td>
-				<td align="center" onclick="PATIENTSEARCHRESULT.visit (${patient.patientId},'${patient.dead}');"> 
+				<td  align="center">${patient.givenName} ${patient.middleName} ${patient.familyName}</td>
+				<td align="center"> 
                 	<c:choose>
                 		<c:when test="${patient.age == 0}"> &lt 1 </c:when>
                 		<c:otherwise >${patient.age}</c:otherwise>
                 	</c:choose>
                 </td>
-				<td align="center" onclick="PATIENTSEARCHRESULT.visit(${patient.patientId},'${patient.dead}');">
+				<td align="center">
 					<c:choose>
                 		<c:when test="${patient.gender eq 'M'}">
 							<img src="${pageContext.request.contextPath}/images/male.gif"/>
@@ -133,13 +126,8 @@
                 		<c:otherwise><img src="${pageContext.request.contextPath}/images/female.gif"/></c:otherwise>
                 	</c:choose>
 				</td>                
-				
-	<!-- 		Sept 22,2012 -- Sagar Bele -- Issue 387 --Removed Birth date from column 
-				<td onclick="PATIENTSEARCHRESULT.visit(${patient.patientId});"> 
-                	<openmrs:formatDate date="${patient.birthdate}"/>
-                </td>  -->
                 
-				<td align="center" onclick="PATIENTSEARCHRESULT.visit(${patient.patientId},'${patient.dead}');"> 
+				<td align="center"> 
                 	<%
 						Patient patient = (Patient) pageContext.getAttribute("patient");
 						Map<Integer, Map<Integer, String>> attributes = (Map<Integer, Map<Integer, String>>) pageContext.findAttribute("attributeMap");						
@@ -149,18 +137,6 @@
 							out.print(relativeName);
 					%>
                 </td>
-              
-                <!-- June 8th 2012 - Thai Chuong removed Phone Number field to match requirement:
-				 Feature: Search a patient on the basis of last day of visit
-				 UC 7: Advance search of patient
-				 -->
-				<!-- <td onclick="PATIENTSEARCHRESULT.visit(${patient.patientId});"> 
-                	<%
-/* 						String phoneNumber = patientAttributes.get(16);
-						if(phoneNumber!=null)
-							out.print(phoneNumber); */
-					%>
-					</td>  -->
 					  <td align="center" >
 	                <openmrs:formatDate date="${lastVisitTime[patient.patientId]}"/>              	
                 </td>
@@ -174,7 +150,6 @@
                <div style="float:center;"> 
                <form>
 			   <img type="image" title="Edit"  src="../../moduleResources/registration/edit.gif"/>
-							<!--<img src="${pageContext.request.contextPath}/Downloads/edit.gif"/>-->
 				</form>
 				</div>
 				</td>
