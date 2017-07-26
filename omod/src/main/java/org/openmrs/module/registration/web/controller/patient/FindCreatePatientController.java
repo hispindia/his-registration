@@ -267,6 +267,37 @@ public class FindCreatePatientController {
 		opdObs.setValueCoded(selectedOPDConcept);
 		encounter.addObs(opdObs);
 		
+		Concept cnrf = Context.getConceptService().getConcept(RegistrationConstants.CONCEPT_NAME_REGISTRATION_FEE);
+		Concept cnp = Context.getConceptService().getConcept(RegistrationConstants.CONCEPT_NEW_PATIENT);
+		Obs obsn = new Obs();
+		obsn.setConcept(cnrf);
+		obsn.setValueCoded(cnp);
+		if(parameters.get(RegistrationConstants.FORM_FIELD_REGISTRATION_FEE).equals("50% Discount")){
+			String regitFeeDefault=GlobalPropertyUtil.getString("registration.registrationFee", "0");
+			Integer regitFeeInInteger=Integer.parseInt(regitFeeDefault);
+			Double discountedRegFee=(double) (regitFeeInInteger/2);
+			obsn.setValueNumeric(discountedRegFee);
+		}
+		else if(parameters.get(RegistrationConstants.FORM_FIELD_REGISTRATION_FEE).equals("Free")){
+			Integer regitFeeInInteger=0;
+			Double discountedRegFee=(double) (regitFeeInInteger);
+			obsn.setValueNumeric(discountedRegFee);	
+		}
+		else{
+			String regitFeeDefault=GlobalPropertyUtil.getString("registration.registrationFee", "0");
+			Integer regitFeeInInteger=Integer.parseInt(regitFeeDefault);
+			Double discountedRegFee=(double) (regitFeeInInteger);
+			obsn.setValueNumeric(discountedRegFee);	
+		}
+		if (!StringUtils.isBlank(parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_PAID_CATEGORY))) {
+			obsn.setValueText(parameters
+					.get(RegistrationConstants.FORM_FIELD_PATIENT_PAID_CATEGORY));	
+		}
+		else{
+			obsn.setValueText(parameters
+					.get(RegistrationConstants.FORM_FIELD_PATIENT_PROGRAM_CATEGORY));		
+		}
+		encounter.addObs(obsn);	
 		
 		Concept temporaryCategoryConcept = Context.getConceptService().getConcept(RegistrationConstants.CONCEPT_NAME_TEMPORARY_CATEGORY);
 		String selectedTemporaryCategory=parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_TEMPORARY_CATEGORY);

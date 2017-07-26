@@ -84,6 +84,7 @@ public class RegistrationConstants {
 	public static final String CONCEPT_NAME_NATIONALITY = "Nationality";
 	public static final String CONCEPT_NAME_PAID_CATEGORY = "Paid Category";
 	public static final String CONCEPT_NAME_PROGRAMS = "Programs";
+	public static final String CONCEPT_NAME_REGISTRATION_FEE = "REGISTRATION FEE";
 	
 
 }

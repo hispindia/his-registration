@@ -206,11 +206,38 @@ public class ShowPatientInfoForRevisitPatientController {
 			opd.setValueCoded(selectedOPDConcept);
 			encounter.addObs(opd);
 			
-			// send patient to opd room/bloodbank
+			Concept cnrf = Context.getConceptService().getConcept(RegistrationConstants.CONCEPT_NAME_REGISTRATION_FEE);
+			Concept cnp = Context.getConceptService().getConcept(RegistrationConstants.CONCEPT_REVISIT);
+			Obs obsn = new Obs();
+			obsn.setConcept(cnrf);
+			obsn.setValueCoded(cnp);
+			if(parameters.get(RegistrationConstants.FORM_FIELD_REGISTRATION_FEE).equals("50% Discount")){
+				String regitFeeDefault=GlobalPropertyUtil.getString("registration.registrationFee", "0");
+				Integer regitFeeInInteger=Integer.parseInt(regitFeeDefault);
+				Double discountedRegFee=(double) (regitFeeInInteger/2);
+				obsn.setValueNumeric(discountedRegFee);
+			}
+			else if(parameters.get(RegistrationConstants.FORM_FIELD_REGISTRATION_FEE).equals("Free")){
+				Integer regitFeeInInteger=0;
+				Double discountedRegFee=(double) (regitFeeInInteger);
+				obsn.setValueNumeric(discountedRegFee);	
+			}
+			else{
+				String regitFeeDefault=GlobalPropertyUtil.getString("registration.registrationFee", "0");
+				Integer regitFeeInInteger=Integer.parseInt(regitFeeDefault);
+				Double discountedRegFee=(double) (regitFeeInInteger);
+				obsn.setValueNumeric(discountedRegFee);	
+			}
+			if (!StringUtils.isBlank(parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_PAID_CATEGORY))) {
+				obsn.setValueText(parameters
+						.get(RegistrationConstants.FORM_FIELD_PATIENT_PAID_CATEGORY));	
+			}
+			else{
+				obsn.setValueText(parameters
+						.get(RegistrationConstants.FORM_FIELD_PATIENT_PROGRAM_CATEGORY));		
+			}
+			encounter.addObs(obsn);	
 			
-			//harsh 5/10/2012 changed the way to get blood bank concept->shifted hardcoded dependency from id to name
-			//			Concept bloodbankConcept = Context.getConceptService().getConcept(
-			//			    GlobalPropertyUtil.getInteger(RegistrationConstants.PROPERTY_BLOODBANK_CONCEPT_ID, 6425));
 			String bloodBankWardName = GlobalPropertyUtil.getString(RegistrationConstants.PROPERTY_BLOODBANK_OPDWARD_NAME,
 			    "Blood Bank Room");
 			
