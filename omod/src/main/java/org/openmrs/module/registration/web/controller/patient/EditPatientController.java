@@ -119,7 +119,12 @@ public class EditPatientController {
 			patient = Context.getPatientService().savePatient(updatedPatient);
 			String relativeName=parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_RELATIVE_NAME);
 			String relativeId=parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_RELATIVE_ID);
-			RegistrationUtils.savePatientSearch(patient,relativeName,Integer.parseInt(relativeId));
+			if (!StringUtils.isBlank(relativeId)) {
+				RegistrationUtils.savePatientSearch(patient,relativeName,Integer.parseInt(relativeId));
+			}
+			else{
+				RegistrationUtils.savePatientSearch(patient,relativeName,null);	
+			}
 			
 			model.addAttribute("status", "success");
 			logger.info(String.format("Updated patient [id=%s]", patient.getId()));

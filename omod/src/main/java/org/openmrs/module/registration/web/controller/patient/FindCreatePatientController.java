@@ -108,7 +108,12 @@ public class FindCreatePatientController {
 			patient = Context.getPatientService().savePatient(patient);
 			String relativeName=parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_RELATIVE_NAME);
 			String relativeId=parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_RELATIVE_ID);
-			RegistrationUtils.savePatientSearch(patient,relativeName,Integer.parseInt(relativeId));
+			if (!StringUtils.isBlank(relativeId)) {
+				RegistrationUtils.savePatientSearch(patient,relativeName,Integer.parseInt(relativeId));
+			}
+			else{
+				RegistrationUtils.savePatientSearch(patient,relativeName,null);	
+			}
 			logger.info(String.format("Saved new patient [id=%s]", patient.getId()));
 			
 			/**
@@ -310,16 +315,9 @@ public class FindCreatePatientController {
 			encounter.addObs(temporaryCategoryObs);	
 		}
 		
-		// Send patient to OPD Queue/bloodbank
-		
-		//harsh 5/10/2012 changed the way to get blood bank concept->shifted hardcoded dependency from id to name
-		//		Concept bloodbankConcept = Context.getConceptService().getConcept(
-		//		    GlobalPropertyUtil.getInteger(RegistrationConstants.PROPERTY_BLOODBANK_CONCEPT_ID, 6425));
-		
-		String bloodBankWardName = GlobalPropertyUtil.getString(RegistrationConstants.PROPERTY_BLOODBANK_OPDWARD_NAME,
+		 String bloodBankWardName = GlobalPropertyUtil.getString(RegistrationConstants.PROPERTY_BLOODBANK_OPDWARD_NAME,
 		    "Blood Bank Room");
-		
-		 //ghanshyam 03-sept-2013 Bug #394 [Blood bank]queue
+
 		 String socn=new String(selectedOPDConcept.getName().toString());
 		 String substringofsocn=socn.substring(0,15);
 		

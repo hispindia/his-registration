@@ -695,6 +695,11 @@ input, select, textarea {
     function submitAadharNumber(){
 	PAGE.checkAadharNumber();
    }
+   
+   function setRelativeName(){
+   var relativeName=jQuery("#nameOrgivenNameOrmiddleNameOrfamilyNameOrIdentifier").val();
+   jQuery("#patientRelativeName").val(relativeName);
+   }
 </script>
 <script type="text/javascript">
 			

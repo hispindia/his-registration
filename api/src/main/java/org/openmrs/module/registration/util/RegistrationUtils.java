@@ -242,8 +242,9 @@ public class RegistrationUtils {
 		ps.setIdentifier(patient.getPatientIdentifier().getIdentifier());
 		ps.setPersonNameId(patient.getPersonName().getId());
 		ps.setRelativeName(relativeName);
+		if(relativeId!=null){
 		ps.setRelativeId(Context.getPatientService().getPatient(relativeId));
-		
+		}
 		
 		Context.getService(HospitalCoreService.class).savePatientSearch(ps);
 	}

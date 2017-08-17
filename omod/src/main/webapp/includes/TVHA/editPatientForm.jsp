@@ -620,6 +620,11 @@ input, select, textarea {
     function submitAadharNumber(){
 	PAGE.checkAadharNumber();
    }
+   
+   function setRelativeName(){
+   var relativeName=jQuery("#nameOrgivenNameOrmiddleNameOrfamilyNameOrIdentifier").val();
+   jQuery("#patientRelativeName").val(relativeName);
+   }
 </script>
 <h3 align="center" style="color:black">EDIT PATIENT INFORMATION<br></h3>
 <form id="patientRegistrationForm" method="POST">
