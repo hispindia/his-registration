@@ -48,6 +48,7 @@ import org.openmrs.OrderType;
 import org.openmrs.Patient;
 import org.openmrs.PersonAttribute;
 import org.openmrs.PersonAttributeType;
+import org.openmrs.User;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.hospitalcore.HospitalCoreService;
 import org.openmrs.module.hospitalcore.util.GlobalPropertyUtil;
@@ -163,6 +164,11 @@ public class ShowPatientInfoForRevisitPatientController {
 		regFee.add("50% Discount");
 		model.addAttribute("regFees",regFee);
 		
+		String hospitalName=GlobalPropertyUtil.getString("hospitalcore.hospitalParticularName", "Kollegal DVT Hospital");
+		model.addAttribute("hospitalName", hospitalName);
+		
+		User user=Context.getAuthenticatedUser();
+		model.addAttribute("userName", user.getGivenName());
 		return "/module/registration/patient/showPatientInfoForRevisitPatient";
 	}
 	

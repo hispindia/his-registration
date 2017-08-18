@@ -235,41 +235,48 @@
 	<center>
 		<form id="patientInfoForm" method="POST">
 			<table border=0 width="710" style="font-size: 14px;">
+				<h2>${hospitalName}</h2>
+				<h2>Registration Receipt</h2>
 				<tr>
-
-				</tr>
-				<tr>
-					<td colspan="1""><b>ID.No:</b></td>
-					<td colspan="2""><span id="identifier" /></td>
-					<td colspan="3"><b>Age:</b></td>
-					<td colspan="4"><span id="age" /></td>
+					<td><b>Day of Visit:</b></td>
+					<td>${dayOfVisit}</td>
 				</tr>
 				<tr>
 					<td colspan="1"><b>Patient Name:</b></td>
 					<td colspan="2"><span id="name" /></td>
-					<td colspan="3"><b>Gender:</b></td>
-					<td colspan="4"><span id="gender" /></td>
 				</tr>
 				<tr>
-					<td colspan="1"><b>Date/Time:</b></td>
-					<td colspan="2"><span id="datetime" /></td>
-					<td colspan="3" id="tempCat1"><b>Temp Categ:</b></td>
-					<td colspan="4" id="tempCat2"><span id="temporaryCategories"></span></td>
+					<td colspan="1""><b>Patient ID:</b></td>
+					<td colspan="2""><span id="identifier" /></td>
+				</tr>
+				<tr>
+					<td colspan="1"><b>Age:</b></td>
+					<td colspan="2"><span id="age" /></td>
+				</tr>
+				<tr>
+					<td colspan="1"><b>Gender:</b></td>
+					<td colspan="2"><span id="gender" /></td>
+				</tr>
+				<tr>
+					<td colspan="1"><b>Patient Category:</b></td>
+					<td colspan="2"><span id="category" /></td>
+				</tr>
+				<tr>
+					<td colspan="1" id="tempCat1"><b>Temp Categ:</b></td>
+					<td colspan="2" id="tempCat2"><span id="temporaryCategories"></span></td>
 				</tr>
 				<tr id="opdWardLabel">
-					<td colspan="1"><b>OPD room:</b></td>
+					<td colspan="1"><b>Room to Visit:</b></td>
 					<td colspan="3"><select id="opdWard" name="patient.opdWard">
 					</select></td>
 				</tr>
-				
 				<tr>
-					<td colspan="1"><b>Category:</b></td>
-					<td colspan="2"><span id="category" /></td>
+					<td colspan="1"><b>Registration Fee:</b></td>
+					<td colspan="2">${registrationFee}</td>
 				</tr>
-				
-				<tr id="aadharCardRow">
-					<td colspan="1"><b>Aadhar No:</b></td>
-					<td colspan="2"><span id="aadharCardNo"></span></td>
+				<tr>
+					<td colspan="1"><b>You were served by:</b></td>
+					<td colspan="2">${userName}</td>
 				</tr>
 			</table>
 		</form>

@@ -47,6 +47,7 @@ import org.openmrs.OrderType;
 import org.openmrs.Patient;
 import org.openmrs.PersonAttribute;
 import org.openmrs.PersonAttributeType;
+import org.openmrs.User;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.hospitalcore.HospitalCoreService;
 import org.openmrs.module.hospitalcore.util.GlobalPropertyUtil;
@@ -104,6 +105,8 @@ public class ShowPatientInfoController {
 		// Get selected OPD room if this is the first time of visit
 		if (encounterId != null) {
 			Encounter encounter = Context.getEncounterService().getEncounter(encounterId);
+			SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+			model.addAttribute("dayOfVisit", formatter.format(encounter.getDateCreated()));
 			for (Obs obs : encounter.getObs()) {
 				if (obs.getConcept().getName().getName().equalsIgnoreCase(RegistrationConstants.CONCEPT_NAME_TEMPORARY_CATEGORY)) {
 					model.addAttribute("selectedTemporaryCategory", obs.getValueCoded().getName().getName());
@@ -155,7 +158,16 @@ public class ShowPatientInfoController {
 		}
 		model.addAttribute("paidCategoryMap", paidCategoryMap);
 		model.addAttribute("programMap", programMap);
-		
+		String hospitalName=GlobalPropertyUtil.getString("hospitalcore.hospitalParticularName", "Kollegal DVT Hospital");
+		model.addAttribute("hospitalName", hospitalName);
+		for (PersonAttribute pa : pas) {
+			PersonAttributeType attributeType = pa.getAttributeType();
+			if (attributeType.getPersonAttributeTypeId() == 28) {
+				model.addAttribute("registrationFee", pa.getValue());
+			}
+		}
+		User user=Context.getAuthenticatedUser();
+		model.addAttribute("userName", user.getGivenName());
 		return "/module/registration/patient/showPatientInfo";
 	}
 	
