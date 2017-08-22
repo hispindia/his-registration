@@ -329,7 +329,7 @@
 			<table border=0 width="600">
 				<img type="image" src="../../moduleResources/registration/Logo_Tibet.jpg"/>
 				<h2>${hospitalName}</h2>
-				<h2>Registration Receipt</h2>
+				<h2>Revisit</h2>
 				<tr>
 					<td colspan="1""><b>ID.No:</b></td>
 					<td colspan="5""><span id="identifier" /></td>
@@ -425,7 +425,7 @@
 <table border=0 width="710" style="font-size: 14px;">
                 <img type="image" src="../../moduleResources/registration/Logo_Tibet.jpg"/>
                 <h2>${hospitalName}</h2>
-				<h2>Registration Receipt</h2>
+				<h2>Revisit Receipt</h2>
 				<tr>
 					<td colspan="1"><b>Day of Visit:</b></td>
 					<td colspan="2"><span id="datetimee" /></td>
