@@ -151,7 +151,7 @@ public class RegistrationAjaxController {
 		Date dat=date.getTime();
 		dat.setMonth(06);
 		dat.setDate(01);
-		return RegistrationUtils.formatDate(date.getTime());
+		return RegistrationUtils.formatDate(dat);
 	}
 	
 	@RequestMapping(value = "/module/registration/ajax/buySlip.htm", method = RequestMethod.GET)
