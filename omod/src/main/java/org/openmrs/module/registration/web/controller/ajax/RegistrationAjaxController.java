@@ -148,6 +148,9 @@ public class RegistrationAjaxController {
 		} else if (type.equalsIgnoreCase("d")) {
 			date.add(Calendar.DATE, -age);
 		}
+		Date dat=date.getTime();
+		dat.setMonth(06);
+		dat.setDate(01);
 		return RegistrationUtils.formatDate(date.getTime());
 	}
 	

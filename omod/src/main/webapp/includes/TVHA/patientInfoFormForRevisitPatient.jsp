@@ -327,9 +327,9 @@
 	<center>
 		<form id="patientInfoForm" method="POST">
 			<table border=0 width="600">
-				<tr>
-
-				</tr>
+				<img type="image" src="../../moduleResources/registration/Logo_Tibet.jpg"/>
+				<h2>${hospitalName}</h2>
+				<h2>Registration Receipt</h2>
 				<tr>
 					<td colspan="1""><b>ID.No:</b></td>
 					<td colspan="5""><span id="identifier" /></td>
@@ -423,6 +423,7 @@
 <div id="patientInfoPrintAreaa">
 <center>
 <table border=0 width="710" style="font-size: 14px;">
+                <img type="image" src="../../moduleResources/registration/Logo_Tibet.jpg"/>
                 <h2>${hospitalName}</h2>
 				<h2>Registration Receipt</h2>
 				<tr>
