@@ -141,6 +141,8 @@ public class ShowPatientInfoController {
 					observations.put(obs.getConcept().getConceptId(), ObsUtils.getValueAsString(obs));
 				}
 				model.addAttribute("observations", observations);
+				SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+				model.addAttribute("dayOfVisit", formatter.format(encounter.getDateCreated()));
 			}
 		}
 		

@@ -87,7 +87,7 @@ public class ShowPatientInfoForRevisitPatientController {
 		model.addAttribute("TEMPORARYCATEGORY", RegistrationWebUtils.getSubConcepts(RegistrationConstants.CONCEPT_NAME_TEMPORARY_CATEGORY));
 		
 		// Get current date
-		SimpleDateFormat sdf = new SimpleDateFormat("EEE dd/MM/yyyy kk:mm");
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 		model.addAttribute("currentDateTime", sdf.format(new Date()));
 		
 		// Get patient registration fee

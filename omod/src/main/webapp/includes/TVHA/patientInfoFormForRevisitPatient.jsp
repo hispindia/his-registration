@@ -331,6 +331,10 @@
 				<h2>${hospitalName}</h2>
 				<h2>Revisit</h2>
 				<tr>
+					<td><b>Day of Visit:</b></td>
+					<td>${currentDateTime}</td>
+				</tr>
+				<tr>
 					<td colspan="1""><b>ID.No:</b></td>
 					<td colspan="5""><span id="identifier" /></td>
 				</tr>
