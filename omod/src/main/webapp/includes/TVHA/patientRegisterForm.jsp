@@ -96,7 +96,8 @@ input, select, textarea {
 					yearRange : 'c-100:c+100',
 					dateFormat : 'dd/mm/yy',
 					changeMonth : true,
-					changeYear : true
+					changeYear : true,
+					maxDate: '+0d'
 				});
 				
 				MODEL.occupations = " , |"
@@ -493,7 +494,13 @@ input, select, textarea {
 					alert("Please enter the patient's contact number in correct format");
 					return false;
 				}
+				if ((jQuery("#patientPhoneNumber").val().length)!=10) {
+				    alert("Please enter the patient's contact number with in 10 digits");
+					return false;
+				  }
+		
 			}
+			
 			
 			if (!StringUtils.isBlank(jQuery("#greenBookNo").val())) {
 				 var input = jQuery("#greenBookNo").val();
