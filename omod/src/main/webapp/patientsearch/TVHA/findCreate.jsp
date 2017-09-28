@@ -111,7 +111,7 @@
 				<td align="center">
 					${patient.patientIdentifier.identifier}
 				</td>
-				<td  align="center">${patient.givenName} ${patient.middleName} ${patient.familyName}</td>
+				<td  align="center">${patient.givenName} ${patient.familyName}</td>
 				<td align="center"> 
                 	<c:choose>
                 		<c:when test="${patient.age == 0}"> &lt 1 </c:when>
@@ -128,14 +128,7 @@
 				</td>                
                 
 				<td align="center"> 
-                	<%
-						Patient patient = (Patient) pageContext.getAttribute("patient");
-						Map<Integer, Map<Integer, String>> attributes = (Map<Integer, Map<Integer, String>>) pageContext.findAttribute("attributeMap");						
-						Map<Integer, String> patientAttributes = (Map<Integer, String>) attributes.get(patient.getPatientId());						
-						String relativeName = patientAttributes.get(8); 
-						if(relativeName!=null)
-							out.print(relativeName);
-					%>
+                	${patientSearchMap[patient.patientId]}
                 </td>
 					  <td align="center" >
 	                <openmrs:formatDate date="${lastVisitTime[patient.patientId]}"/>              	

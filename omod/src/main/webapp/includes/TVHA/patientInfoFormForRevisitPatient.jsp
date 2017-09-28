@@ -42,6 +42,7 @@
 			delimiter: ",",
 			optionDelimiter: "|"
 		});
+		jQuery("#opdWard").val(${opdPatientQueueLog.opdConcept.id});
 		
 		MODEL.TEMPORARYCATEGORY = " ,select temporary category|"
 						+ MODEL.TEMPORARYCATEGORY;
@@ -66,6 +67,25 @@
 					delimiter : ",",
 					optionDelimiter : "|"
 				});
+		
+		if(MODEL.paidCategoryMap[MODEL.patientAttributes[14]]==="Non TMS"
+		|| MODEL.paidCategoryMap[MODEL.patientAttributes[14]]==="TMS"
+		|| MODEL.paidCategoryMap[MODEL.patientAttributes[14]]==="School Children"
+		|| MODEL.paidCategoryMap[MODEL.patientAttributes[14]]==="Monasteries"){
+		jQuery("#paidCategoryChecked").attr('checked', true);
+		jQuery("#paidCategoryField").show();
+		jQuery("#paidCategory").val(MODEL.patientAttributes[14]);
+		}else if(MODEL.programMap[MODEL.patientAttributes[14]]==="Antenatal"
+		|| MODEL.programMap[MODEL.patientAttributes[14]]==="Immunization"
+		|| MODEL.programMap[MODEL.patientAttributes[14]]==="HIV"
+		|| MODEL.programMap[MODEL.patientAttributes[14]]==="Non MDR TB"
+		|| MODEL.programMap[MODEL.patientAttributes[14]]==="MDR"
+		|| MODEL.programMap[MODEL.patientAttributes[14]]==="Mental Health"
+		|| MODEL.programMap[MODEL.patientAttributes[14]]==="Destitute/BPL"){
+		jQuery("#programChecked").attr('checked', true);
+		jQuery("#programField").show();
+		jQuery("#program").val(MODEL.patientAttributes[14]);
+		}
 		
 		PAGE.fillOptions("#regFee", {
 					data : MODEL.regFees
@@ -268,6 +288,33 @@
 				alert("Please select OPD ward");
 				return false;
 			};
+			
+			if (jQuery("#paidCategoryChecked").attr('checked') == false
+					&& jQuery("#programChecked").attr('checked') == false) {			
+			    alert("You did not choose any of the Patient Category");
+				return false;
+			}
+			else{
+			
+			if(jQuery("#paidCategoryChecked").attr('checked') == true){
+			if (StringUtils.isBlank(jQuery("#paidCategory").val())) {
+				alert("Please select Paid Category");
+				return false;
+			} 
+			}
+			else if(jQuery("#programChecked").attr('checked') == true){
+			if (StringUtils.isBlank(jQuery("#program").val())) {
+				alert("Please select Program");
+				return false;
+			} 
+			}
+			
+			}
+			
+			if (jQuery("#regFee").val()=="Select") {
+				alert("Please select registration fee");
+				return false;
+			} 
 		
 			return true;
 		}

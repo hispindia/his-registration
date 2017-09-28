@@ -51,6 +51,8 @@ import org.openmrs.PersonAttributeType;
 import org.openmrs.User;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.hospitalcore.HospitalCoreService;
+import org.openmrs.module.hospitalcore.PatientQueueService;
+import org.openmrs.module.hospitalcore.model.OpdPatientQueueLog;
 import org.openmrs.module.hospitalcore.util.GlobalPropertyUtil;
 import org.openmrs.module.hospitalcore.util.ObsUtils;
 import org.openmrs.module.hospitalcore.util.OrderUtil;
@@ -155,6 +157,18 @@ public class ShowPatientInfoForRevisitPatientController {
 		
 		model.addAttribute("paidCategories", RegistrationWebUtils.getSubConcepts(RegistrationConstants.CONCEPT_NAME_PAID_CATEGORY));
 		model.addAttribute("programs", RegistrationWebUtils.getSubConcepts(RegistrationConstants.CONCEPT_NAME_PROGRAMS));
+		Map<String, String> paidCategoryMap = new LinkedHashMap<String, String>();
+		Concept paidCategory = Context.getConceptService().getConcept(RegistrationConstants.CONCEPT_NAME_PAID_CATEGORY);
+		for (ConceptAnswer ca : paidCategory.getAnswers()) {
+			paidCategoryMap.put(ca.getAnswerConcept().getConceptId().toString(), ca.getAnswerConcept().getName().getName());
+		}
+		Map<String, String> programMap = new LinkedHashMap<String, String>();
+		Concept program = Context.getConceptService().getConcept(RegistrationConstants.CONCEPT_NAME_PROGRAMS);
+		for (ConceptAnswer ca : program.getAnswers()) {
+			programMap.put(ca.getAnswerConcept().getConceptId().toString(), ca.getAnswerConcept().getName().getName());
+		}
+		model.addAttribute("paidCategoryMap", paidCategoryMap);
+		model.addAttribute("programMap", programMap);
 		
 		String registrationFee=GlobalPropertyUtil.getString("registration.registrationFee", "0");
 		List<String> regFee=new LinkedList<String>();
@@ -169,6 +183,17 @@ public class ShowPatientInfoForRevisitPatientController {
 		
 		User user=Context.getAuthenticatedUser();
 		model.addAttribute("userName", user.getGivenName());
+		
+		PatientQueueService patientQueueService = Context.getService(PatientQueueService.class);
+		OpdPatientQueueLog opdPatientQueueLog = patientQueueService.getOpdPatientQueueLogByPatientId(patient);
+		model.addAttribute("opdPatientQueueLog", opdPatientQueueLog);
+		
+		Map<Integer, String> attributess = new HashMap<Integer, String>();
+		Map<String, PersonAttribute> attributes = patient.getAttributeMap();
+		for (String key : attributes.keySet()) {
+			attributess.put(attributes.get(key).getAttributeType().getId(), attributes.get(key).getValue());
+		}
+		model.addAttribute("attributes", attributess);
 		return "/module/registration/patient/showPatientInfoForRevisitPatient";
 	}
 	

@@ -213,6 +213,25 @@ input, select, textarea {
 				 jQuery("#program").val(MODEL.patientAttributes[14]);
 				}
 				
+				if (MODEL.patientGender == "Male") {
+				jQuery("#patientRelativeNameSection")
+						.html(
+								'<input type="radio" name="person.attribute.15" value="Son of" checked="checked"/> Son of');
+			    } else if(MODEL.patientGender == "Female" && MODEL.patientAttributes[15]=="Daughter of"){
+				jQuery("#patientRelativeNameSection")
+						.html(
+								'<input type="radio" name="person.attribute.15" value="Daughter of" checked="checked"/> Daughter of <input type="radio" name="person.attribute.15" value="Wife of"/> Wife of');
+			    }else if(MODEL.patientGender == "Female" && MODEL.patientAttributes[15]=="Wife of"){
+				jQuery("#patientRelativeNameSection")
+						.html(
+								'<input type="radio" name="person.attribute.15" value="Daughter of"/> Daughter of <input type="radio" name="person.attribute.15" value="Wife of" checked="checked"/> Wife of');
+			    }
+			    else if(MODEL.patientGender == "Others"){
+				jQuery("#patientRelativeNameSection")
+				.html(
+				'<input type="radio" name="person.attribute.15" value="Relative of" checked="checked"/> Relative of');
+			    }
+				
 				//formValues += "person.attribute.8=="
 						//+ MODEL.patientAttributes[8] + "||";
 						
@@ -594,12 +613,12 @@ input, select, textarea {
 			} else if(jQuery("#patientGender").val() == "F"){
 				jQuery("#patientRelativeNameSection")
 						.html(
-								'<input type="radio" name="person.attribute.15" value="Daughter of"/> Daughter of <input type="radio" name="person.attribute.15" value="Wife of"/> Wife of');
+								'<input type="radio" name="person.attribute.15" value="Daughter of" checked="checked"/> Daughter of <input type="radio" name="person.attribute.15" value="Wife of"/> Wife of');
 			}
 			else if(jQuery("#patientGender").val() == "O"){
 				jQuery("#patientRelativeNameSection")
 				.html(
-				'<input hidden type="radio" name="person.attribute.15" value="Relative of" checked="checked"/>');
+				'<input type="radio" name="person.attribute.15" value="Relative of" checked="checked"/> Relative of');
 			}
 		}
 		

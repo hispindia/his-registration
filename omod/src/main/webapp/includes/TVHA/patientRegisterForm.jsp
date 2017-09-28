@@ -532,6 +532,33 @@ input, select, textarea {
           return false;
 	      }
 			
+			if (jQuery("#paidCategoryChecked").attr('checked') == false
+					&& jQuery("#programChecked").attr('checked') == false) {			
+			    alert("You did not choose any of the Patient Category");
+				return false;
+			}
+			else{
+			
+			if(jQuery("#paidCategoryChecked").attr('checked') == true){
+			if (StringUtils.isBlank(jQuery("#paidCategory").val())) {
+				alert("Please select Paid Category");
+				return false;
+			} 
+			}
+			else if(jQuery("#programChecked").attr('checked') == true){
+			if (StringUtils.isBlank(jQuery("#program").val())) {
+				alert("Please select Program");
+				return false;
+			} 
+			}
+			
+			} 
+			
+			if (jQuery("#regFee").val()=="Select") {
+				alert("Please select registration fee");
+				return false;
+			} 
+			
 			if (StringUtils.isBlank(jQuery("#patientRelativeName").val())) {
 				alert("Please enter the patient's relative name");
 				return false;
@@ -596,7 +623,6 @@ input, select, textarea {
 			if (jQuery("#paidCategoryChecked").is(':checked')) {
 					jQuery("#programChecked").removeAttr("checked");
 					jQuery("#paidCategoryField").show();
-					//jQuery("#nonPayingCategory").val("");
 				    jQuery("#programField").hide();
 			}
 			else{
@@ -672,16 +698,16 @@ input, select, textarea {
 			if (jQuery("#patientGender").val() == "M") {
 				jQuery("#patientRelativeNameSection")
 						.html(
-								'<input type="radio" name="person.attribute.15" value="Son of" checked="checked"/> Son of');
+								'<input type="radio" id="relationShip" name="person.attribute.15" value="Son of" checked="checked"/> Son of');
 			} else if(jQuery("#patientGender").val() == "F"){
 				jQuery("#patientRelativeNameSection")
 						.html(
-								'<input type="radio" name="person.attribute.15" value="Daughter of"/> Daughter of <input type="radio" name="person.attribute.15" value="Wife of"/> Wife of');
+								'<input type="radio" id="relationShip" name="person.attribute.15" value="Daughter of" checked="checked"/> Daughter of <input type="radio" id="relationShip" name="person.attribute.15" value="Wife of"/> Wife of');
 			}
 			else if(jQuery("#patientGender").val() == "O"){
 				jQuery("#patientRelativeNameSection")
 				.html(
-				'<input hidden type="radio" name="person.attribute.15" value="Relative of" checked="checked"/>');
+				'<input type="radio" id="relationShip" name="person.attribute.15" value="Relative of" checked="checked"/> Relative of');
 			}
 		}
 		

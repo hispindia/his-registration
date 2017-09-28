@@ -39,6 +39,23 @@
 		_regFees[${status.index}] = "${regFee}";
 	</c:forEach>
 	
+	// Patient Attribute
+	var _attributes = new Array();
+	<c:forEach var="entry" items="${patient.attributes}">
+		_attributes[${entry.key}] = "${entry.value}";
+	</c:forEach>
+	
+	
+	var _paidCategoryMap = new Array();
+	<c:forEach var="entry" items="${paidCategoryMap}">
+		_paidCategoryMap[${entry.key}] = "${entry.value}";
+	</c:forEach>
+	
+	var _programMap = new Array();
+	<c:forEach var="entry" items="${programMap}">
+		_programMap[${entry.key}] = "${entry.value}";
+	</c:forEach>
+	
 	/**
 	 ** VALUES FROM MODEL
 	 **/
@@ -64,7 +81,10 @@
 		opdWardId: "${opdWardId}",
 		paidCategories: "${paidCategories}",
 		programs: "${programs}",
-		regFees: _regFees
+		regFees: _regFees,
+		patientAttributes: _attributes,
+		paidCategoryMap : _paidCategoryMap,
+		programMap : _programMap
 	};
 </script>
 
