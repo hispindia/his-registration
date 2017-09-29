@@ -92,7 +92,7 @@ public interface RegistrationDAO {
 	
 	public int getAadharCardNumber(Integer patientId,String aadharCardNo);
 	
-    public int getDhoID(String dhoid);
+    public int getDohID(String dohid);
     
-	public int getDhoID(Integer patientId,String dhoid);
+	public int getDohID(Integer patientId,String dohid);
 }

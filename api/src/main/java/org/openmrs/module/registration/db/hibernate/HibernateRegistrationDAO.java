@@ -184,8 +184,8 @@ public class HibernateRegistrationDAO implements RegistrationDAO {
 		
 	}
 	
-	public int getDhoID(String dhoid) {
-		String hql = "from PersonAttribute pa where pa.attributeType=29 AND pa.value like '"+ dhoid +"' ";
+	public int getDohID(String dohid) {
+		String hql = "from PersonAttribute pa where pa.attributeType=29 AND pa.value like '"+ dohid +"' ";
 		Session session = sessionFactory.getCurrentSession();
 		Query q = session.createQuery(hql);
 		List<PersonAttribute> list = q.list();
@@ -195,10 +195,10 @@ public class HibernateRegistrationDAO implements RegistrationDAO {
 			{return 0;}
 	}
 	
-	public int getDhoID(Integer patientId,String dhoid) {
+	public int getDohID(Integer patientId,String dohid) {
 		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(PersonAttribute.class);
 		criteria.add(Restrictions.eq("attributeType.id", 29));
-		criteria.add(Restrictions.eq("value", dhoid));
+		criteria.add(Restrictions.eq("value", dohid));
 		criteria.add(Restrictions.eq("voided", false));
 		criteria.add(Restrictions.not(Restrictions.eq("person.id",patientId)));
 		List<PersonAttribute> list = criteria.list();

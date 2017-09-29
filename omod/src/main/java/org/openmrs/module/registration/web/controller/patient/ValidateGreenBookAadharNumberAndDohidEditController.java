@@ -30,31 +30,31 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-@Controller("ValidateGreenBookAadharNumberAndDhoidRegController")
-@RequestMapping("/module/registration/validateGreenBookAadharNumberAndDhoidReg.form")
-public class ValidateGreenBookAadharNumberAndDhoidRegController {
+@Controller("ValidateGreenBookAadharNumberAndDohidEditController")
+@RequestMapping("/module/registration/validateGreenBookAadharNumberAndDohidEdit.form")
+public class ValidateGreenBookAadharNumberAndDohidEditController {
 	@RequestMapping(method = RequestMethod.GET)
 	public String main(
 			Model model,
+			@RequestParam(value = "patientId", required = false) Integer patientId,
 			@RequestParam(value = "greenBookNumber", required = false) String greenBookNumber,
 			@RequestParam(value = "aadharNumber", required = false) String aadharNumber,
-			@RequestParam(value = "dhoid", required = false) String dhoid) {
+			@RequestParam(value = "dohid", required = false) String dohid) {
 		RegistrationService registrationService = Context
 				.getService(RegistrationService.class);
 		if (greenBookNumber != null) {
-			Integer gnum = registrationService.getGreenBookNumber(greenBookNumber);
+			Integer gnum = registrationService.getGreenBookNumber(patientId,greenBookNumber);
 			model.addAttribute("gnum", gnum);
-			return "/module/registration/validateGreenBookNumberForReg";
-		} 
-		else if(aadharNumber != null){
-			Integer anum = registrationService.getAadharCardNumber(aadharNumber);
+			return "/module/registration/validateGreenBookNumberForEdit";
+		} else if(aadharNumber != null){
+			Integer anum = registrationService.getAadharCardNumber(patientId,aadharNumber);
 			model.addAttribute("anum", anum);
-			return "/module/registration/validateAadharNumberForReg";
+			return "/module/registration/validateAadharNumberForEdit";
 		}
 		else{
-			Integer dnum = registrationService.getDhoID(dhoid);
+			Integer dnum = registrationService.getDohID(patientId,dohid);
 			model.addAttribute("dnum", dnum);
-			return "/module/registration/validateDhoidForReg";	
+			return "/module/registration/validateDohidForEdit";	
 		}
 	}
 }

@@ -92,11 +92,11 @@ public class RegistrationServiceImpl extends BaseOpenmrsService implements
 		return dao.getAadharCardNumber(patientId,aadharCardNo);
 	}
 	
-	public int getDhoID(String dhoid){
-		return dao.getDhoID(dhoid);
+	public int getDohID(String dohid){
+		return dao.getDohID(dohid);
 	}
 	
-	public int getDhoID(Integer patientId,String dhoid){
-		return dao.getDhoID(patientId,dhoid);
+	public int getDohID(Integer patientId,String dohid){
+		return dao.getDohID(patientId,dohid);
 	}
 }

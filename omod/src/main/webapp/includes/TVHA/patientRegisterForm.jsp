@@ -299,7 +299,7 @@ input, select, textarea {
 		greenBookNumber=jQuery("#greenBookNo").val();
 		jQuery.ajax({
 		type : "GET",
-		url : getContextPath() + "/module/registration/validateGreenBookAadharNumberAndDhoidReg.form",
+		url : getContextPath() + "/module/registration/validateGreenBookAadharNumberAndDohidReg.form",
 		data : ({
 			greenBookNumber			: greenBookNumber
 				}),
@@ -313,7 +313,7 @@ input, select, textarea {
 		aadharNumber=jQuery("#adhaarNo").val();
 		jQuery.ajax({
 		type : "GET",
-		url : getContextPath() + "/module/registration/validateGreenBookAadharNumberAndDhoidReg.form",
+		url : getContextPath() + "/module/registration/validateGreenBookAadharNumberAndDohidReg.form",
 		data : ({
 			aadharNumber			: aadharNumber
 				}),
@@ -323,16 +323,16 @@ input, select, textarea {
          });
 	   },
 	   
-	   checkDHOID : function() {	
-		dhoid=jQuery("#dhoid").val();
+	   checkDOHID : function() {	
+		dohid=jQuery("#dohid").val();
 		jQuery.ajax({
 		type : "GET",
-		url : getContextPath() + "/module/registration/validateGreenBookAadharNumberAndDhoidReg.form",
+		url : getContextPath() + "/module/registration/validateGreenBookAadharNumberAndDohidReg.form",
 		data : ({
-			dhoid			: dhoid
+			dohid			: dohid
 				}),
 		success : function(data) {	
-		jQuery("#divForDHOID").html(data);
+		jQuery("#divForDOHID").html(data);
 		   } 
          });
 	   },
@@ -534,11 +534,11 @@ input, select, textarea {
 				 }
 			}
 			
-			if (!StringUtils.isBlank(jQuery("#dhoid").val())) {
-				 var input = jQuery("#dhoid").val();
+			if (!StringUtils.isBlank(jQuery("#dohid").val())) {
+				 var input = jQuery("#dohid").val();
 				 var regex = new RegExp(/^[a-zA-Z]{3}[-]{1}[0-9]{4}[-]{1}[0-9]{5}$/i);
 				 if(regex.test(input)==false){
-				 alert("please Enter DHOID in correct Format");
+				 alert("please Enter DOH ID in correct Format");
 				 return false;
 				 }
 			}
@@ -557,7 +557,7 @@ input, select, textarea {
 	      
 	      var dNum=jQuery("#dNum").val();
           if(dNum=="1"){
-          alert("Entered DHOID already exit in the system");
+          alert("Entered DOH ID already exit in the system");
           return false;
 	      }
 			
@@ -758,8 +758,8 @@ input, select, textarea {
 	PAGE.checkAadharNumber();
    }
    
-   function submitDHOID(){
-	PAGE.checkDHOID();
+   function submitDOHID(){
+	PAGE.checkDOHID();
    }
    
    function setRelativeName(){
@@ -913,8 +913,8 @@ input, select, textarea {
 		    </tr>
 		    <tr>
 				<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
-				<td>DHOID&nbsp;&nbsp;&nbsp;&nbsp;</td>
-				<td><input id="dhoid" name="person.attribute.29" style='width: 152px;' onblur="submitDHOID();"></td>
+				<td>DOH ID&nbsp;&nbsp;&nbsp;&nbsp;</td>
+				<td><input id="dohid" name="person.attribute.29" style='width: 152px;' onblur="submitDOHID();"></td>
 		    </tr>
 		</table>
 		</div>
@@ -1011,7 +1011,7 @@ input, select, textarea {
 		
 		<div id="divForGreenBookNumber"></div>
 		<div id="divForAadharNumber"></div>
-		<div id="divForDHOID"></div>
+		<div id="divForDOHID"></div>
 		
 		<div class="floatBottom">
 		<table>
