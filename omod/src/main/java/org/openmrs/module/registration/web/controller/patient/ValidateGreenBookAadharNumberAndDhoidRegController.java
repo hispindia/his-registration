@@ -30,14 +30,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-@Controller("ValidateGreenBookAndAadharNumberRegController")
-@RequestMapping("/module/registration/validateGreenBookAndAadharNumber.form")
-public class ValidateGreenBookAndAadharNumberRegController {
+@Controller("ValidateGreenBookAadharNumberAndDhoidRegController")
+@RequestMapping("/module/registration/validateGreenBookAadharNumberAndDhoidReg.form")
+public class ValidateGreenBookAadharNumberAndDhoidRegController {
 	@RequestMapping(method = RequestMethod.GET)
 	public String main(
 			Model model,
 			@RequestParam(value = "greenBookNumber", required = false) String greenBookNumber,
-			@RequestParam(value = "aadharNumber", required = false) String aadharNumber) {
+			@RequestParam(value = "aadharNumber", required = false) String aadharNumber,
+			@RequestParam(value = "dhoid", required = false) String dhoid) {
 		RegistrationService registrationService = Context
 				.getService(RegistrationService.class);
 		if (greenBookNumber != null) {
@@ -45,10 +46,15 @@ public class ValidateGreenBookAndAadharNumberRegController {
 			model.addAttribute("gnum", gnum);
 			return "/module/registration/validateGreenBookNumberForReg";
 		} 
-		else {
+		else if(aadharNumber != null){
 			Integer anum = registrationService.getAadharCardNumber(aadharNumber);
 			model.addAttribute("anum", anum);
 			return "/module/registration/validateAadharNumberForReg";
+		}
+		else{
+			Integer dnum = registrationService.getDhoID(dhoid);
+			model.addAttribute("dnum", dnum);
+			return "/module/registration/validateDhoidForReg";	
 		}
 	}
 }

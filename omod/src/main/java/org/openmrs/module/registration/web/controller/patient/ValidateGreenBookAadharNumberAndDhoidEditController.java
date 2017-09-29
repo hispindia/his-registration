@@ -30,25 +30,31 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-@Controller("ValidateNationalIdAndPassportNumberEditController")
-@RequestMapping("/module/registration/validateGreenBookAndAadharNumberedit.form")
-public class ValidateGreenBookAndAadharNumberEditController {
+@Controller("ValidateGreenBookAadharNumberAndDhoidEditController")
+@RequestMapping("/module/registration/validateGreenBookAadharNumberAndDhoidEdit.form")
+public class ValidateGreenBookAadharNumberAndDhoidEditController {
 	@RequestMapping(method = RequestMethod.GET)
 	public String main(
 			Model model,
 			@RequestParam(value = "patientId", required = false) Integer patientId,
 			@RequestParam(value = "greenBookNumber", required = false) String greenBookNumber,
-			@RequestParam(value = "aadharNumber", required = false) String aadharNumber) {
+			@RequestParam(value = "aadharNumber", required = false) String aadharNumber,
+			@RequestParam(value = "dhoid", required = false) String dhoid) {
 		RegistrationService registrationService = Context
 				.getService(RegistrationService.class);
 		if (greenBookNumber != null) {
 			Integer gnum = registrationService.getGreenBookNumber(patientId,greenBookNumber);
 			model.addAttribute("gnum", gnum);
 			return "/module/registration/validateGreenBookNumberForEdit";
-		} else {
+		} else if(aadharNumber != null){
 			Integer anum = registrationService.getAadharCardNumber(patientId,aadharNumber);
 			model.addAttribute("anum", anum);
 			return "/module/registration/validateAadharNumberForEdit";
+		}
+		else{
+			Integer dnum = registrationService.getDhoID(patientId,dhoid);
+			model.addAttribute("dnum", dnum);
+			return "/module/registration/validateDhoidForEdit";	
 		}
 	}
 }

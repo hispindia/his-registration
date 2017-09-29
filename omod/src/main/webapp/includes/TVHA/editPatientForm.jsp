@@ -190,6 +190,10 @@ input, select, textarea {
 					formValues += "person.attribute.20=="
 							+ MODEL.patientAttributes[20] + "||";
 				}
+				if (!StringUtils.isBlank(MODEL.patientAttributes[29])) {
+					formValues += "person.attribute.29=="
+							+ MODEL.patientAttributes[29] + "||";
+				}
 				if (!StringUtils.isBlank(MODEL.patientAttributes[28])) {
 					formValues += "person.attribute.28=="
 							+ MODEL.patientAttributes[28] + "||";
@@ -327,7 +331,7 @@ input, select, textarea {
 		greenBookNumber=jQuery("#greenBookNo").val();
 		jQuery.ajax({
 		type : "GET",
-		url : getContextPath() + "/module/registration/validateGreenBookAndAadharNumberedit.form",
+		url : getContextPath() + "/module/registration/validateGreenBookAadharNumberAndDhoidEdit.form",
 		data : ({
 			patientId			: MODEL.patientId,
 			greenBookNumber			: greenBookNumber
@@ -342,13 +346,27 @@ input, select, textarea {
 		aadharNumber=jQuery("#adhaarNo").val();
 		jQuery.ajax({
 		type : "GET",
-		url : getContextPath() + "/module/registration/validateGreenBookAndAadharNumberedit.form",
+		url : getContextPath() + "/module/registration/validateGreenBookAadharNumberAndDhoidEdit.form",
 		data : ({
 			patientId			: MODEL.patientId,
 			aadharNumber			: aadharNumber
 				}),
 		success : function(data) {	
 		jQuery("#divForAadharNumber").html(data);
+		   } 
+         });
+	   },
+	   
+	   checkDHOID : function() {	
+		dhoid=jQuery("#dhoid").val();
+		jQuery.ajax({
+		type : "GET",
+		url : getContextPath() + "/module/registration/validateGreenBookAadharNumberAndDhoidEdit.form",
+		data : ({
+			dhoid			: dhoid
+				}),
+		success : function(data) {	
+		jQuery("#divForDHOID").html(data);
 		   } 
          });
 	   },
@@ -549,6 +567,15 @@ input, select, textarea {
 				 }
 			}
 			
+			if (!StringUtils.isBlank(jQuery("#dhoid").val())) {
+				 var input = jQuery("#dhoid").val();
+				 var regex = new RegExp(/^[a-zA-Z]{3}[-]{1}[0-9]{4}[-]{1}[0-9]{5}$/i);
+				 if(regex.test(input)==false){
+				 alert("please Enter DHOID in correct Format");
+				 return false;
+				 }
+			}
+			
            var gNum=jQuery("#gNum").val();
            if(gNum=="1"){
            alert("Entered Green Book Number already exit in the system");
@@ -558,6 +585,12 @@ input, select, textarea {
           var aCardNo=jQuery("#aCardNo").val();
           if(aCardNo=="1"){
           alert("Entered Aadhar Number already exit in the system");
+          return false;
+	      }
+	      
+	      var dNum=jQuery("#dNum").val();
+          if(dNum=="1"){
+          alert("Entered DHOID already exit in the system");
           return false;
 	      }
 			
@@ -638,6 +671,10 @@ input, select, textarea {
    
     function submitAadharNumber(){
 	PAGE.checkAadharNumber();
+   }
+   
+   function submitDHOID(){
+	PAGE.checkDHOID();
    }
    
    function setRelativeName(){
@@ -782,6 +819,11 @@ input, select, textarea {
 				<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
 				<td>Adhaar No&nbsp;&nbsp;&nbsp;&nbsp;</td>
 				<td><input id="adhaarNo" name="person.attribute.20" style='width: 152px;' onblur="submitAadharNumber();"/></td>
+		    </tr>
+		    <tr>
+				<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+				<td>DHOID&nbsp;&nbsp;&nbsp;&nbsp;</td>
+				<td><input id="dhoid" name="person.attribute.29" style='width: 152px;' onblur="submitDHOID();"></td>
 		    </tr>
 		</table>
 		</div>

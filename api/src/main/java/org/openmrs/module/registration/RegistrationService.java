@@ -92,4 +92,8 @@ public interface RegistrationService extends OpenmrsService {
 	public int getAadharCardNumber(String aadharCardNo);
     
 	public int getAadharCardNumber(Integer patientId,String aadharCardNo);
+	
+    public int getDhoID(String dhoid);
+    
+	public int getDhoID(Integer patientId,String dhoid);
 }
