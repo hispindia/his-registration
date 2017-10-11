@@ -330,10 +330,11 @@
 			if (jQuery("#paidCategoryChecked").is(':checked')) {
 					jQuery("#programChecked").removeAttr("checked");
 					jQuery("#paidCategoryField").show();
-					//jQuery("#nonPayingCategory").val("");
+					jQuery("#program").val("");
 				    jQuery("#programField").hide();
 			}
 			else{
+			jQuery("#paidCategory").val("");
 			jQuery("#paidCategoryField").hide();
 			}
 		},
@@ -342,9 +343,11 @@
 			if (jQuery("#programChecked").is(':checked')) {
 					jQuery("#paidCategoryChecked").removeAttr("checked");
 				    jQuery("#programField").show();
+				    jQuery("#paidCategory").val("");
 				    jQuery("#paidCategoryField").hide();
 			}
 			else{
+			jQuery("#program").val("");
 			jQuery("#programField").hide();
 			}
 		},

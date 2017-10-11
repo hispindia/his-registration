@@ -304,6 +304,7 @@ public class ShowPatientInfoForRevisitPatientController {
 			perAttr.setAttributeType(Context.getPersonService().getPersonAttributeType(14));
 			perAttr.setCreator(Context.getUserContext().getAuthenticatedUser());
 			perAttr.setDateCreated(new Date());
+			perAttr.setVoided(false);
 		}
 		else if (!StringUtils.isBlank(parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_PROGRAM_CATEGORY))) {
 			perAttr.setPerson(patient);	
@@ -311,6 +312,7 @@ public class ShowPatientInfoForRevisitPatientController {
 			perAttr.setAttributeType(Context.getPersonService().getPersonAttributeType(14));
 			perAttr.setCreator(Context.getUserContext().getAuthenticatedUser());
 			perAttr.setDateCreated(new Date());
+			perAttr.setVoided(false);
 		}
 		
 		patient.addAttribute(perAttr);
@@ -332,9 +334,10 @@ public class ShowPatientInfoForRevisitPatientController {
 					attribute.setValue("0");
 				}
 				patient.addAttribute(attribute);
-				patient = Context.getPatientService().savePatient(patient);
 			}
 		}
+		
+		patient = Context.getPatientService().savePatient(patient);
 		
 		Concept temporaryCategoryConcept = Context.getConceptService().getConcept(RegistrationConstants.CONCEPT_NAME_TEMPORARY_CATEGORY);
 		String selectedTemporaryCategory=parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_TEMPORARY_CATEGORY);
