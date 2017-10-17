@@ -23,6 +23,13 @@ td.border {
 					changeMonth : true,
 					changeYear : true
 				});
+				jQuery('#lastMenstrualPeriod').datepicker({
+					yearRange : 'c-100:c+100',
+					dateFormat : 'dd/mm/yy',
+					changeMonth : true,
+					changeYear : true,
+					maxDate:'0'
+				});
 				jQuery('#birthdate').change(PAGE.checkBirthDate);
 				PAGE.fillOptions("#districts", {
 					data : MODEL.districts
@@ -86,6 +93,8 @@ td.border {
 				jQuery("#freeField").hide();
 				//document.getElementById("freeCategory").style.visibility = "hidden";
 				jQuery("#temporaryCategory").hide();
+				 jQuery("#lastMenstrualPeriod").attr("disabled", "disabled");
+                 jQuery("#calendarButtonn").hide();
 
 				// binding
 				jQuery("#bpl").click(function() {
@@ -117,6 +126,9 @@ td.border {
 				});
 				jQuery("#birthdate").click(function() {
 					jQuery("#birthdate").select();
+				});
+				jQuery("#calendarButtonn").click(function() {
+					jQuery("#lastMenstrualPeriod").datepicker("show");
 				});
 				// 26/5/2012 Marta: Changing categories to match with requirements on #240 
 				/*jQuery("#patCatSeniorCitizen").click(function() {
@@ -446,19 +458,49 @@ td.border {
 			   }	
 			}	
 			
-			        //PAGE.checkAadharCardNumber();
-			        /*
-			        var patientCategoryDisabled=document.getElementById('patientCategory').disabled;
-			        if(patientCategoryDisabled==false){
-			        var patientCategory=document.getElementById('patientCategory');
-			        if(patientCategory.value==""){
-			        alert("Please select Patient Category");
-					return false
-			        }
-			        }*/
-		            //alert("click ok to proceed");
-		            //abc=jQuery("#abc").val();
-					//def=jQuery("#def").val();
+			if (!StringUtils.isBlank(jQuery("#weight").val())) {
+				if (!StringUtils.isDigit(jQuery("#weight").val())) {
+					alert("Please enter weight in correct format");
+					return false;
+				}
+			}
+			
+			if (!StringUtils.isBlank(jQuery("#height").val())) {
+				if (!StringUtils.isDigit(jQuery("#height").val())) {
+					alert("Please enter height in correct format");
+					return false;
+				}
+			}
+			
+			if (!StringUtils.isBlank(jQuery("#temp").val())) {
+				 var regex = /^[0-9]*\.[0-9]*$/;
+				 var input = jQuery("#temp").val();
+				if(regex.test(input)==false){
+					alert("Please enter temperature in correct format");
+					return false;
+				}
+			}
+			
+			if (!StringUtils.isBlank(jQuery("#systolic").val())) {
+				if (!StringUtils.isDigit(jQuery("#systolic").val())) {
+					alert("Please enter systolic B.P in correct format");
+					return false;
+				}
+			}
+			
+			if (!StringUtils.isBlank(jQuery("#diastolic").val())) {
+				if (!StringUtils.isDigit(jQuery("#diastolic").val())) {
+					alert("Please enter diastolic B.P in correct format");
+					return false;
+				}
+			}
+			
+			if (!StringUtils.isBlank(jQuery("#pulsRate").val())) {
+				if (!StringUtils.isDigit(jQuery("#pulsRate").val())) {
+					alert("Please enter pulse rate in correct format");
+					return false;
+				}
+			}
 					aadharCardNo=jQuery("#aCardNo").val();
 				
 					if(typeof aadharCardNo!="undefined"){
@@ -828,6 +870,19 @@ td.border {
 				.html(
 				'<input hidden type="radio" name="person.attribute.15" value="Relative of" checked="checked"/>');
 			}
+			
+			if (jQuery("#patientGender").val() == "M") {
+            jQuery("#lastMenstrualPeriod").attr("disabled", "disabled");
+            jQuery("#calendarButtonn").hide();
+            }
+            else if (jQuery("#patientGender").val() == "F") {
+            jQuery("#lastMenstrualPeriod").removeAttr('disabled');
+            jQuery("#calendarButtonn").show();
+            }
+            else if (jQuery("#patientGender").val() == "O") {
+            jQuery("#lastMenstrualPeriod").attr("disabled", "disabled");
+            jQuery("#calendarButtonn").hide();
+            }
 		},
 
 		// 26/5/2012 Marta: Changing categories to match with requirements on #240
@@ -1022,6 +1077,20 @@ function checkAadharCardNumberr() {
                });
              }
 		  }
+		  
+function vitalPopup(){
+var url = "#TB_inline?height=400&width=400&inlineId=vitalDiv";
+tb_show("Vitals",url,false);
+}
+
+function calculateBmi(){
+var weight = jQuery("#weight").val();
+var height = jQuery("#height").val();	
+var Bmi =  jQuery("#weight").val()/((jQuery("#height").val()/100)*(jQuery("#height").val()/100));
+
+var b=Math.round(Bmi);
+jQuery("#BMI").val(b);
+}
 </script>
 
 
@@ -1187,6 +1256,13 @@ function checkAadharCardNumberr() {
 			<select id="temporaryCategory" name="temporaryCategory" style="width: 215px;"></select>
 		</tr>
 		<tr>
+			<td class="cell">&nbsp;</td>
+			<td class="cell">&nbsp;</td>
+			<td rowspan="1" class="border"><b>&nbsp;&nbsp;<font color="red">Vital Statistics: </font></b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			<input type="button" id="vitals" name="vitals" value="Vitals" onclick="vitalPopup();"/>&nbsp;&nbsp;
+			</td>
+		</tr>
+		<tr>
 			<td class="cell"><b>Relative Name <label style="color:red">*</label></b>
 			</td>
 			<td class="cell">
@@ -1233,7 +1309,77 @@ function checkAadharCardNumberr() {
 				type="button" value="Reset"
 				onclick="window.location.href=window.location.href" /></td>
 		</tr>
-	</table>
+		</table>
+		<div id="vitalDiv" style="visibility:hidden;">
+						<label><b class="boxHeader">Current Vitals Details</b></label>
+						<table width="65%" height="50%" class=box>
+							<tr>
+								<th></th>
+								<th></th>
+								<th></th>
+								<th>Range</th>
+								<th>Unit</th>
+							</tr>
+							<tr>
+								<td>Weight</td>
+								<td><input type="text" id="weight" name="weight" size="11">
+								</td>
+								<td></td>
+								<td></td>
+								<td>Kg</td>
+							</tr>
+							<tr>
+								<td>Height</td>
+								<td><input type="text" id="height" name="height" size="11"
+									oninput="calculateBmi()"></td>
+								<td></td>
+								<td></td>
+								<td>cm</td>
+							</tr>
+							<tr>
+								<td>BMI</td>
+								<td><input type="text" id="BMI" name="BMI" size="11" maxlength="7" readonly="readonly"></td>
+								<td></td>
+								<td>18.5-24.9</td>
+
+								<td></td>
+							</tr>
+							<tr>
+								<td>Temperature</td>
+								<td><input type="text" id="temp" name="temp" size="11"
+									maxlength="7"></td>
+								<td></td>
+								<td>97.7-98.96</td>
+
+								<td>F</td>
+							</tr>
+							<tr>
+								<td>B.P</td>
+								<td><input type="text" id="systolic" name="systolic"
+									size="5">/<input type="text" id="diastolic"
+									name="diastolic" size="5"></td>
+								<td></td>
+								<td>110/70-140/90</td>
+
+								<td>mm/Hg</td>
+							</tr>
+							<tr>
+								<td>Pulse Rate</td>
+								<td><input type="text" id="pulsRate" name="pulsRate"
+									size="11"></td>
+								<td></td>
+								<td>60-90</td>
+
+								<td>/min</td>
+							</tr>
+							<tr>
+								<td>LMP</td>
+								<td><input type="text" id="lastMenstrualPeriod" name="lastMenstrualPeriod" size="11" readonly="readonly">
+									<img id="calendarButtonn" src="../../moduleResources/registration/calendar.gif" />
+								</td>
+							</tr>
+						</table>
+        </div>
 </form>
 
 <!-- ghanshyam 07-sept-2013 Support #2686 GUI Changes (spellings/ fonts/ alignments) -->

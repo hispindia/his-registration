@@ -44,6 +44,7 @@ import org.openmrs.Encounter;
 import org.openmrs.EncounterType;
 import org.openmrs.Location;
 import org.openmrs.Patient;
+import org.openmrs.User;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.hospitalcore.PatientQueueService;
 import org.openmrs.module.hospitalcore.model.OpdPatientQueue;
@@ -94,8 +95,9 @@ public class RegistrationWebUtils {
 	 * @param selectedOPDConcept
 	 * @param revisit
 	 */
-	public static void sendPatientToOPDQueue(Patient patient, Concept selectedOPDConcept, boolean revisit) {
+	public static void sendPatientToOPDQueue(Patient patient, Concept selectedOPDConcept, boolean revisit,Encounter encounter) {
 		Concept referralConcept = null;
+		User user = Context.getAuthenticatedUser();
 		if (!revisit) {
 			referralConcept = Context.getConceptService().getConcept("New Patient");
 		} else {
@@ -106,6 +108,7 @@ public class RegistrationWebUtils {
 		    patient.getPatientIdentifier().getIdentifier(), selectedOPDConcept.getConceptId());
 		if (queue == null) {
 			queue = new OpdPatientQueue();
+			queue.setUser(user);
 			queue.setPatient(patient);
 			queue.setCreatedOn(new Date());
 			queue.setBirthDate(patient.getBirthdate());
@@ -116,6 +119,7 @@ public class RegistrationWebUtils {
 			queue.setReferralConcept(referralConcept);
 			queue.setReferralConceptName(referralConcept.getName().getName());
 			queue.setSex(patient.getGender());
+			queue.setRegistrationEncounter(encounter);
 			PatientQueueService queueService = Context.getService(PatientQueueService.class);
 			queueService.saveOpdPatientQueue(queue);
 			

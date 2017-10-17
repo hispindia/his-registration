@@ -1,5 +1,13 @@
 <script type="text/javascript">
 	jQuery(document).ready(function(){		
+		jQuery('#lastMenstrualPeriod').datepicker({
+					yearRange : 'c-100:c+100',
+					dateFormat : 'dd/mm/yy',
+					changeMonth : true,
+					changeYear : true,
+					maxDate:'0'
+		});
+		
 		jQuery("#patientId").val(MODEL.patientId);
 		jQuery("#revisit").val(MODEL.revisit);
 		jQuery("#identifier").html(MODEL.patientIdentifier);
@@ -9,6 +17,10 @@
 		jQuery("#name").html(MODEL.patientName);
 		jQuery("#namee").html(MODEL.patientName);
 		jQuery("#patientInfoPrintAreaa").hide();
+		if(MODEL.patientGender=="Male" || MODEL.patientGender=="Others"){
+		jQuery("#lastMenstrualPeriod").attr("disabled", "disabled");
+        jQuery("#calendarButtonn").hide();
+        }
 		
 		jQuery("#rsbyNumber").hide();
 		jQuery("#bplNumber").hide();
@@ -18,6 +30,9 @@
 		
 		jQuery("#patCatGeneral").click(function() {
 		VALIDATORS.generalCheck();
+		});
+		jQuery("#calendarButtonn").click(function() {
+		jQuery("#lastMenstrualPeriod").datepicker("show");
 		});
 		jQuery("#patCatStaff").click(function() {
 		VALIDATORS.staffCheck();
@@ -231,6 +246,8 @@
 				}
 				jQuery("#temporaryCategories").hide();
 				
+				jQuery("#vitalRow").hide();
+				
 				// submit form and print		
 				if(!reprint){
 					jQuery("#patientInfoForm").ajaxSubmit({
@@ -394,6 +411,50 @@
 					}
 				}
 				return true;
+			}
+			
+			if (!StringUtils.isBlank(jQuery("#weight").val())) {
+				if (!StringUtils.isDigit(jQuery("#weight").val())) {
+					alert("Please enter weight in correct format");
+					return false;
+				}
+			}
+			
+			if (!StringUtils.isBlank(jQuery("#height").val())) {
+				if (!StringUtils.isDigit(jQuery("#height").val())) {
+					alert("Please enter height in correct format");
+					return false;
+				}
+			}
+			
+			if (!StringUtils.isBlank(jQuery("#temp").val())) {
+				 var regex = /^[0-9]*\.[0-9]*$/;
+				 var input = jQuery("#temp").val();
+				if(regex.test(input)==false){
+					alert("Please enter temperature in correct format");
+					return false;
+				}
+			}
+			
+			if (!StringUtils.isBlank(jQuery("#systolic").val())) {
+				if (!StringUtils.isDigit(jQuery("#systolic").val())) {
+					alert("Please enter systolic B.P in correct format");
+					return false;
+				}
+			}
+			
+			if (!StringUtils.isBlank(jQuery("#diastolic").val())) {
+				if (!StringUtils.isDigit(jQuery("#diastolic").val())) {
+					alert("Please enter diastolic B.P in correct format");
+					return false;
+				}
+			}
+			
+			if (!StringUtils.isBlank(jQuery("#pulsRate").val())) {
+				if (!StringUtils.isDigit(jQuery("#pulsRate").val())) {
+					alert("Please enter pulse rate in correct format");
+					return false;
+				}
 			}
 		
 			return true;
@@ -659,6 +720,20 @@
 		 }
 		}
 	};
+	
+function vitalPopup(){
+var url = "#TB_inline?height=400&width=400&inlineId=vitalDiv";
+tb_show("Vitals",url,false);
+}
+
+function calculateBmi(){
+var weight = jQuery("#weight").val();
+var height = jQuery("#height").val();	
+var Bmi =  jQuery("#weight").val()/((jQuery("#height").val()/100)*(jQuery("#height").val()/100));
+
+var b=Math.round(Bmi);
+jQuery("#BMI").val(b);
+}
 </script>
 <input id="printSlip" type="button" value="Print"
 	onClick="PAGE.submit(false);" />
@@ -757,9 +832,92 @@
 						</table>
 					</td>	
 				</tr>
+				<tr id="vitalRow">
+					<td colspan="1"><b>Vital Statistics:</b></td>
+					<td colspan="5">
+						<table>
+							<tr>
+								<td>
+									<input type="button" id="vitals" name="vitals" value="Vitals" onclick="vitalPopup();"/>		
+								</td>			
+							</tr>
+						</table>
+					</td>	
+				</tr>
 			</table>
-		</form>
-	</center>
+
+<div id="vitalDiv" style="visibility:hidden;">
+						<label><b class="boxHeader">Current Vitals Details</b></label>
+						<table width="65%" height="50%" class=box>
+							<tr>
+								<th></th>
+								<th></th>
+								<th></th>
+								<th>Range</th>
+								<th>Unit</th>
+							</tr>
+							<tr>
+								<td>Weight</td>
+								<td><input type="text" id="weight" name="weight" size="11">
+								</td>
+								<td></td>
+								<td></td>
+								<td>Kg</td>
+							</tr>
+							<tr>
+								<td>Height</td>
+								<td><input type="text" id="height" name="height" size="11"
+									oninput="calculateBmi()"></td>
+								<td></td>
+								<td></td>
+								<td>cm</td>
+							</tr>
+							<tr>
+								<td>BMI</td>
+								<td><input type="text" id="BMI" name="BMI" size="11" maxlength="7" readonly="readonly"></td>
+								<td></td>
+								<td>18.5-24.9</td>
+
+								<td></td>
+							</tr>
+							<tr>
+								<td>Temperature</td>
+								<td><input type="text" id="temp" name="temp" size="11"
+									maxlength="7"></td>
+								<td></td>
+								<td>97.7-98.96</td>
+
+								<td>F</td>
+							</tr>
+							<tr>
+								<td>B.P</td>
+								<td><input type="text" id="systolic" name="systolic"
+									size="5">/<input type="text" id="diastolic"
+									name="diastolic" size="5"></td>
+								<td></td>
+								<td>110/70-140/90</td>
+
+								<td>mm/Hg</td>
+							</tr>
+							<tr>
+								<td>Pulse Rate</td>
+								<td><input type="text" id="pulsRate" name="pulsRate"
+									size="11"></td>
+								<td></td>
+								<td>60-90</td>
+
+								<td>/min</td>
+							</tr>
+							<tr>
+								<td>LMP</td>
+								<td><input type="text" id="lastMenstrualPeriod" name="lastMenstrualPeriod" size="11" readonly="readonly">
+									<img id="calendarButtonn" src="../../moduleResources/registration/calendar.gif" />
+								</td>
+							</tr>
+						</table>
+        </div>
+  </form>      
+</center>
 </div>
 
 <div id="patientInfoPrintAreaa">

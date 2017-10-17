@@ -204,7 +204,7 @@ public class ShowPatientInfoController {
 			 String substringofsocn=socn.substring(0,15);
 			
 			 if (!substringofsocn.equalsIgnoreCase(bloodBankWardName)) {
-				RegistrationWebUtils.sendPatientToOPDQueue(patient, selectedOPDConcept, true);
+				RegistrationWebUtils.sendPatientToOPDQueue(patient, selectedOPDConcept, true,encounter);
 			} else {
 				OrderType orderType = null;
 				String orderTypeName = Context.getAdministrationService().getGlobalProperty("bloodbank.orderTypeName");
