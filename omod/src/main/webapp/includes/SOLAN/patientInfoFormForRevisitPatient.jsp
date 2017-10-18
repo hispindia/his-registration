@@ -374,45 +374,6 @@
 				return false;
 			};
 			
-			if (jQuery("#patCatGeneral").attr('checked') == false
-					//17/05/2012 Marta: Delete Poor and Governement Employee Categories #188
-					/* && jQuery("#patCatPoor").attr('checked') == false
-					&& jQuery("#patCatGovEmp").attr('checked') == false */
-					// 26/5/2012 Marta: Changing categories to match with requirements on #240
-					/*&& jQuery("#patCatGovEmp").attr('checked') == false
-					&& jQuery("#patCatSeniorCitizen").attr('checked') == false*/
-					&& jQuery("#rsby").attr('checked') == false
-					&& jQuery("#bpl").attr('checked') == false
-					// 15/05/2012: Marta added for Solan new categories validation - Bug #188
-					&& jQuery("#patCatAntenatal").attr('checked') == false
-					&& jQuery("#patCatChildLessThan1yr").attr('checked') == false
-					&& jQuery("#patCatOtherFree").attr('checked') == false
-					&& jQuery("#patCatStaff").attr('checked') == false) {
-				alert('You didn\'t choose any of the patient categories!');
-				return false;
-			} else {
-				if (jQuery("#rsby").attr('checked')) {
-					if (jQuery("#rsbyNumber").val().length <= 0) {
-						alert('Please enter RSBY number');
-						return false;
-					}
-				}
-				if (jQuery("#bpl").attr('checked')) {
-					if (jQuery("#bplNumber").val().length <= 0) {
-						alert('Please enter BPL number');
-						return false;
-					}
-				}
-				
-				if (jQuery("#patCatOtherFree").attr('checked')) {
-					if (jQuery("#freeCategory").val().length <= 0) {
-						alert('Please enter Other Free Category Description');
-						return false;
-					}
-				}
-				return true;
-			}
-			
 			if (!StringUtils.isBlank(jQuery("#weight").val())) {
 				if (!StringUtils.isDigit(jQuery("#weight").val())) {
 					alert("Please enter weight in correct format");
@@ -455,6 +416,45 @@
 					alert("Please enter pulse rate in correct format");
 					return false;
 				}
+			}
+			
+			if (jQuery("#patCatGeneral").attr('checked') == false
+					//17/05/2012 Marta: Delete Poor and Governement Employee Categories #188
+					/* && jQuery("#patCatPoor").attr('checked') == false
+					&& jQuery("#patCatGovEmp").attr('checked') == false */
+					// 26/5/2012 Marta: Changing categories to match with requirements on #240
+					/*&& jQuery("#patCatGovEmp").attr('checked') == false
+					&& jQuery("#patCatSeniorCitizen").attr('checked') == false*/
+					&& jQuery("#rsby").attr('checked') == false
+					&& jQuery("#bpl").attr('checked') == false
+					// 15/05/2012: Marta added for Solan new categories validation - Bug #188
+					&& jQuery("#patCatAntenatal").attr('checked') == false
+					&& jQuery("#patCatChildLessThan1yr").attr('checked') == false
+					&& jQuery("#patCatOtherFree").attr('checked') == false
+					&& jQuery("#patCatStaff").attr('checked') == false) {
+				alert('You didn\'t choose any of the patient categories!');
+				return false;
+			} else {
+				if (jQuery("#rsby").attr('checked')) {
+					if (jQuery("#rsbyNumber").val().length <= 0) {
+						alert('Please enter RSBY number');
+						return false;
+					}
+				}
+				if (jQuery("#bpl").attr('checked')) {
+					if (jQuery("#bplNumber").val().length <= 0) {
+						alert('Please enter BPL number');
+						return false;
+					}
+				}
+				
+				if (jQuery("#patCatOtherFree").attr('checked')) {
+					if (jQuery("#freeCategory").val().length <= 0) {
+						alert('Please enter Other Free Category Description');
+						return false;
+					}
+				}
+				return true;
 			}
 		
 			return true;
