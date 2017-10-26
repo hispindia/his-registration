@@ -171,6 +171,12 @@ input, select, textarea {
 					formValues += "person.attribute.25=="
 							+ MODEL.patientAttributes[25] + "||";
 				}
+				else { 
+					document.getElementById("livediny").checked = true;
+				
+				}
+				
+				
 				formValues += "patient.address.postalAddress==" + MODEL.postalAddress + "||";
 				formValues += "patient.address.town==" + MODEL.town + "||";
 				formValues += "patient.address.settlement==" + MODEL.settlement + "||";
