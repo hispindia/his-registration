@@ -243,6 +243,7 @@ public class ShowPatientInfoForRevisitPatientController {
 		encounter.addObs(temporaryCategoryObs);
 		}
 		
+		/*
 		if(request.getParameter("weight")!=null && request.getParameter("weight")!="")
 		{ 
 		String weight=request.getParameter("weight");
@@ -356,6 +357,7 @@ if(request.getParameter("lastMenstrualPeriod")!=null && request.getParameter("la
    vitalstaticweight.setCreator(user);
    encounter.addObs(vitalstaticweight);
 }
+*/
 		
           //create OPD obs
           Concept opdWardConcept = Context.getConceptService().getConcept(RegistrationConstants.CONCEPT_NAME_OPD_WARD);

@@ -69,6 +69,8 @@ public class FindCreatePatientController {
 	public String showForm(HttpServletRequest request, Model model) throws JaxenException, DocumentException, IOException {
 		model.addAttribute("patientIdentifier", RegistrationUtils.getNewIdentifier());
 		model.addAttribute("OPDs", RegistrationWebUtils.getSubConcepts(RegistrationConstants.CONCEPT_NAME_OPD_WARD));
+		model.addAttribute("TRIAGE", RegistrationWebUtils
+				.getSubConcepts(RegistrationConstants.CONCEPT_NAME_TRIAGE));
 		model.addAttribute("OTHERFREE", RegistrationWebUtils.getSubConcepts(RegistrationConstants.CONCEPT_NAME_OTHER_FREE));
 		model.addAttribute("TEMPORARYCATEGORY", RegistrationWebUtils.getSubConcepts(RegistrationConstants.CONCEPT_NAME_TEMPORARY_CATEGORY));
 		model.addAttribute("referralHospitals",
@@ -116,6 +118,7 @@ public class FindCreatePatientController {
 			// create encounter for the visit
 			Encounter encounter = createEncounter(patient, parameters);
 			User user = Context.getAuthenticatedUser();
+			/*
 			if(request.getParameter("weight")!=null && request.getParameter("weight")!="")
 			{ 
 			String weight=request.getParameter("weight");
@@ -229,11 +232,13 @@ public class FindCreatePatientController {
 	   vitalstaticweight.setCreator(user);
 	   encounter.addObs(vitalstaticweight);
 	}
+	 */
 	
 	/*
 	 * ADD OPD ROOM
 	 */
-	Concept opdWardConcept = Context.getConceptService().getConcept(RegistrationConstants.CONCEPT_NAME_OPD_WARD);
+	/*
+			Concept opdWardConcept = Context.getConceptService().getConcept(RegistrationConstants.CONCEPT_NAME_OPD_WARD);
 	Concept selectedOPDConcept = Context.getConceptService().getConcept(
 	    Integer.parseInt(parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_OPD_WARD)));
 	Obs opdObs = new Obs();
@@ -244,6 +249,16 @@ public class FindCreatePatientController {
 	encounter = Context.getEncounterService().saveEncounter(encounter);
 	
 	RegistrationWebUtils.sendPatientToOPDQueue(patient, selectedOPDConcept, false,encounter);
+	*/
+	Concept triageConcept = Context.getConceptService().getConcept(RegistrationConstants.CONCEPT_NAME_TRIAGE);
+	Concept selectedTRIAGEConcept = Context.getConceptService().getConcept(parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_TRIAGE));
+	Obs triageObs = new Obs();
+	triageObs.setConcept(triageConcept);
+	triageObs.setValueCoded(selectedTRIAGEConcept);
+	encounter.addObs(triageObs);
+	String selectedCategory=parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_CATEGORY);
+	RegistrationWebUtils.sendPatientToTriageQueue(patient,
+			selectedTRIAGEConcept, false, selectedCategory);
 	logger.info(String.format("Saved encounter for the visit of patient [id=%s, patient=%s]", encounter.getId(),
 	    patient.getId()));
 	model.addAttribute("status", "success");

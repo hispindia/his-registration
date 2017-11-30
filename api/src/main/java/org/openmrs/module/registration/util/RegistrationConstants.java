@@ -57,14 +57,17 @@ public class RegistrationConstants {
 	public static final String FORM_FIELD_PATIENT_ADDRESS_DISTRICT = "patient.address.district";
 	public static final String FORM_FIELD_PATIENT_ADDRESS_TEHSIL = "patient.address.tehsil";
 	public static final String FORM_FIELD_PATIENT_TEMPORARY_ATTRIBUTE = "patient.temporary.attribute";
+	public static final String FORM_FIELD_PATIENT_TRIAGE = "patient.triage";
 	public static final String FORM_FIELD_PATIENT_OPD_WARD = "patient.opdWard";
 	public static final String FORM_FIELD_PATIENT_TEMPORARY_CATEGORY = "temporaryCategory";
 	public static final String FORM_FIELD_PATIENT_REFERRED = "patient.referred";
 	public static final String FORM_FIELD_PATIENT_REFERRED_FROM = "patient.referred.from";
 	public static final String FORM_FIELD_PATIENT_REFERRED_REASON = "patient.referred.reason";
+	public static final String FORM_FIELD_PATIENT_CATEGORY = "person.attribute.14";
 
 	// concept name
 	public static final String CONCEPT_NAME_OPD_WARD = "OPD WARD";
+	public static final String CONCEPT_NAME_TRIAGE = "TRIAGE";
 	public static final String CONCEPT_NAME_PATIENT_REFERRED_TO_HOSPITAL = "PATIENT REFERRED TO HOSPITAL?";
 	public static final String CONCEPT_NAME_REASON_FOR_REFERRAL = "REASON FOR REFERRAL";
 	public static final String CONCEPT_NAME_PATIENT_REFERRED_FROM = "PATIENT REFERRED FROM";

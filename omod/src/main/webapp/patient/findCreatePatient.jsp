@@ -48,6 +48,7 @@
 		patientIdentifier: "${patientIdentifier}",
 		districts: _districts,
 		tehsils: _tehsils,
+		TRIAGE: "${TRIAGE}",
 		OPDs: "${OPDs}",
 		OTHERFREE: "${OTHERFREE}",
 		TEMPORARYCATEGORY: "${TEMPORARYCATEGORY}",

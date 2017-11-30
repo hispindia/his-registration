@@ -832,6 +832,7 @@ jQuery("#BMI").val(b);
 						</table>
 					</td>	
 				</tr>
+				<!--
 				<tr id="vitalRow">
 					<td colspan="1"><b>Vital Statistics:</b></td>
 					<td colspan="5">
@@ -844,8 +845,10 @@ jQuery("#BMI").val(b);
 						</table>
 					</td>	
 				</tr>
+				-->
 			</table>
 
+<!--
 <div id="vitalDiv" style="visibility:hidden;">
 						<label><b class="boxHeader">Current Vitals Details</b></label>
 						<table width="65%" height="50%" class=box>
@@ -916,6 +919,7 @@ jQuery("#BMI").val(b);
 							</tr>
 						</table>
         </div>
+        -->
   </form>      
 </center>
 </div>

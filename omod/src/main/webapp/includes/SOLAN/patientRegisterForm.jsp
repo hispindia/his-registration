@@ -38,6 +38,14 @@ td.border {
 					data : MODEL.tehsils[0].split(',')
 				});
 
+				MODEL.TRIAGE = " , Please select a triage room to visit|"
+						+ MODEL.TRIAGE;
+				PAGE.fillOptions("#triage", {
+					data : MODEL.TRIAGE,
+					delimiter : ",",
+					optionDelimiter : "|"
+				});
+				
 				MODEL.OPDs = " ,Please select an OPD room to visit|"
 						+ MODEL.OPDs;
 				PAGE.fillOptions("#opdWard", {
@@ -422,8 +430,14 @@ td.border {
 		    }
 			}
 			
+			/*
 			if (StringUtils.isBlank(jQuery("#opdWard").val())) {
 				alert("Please select OPD ward");
+				return false;
+			}*/
+			
+			if (StringUtils.isBlank(jQuery("#triage").val())) {
+				alert("Please select Triage room");
 				return false;
 			}
 
@@ -1255,6 +1269,7 @@ jQuery("#BMI").val(b);
 			<input type="checkbox" id="temporaryCategoryCheckBox" name="temporaryCategoryCheckBox" value="MLC" />MLC  &nbsp;&nbsp;
 			<select id="temporaryCategory" name="temporaryCategory" style="width: 215px;"></select>
 		</tr>
+		<!--
 		<tr>
 			<td class="cell">&nbsp;</td>
 			<td class="cell">&nbsp;</td>
@@ -1262,6 +1277,7 @@ jQuery("#BMI").val(b);
 			<input type="button" id="vitals" name="vitals" value="Vitals" onclick="vitalPopup();"/>&nbsp;&nbsp;
 			</td>
 		</tr>
+		-->
 		<tr>
 			<td class="cell"><b>Relative Name <label style="color:red">*</label></b>
 			</td>
@@ -1296,8 +1312,8 @@ jQuery("#BMI").val(b);
 							</td>
 						</tr>
 					</table>
-				</div> <b>OPD Room to Visit: <label style="color:red">*</label></b> <select id="opdWard"
-				name="patient.opdWard">
+				</div> <b>Triage Room to Visit: <label style="color:red">*</label></b> <select id="triage"
+				name="patient.triage">
 			</select>
 			</td>
 
@@ -1310,6 +1326,7 @@ jQuery("#BMI").val(b);
 				onclick="window.location.href=window.location.href" /></td>
 		</tr>
 		</table>
+		<!--
 		<div id="vitalDiv" style="visibility:hidden;">
 						<label><b class="boxHeader">Current Vitals Details</b></label>
 						<table width="65%" height="50%" class=box>
@@ -1380,6 +1397,7 @@ jQuery("#BMI").val(b);
 							</tr>
 						</table>
         </div>
+        -->
 </form>
 
 <!-- ghanshyam 07-sept-2013 Support #2686 GUI Changes (spellings/ fonts/ alignments) -->
