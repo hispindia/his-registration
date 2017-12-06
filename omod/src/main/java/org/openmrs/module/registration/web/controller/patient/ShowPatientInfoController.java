@@ -80,6 +80,7 @@ public class ShowPatientInfoController {
 		PatientModel patientModel = new PatientModel(patient);
 		model.addAttribute("patient", patientModel);
 		model.addAttribute("OPDs", RegistrationWebUtils.getSubConcepts(RegistrationConstants.CONCEPT_NAME_OPD_WARD));
+		model.addAttribute("TRIAGE", RegistrationWebUtils.getSubConcepts(RegistrationConstants.CONCEPT_NAME_TRIAGE));
 		
 		// Get current date
 		SimpleDateFormat sdf = new SimpleDateFormat("EEE dd/MM/yyyy kk:mm");
@@ -106,8 +107,12 @@ public class ShowPatientInfoController {
 				if (obs.getConcept().getName().getName().equalsIgnoreCase(RegistrationConstants.CONCEPT_NAME_TEMPORARY_CATEGORY)) {
 					model.addAttribute("selectedTemporaryCategory", obs.getValueCoded().getName().getName());
 				}
+				/*
 				else if (obs.getConcept().getName().getName().equalsIgnoreCase(RegistrationConstants.CONCEPT_NAME_OPD_WARD)) {
 					model.addAttribute("selectedOPD", obs.getValueCoded().getConceptId());
+				}*/
+				else if (obs.getConcept().getName().getName().equalsIgnoreCase(RegistrationConstants.CONCEPT_NAME_TRIAGE)) {
+					model.addAttribute("selectedTriage", obs.getValueCoded().getConceptId());
 				}
 			}
 		}
@@ -129,9 +134,14 @@ public class ShowPatientInfoController {
 					        .equalsIgnoreCase(RegistrationConstants.CONCEPT_NAME_TEMPORARY_CATEGORY)) {
 						model.addAttribute("tempCategoryId", obs.getValueCoded().getConceptId());
 						model.addAttribute("tempCategoryConceptName", obs.getValueCoded().getName().getName());
-					} else if (obs.getConcept().getDisplayString()
+					}
+					/*else if (obs.getConcept().getDisplayString()
 					        .equalsIgnoreCase(RegistrationConstants.CONCEPT_NAME_OPD_WARD)) {
 						model.addAttribute("opdWardId", obs.getConcept().getConceptId());
+					}*/
+					else if (obs.getConcept().getDisplayString()
+					        .equalsIgnoreCase(RegistrationConstants.CONCEPT_NAME_TRIAGE)) {
+						model.addAttribute("triageRoomId", obs.getConcept().getConceptId());
 					}
 					observations.put(obs.getConcept().getConceptId(), ObsUtils.getValueAsString(obs));
 				}

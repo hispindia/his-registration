@@ -22,7 +22,6 @@ package org.openmrs.module.registration.web.controller.patient;
 
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Map;
 
@@ -36,8 +35,6 @@ import org.jaxen.JaxenException;
 import org.openmrs.Concept;
 import org.openmrs.Encounter;
 import org.openmrs.Obs;
-import org.openmrs.Order;
-import org.openmrs.OrderType;
 import org.openmrs.Patient;
 import org.openmrs.PatientIdentifier;
 import org.openmrs.PersonAttribute;
@@ -47,7 +44,6 @@ import org.openmrs.api.context.Context;
 import org.openmrs.module.hospitalcore.util.GlobalPropertyUtil;
 import org.openmrs.module.hospitalcore.util.HospitalCoreConstants;
 import org.openmrs.module.hospitalcore.util.HospitalCoreUtils;
-import org.openmrs.module.hospitalcore.util.OrderUtil;
 import org.openmrs.module.registration.RegistrationService;
 import org.openmrs.module.registration.includable.validator.attribute.PatientAttributeValidatorService;
 import org.openmrs.module.registration.model.RegistrationFee;
@@ -256,9 +252,10 @@ public class FindCreatePatientController {
 	triageObs.setConcept(triageConcept);
 	triageObs.setValueCoded(selectedTRIAGEConcept);
 	encounter.addObs(triageObs);
+	encounter = Context.getEncounterService().saveEncounter(encounter);
 	String selectedCategory=parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_CATEGORY);
 	RegistrationWebUtils.sendPatientToTriageQueue(patient,
-			selectedTRIAGEConcept, false, selectedCategory);
+			selectedTRIAGEConcept, false, selectedCategory,encounter);
 	logger.info(String.format("Saved encounter for the visit of patient [id=%s, patient=%s]", encounter.getId(),
 	    patient.getId()));
 	model.addAttribute("status", "success");

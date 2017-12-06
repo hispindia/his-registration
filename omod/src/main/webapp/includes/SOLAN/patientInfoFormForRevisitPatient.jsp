@@ -123,9 +123,9 @@
 		else{
 		jQuery("#aadharCardRow").hide();
 		}
-		MODEL.OPDs = " ,Please select an OPD room to visit|" + MODEL.OPDs;
-		PAGE.fillOptions("#opdWard", {
-			data:MODEL.OPDs,
+		MODEL.TRIAGE = " ,Please select an TRIAGE room to visit|" + MODEL.TRIAGE;
+		PAGE.fillOptions("#triage", {
+			data:MODEL.TRIAGE,
 			delimiter: ",",
 			optionDelimiter: "|"
 		});
@@ -188,10 +188,10 @@
 				jQuery("#printSlip").hide();
 				jQuery("#reprint").hide();
 				
-				// Convert OPDWard dropdown to printable format
-				jQuery("#opdWard").hide();
-				jQuery("#opdWard").after("<span>" + jQuery("#opdWard option:checked").html() +  "</span>");	
-				jQuery("#opdWardd").after("<span>" + jQuery("#opdWard option:checked").html() +  "</span>");	
+				// Convert triage dropdown to printable format
+				jQuery("#triage").hide();
+				jQuery("#triage").after("<span>" + jQuery("#triage option:checked").html() +  "</span>");	
+				jQuery("#triagee").after("<span>" + jQuery("#triage option:checked").html() +  "</span>");	
 				
 				if (jQuery("#rsby").is(':checked') && jQuery("#bpl").is(':checked')) {
 				var rsbyNo=document.getElementById('rsbyNumber').value;
@@ -369,8 +369,8 @@
 		    }
 			}
 			
-			if(StringUtils.isBlank(jQuery("#opdWard").val())){
-				alert("Please select OPD ward");
+			if(StringUtils.isBlank(jQuery("#triage").val())){
+				alert("Please select Triage Room");
 				return false;
 			};
 			
@@ -774,9 +774,9 @@ jQuery("#BMI").val(b);
 					<td colspan="5"><span id="phoneNumber" /></td>
 				</tr>
 				<!-- 03/05/2012 Thai Chuong: Supported issue #182 -->
-				<tr id="opdWardLabel">
-					<td colspan="1"><b>OPD room to visit:</b></td>
-					<td colspan="5"><select id="opdWard" name="patient.opdWard">
+				<tr id="triageRoomLabel">
+					<td colspan="1"><b>Triage room to visit:</b></td>
+					<td colspan="5"><select id="triage" name="patient.triage">
 					</select></td>
 				</tr>
 				<tr>
@@ -945,9 +945,9 @@ jQuery("#BMI").val(b);
 					<td colspan="3" id="tempCat1"><b>Temp Categ:</b></td>
 					<td colspan="4" id="tempCat2"><span id="printableTemporaryCategories"></span></td>
 				</tr>
-				<tr id="opdWardLabel">
-					<td colspan="1"><b>OPD room:</b></td>
-					<td colspan="3"><span id="opdWardd"></span>
+				<tr id="triageRoomLabell">
+					<td colspan="1"><b>Triage room:</b></td>
+					<td colspan="3"><span id="triagee"></span>
 					</td>
 				</tr>
 				

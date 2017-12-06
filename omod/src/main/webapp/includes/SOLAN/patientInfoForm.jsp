@@ -34,28 +34,28 @@
 		jQuery("#temporaryCategories").html(MODEL.selectedTemporaryCategory);
 		}
 		
-		MODEL.OPDs = " ,Please select an OPD room to visit|" + MODEL.OPDs;
-		PAGE.fillOptions("#opdWard", {
-			data:MODEL.OPDs,
+		MODEL.TRIAGE = " ,Please select an triage room to visit|" + MODEL.TRIAGE;
+		PAGE.fillOptions("#triage", {
+			data:MODEL.TRIAGE,
 			delimiter: ",",
 			optionDelimiter: "|"
 		});
 		
 		// Set the selected OPD
-		if(!StringUtils.isBlank(MODEL.selectedOPD)){			
-			jQuery("#opdWard").val(MODEL.selectedOPD);
-			jQuery("#opdWard").attr("disabled", "disabled");
+		if(!StringUtils.isBlank(MODEL.selectedTriage)){			
+			jQuery("#triage").val(MODEL.selectedTriage);
+			jQuery("#triage").attr("disabled", "disabled");
 		}
 		
 		jQuery("#buySlip").hide();
 		
 		// Set data for reprint page
 		if(MODEL.reprint=="true"){
-			var opdWardId=MODEL.opdWardId;
-		jQuery("#opdWard").val(MODEL.observations[opdWardId]);
+			var triageRoomId=MODEL.triageRoomId;
+		jQuery("#triage").val(MODEL.observations[triageRoomId]);
 			
 			//ghanshyam 15-may-2013 Bug #1614 Reprint Slip: Solan, DDU, Mandi
-			jQuery("#opdWard").attr("disabled", "disabled");
+			jQuery("#triage").attr("disabled", "disabled");
 			
 			var tempCategoryId=MODEL.tempCategoryId;
 		    if(!StringUtils.isBlank(MODEL.tempCategoryId)){
@@ -111,9 +111,9 @@
 				jQuery("#printSlip").hide();
 				jQuery("#reprint").hide();
 				
-				// Convert OPDWard dropdown to printable format
-				jQuery("#opdWard").hide();
-				jQuery("#opdWard").after("<span>" + jQuery("#opdWard option:checked").html() +  "</span>");		
+				// Convert triage dropdown to printable format
+				jQuery("#triage").hide();
+				jQuery("#triage").after("<span>" + jQuery("#triage option:checked").html() +  "</span>");		
 				
 				// submit form and print		
 				if(!reprint){
@@ -222,8 +222,8 @@
 		
 		/** Validate Form */
 		validate: function(){
-			if(StringUtils.isBlank(jQuery("#opdWard").val())){
-				alert("Please select OPD ward");
+			if(StringUtils.isBlank(jQuery("#triage").val())){
+				alert("Please select Triage Room");
 				return false;
 			};
 			return true;
@@ -264,10 +264,10 @@
 					<td colspan="3" id="tempCat1"><b>Temp Categ:</b></td>
 					<td colspan="4" id="tempCat2"><span id="temporaryCategories"></span></td>
 				</tr>
-				<tr id="opdWardLabel">
-					<td colspan="1"><b>OPD room:</b></td>
-					<td colspan="3"><select id="opdWard" name="patient.opdWard">
-					</select></td>
+				<tr id="triageRoomLabel">
+					<td colspan="1"><b>Triage Room to Visit:</b></td>
+					<td colspan="3"><select id="triage" name="patient.triage"></select>
+					</td>
 				</tr>
 				
 				<tr>

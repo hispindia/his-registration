@@ -47,15 +47,18 @@
 		patientAttributes: _attributes,
 		observations: _observations,
 		currentDateTime: "${currentDateTime}",	
-		selectedOPD: "${selectedOPD}",
+		//selectedOPD: "${selectedOPD}",
+		selectedTriage: "${selectedTriage}",
 		selectedTemporaryCategory: "${selectedTemporaryCategory}",
 		OPDs: "${OPDs}",
+		TRIAGE: "${TRIAGE}",
 		dueDate: "${dueDate}",
 		daysLeft: "${daysLeft}",
 		reprint: "${param.reprint eq 'true'}",
 		tempCategoryId: "${tempCategoryId}",
 		tempCategoryConceptName: "${tempCategoryConceptName}",
 		opdWardId: "${opdWardId}",
+		triageRoomId: "${triageRoomId}",
 		selectedOtherFree: "${selectedOtherFree}"
 	};
 </script>

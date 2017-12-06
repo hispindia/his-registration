@@ -47,9 +47,11 @@
 		patientAttributes: _attributes,
 		observations: _observations,
 		currentDateTime: "${currentDateTime}",	
-		selectedOPD: "${selectedOPD}",
+		//selectedOPD: "${selectedOPD}",
+		selectedTriage: "${selectedTriage}",
 		selectedTemporaryCategory: "${selectedTemporaryCategory}",
 		OPDs: "${OPDs}",
+		TRIAGE: "${TRIAGE}",
 		TEMPORARYCATEGORY: "${TEMPORARYCATEGORY}",
 		dueDate: "${dueDate}",
 		daysLeft: "${daysLeft}",
@@ -57,6 +59,7 @@
 		tempCategoryId: "${tempCategoryId}",
 		tempCategoryConceptName: "${tempCategoryConceptName}",
 		opdWardId: "${opdWardId}",
+		triageRoomId: "${triageRoomId}",
 		OTHERFREE: "${OTHERFREE}",
 		selectedOtherFree: "${selectedOtherFree}"
 	};

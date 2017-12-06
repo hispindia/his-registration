@@ -81,6 +81,7 @@ public class ShowPatientInfoForRevisitPatientController {
 		PatientModel patientModel = new PatientModel(patient);
 		model.addAttribute("patient", patientModel);
 		model.addAttribute("OPDs", RegistrationWebUtils.getSubConcepts(RegistrationConstants.CONCEPT_NAME_OPD_WARD));
+		model.addAttribute("TRIAGE", RegistrationWebUtils.getSubConcepts(RegistrationConstants.CONCEPT_NAME_TRIAGE));
 		model.addAttribute("TEMPORARYCATEGORY", RegistrationWebUtils.getSubConcepts(RegistrationConstants.CONCEPT_NAME_TEMPORARY_CATEGORY));
 		
 		// Get current date
@@ -108,8 +109,12 @@ public class ShowPatientInfoForRevisitPatientController {
 				if (obs.getConcept().getName().getName().equalsIgnoreCase(RegistrationConstants.CONCEPT_NAME_TEMPORARY_CATEGORY)) {
 					model.addAttribute("selectedTemporaryCategory", obs.getValueCoded().getName().getName());
 				}
+				/*
 				else if (obs.getConcept().getName().getName().equalsIgnoreCase(RegistrationConstants.CONCEPT_NAME_OPD_WARD)) {
 					model.addAttribute("selectedOPD", obs.getValueCoded().getConceptId());
+				}*/
+				else if (obs.getConcept().getName().getName().equalsIgnoreCase(RegistrationConstants.CONCEPT_NAME_TRIAGE)) {
+					model.addAttribute("selectedTriage", obs.getValueCoded().getConceptId());
 				}
 			}
 		}
@@ -131,9 +136,14 @@ public class ShowPatientInfoForRevisitPatientController {
 					        .equalsIgnoreCase(RegistrationConstants.CONCEPT_NAME_TEMPORARY_CATEGORY)) {
 						model.addAttribute("tempCategoryId", obs.getValueCoded().getConceptId());
 						model.addAttribute("tempCategoryConceptName", obs.getValueCoded().getName().getName());
-					} else if (obs.getConcept().getDisplayString()
+					} 
+					/*else if (obs.getConcept().getDisplayString()
 					        .equalsIgnoreCase(RegistrationConstants.CONCEPT_NAME_OPD_WARD)) {
 						model.addAttribute("opdWardId", obs.getConcept().getConceptId());
+					}*/
+					else if (obs.getConcept().getDisplayString()
+					        .equalsIgnoreCase(RegistrationConstants.CONCEPT_NAME_TRIAGE)) {
+						model.addAttribute("triageRoomId", obs.getConcept().getConceptId());
 					}
 					observations.put(obs.getConcept().getConceptId(), ObsUtils.getValueAsString(obs));
 				}
@@ -360,6 +370,7 @@ if(request.getParameter("lastMenstrualPeriod")!=null && request.getParameter("la
 */
 		
           //create OPD obs
+		/*
           Concept opdWardConcept = Context.getConceptService().getConcept(RegistrationConstants.CONCEPT_NAME_OPD_WARD);
           Concept selectedOPDConcept = Context.getConceptService().getConcept(
           Integer.parseInt(parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_OPD_WARD)));
@@ -367,9 +378,20 @@ if(request.getParameter("lastMenstrualPeriod")!=null && request.getParameter("la
           opd.setConcept(opdWardConcept);
           opd.setValueCoded(selectedOPDConcept);
           encounter.addObs(opd);
-        // save encounter
+        
 		Context.getEncounterService().saveEncounter(encounter);
-		 RegistrationWebUtils.sendPatientToOPDQueue(patient, selectedOPDConcept, true,encounter);
+		RegistrationWebUtils.sendPatientToOPDQueue(patient, selectedOPDConcept, true,encounter);
+		*/
+		Concept triageConcept = Context.getConceptService().getConcept(RegistrationConstants.CONCEPT_NAME_TRIAGE);
+		Concept selectedTRIAGEConcept = Context.getConceptService().getConcept(parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_TRIAGE));
+		Obs triageObs = new Obs();
+		triageObs.setConcept(triageConcept);
+		triageObs.setValueCoded(selectedTRIAGEConcept);
+		encounter.addObs(triageObs);
+		encounter = Context.getEncounterService().saveEncounter(encounter);
+		String selectedCategory=parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_CATEGORY);
+		RegistrationWebUtils.sendPatientToTriageQueue(patient,
+				selectedTRIAGEConcept, true, selectedCategory,encounter);
 		logger.info(String.format("Save encounter for the visit of patient [encounterId=%s, patientId=%s]",
 		    encounter.getId(), patient.getId()));
 		
