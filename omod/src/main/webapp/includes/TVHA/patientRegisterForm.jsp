@@ -182,7 +182,9 @@ input, select, textarea {
 				});
 				
 				jQuery("#paidCategoryField").hide();
+				jQuery("#subCategoryPaidField").hide();
                 jQuery("#programField").hide();
+                jQuery("#subProgramField").hide();
 				jQuery("#mlc").hide();
 				jQuery("#referredFromColumn").hide();
 				jQuery("#referralTypeRow").hide();
@@ -653,8 +655,12 @@ input, select, textarea {
 					jQuery("#programChecked").removeAttr("checked");
 					jQuery("#paidCategoryField").show();
 				    jQuery("#programField").hide();
+				    jQuery("#subProgramField").hide();
+				    jQuery("#program").val('');
+				    jQuery("#subCategoryProgram").val('');
 			}
 			else{
+			jQuery("#paidCategory").val("");
 			jQuery("#paidCategoryField").hide();
 			}
 		},
@@ -664,8 +670,12 @@ input, select, textarea {
 					jQuery("#paidCategoryChecked").removeAttr("checked");
 				    jQuery("#programField").show();
 				    jQuery("#paidCategoryField").hide();
+				    jQuery("#subCategoryPaidField").hide();
+				    jQuery("#paidCategory").val('');
+				    jQuery("#subCategoryPaid").val('');
 			}
 			else{
+			jQuery("#program").val("");
 			jQuery("#programField").hide();
 			}
 		},
@@ -766,6 +776,55 @@ input, select, textarea {
    var relativeName=jQuery("#nameOrgivenNameOrmiddleNameOrfamilyNameOrIdentifier").val();
    jQuery("#patientRelativeName").val(relativeName);
    }
+   
+   function paidCategorySelection(paidCategoryId){
+   if(MODEL.subPaidCategoryMap[paidCategoryId.value]!=undefined){
+   jQuery("#subCategoryPaidField").show();
+   MODEL.subPaidCategoryMap[paidCategoryId.value] = " , |"
+						+ MODEL.subPaidCategoryMap[paidCategoryId.value];
+				PAGE.fillOptions("#subCategoryPaid", {
+					data : MODEL.subPaidCategoryMap[paidCategoryId.value],
+					delimiter : ",",
+					optionDelimiter : "|"
+				});
+	}
+	else{
+	jQuery("#subCategoryPaid").val('');
+	jQuery("#subCategoryPaidField").hide();
+	}
+   }
+   
+   function programCategorySelection(programCategoryId){
+   if(MODEL.subProgramsCategoryMap[programCategoryId.value]!=undefined){
+   jQuery("#subProgramField").show();
+   MODEL.subProgramsCategoryMap[programCategoryId.value] = " , |"
+						+ MODEL.subProgramsCategoryMap[programCategoryId.value];
+				PAGE.fillOptions("#subCategoryProgram", {
+					data : MODEL.subProgramsCategoryMap[programCategoryId.value],
+					delimiter : ",",
+					optionDelimiter : "|"
+				});
+	}
+	else{
+	jQuery("#subCategoryProgram").val('');
+	jQuery("#subProgramField").hide();
+	}
+   }
+   
+   function registrationFee(regFee) {
+	var regFeee=regFee.value;
+	if(regFeee=="Credit"){
+	jQuery("#regFeeSection")
+						.html(
+								 '<input type="hidden" id="regFeee" name="person.attribute.30" style="width: 152px;">');
+	}
+	else{
+	jQuery("#regFeeSection")
+						.html(
+								 '<input type="hidden" id="regFeee" name="person.attribute.28" style="width: 152px;">');
+	}
+	jQuery("#regFeee").val(regFeee);		
+	}
 </script>
 <script type="text/javascript">
 			
@@ -924,13 +983,17 @@ input, select, textarea {
 		<tr>
 				<td><b>Patient Category <label style="color:red">*</label></b>&nbsp;&nbsp;&nbsp;&nbsp;</td>
 				<td><input id="paidCategoryChecked" type="checkbox" name="paidCategoryChecked"/> Paid Category&nbsp;&nbsp;&nbsp;&nbsp;</td>
-				<td id="paidCategoryField"><select id="paidCategory" name="patient.paidCategory" style="width: 152px;">
+				<td id="paidCategoryField"><select id="paidCategory" name="patient.paidCategory" style="width: 152px;" onchange="paidCategorySelection(this);">
+						</select></td>
+				<td id="subCategoryPaidField"><select id="subCategoryPaid" name="patient.subCategoryPaid" style="width: 152px;">
 						</select></td>
 		    </tr>
 		    <tr>
 				<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
 				<td><input id="programChecked" type="checkbox" name="programChecked"/> Programs&nbsp;&nbsp;&nbsp;&nbsp;</td>
-				<td id="programField"><select id="program" name="patient.program" style="width: 152px;">
+				<td id="programField"><select id="program" name="patient.program" style="width: 152px;" onchange="programCategorySelection(this);">
+						</select></td>
+				<td id="subProgramField"><select id="subCategoryProgram" name="patient.subCategoryProgram" style="width: 152px;">
 						</select></td>
 		    </tr>
 		    
@@ -939,8 +1002,9 @@ input, select, textarea {
 		     <tr>
 				<td><b>Registration Fee <label style="color:red">*</label></b>&nbsp;&nbsp;&nbsp;&nbsp;</td>
 				<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
-				<td><select id="regFee" name="person.attribute.28" style='width: 152px;'>
+				<td><select id="regFee" name="regFee" style='width: 152px;' onchange="registrationFee(this);">
 					</select></td>
+				<td id="regFeeSection"></td>
 		    </tr>
 		    
 		    <tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr>

@@ -46,14 +46,14 @@
 	</c:forEach>
 	
 	
-	var _paidCategoryMap = new Array();
-	<c:forEach var="entry" items="${paidCategoryMap}">
-		_paidCategoryMap[${entry.key}] = "${entry.value}";
+	var _subPaidCategoryMap = new Array();
+	<c:forEach var="entry" items="${subPaidCategoryMap}">
+		_subPaidCategoryMap[${entry.key}] = "${entry.value}";
 	</c:forEach>
 	
-	var _programMap = new Array();
-	<c:forEach var="entry" items="${programMap}">
-		_programMap[${entry.key}] = "${entry.value}";
+	var _subProgramsCategoryMap = new Array();
+	<c:forEach var="entry" items="${subProgramsCategoryMap}">
+		_subProgramsCategoryMap[${entry.key}] = "${entry.value}";
 	</c:forEach>
 	
 	/**
@@ -79,12 +79,12 @@
 		tempCategoryId: "${tempCategoryId}",
 		tempCategoryConceptName: "${tempCategoryConceptName}",
 		opdWardId: "${opdWardId}",
-		paidCategories: "${paidCategories}",
-		programs: "${programs}",
 		regFees: _regFees,
 		patientAttributes: _attributes,
-		paidCategoryMap : _paidCategoryMap,
-		programMap : _programMap
+		paidCategories: "${paidCategories}",
+		programs: "${programs}",
+		subPaidCategoryMap: _subPaidCategoryMap,
+		subProgramsCategoryMap: _subProgramsCategoryMap
 	};
 </script>
 

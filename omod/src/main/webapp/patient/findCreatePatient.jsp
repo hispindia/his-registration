@@ -45,6 +45,16 @@
 		_regFees[${status.index}] = "${regFee}";
 	</c:forEach>
 	
+	var _subPaidCategoryMap = new Array();
+	<c:forEach var="entry" items="${subPaidCategoryMap}">
+		_subPaidCategoryMap[${entry.key}] = "${entry.value}";
+	</c:forEach>
+	
+	var _subProgramsCategoryMap = new Array();
+	<c:forEach var="entry" items="${subProgramsCategoryMap}">
+		_subProgramsCategoryMap[${entry.key}] = "${entry.value}";
+	</c:forEach>
+	
 	/**
 	 ** MODEL FROM CONTROLLER
 	 **/
@@ -62,6 +72,8 @@
 		referredFrom: "${referralHospitals}",
 		referralType: "${referralReasons}",
 		TEMPORARYCAT: "${TEMPORARYCAT}",
+		subPaidCategoryMap: _subPaidCategoryMap,
+		subProgramsCategoryMap: _subProgramsCategoryMap,
 	}
 </script>
 <jsp:include page="../includes/${hospitalName}/patientRegisterForm.jsp"/>

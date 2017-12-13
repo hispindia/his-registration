@@ -11,7 +11,9 @@
 		jQuery("#patientInfoPrintAreaa").hide();
 		jQuery("#mlc").hide();
 		jQuery("#paidCategoryField").hide();
+		jQuery("#subCategoryPaidField").hide();
         jQuery("#programField").hide();
+        jQuery("#subProgramField").hide();
 		
 		jQuery("#paidCategoryChecked").click(function() {
 		VALIDATORS.payingCheck();
@@ -67,25 +69,6 @@
 					delimiter : ",",
 					optionDelimiter : "|"
 				});
-		
-		if(MODEL.paidCategoryMap[MODEL.patientAttributes[14]]==="Non TMS"
-		|| MODEL.paidCategoryMap[MODEL.patientAttributes[14]]==="TMS"
-		|| MODEL.paidCategoryMap[MODEL.patientAttributes[14]]==="School Children"
-		|| MODEL.paidCategoryMap[MODEL.patientAttributes[14]]==="Monasteries"){
-		jQuery("#paidCategoryChecked").attr('checked', true);
-		jQuery("#paidCategoryField").show();
-		jQuery("#paidCategory").val(MODEL.patientAttributes[14]);
-		}else if(MODEL.programMap[MODEL.patientAttributes[14]]==="Antenatal"
-		|| MODEL.programMap[MODEL.patientAttributes[14]]==="Immunization"
-		|| MODEL.programMap[MODEL.patientAttributes[14]]==="HIV"
-		|| MODEL.programMap[MODEL.patientAttributes[14]]==="Non MDR TB"
-		|| MODEL.programMap[MODEL.patientAttributes[14]]==="MDR"
-		|| MODEL.programMap[MODEL.patientAttributes[14]]==="Mental Health"
-		|| MODEL.programMap[MODEL.patientAttributes[14]]==="Destitute/BPL"){
-		jQuery("#programChecked").attr('checked', true);
-		jQuery("#programField").show();
-		jQuery("#program").val(MODEL.patientAttributes[14]);
-		}
 		
 		PAGE.fillOptions("#regFee", {
 					data : MODEL.regFees
@@ -158,11 +141,25 @@
 				
 				if(jQuery("#paidCategoryChecked").is(':checked')){
 				var paidCategory=jQuery("#paidCategory option:checked").html();	
+				var subCategoryPaid=jQuery("#subCategoryPaid option:checked").html();
+				if(subCategoryPaid==null){
 				jQuery("#printablePatientCategory").append("<span style='margin:5px;'>" + paidCategory + "</span>");
+				}
+				else{
+				var patCat=paidCategory+"("+subCategoryPaid+")";
+				jQuery("#printablePatientCategory").append("<span style='margin:5px;'>" + patCat + "</span>");
+				}
 				}
 				else if(jQuery("#programChecked").is(':checked')){
 				var program=jQuery("#program option:checked").html();	
+				var subCategoryProgram=jQuery("#subCategoryProgram option:checked").html();
+				if(subCategoryProgram==null){
 				jQuery("#printablePatientCategory").append("<span style='margin:5px;'>" + program + "</span>");
+				}
+				else{
+				var patCat=paidCategory+"("+subCategoryProgram+")";
+				jQuery("#printablePatientCategory").append("<span style='margin:5px;'>" + patCat + "</span>");
+				}
 				}
 				jQuery("#patCat1").hide();
 				jQuery("#patCat2").hide();
@@ -330,8 +327,10 @@
 			if (jQuery("#paidCategoryChecked").is(':checked')) {
 					jQuery("#programChecked").removeAttr("checked");
 					jQuery("#paidCategoryField").show();
-					jQuery("#program").val("");
-				    jQuery("#programField").hide();
+					jQuery("#programField").hide();
+				    jQuery("#subProgramField").hide();
+				    jQuery("#program").val('');
+				    jQuery("#subCategoryProgram").val('');
 			}
 			else{
 			jQuery("#paidCategory").val("");
@@ -343,8 +342,10 @@
 			if (jQuery("#programChecked").is(':checked')) {
 					jQuery("#paidCategoryChecked").removeAttr("checked");
 				    jQuery("#programField").show();
-				    jQuery("#paidCategory").val("");
 				    jQuery("#paidCategoryField").hide();
+				    jQuery("#subCategoryPaidField").hide();
+				    jQuery("#paidCategory").val('');
+				    jQuery("#subCategoryPaid").val('');
 			}
 			else{
 			jQuery("#program").val("");
@@ -361,6 +362,55 @@
 		 }
 		}
 	};
+	
+	function paidCategorySelection(paidCategoryId){
+   if(MODEL.subPaidCategoryMap[paidCategoryId.value]!=undefined){
+   jQuery("#subCategoryPaidField").show();
+   MODEL.subPaidCategoryMap[paidCategoryId.value] = " , |"
+						+ MODEL.subPaidCategoryMap[paidCategoryId.value];
+				PAGE.fillOptions("#subCategoryPaid", {
+					data : MODEL.subPaidCategoryMap[paidCategoryId.value],
+					delimiter : ",",
+					optionDelimiter : "|"
+				});
+	}
+	else{
+	jQuery("#subCategoryPaid").val('');
+	jQuery("#subCategoryPaidField").hide();
+	}
+   }
+   
+   function programCategorySelection(programCategoryId){
+   if(MODEL.subProgramsCategoryMap[programCategoryId.value]!=undefined){
+   jQuery("#subProgramField").show();
+   MODEL.subProgramsCategoryMap[programCategoryId.value] = " , |"
+						+ MODEL.subProgramsCategoryMap[programCategoryId.value];
+				PAGE.fillOptions("#subCategoryProgram", {
+					data : MODEL.subProgramsCategoryMap[programCategoryId.value],
+					delimiter : ",",
+					optionDelimiter : "|"
+				});
+	}
+	else{
+	jQuery("#subCategoryProgram").val('');
+	jQuery("#subProgramField").hide();
+	}
+   }
+   
+   function registrationFee(regFee) {
+	var regFeee=regFee.value;
+	if(regFeee=="Credit"){
+	jQuery("#regFeeSection")
+						.html(
+								 '<input type="hidden" id="regFeee" name="person.attribute.30" style="width: 152px;">');
+	}
+	else{
+	jQuery("#regFeeSection")
+						.html(
+								 '<input type="hidden" id="regFeee" name="person.attribute.28" style="width: 152px;">');
+	}
+	jQuery("#regFeee").val(regFeee);		
+	}
 </script>
 <input id="printSlip" type="button" value="Print"
 	onClick="PAGE.submit(false);" />
@@ -427,8 +477,10 @@
 				<td>
 				<input id="paidCategoryChecked" type="checkbox" name="paidCategoryChecked"/> Paid Category&nbsp;&nbsp;
 				</td>
-				<td id="paidCategoryField"><select id="paidCategory" name="patient.paidCategory" style="width: 130px;">
-						</select></td>		
+				<td id="paidCategoryField"><select id="paidCategory" name="patient.paidCategory" style="width: 130px;" onchange="paidCategorySelection(this);">
+						</select></td>	
+				<td id="subCategoryPaidField"><select id="subCategoryPaid" name="patient.subCategoryPaid" style="width: 130px;">
+						</select></td>	
 				</tr>
 				</table>
 				</td>
@@ -442,8 +494,10 @@
 				<td>
 				<input id="programChecked" type="checkbox" name="programChecked"/> Programs&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 				</td>
-				<td id="programField"><select id="program" name="patient.program" style="width: 130px;">
-						</select></td>		
+				<td id="programField"><select id="program" name="patient.program" style="width: 130px;" onchange="programCategorySelection(this);">
+						</select></td>	
+				<td id="subProgramField"><select id="subCategoryProgram" name="patient.subCategoryProgram" style="width: 130px;">
+						</select></td>	
 				</tr>
 				</table>
 				</td>
@@ -452,8 +506,9 @@
 				<tr id="regFeeRow">
 				<td><b>Registration Fee <label style="color:red">*</label></b>&nbsp;&nbsp;&nbsp;&nbsp;</td>
 				<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-				<td><select id="regFee" name="person.attribute.28" style='width: 130px;'>
+				<td><select id="regFee" name="regFee" style='width: 130px;' onchange="registrationFee(this);">
 					</select></td>
+				<td id="regFeeSection"></td>
 		    </tr>
 				
 				<tr id="temporaryCategories">

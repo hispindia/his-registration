@@ -44,6 +44,16 @@
 		_programMap[${entry.key}] = "${entry.value}";
 	</c:forEach>
 	
+	var _subPaidCategoryMap = new Array();
+	<c:forEach var="entry" items="${subPaidCategoryMap}">
+		_subPaidCategoryMap[${entry.key}] = "${entry.value}";
+	</c:forEach>
+	
+	var _subProgramsCategoryMap = new Array();
+	<c:forEach var="entry" items="${subProgramsCategoryMap}">
+		_subProgramsCategoryMap[${entry.key}] = "${entry.value}";
+	</c:forEach>
+	
 	/**
 	 ** VALUES FROM MODEL
 	 **/
@@ -67,7 +77,9 @@
 		tempCategoryConceptName: "${tempCategoryConceptName}",
 		opdWardId: "${opdWardId}",
 		paidCategoryMap : _paidCategoryMap,
-		programMap : _programMap
+		programMap : _programMap,
+		subPaidCategoryMap: _subPaidCategoryMap,
+		subProgramsCategoryMap: _subProgramsCategoryMap
 	};
 </script>
 

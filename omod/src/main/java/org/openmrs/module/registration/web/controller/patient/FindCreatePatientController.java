@@ -22,7 +22,9 @@ package org.openmrs.module.registration.web.controller.patient;
 
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.util.Collection;
 import java.util.Date;
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -35,6 +37,7 @@ import org.apache.commons.logging.LogFactory;
 import org.dom4j.DocumentException;
 import org.jaxen.JaxenException;
 import org.openmrs.Concept;
+import org.openmrs.ConceptAnswer;
 import org.openmrs.Encounter;
 import org.openmrs.Obs;
 import org.openmrs.Order;
@@ -82,13 +85,30 @@ public class FindCreatePatientController {
 		model.addAttribute("referralReasons",
 		    RegistrationWebUtils.getSubConcepts(RegistrationConstants.CONCEPT_NAME_REASON_FOR_REFERRAL));
 		model.addAttribute("paidCategories", RegistrationWebUtils.getSubConcepts(RegistrationConstants.CONCEPT_NAME_PAID_CATEGORY));
+		Concept conceptPaidCategory=Context.getConceptService().getConcept(RegistrationConstants.CONCEPT_NAME_PAID_CATEGORY);
+		Map<String,String> subPaidCategoryMap=new LinkedHashMap<String,String>();
+		Collection<ConceptAnswer> conAns=conceptPaidCategory.getAnswers();
+		for(ConceptAnswer con:conAns){
+			if(con.getAnswerConcept().getAnswers().size()!=0)
+			subPaidCategoryMap.put(con.getAnswerConcept().getConceptId().toString(), RegistrationWebUtils.getSubConcepts(con.getAnswerConcept().getName().getName()));
+		    }
+		model.addAttribute("subPaidCategoryMap",subPaidCategoryMap);
 		model.addAttribute("programs", RegistrationWebUtils.getSubConcepts(RegistrationConstants.CONCEPT_NAME_PROGRAMS));
+		Concept conceptPrograms=Context.getConceptService().getConcept(RegistrationConstants.CONCEPT_NAME_PROGRAMS);
+		Map<String,String> subProgramsCategoryMap=new LinkedHashMap<String,String>();
+		Collection<ConceptAnswer> conAnsForPrograms=conceptPrograms.getAnswers();
+		for(ConceptAnswer con:conAnsForPrograms){
+			if(con.getAnswerConcept().getAnswers().size()!=0)
+				subProgramsCategoryMap.put(con.getAnswerConcept().getConceptId().toString(), RegistrationWebUtils.getSubConcepts(con.getAnswerConcept().getName().getName()));
+		    }
+		model.addAttribute("subProgramsCategoryMap",subProgramsCategoryMap);
 		String registrationFee=GlobalPropertyUtil.getString("registration.registrationFee", "0");
 		List<String> regFee=new LinkedList<String>();
 		regFee.add("Select");
 		regFee.add(registrationFee);
 		regFee.add("Free");
 		regFee.add("50% Discount");
+		regFee.add("Credit");
 		model.addAttribute("regFees",regFee);
 		RegistrationWebUtils.getAddressData(model);
 		return "/module/registration/patient/findCreatePatient";
@@ -222,6 +242,9 @@ public class FindCreatePatientController {
 					else if(attribute.getAttributeType().getId()==28 && parameters.get(RegistrationConstants.FORM_FIELD_REGISTRATION_FEE).equals("Free")){
 						attribute.setValue("0");
 					}
+					else if(attribute.getAttributeType().getId()==30 && parameters.get(RegistrationConstants.FORM_FIELD_CREDIT).equals("Credit")){
+						attribute.setValue("Credit");
+					}
 					patient.addAttribute(attribute);
 				}
 			}
@@ -246,6 +269,24 @@ public class FindCreatePatientController {
 		}
 		
 		patient.addAttribute(perAttr);
+		
+		PersonAttribute perAttri=new PersonAttribute();
+		if (!StringUtils.isBlank(parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_SUB_CATEGORY_PAID))) {
+			perAttri.setPerson(patient);	
+			perAttri.setValue(parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_SUB_CATEGORY_PAID));
+			perAttri.setAttributeType(Context.getPersonService().getPersonAttributeType(31));
+			perAttri.setCreator(Context.getUserContext().getAuthenticatedUser());
+			perAttri.setDateCreated(new Date());
+		}
+		else if (!StringUtils.isBlank(parameters.get(RegistrationConstants.FORM_FIELD_PATIENT__SUB_CATEGORY_PROGRAM))) {
+			perAttri.setPerson(patient);	
+			perAttri.setValue(parameters.get(RegistrationConstants.FORM_FIELD_PATIENT__SUB_CATEGORY_PROGRAM));
+			perAttri.setAttributeType(Context.getPersonService().getPersonAttributeType(31));
+			perAttri.setCreator(Context.getUserContext().getAuthenticatedUser());
+			perAttri.setDateCreated(new Date());
+		}
+		
+		patient.addAttribute(perAttri);
 		
 		return patient;
 	}
@@ -273,36 +314,57 @@ public class FindCreatePatientController {
 		encounter.addObs(opdObs);
 		
 		Concept cnrf = Context.getConceptService().getConcept(RegistrationConstants.CONCEPT_NAME_REGISTRATION_FEE);
+		Concept cnc = Context.getConceptService().getConcept(RegistrationConstants.CONCEPT_NAME_CREDIT);
 		Concept cnp = Context.getConceptService().getConcept(RegistrationConstants.CONCEPT_NEW_PATIENT);
 		Obs obsn = new Obs();
 		obsn.setConcept(cnrf);
 		obsn.setValueCoded(cnp);
-		if(parameters.get(RegistrationConstants.FORM_FIELD_REGISTRATION_FEE).equals("50% Discount")){
-			String regitFeeDefault=GlobalPropertyUtil.getString("registration.registrationFee", "0");
-			Integer regitFeeInInteger=Integer.parseInt(regitFeeDefault);
-			Double discountedRegFee=(double) (regitFeeInInteger/2);
-			obsn.setValueNumeric(discountedRegFee);
-		}
-		else if(parameters.get(RegistrationConstants.FORM_FIELD_REGISTRATION_FEE).equals("Free")){
-			Integer regitFeeInInteger=0;
-			Double discountedRegFee=(double) (regitFeeInInteger);
-			obsn.setValueNumeric(discountedRegFee);	
-		}
-		else{
-			String regitFeeDefault=GlobalPropertyUtil.getString("registration.registrationFee", "0");
-			Integer regitFeeInInteger=Integer.parseInt(regitFeeDefault);
-			Double discountedRegFee=(double) (regitFeeInInteger);
-			obsn.setValueNumeric(discountedRegFee);	
-		}
+		
+		Obs obs = new Obs();
+		obs.setConcept(cnc);
+		obs.setValueCoded(cnp);
+		
 		if (!StringUtils.isBlank(parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_PAID_CATEGORY))) {
 			obsn.setValueText(parameters
+					.get(RegistrationConstants.FORM_FIELD_PATIENT_PAID_CATEGORY));	
+			obs.setValueText(parameters
 					.get(RegistrationConstants.FORM_FIELD_PATIENT_PAID_CATEGORY));	
 		}
 		else{
 			obsn.setValueText(parameters
-					.get(RegistrationConstants.FORM_FIELD_PATIENT_PROGRAM_CATEGORY));		
+					.get(RegistrationConstants.FORM_FIELD_PATIENT_PROGRAM_CATEGORY));
+			obs.setValueText(parameters
+					.get(RegistrationConstants.FORM_FIELD_PATIENT_PROGRAM_CATEGORY));
 		}
-		encounter.addObs(obsn);	
+		
+		if(!StringUtils.isBlank(parameters.get(RegistrationConstants.FORM_FIELD_REGISTRATION_FEE))&&parameters.get(RegistrationConstants.FORM_FIELD_REGISTRATION_FEE).equals("50% Discount")){
+			String regitFeeDefault=GlobalPropertyUtil.getString("registration.registrationFee", "0");
+			Integer regitFeeInInteger=Integer.parseInt(regitFeeDefault);
+			Double discountedRegFee=(double) (regitFeeInInteger/2);
+			obsn.setValueNumeric(discountedRegFee);
+			encounter.addObs(obsn);	
+		}
+		else if(!StringUtils.isBlank(parameters.get(RegistrationConstants.FORM_FIELD_REGISTRATION_FEE))&&parameters.get(RegistrationConstants.FORM_FIELD_REGISTRATION_FEE).equals("Free")){
+			Integer regitFeeInInteger=0;
+			Double discountedRegFee=(double) (regitFeeInInteger);
+			obsn.setValueNumeric(discountedRegFee);	
+			encounter.addObs(obsn);	
+		}
+		else if(!StringUtils.isBlank(parameters.get(RegistrationConstants.FORM_FIELD_REGISTRATION_FEE))){
+			String regitFeeDefault=GlobalPropertyUtil.getString("registration.registrationFee", "0");
+			Integer regitFeeInInteger=Integer.parseInt(regitFeeDefault);
+			Double discountedRegFee=(double) (regitFeeInInteger);
+			obsn.setValueNumeric(discountedRegFee);	
+			encounter.addObs(obsn);	
+		}
+		
+		if(!StringUtils.isBlank(parameters.get(RegistrationConstants.FORM_FIELD_CREDIT))&&parameters.get(RegistrationConstants.FORM_FIELD_CREDIT).equals("Credit")){
+			String regitFeeDefault=GlobalPropertyUtil.getString("registration.registrationFee", "0");
+			Integer regitFeeInInteger=Integer.parseInt(regitFeeDefault);
+			Double discountedRegFee=(double) (regitFeeInInteger);
+			obs.setValueNumeric(discountedRegFee);	
+			encounter.addObs(obs);	
+		}
 		
 		Concept temporaryCategoryConcept = Context.getConceptService().getConcept(RegistrationConstants.CONCEPT_NAME_TEMPORARY_CATEGORY);
 		String selectedTemporaryCategory=parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_TEMPORARY_CATEGORY);

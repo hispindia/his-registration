@@ -144,28 +144,46 @@ public class ShowPatientInfoController {
 				SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 				model.addAttribute("dayOfVisit", formatter.format(encounter.getDateCreated()));
 			}
+			model.addAttribute("duplicate","Duplicate");
 		}
 		
 		List<PersonAttribute> pas = hcs.getPersonAttributes(patientId);
 		
 		Map<String, String> paidCategoryMap = new LinkedHashMap<String, String>();
+		Map<String,String> subPaidCategoryMap=new LinkedHashMap<String,String>();
 		Concept paidCategory = Context.getConceptService().getConcept(RegistrationConstants.CONCEPT_NAME_PAID_CATEGORY);
 		for (ConceptAnswer ca : paidCategory.getAnswers()) {
 			paidCategoryMap.put(ca.getAnswerConcept().getConceptId().toString(), ca.getAnswerConcept().getName().getName());
+			if(ca.getAnswerConcept().getAnswers().size()!=0){
+				for (ConceptAnswer cans : ca.getAnswerConcept().getAnswers()) {
+				subPaidCategoryMap.put(cans.getAnswerConcept().getConceptId().toString(),cans.getAnswerConcept().getName().getName());
+			    }
+			}
 		}
 		Map<String, String> programMap = new LinkedHashMap<String, String>();
+		Map<String,String> subProgramsCategoryMap=new LinkedHashMap<String,String>();
 		Concept program = Context.getConceptService().getConcept(RegistrationConstants.CONCEPT_NAME_PROGRAMS);
 		for (ConceptAnswer ca : program.getAnswers()) {
 			programMap.put(ca.getAnswerConcept().getConceptId().toString(), ca.getAnswerConcept().getName().getName());
+			if(ca.getAnswerConcept().getAnswers().size()!=0){
+				for (ConceptAnswer cans : ca.getAnswerConcept().getAnswers()) {
+					subProgramsCategoryMap.put(cans.getAnswerConcept().getConceptId().toString(),cans.getAnswerConcept().getName().getName());
+			    }
+			}
 		}
 		model.addAttribute("paidCategoryMap", paidCategoryMap);
+		model.addAttribute("subPaidCategoryMap", subPaidCategoryMap);
 		model.addAttribute("programMap", programMap);
+		model.addAttribute("subProgramsCategoryMap", subProgramsCategoryMap);
 		String hospitalName=GlobalPropertyUtil.getString("hospitalcore.hospitalParticularName", "Kollegal DVT Hospital");
 		model.addAttribute("hospitalName", hospitalName);
 		for (PersonAttribute pa : pas) {
 			PersonAttributeType attributeType = pa.getAttributeType();
 			if (attributeType.getPersonAttributeTypeId() == 28) {
 				model.addAttribute("registrationFee", pa.getValue());
+			}
+			else if(attributeType.getPersonAttributeTypeId() == 30){
+				model.addAttribute("registrationFee", pa.getValue());	
 			}
 		}
 		User user=Context.getAuthenticatedUser();

@@ -60,7 +60,10 @@ public class RegistrationConstants {
 	public static final String FORM_FIELD_PATIENT_ADDRESS_SETTLEMENT = "patient.address.settlement";
 	public static final String FORM_FIELD_PATIENT_PAID_CATEGORY = "patient.paidCategory";
 	public static final String FORM_FIELD_PATIENT_PROGRAM_CATEGORY = "patient.program";
+	public static final String FORM_FIELD_PATIENT_SUB_CATEGORY_PAID = "patient.subCategoryPaid";
+	public static final String FORM_FIELD_PATIENT__SUB_CATEGORY_PROGRAM = "patient.subCategoryProgram";
 	public static final String FORM_FIELD_REGISTRATION_FEE = "person.attribute.28";
+	public static final String FORM_FIELD_CREDIT = "person.attribute.30";
 	public static final String FORM_FIELD_PATIENT_RELATIVE_NAME = "patientRelativeName";
 	public static final String FORM_FIELD_PATIENT_RELATIVE_ID = "patientRelativeId";
 	public static final String FORM_FIELD_PATIENT_TEMPORARY_ATTRIBUTE = "patient.temporary.attribute";
@@ -85,6 +88,7 @@ public class RegistrationConstants {
 	public static final String CONCEPT_NAME_PAID_CATEGORY = "Paid Category";
 	public static final String CONCEPT_NAME_PROGRAMS = "Programs";
 	public static final String CONCEPT_NAME_REGISTRATION_FEE = "REGISTRATION FEE";
+	public static final String CONCEPT_NAME_CREDIT = "CREDIT";
 	
 
 }
