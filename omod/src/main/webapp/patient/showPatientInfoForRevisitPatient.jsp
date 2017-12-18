@@ -80,6 +80,7 @@
 		tempCategoryConceptName: "${tempCategoryConceptName}",
 		opdWardId: "${opdWardId}",
 		regFees: _regFees,
+		registrationFee: "${registrationFee}",
 		patientAttributes: _attributes,
 		paidCategories: "${paidCategories}",
 		programs: "${programs}",

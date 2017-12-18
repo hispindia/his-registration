@@ -183,7 +183,7 @@ public class ShowPatientInfoController {
 				model.addAttribute("registrationFee", pa.getValue());
 			}
 			else if(attributeType.getPersonAttributeTypeId() == 30){
-				model.addAttribute("registrationFee", pa.getValue());	
+				model.addAttribute("registrationFee", "Credit-"+pa.getValue());	
 			}
 		}
 		User user=Context.getAuthenticatedUser();

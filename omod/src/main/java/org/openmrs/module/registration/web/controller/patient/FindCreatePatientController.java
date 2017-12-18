@@ -243,7 +243,9 @@ public class FindCreatePatientController {
 						attribute.setValue("0");
 					}
 					else if(attribute.getAttributeType().getId()==30 && parameters.get(RegistrationConstants.FORM_FIELD_CREDIT).equals("Credit")){
-						attribute.setValue("Credit");
+						String regitFeeDefault=GlobalPropertyUtil.getString("registration.registrationFee", "0");
+						Integer regitFeeInInteger=Integer.parseInt(regitFeeDefault);
+						attribute.setValue(regitFeeInInteger.toString(regitFeeInInteger));
 					}
 					patient.addAttribute(attribute);
 				}
@@ -259,6 +261,7 @@ public class FindCreatePatientController {
 			perAttr.setAttributeType(Context.getPersonService().getPersonAttributeType(14));
 			perAttr.setCreator(Context.getUserContext().getAuthenticatedUser());
 			perAttr.setDateCreated(new Date());
+			perAttr.setVoided(false);
 		}
 		else if (!StringUtils.isBlank(parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_PROGRAM_CATEGORY))) {
 			perAttr.setPerson(patient);	
@@ -266,6 +269,7 @@ public class FindCreatePatientController {
 			perAttr.setAttributeType(Context.getPersonService().getPersonAttributeType(14));
 			perAttr.setCreator(Context.getUserContext().getAuthenticatedUser());
 			perAttr.setDateCreated(new Date());
+			perAttr.setVoided(false);
 		}
 		
 		patient.addAttribute(perAttr);
@@ -277,6 +281,8 @@ public class FindCreatePatientController {
 			perAttri.setAttributeType(Context.getPersonService().getPersonAttributeType(31));
 			perAttri.setCreator(Context.getUserContext().getAuthenticatedUser());
 			perAttri.setDateCreated(new Date());
+			perAttri.setVoided(false);
+			patient.addAttribute(perAttri);
 		}
 		else if (!StringUtils.isBlank(parameters.get(RegistrationConstants.FORM_FIELD_PATIENT__SUB_CATEGORY_PROGRAM))) {
 			perAttri.setPerson(patient);	
@@ -284,9 +290,9 @@ public class FindCreatePatientController {
 			perAttri.setAttributeType(Context.getPersonService().getPersonAttributeType(31));
 			perAttri.setCreator(Context.getUserContext().getAuthenticatedUser());
 			perAttri.setDateCreated(new Date());
+			perAttri.setVoided(false);
+			patient.addAttribute(perAttri);
 		}
-		
-		patient.addAttribute(perAttri);
 		
 		return patient;
 	}

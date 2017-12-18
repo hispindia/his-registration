@@ -47,6 +47,7 @@ import org.openmrs.Obs;
 import org.openmrs.Order;
 import org.openmrs.OrderType;
 import org.openmrs.Patient;
+import org.openmrs.Person;
 import org.openmrs.PersonAttribute;
 import org.openmrs.PersonAttributeType;
 import org.openmrs.User;
@@ -183,6 +184,7 @@ public class ShowPatientInfoForRevisitPatientController {
 		regFee.add("50% Discount");
 		regFee.add("Credit");
 		model.addAttribute("regFees",regFee);
+		model.addAttribute("registrationFee",registrationFee);
 		
 		String hospitalName=GlobalPropertyUtil.getString("hospitalcore.hospitalParticularName", "Kollegal DVT Hospital");
 		model.addAttribute("hospitalName", hospitalName);
@@ -224,6 +226,9 @@ public class ShowPatientInfoForRevisitPatientController {
 		
 		// get patient
 		Patient patient = Context.getPatientService().getPatient(patientId);
+		Person person = Context.getPersonService().getPerson(patient);
+		HospitalCoreService hcs = Context.getService(HospitalCoreService.class);
+		List<PersonAttribute> pas = hcs.getPersonAttributes(patientId);
 		
 		/*
 		 * SAVE ENCOUNTER
@@ -351,7 +356,8 @@ public class ShowPatientInfoForRevisitPatientController {
 			perAttri.setAttributeType(Context.getPersonService().getPersonAttributeType(31));
 			perAttri.setCreator(Context.getUserContext().getAuthenticatedUser());
 			perAttri.setDateCreated(new Date());
-			perAttr.setVoided(false);
+			perAttri.setVoided(false);
+			patient.addAttribute(perAttri);
 		}
 		else if (!StringUtils.isBlank(parameters.get(RegistrationConstants.FORM_FIELD_PATIENT__SUB_CATEGORY_PROGRAM))) {
 			perAttri.setPerson(patient);	
@@ -359,10 +365,21 @@ public class ShowPatientInfoForRevisitPatientController {
 			perAttri.setAttributeType(Context.getPersonService().getPersonAttributeType(31));
 			perAttri.setCreator(Context.getUserContext().getAuthenticatedUser());
 			perAttri.setDateCreated(new Date());
-			perAttr.setVoided(false);
+			perAttri.setVoided(false);
+			patient.addAttribute(perAttri);
 		}
-		
-		patient.addAttribute(perAttri);
+		else{
+			for (PersonAttribute pa : pas) {
+				PersonAttributeType attributeType = pa.getAttributeType();
+				if (attributeType.getPersonAttributeTypeId() == 31) {
+					PersonAttribute perAtt=Context.getPersonService().getPersonAttribute(pa.getPersonAttributeId());
+					perAtt.setVoidedBy(Context.getUserContext().getAuthenticatedUser());
+					perAtt.setDateVoided(new Date());
+					perAtt.setVoided(true);
+					hcs.saveOrUpdatePersonAttribute(perAtt);
+				}
+			}
+		}
 		
 		
 		for (String name : parameters.keySet()) {
@@ -376,12 +393,55 @@ public class ShowPatientInfoForRevisitPatientController {
 					Integer regitFeeInInteger=Integer.parseInt(regitFeeDefault);
 					Float discountedRegFee=(float) (regitFeeInInteger/2);
 					attribute.setValue(discountedRegFee.toString(discountedRegFee));
+					
+					for (PersonAttribute pa : pas) {
+						PersonAttributeType attributeType = pa.getAttributeType();
+						if (attributeType.getPersonAttributeTypeId() == 30) {
+							pa.setVoidedBy(Context.getUserContext().getAuthenticatedUser());
+							pa.setDateVoided(new Date());
+							pa.setVoided(true);
+							hcs.saveOrUpdatePersonAttribute(pa);
+						}
+					}
 				}
 				else if(attribute.getAttributeType().getId()==28 && parameters.get(RegistrationConstants.FORM_FIELD_REGISTRATION_FEE).equals("Free")){
 					attribute.setValue("0");
+					
+					for (PersonAttribute pa : pas) {
+						PersonAttributeType attributeType = pa.getAttributeType();
+						if (attributeType.getPersonAttributeTypeId() == 30) {
+							pa.setVoidedBy(Context.getUserContext().getAuthenticatedUser());
+							pa.setDateVoided(new Date());
+							pa.setVoided(true);
+							hcs.saveOrUpdatePersonAttribute(pa);
+						}
+					}
 				}
 				else if(attribute.getAttributeType().getId()==30 && parameters.get(RegistrationConstants.FORM_FIELD_CREDIT).equals("Credit")){
-					attribute.setValue("Credit");
+					String regitFeeDefault=GlobalPropertyUtil.getString("registration.registrationFee", "0");
+					Integer regitFeeInInteger=Integer.parseInt(regitFeeDefault);
+					attribute.setValue(regitFeeInInteger.toString(regitFeeInInteger));
+					
+					for (PersonAttribute pa : pas) {
+						PersonAttributeType attributeType = pa.getAttributeType();
+						if (attributeType.getPersonAttributeTypeId() == 28) {
+							pa.setVoidedBy(Context.getUserContext().getAuthenticatedUser());
+							pa.setDateVoided(new Date());
+							pa.setVoided(true);
+							hcs.saveOrUpdatePersonAttribute(pa);
+						}
+					}
+				}
+				else if(attribute.getAttributeType().getId()==28){
+					for (PersonAttribute pa : pas) {
+						PersonAttributeType attributeType = pa.getAttributeType();
+						if (attributeType.getPersonAttributeTypeId() == 30) {
+							pa.setVoidedBy(Context.getUserContext().getAuthenticatedUser());
+							pa.setDateVoided(new Date());
+							pa.setVoided(true);
+							hcs.saveOrUpdatePersonAttribute(pa);
+						}
+					}
 				}
 				patient.addAttribute(attribute);
 			}

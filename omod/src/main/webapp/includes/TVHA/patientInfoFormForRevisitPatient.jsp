@@ -130,7 +130,14 @@
 				jQuery("#opdWardd").after("<span>" + jQuery("#opdWard option:checked").html() +  "</span>");
 			
 				jQuery("#regFee").after("<span>" + jQuery("#regFee option:checked").html() +  "</span>");
-				jQuery("#registrationFee").after("<span>" + jQuery("#regFee option:checked").html() +  "</span>");	
+				var regFee=jQuery("#regFee option:checked").html();
+				if(regFee=="Credit"){
+				regFee=regFee+"-"+${registrationFee};
+				jQuery("#registrationFee").after("<span>" + regFee +  "</span>");	
+				}
+				else{
+				jQuery("#registrationFee").after("<span>" + regFee +  "</span>");	
+				}
 				
 				// Convert temporary category dropdown to printable format
 				if(jQuery("#temporaryCategoryCheckBox").is(':checked')){
@@ -165,6 +172,9 @@
 				jQuery("#patCat2").hide();
 				
 				jQuery("#regFeeRow").hide();
+				
+				jQuery("#patientInfoPrintArea").hide();
+				jQuery("#patientInfoPrintAreaa").show();
 				
 				// submit form and print		
 				if(!reprint){
