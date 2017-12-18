@@ -330,6 +330,7 @@ public class ShowPatientInfoForRevisitPatientController {
 		}
 		
 		PersonAttribute perAttr=new PersonAttribute();
+		List<PersonAttribute> listPersonAttribute=new LinkedList<PersonAttribute>();
 		if (!StringUtils.isBlank(parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_PAID_CATEGORY))) {
 			perAttr.setPerson(patient);	
 			perAttr.setValue(parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_PAID_CATEGORY));
@@ -372,15 +373,10 @@ public class ShowPatientInfoForRevisitPatientController {
 			for (PersonAttribute pa : pas) {
 				PersonAttributeType attributeType = pa.getAttributeType();
 				if (attributeType.getPersonAttributeTypeId() == 31) {
-					PersonAttribute perAtt=Context.getPersonService().getPersonAttribute(pa.getPersonAttributeId());
-					perAtt.setVoidedBy(Context.getUserContext().getAuthenticatedUser());
-					perAtt.setDateVoided(new Date());
-					perAtt.setVoided(true);
-					hcs.saveOrUpdatePersonAttribute(perAtt);
+					listPersonAttribute.add(pa);
 				}
 			}
 		}
-		
 		
 		for (String name : parameters.keySet()) {
 			if ((name.contains(".attribute.")) && (!StringUtils.isBlank(parameters.get(name)))) {
@@ -397,10 +393,7 @@ public class ShowPatientInfoForRevisitPatientController {
 					for (PersonAttribute pa : pas) {
 						PersonAttributeType attributeType = pa.getAttributeType();
 						if (attributeType.getPersonAttributeTypeId() == 30) {
-							pa.setVoidedBy(Context.getUserContext().getAuthenticatedUser());
-							pa.setDateVoided(new Date());
-							pa.setVoided(true);
-							hcs.saveOrUpdatePersonAttribute(pa);
+							listPersonAttribute.add(pa);
 						}
 					}
 				}
@@ -410,10 +403,7 @@ public class ShowPatientInfoForRevisitPatientController {
 					for (PersonAttribute pa : pas) {
 						PersonAttributeType attributeType = pa.getAttributeType();
 						if (attributeType.getPersonAttributeTypeId() == 30) {
-							pa.setVoidedBy(Context.getUserContext().getAuthenticatedUser());
-							pa.setDateVoided(new Date());
-							pa.setVoided(true);
-							hcs.saveOrUpdatePersonAttribute(pa);
+							listPersonAttribute.add(pa);
 						}
 					}
 				}
@@ -425,10 +415,7 @@ public class ShowPatientInfoForRevisitPatientController {
 					for (PersonAttribute pa : pas) {
 						PersonAttributeType attributeType = pa.getAttributeType();
 						if (attributeType.getPersonAttributeTypeId() == 28) {
-							pa.setVoidedBy(Context.getUserContext().getAuthenticatedUser());
-							pa.setDateVoided(new Date());
-							pa.setVoided(true);
-							hcs.saveOrUpdatePersonAttribute(pa);
+							listPersonAttribute.add(pa);
 						}
 					}
 				}
@@ -436,10 +423,7 @@ public class ShowPatientInfoForRevisitPatientController {
 					for (PersonAttribute pa : pas) {
 						PersonAttributeType attributeType = pa.getAttributeType();
 						if (attributeType.getPersonAttributeTypeId() == 30) {
-							pa.setVoidedBy(Context.getUserContext().getAuthenticatedUser());
-							pa.setDateVoided(new Date());
-							pa.setVoided(true);
-							hcs.saveOrUpdatePersonAttribute(pa);
+							listPersonAttribute.add(pa);
 						}
 					}
 				}
@@ -448,6 +432,10 @@ public class ShowPatientInfoForRevisitPatientController {
 		}
 		
 		patient = Context.getPatientService().savePatient(patient);
+		
+		for(PersonAttribute personAttribute:listPersonAttribute){
+			hcs.saveOrUpdatePersonAttributee(personAttribute.getPersonAttributeId(),Context.getUserContext().getAuthenticatedUser().getUserId());	
+		}
 		
 		Concept temporaryCategoryConcept = Context.getConceptService().getConcept(RegistrationConstants.CONCEPT_NAME_TEMPORARY_CATEGORY);
 		String selectedTemporaryCategory=parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_TEMPORARY_CATEGORY);
