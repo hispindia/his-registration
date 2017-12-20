@@ -343,6 +343,19 @@ public class FindCreatePatientController {
 					.get(RegistrationConstants.FORM_FIELD_PATIENT_PROGRAM_CATEGORY));
 		}
 		
+		if (!StringUtils.isBlank(parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_SUB_CATEGORY_PAID))) {
+			obsn.setComment(parameters
+					.get(RegistrationConstants.FORM_FIELD_PATIENT_SUB_CATEGORY_PAID));	
+			obs.setComment(parameters
+					.get(RegistrationConstants.FORM_FIELD_PATIENT_SUB_CATEGORY_PAID));	
+		}
+		else if (!StringUtils.isBlank(parameters.get(RegistrationConstants.FORM_FIELD_PATIENT__SUB_CATEGORY_PROGRAM))) {
+			obsn.setComment(parameters
+					.get(RegistrationConstants.FORM_FIELD_PATIENT__SUB_CATEGORY_PROGRAM));
+			obs.setComment(parameters
+					.get(RegistrationConstants.FORM_FIELD_PATIENT__SUB_CATEGORY_PROGRAM));	
+		}
+		
 		if(!StringUtils.isBlank(parameters.get(RegistrationConstants.FORM_FIELD_REGISTRATION_FEE))&&parameters.get(RegistrationConstants.FORM_FIELD_REGISTRATION_FEE).equals("50% Discount")){
 			String regitFeeDefault=GlobalPropertyUtil.getString("registration.registrationFee", "0");
 			Integer regitFeeInInteger=Integer.parseInt(regitFeeDefault);
