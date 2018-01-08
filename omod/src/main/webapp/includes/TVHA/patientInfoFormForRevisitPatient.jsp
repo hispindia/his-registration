@@ -38,6 +38,13 @@
 		else{
 		jQuery("#aadharCardRow").hide();
 		}
+		if (!StringUtils.isBlank(MODEL.patientAttributes[29])){
+			jQuery("#dohid").html(MODEL.patientAttributes[29]);
+			}
+			else{
+				jQuery("#dohId").hide();
+			jQuery("#dohid").hide();
+			}
 		MODEL.OPDs = " ,Please select an OPD room to visit|" + MODEL.OPDs;
 		PAGE.fillOptions("#opdWard", {
 			data:MODEL.OPDs,
@@ -554,7 +561,7 @@
 					<td colspan="2"><span id="namee" /></td>
 				</tr>
 				<tr>
-					<td colspan="1""><b>Patient ID:</b></td>
+					<td colspan="1"" ><b>Patient ID:</b></td>
 					<td colspan="2""><span id="identifierr" /></td>
 				</tr>
 				<tr>
@@ -564,6 +571,10 @@
 				<tr>
 					<td colspan="1"><b>Gender:</b></td>
 					<td colspan="2"><span id="genderr" /></td>
+				</tr>
+					<tr>
+					<td colspan="1" id="dohId"><b>DOH Id:</b></td>
+					<td colspan="2"><span id="dohid" /></td>
 				</tr>
 				<tr>
 					<td colspan="1"><b>Patient Category:</b></td>

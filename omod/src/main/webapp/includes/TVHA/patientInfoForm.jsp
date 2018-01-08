@@ -15,7 +15,13 @@
 		else{
 		jQuery("#aadharCardRow").hide();
 		}
-		
+		if (!StringUtils.isBlank(MODEL.patientAttributes[29])){
+			jQuery("#dohid").html(MODEL.patientAttributes[29]);
+			}
+			else{
+				jQuery("#dohid").hide();
+			jQuery("#dohId").hide();
+			}
 		if(MODEL.paidCategoryMap[MODEL.patientAttributes[14]]!=undefined){
 		if(MODEL.patientAttributes[31]!=undefined){
 		var pcm=MODEL.paidCategoryMap[MODEL.patientAttributes[14]]+"("+MODEL.subPaidCategoryMap[MODEL.patientAttributes[31]]+")";
@@ -270,6 +276,10 @@
 				<tr>
 					<td colspan="1"><b>Gender:</b></td>
 					<td colspan="2"><span id="gender" /></td>
+				</tr>
+					<tr>
+					<td colspan="1" id="dohId"><b>DoH Id:</b></td>
+					<td colspan="2"><span id="dohid" /></td>
 				</tr>
 				<tr>
 					<td colspan="1"><b>Patient Category:</b></td>
