@@ -146,7 +146,9 @@ input, select, textarea {
 				});
 				
 				jQuery("#paidCategoryField").hide();
+				jQuery("#subCategoryPaidField").hide();
                 jQuery("#programField").hide();
+                jQuery("#subProgramField").hide();
 				
 				// Set value for patient information
 				formValues = "patient.lastName==" + MODEL.lastName + "||";
@@ -211,6 +213,23 @@ input, select, textarea {
 				 jQuery("#paidCategoryChecked").attr('checked', true);
 				 jQuery("#paidCategoryField").show();
 				 jQuery("#paidCategory").val(MODEL.patientAttributes[14]);
+				 
+				 if(MODEL.subPaidCategoryMap[MODEL.patientAttributes[14]]!=undefined){
+                 jQuery("#subCategoryPaidField").show();
+                 MODEL.subPaidCategoryMap[MODEL.patientAttributes[14]] = " , |"
+						+ MODEL.subPaidCategoryMap[MODEL.patientAttributes[14]];
+				 PAGE.fillOptions("#subCategoryPaid", {
+					data : MODEL.subPaidCategoryMap[MODEL.patientAttributes[14]],
+					delimiter : ",",
+					optionDelimiter : "|"
+				});
+				jQuery("#subCategoryPaid").val(MODEL.patientAttributes[31]);
+	           }
+	           else{
+	           jQuery("#subCategoryPaid").val('');
+	           jQuery("#subCategoryPaidField").hide();
+	           }
+				 
 				}else if(MODEL.programMap[MODEL.patientAttributes[14]]==="Antenatal"
 				 || MODEL.programMap[MODEL.patientAttributes[14]]==="Immunization"
 				 || MODEL.programMap[MODEL.patientAttributes[14]]==="HIV"
@@ -221,6 +240,24 @@ input, select, textarea {
 				 jQuery("#programChecked").attr('checked', true);
 				 jQuery("#programField").show();
 				 jQuery("#program").val(MODEL.patientAttributes[14]);
+				 alert(MODEL.patientAttributes[14]);
+				 alert(MODEL.subProgramsCategoryMap[MODEL.patientAttributes[14]]);
+				 if(MODEL.subProgramsCategoryMap[MODEL.patientAttributes[14]]!=undefined){
+                 jQuery("#subProgramField").show();
+                 MODEL.subProgramsCategoryMap[MODEL.patientAttributes[14]] = " , |"
+						+ MODEL.subProgramsCategoryMap[MODEL.patientAttributes[14]];
+				 PAGE.fillOptions("#subCategoryProgram", {
+					data : MODEL.subProgramsCategoryMap[MODEL.patientAttributes[14]],
+					delimiter : ",",
+					optionDelimiter : "|"
+				});
+				jQuery("#subCategoryProgram").val(MODEL.patientAttributes[31]);
+	           }
+	           else{
+	           jQuery("#subCategoryProgram").val('');
+	           jQuery("#subProgramField").hide();
+	           }
+				  
 				}
 				
 				if (MODEL.patientGender == "Male") {
@@ -599,6 +636,28 @@ input, select, textarea {
           alert("Entered DOH ID already exit in the system");
           return false;
 	      }
+	      
+	      if (jQuery("#paidCategoryChecked").attr('checked') == false
+					&& jQuery("#programChecked").attr('checked') == false) {			
+			    alert("You did not choose any of the Patient Category");
+				return false;
+		  }
+		else{
+			
+		if(jQuery("#paidCategoryChecked").attr('checked') == true){
+		if (StringUtils.isBlank(jQuery("#paidCategory").val())) {
+			alert("Please select Paid Category");
+			return false;
+		} 
+		}
+		else if(jQuery("#programChecked").attr('checked') == true){
+		if (StringUtils.isBlank(jQuery("#program").val())) {
+			alert("Please select Program");
+			return false;
+		} 
+		}
+			
+		}
 			
 			if (StringUtils.isBlank(jQuery("#patientRelativeName").val())) {
 				alert("Please enter the patient's relative name");
@@ -619,10 +678,13 @@ input, select, textarea {
 			if (jQuery("#paidCategoryChecked").is(':checked')) {
 					jQuery("#programChecked").removeAttr("checked");
 					jQuery("#paidCategoryField").show();
-					//jQuery("#nonPayingCategory").val("");
 				    jQuery("#programField").hide();
+				    jQuery("#subProgramField").hide();
+				    jQuery("#program").val('');
+				    jQuery("#subCategoryProgram").val('');
 			}
 			else{
+			jQuery("#paidCategory").val("");
 			jQuery("#paidCategoryField").hide();
 			}
 		},
@@ -633,8 +695,12 @@ input, select, textarea {
 					jQuery("#paidCategoryChecked").removeAttr("checked");
 				    jQuery("#programField").show();
 				    jQuery("#paidCategoryField").hide();
+				    jQuery("#subCategoryPaidField").hide();
+				    jQuery("#paidCategory").val('');
+				    jQuery("#subCategoryPaid").val('');
 			}
 			else{
+			jQuery("#program").val("");
 			jQuery("#programField").hide();
 			}
 		},
@@ -686,6 +752,40 @@ input, select, textarea {
    function setRelativeName(){
    var relativeName=jQuery("#nameOrgivenNameOrmiddleNameOrfamilyNameOrIdentifier").val();
    jQuery("#patientRelativeName").val(relativeName);
+   }
+   
+   function paidCategorySelection(paidCategoryId){
+   if(MODEL.subPaidCategoryMap[paidCategoryId.value]!=undefined){
+   jQuery("#subCategoryPaidField").show();
+   MODEL.subPaidCategoryMap[paidCategoryId.value] = " , |"
+						+ MODEL.subPaidCategoryMap[paidCategoryId.value];
+				PAGE.fillOptions("#subCategoryPaid", {
+					data : MODEL.subPaidCategoryMap[paidCategoryId.value],
+					delimiter : ",",
+					optionDelimiter : "|"
+				});
+	}
+	else{
+	jQuery("#subCategoryPaid").val('');
+	jQuery("#subCategoryPaidField").hide();
+	}
+   }
+   
+   function programCategorySelection(programCategoryId){
+   if(MODEL.subProgramsCategoryMap[programCategoryId.value]!=undefined){
+   jQuery("#subProgramField").show();
+   MODEL.subProgramsCategoryMap[programCategoryId.value] = " , |"
+						+ MODEL.subProgramsCategoryMap[programCategoryId.value];
+				PAGE.fillOptions("#subCategoryProgram", {
+					data : MODEL.subProgramsCategoryMap[programCategoryId.value],
+					delimiter : ",",
+					optionDelimiter : "|"
+				});
+	}
+	else{
+	jQuery("#subCategoryProgram").val('');
+	jQuery("#subProgramField").hide();
+	}
    }
 </script>
 <h3 align="center" style="color:black">EDIT PATIENT INFORMATION<br></h3>
@@ -839,13 +939,17 @@ input, select, textarea {
 		<tr>
 				<td><b>Patient Category <label style="color:red">*</label></b>&nbsp;&nbsp;&nbsp;&nbsp;</td>
 				<td><input id="paidCategoryChecked" type="checkbox" name="paidCategoryChecked"/> Paid Category&nbsp;&nbsp;&nbsp;&nbsp;</td>
-				<td id="paidCategoryField"><select id="paidCategory" name="patient.paidCategory" style="width: 152px;">
+				<td id="paidCategoryField"><select id="paidCategory" name="patient.paidCategory" style="width: 152px;" onchange="paidCategorySelection(this);">
+						</select></td>
+				<td id="subCategoryPaidField"><select id="subCategoryPaid" name="patient.subCategoryPaid" style="width: 152px;">
 						</select></td>
 		    </tr>
 		    <tr>
 				<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
 				<td><input id="programChecked" type="checkbox" name="programChecked"/> Programs&nbsp;&nbsp;&nbsp;&nbsp;</td>
-				<td id="programField"><select id="program" name="patient.program" style="width: 152px;">
+				<td id="programField"><select id="program" name="patient.program" style="width: 152px;" onchange="programCategorySelection(this);">
+						</select></td>
+				<td id="subProgramField"><select id="subCategoryProgram" name="patient.subCategoryProgram" style="width: 152px;">
 						</select></td>
 		    </tr>
 		    

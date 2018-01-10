@@ -53,14 +53,6 @@
 		});
 		jQuery("#opdWard").val(${opdPatientQueueLog.opdConcept.id});
 		
-		MODEL.TEMPORARYCATEGORY = " ,select temporary category|"
-						+ MODEL.TEMPORARYCATEGORY;
-				PAGE.fillOptions("#mlc", {
-					data : MODEL.TEMPORARYCATEGORY,
-					delimiter : ",",
-					optionDelimiter : "|"
-				});
-				
 		MODEL.paidCategories = " , |"
 						+ MODEL.paidCategories;
 				PAGE.fillOptions("#paidCategory", {
@@ -69,10 +61,73 @@
 					optionDelimiter : "|"
 				});
 				
-	  MODEL.programs = " , |"
+	    MODEL.programs = " , |"
 						+ MODEL.programs;
 				PAGE.fillOptions("#program", {
 					data : MODEL.programs,
+					delimiter : ",",
+					optionDelimiter : "|"
+				});
+		
+		//patient category and subCategory preselection
+		if(MODEL.paidCategoryMap[MODEL.patientAttributes[14]]==="Non TMS"
+				 || MODEL.paidCategoryMap[MODEL.patientAttributes[14]]==="TMS"
+				 || MODEL.paidCategoryMap[MODEL.patientAttributes[14]]==="School Children"
+				 || MODEL.paidCategoryMap[MODEL.patientAttributes[14]]==="Monasteries"){
+				 jQuery("#paidCategoryChecked").attr('checked', true);
+				 jQuery("#paidCategoryField").show();
+				 jQuery("#paidCategory").val(MODEL.patientAttributes[14]);
+				 
+				 if(MODEL.subPaidCategoryMap[MODEL.patientAttributes[14]]!=undefined){
+                 jQuery("#subCategoryPaidField").show();
+                 MODEL.subPaidCategoryMap[MODEL.patientAttributes[14]] = " , |"
+						+ MODEL.subPaidCategoryMap[MODEL.patientAttributes[14]];
+				 PAGE.fillOptions("#subCategoryPaid", {
+					data : MODEL.subPaidCategoryMap[MODEL.patientAttributes[14]],
+					delimiter : ",",
+					optionDelimiter : "|"
+				});
+				jQuery("#subCategoryPaid").val(MODEL.patientAttributes[31]);
+	           }
+	           else{
+	           jQuery("#subCategoryPaid").val('');
+	           jQuery("#subCategoryPaidField").hide();
+	           }
+				 
+				}else if(MODEL.programMap[MODEL.patientAttributes[14]]==="Antenatal"
+				 || MODEL.programMap[MODEL.patientAttributes[14]]==="Immunization"
+				 || MODEL.programMap[MODEL.patientAttributes[14]]==="HIV"
+				 || MODEL.programMap[MODEL.patientAttributes[14]]==="Non MDR TB"
+				 || MODEL.programMap[MODEL.patientAttributes[14]]==="MDR"
+				 || MODEL.programMap[MODEL.patientAttributes[14]]==="Mental Health"
+				 || MODEL.programMap[MODEL.patientAttributes[14]]==="Destitute/BPL"){
+				 jQuery("#programChecked").attr('checked', true);
+				 jQuery("#programField").show();
+				 jQuery("#program").val(MODEL.patientAttributes[14]);
+				 alert(MODEL.patientAttributes[14]);
+				 alert(MODEL.subProgramsCategoryMap[MODEL.patientAttributes[14]]);
+				 if(MODEL.subProgramsCategoryMap[MODEL.patientAttributes[14]]!=undefined){
+                 jQuery("#subProgramField").show();
+                 MODEL.subProgramsCategoryMap[MODEL.patientAttributes[14]] = " , |"
+						+ MODEL.subProgramsCategoryMap[MODEL.patientAttributes[14]];
+				 PAGE.fillOptions("#subCategoryProgram", {
+					data : MODEL.subProgramsCategoryMap[MODEL.patientAttributes[14]],
+					delimiter : ",",
+					optionDelimiter : "|"
+				});
+				jQuery("#subCategoryProgram").val(MODEL.patientAttributes[31]);
+	           }
+	           else{
+	           jQuery("#subCategoryProgram").val('');
+	           jQuery("#subProgramField").hide();
+	           }
+				  
+				}
+		
+		MODEL.TEMPORARYCATEGORY = " ,select temporary category|"
+						+ MODEL.TEMPORARYCATEGORY;
+				PAGE.fillOptions("#mlc", {
+					data : MODEL.TEMPORARYCATEGORY,
 					delimiter : ",",
 					optionDelimiter : "|"
 				});

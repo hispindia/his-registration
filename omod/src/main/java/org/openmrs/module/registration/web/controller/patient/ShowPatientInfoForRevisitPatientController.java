@@ -158,22 +158,32 @@ public class ShowPatientInfoForRevisitPatientController {
 		}
 		
 		model.addAttribute("paidCategories", RegistrationWebUtils.getSubConcepts(RegistrationConstants.CONCEPT_NAME_PAID_CATEGORY));
-		Concept conceptPaidCategory=Context.getConceptService().getConcept(RegistrationConstants.CONCEPT_NAME_PAID_CATEGORY);
+		model.addAttribute("programs", RegistrationWebUtils.getSubConcepts(RegistrationConstants.CONCEPT_NAME_PROGRAMS));
+		Map<String, String> paidCategoryMap = new LinkedHashMap<String, String>();
+		Concept conceptPaidCategory = Context.getConceptService().getConcept(RegistrationConstants.CONCEPT_NAME_PAID_CATEGORY);
+		for (ConceptAnswer ca : conceptPaidCategory.getAnswers()) {
+			paidCategoryMap.put(ca.getAnswerConcept().getConceptId().toString(), ca.getAnswerConcept().getName().getName());
+		}
 		Map<String,String> subPaidCategoryMap=new LinkedHashMap<String,String>();
 		Collection<ConceptAnswer> conAns=conceptPaidCategory.getAnswers();
 		for(ConceptAnswer con:conAns){
 			if(con.getAnswerConcept().getAnswers().size()!=0)
 			subPaidCategoryMap.put(con.getAnswerConcept().getConceptId().toString(), RegistrationWebUtils.getSubConcepts(con.getAnswerConcept().getName().getName()));
 		    }
+		model.addAttribute("paidCategoryMap", paidCategoryMap);
 		model.addAttribute("subPaidCategoryMap",subPaidCategoryMap);
-		model.addAttribute("programs", RegistrationWebUtils.getSubConcepts(RegistrationConstants.CONCEPT_NAME_PROGRAMS));
-		Concept conceptPrograms=Context.getConceptService().getConcept(RegistrationConstants.CONCEPT_NAME_PROGRAMS);
+		Map<String, String> programMap = new LinkedHashMap<String, String>();
+		Concept conceptPrograms = Context.getConceptService().getConcept(RegistrationConstants.CONCEPT_NAME_PROGRAMS);
+		for (ConceptAnswer ca : conceptPrograms.getAnswers()) {
+			programMap.put(ca.getAnswerConcept().getConceptId().toString(), ca.getAnswerConcept().getName().getName());
+		}
 		Map<String,String> subProgramsCategoryMap=new LinkedHashMap<String,String>();
 		Collection<ConceptAnswer> conAnsForPrograms=conceptPrograms.getAnswers();
 		for(ConceptAnswer con:conAnsForPrograms){
 			if(con.getAnswerConcept().getAnswers().size()!=0)
 				subProgramsCategoryMap.put(con.getAnswerConcept().getConceptId().toString(), RegistrationWebUtils.getSubConcepts(con.getAnswerConcept().getName().getName()));
 		    }
+		model.addAttribute("programMap", programMap);
 		model.addAttribute("subProgramsCategoryMap",subProgramsCategoryMap);
 		
 		String registrationFee=GlobalPropertyUtil.getString("registration.registrationFee", "0");

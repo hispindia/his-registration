@@ -46,9 +46,19 @@
 	</c:forEach>
 	
 	
+	var _paidCategoryMap = new Array();
+	<c:forEach var="entry" items="${paidCategoryMap}">
+		_paidCategoryMap[${entry.key}] = "${entry.value}";
+	</c:forEach>
+	
 	var _subPaidCategoryMap = new Array();
 	<c:forEach var="entry" items="${subPaidCategoryMap}">
 		_subPaidCategoryMap[${entry.key}] = "${entry.value}";
+	</c:forEach>
+	
+	var _programMap = new Array();
+	<c:forEach var="entry" items="${programMap}">
+		_programMap[${entry.key}] = "${entry.value}";
 	</c:forEach>
 	
 	var _subProgramsCategoryMap = new Array();
@@ -84,7 +94,9 @@
 		patientAttributes: _attributes,
 		paidCategories: "${paidCategories}",
 		programs: "${programs}",
+		paidCategoryMap : _paidCategoryMap,
 		subPaidCategoryMap: _subPaidCategoryMap,
+		programMap : _programMap,
 		subProgramsCategoryMap: _subProgramsCategoryMap
 	};
 </script>

@@ -51,9 +51,19 @@
 		_paidCategoryMap[${entry.key}] = "${entry.value}";
 	</c:forEach>
 	
+	var _subPaidCategoryMap = new Array();
+	<c:forEach var="entry" items="${subPaidCategoryMap}">
+		_subPaidCategoryMap[${entry.key}] = "${entry.value}";
+	</c:forEach>
+	
 	var _programMap = new Array();
 	<c:forEach var="entry" items="${programMap}">
 		_programMap[${entry.key}] = "${entry.value}";
+	</c:forEach>
+	
+	var _subProgramsCategoryMap = new Array();
+	<c:forEach var="entry" items="${subProgramsCategoryMap}">
+		_subProgramsCategoryMap[${entry.key}] = "${entry.value}";
 	</c:forEach>
 	
 	/**
@@ -80,7 +90,9 @@
 		paidCategories: "${paidCategories}",
 		programs: "${programs}",
 		paidCategoryMap : _paidCategoryMap,
+		subPaidCategoryMap : _subPaidCategoryMap,
 		programMap : _programMap,
+		subProgramsCategoryMap : _subProgramsCategoryMap,
 		relativeName : "${patSearch.relativeName}",
 		relativeId : "${patSearch.relativeId.patientId}"
 	};

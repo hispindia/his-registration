@@ -22,8 +22,10 @@ package org.openmrs.module.registration.web.controller.patient;
 
 import java.io.IOException;
 import java.text.ParseException;
+import java.util.Collection;
 import java.util.Date;
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -36,14 +38,16 @@ import org.dom4j.DocumentException;
 import org.jaxen.JaxenException;
 import org.openmrs.Concept;
 import org.openmrs.ConceptAnswer;
+import org.openmrs.Encounter;
+import org.openmrs.Obs;
 import org.openmrs.Patient;
 import org.openmrs.PersonAttribute;
 import org.openmrs.PersonAttributeType;
-import org.openmrs.PersonName;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.hospitalcore.HospitalCoreService;
 import org.openmrs.module.hospitalcore.model.PatientSearch;
 import org.openmrs.module.hospitalcore.util.HospitalCoreUtils;
+import org.openmrs.module.registration.RegistrationService;
 import org.openmrs.module.registration.includable.validator.attribute.PatientAttributeValidatorService;
 import org.openmrs.module.registration.util.RegistrationConstants;
 import org.openmrs.module.registration.util.RegistrationUtils;
@@ -85,17 +89,31 @@ public class EditPatientController {
 		model.addAttribute("paidCategories", RegistrationWebUtils.getSubConcepts(RegistrationConstants.CONCEPT_NAME_PAID_CATEGORY));
 		model.addAttribute("programs", RegistrationWebUtils.getSubConcepts(RegistrationConstants.CONCEPT_NAME_PROGRAMS));
 		Map<String, String> paidCategoryMap = new LinkedHashMap<String, String>();
-		Concept paidCategory = Context.getConceptService().getConcept(RegistrationConstants.CONCEPT_NAME_PAID_CATEGORY);
-		for (ConceptAnswer ca : paidCategory.getAnswers()) {
+		Concept conceptPaidCategory = Context.getConceptService().getConcept(RegistrationConstants.CONCEPT_NAME_PAID_CATEGORY);
+		for (ConceptAnswer ca : conceptPaidCategory.getAnswers()) {
 			paidCategoryMap.put(ca.getAnswerConcept().getConceptId().toString(), ca.getAnswerConcept().getName().getName());
 		}
+		Map<String,String> subPaidCategoryMap=new LinkedHashMap<String,String>();
+		Collection<ConceptAnswer> conAns=conceptPaidCategory.getAnswers();
+		for(ConceptAnswer con:conAns){
+			if(con.getAnswerConcept().getAnswers().size()!=0)
+			subPaidCategoryMap.put(con.getAnswerConcept().getConceptId().toString(), RegistrationWebUtils.getSubConcepts(con.getAnswerConcept().getName().getName()));
+		    }
+		model.addAttribute("paidCategoryMap", paidCategoryMap);
+		model.addAttribute("subPaidCategoryMap",subPaidCategoryMap);
 		Map<String, String> programMap = new LinkedHashMap<String, String>();
-		Concept program = Context.getConceptService().getConcept(RegistrationConstants.CONCEPT_NAME_PROGRAMS);
-		for (ConceptAnswer ca : program.getAnswers()) {
+		Concept conceptPrograms = Context.getConceptService().getConcept(RegistrationConstants.CONCEPT_NAME_PROGRAMS);
+		for (ConceptAnswer ca : conceptPrograms.getAnswers()) {
 			programMap.put(ca.getAnswerConcept().getConceptId().toString(), ca.getAnswerConcept().getName().getName());
 		}
-		model.addAttribute("paidCategoryMap", paidCategoryMap);
+		Map<String,String> subProgramsCategoryMap=new LinkedHashMap<String,String>();
+		Collection<ConceptAnswer> conAnsForPrograms=conceptPrograms.getAnswers();
+		for(ConceptAnswer con:conAnsForPrograms){
+			if(con.getAnswerConcept().getAnswers().size()!=0)
+				subProgramsCategoryMap.put(con.getAnswerConcept().getConceptId().toString(), RegistrationWebUtils.getSubConcepts(con.getAnswerConcept().getName().getName()));
+		    }
 		model.addAttribute("programMap", programMap);
+		model.addAttribute("subProgramsCategoryMap",subProgramsCategoryMap);
 		return "/module/registration/patient/editPatient";
 	}
 	
@@ -146,6 +164,12 @@ public class EditPatientController {
 	 */
 	private Patient generatePatient(Patient patient, Map<String, String> parameters) throws ParseException {
 		
+		HospitalCoreService hcs = Context.getService(HospitalCoreService.class);
+		List<PersonAttribute> pas = hcs.getPersonAttributes(patient.getPatientId());
+		Encounter encounter = Context.getService(RegistrationService.class).getLastEncounter(patient);
+		Concept concept = Context.getConceptService().getConcept(RegistrationConstants.CONCEPT_NAME_CREDIT);
+		Obs obs= hcs.getObsByEncounterAndConcept(encounter,concept);
+		
 		// get person name
 		if (!StringUtils.isBlank(parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_FIRSTNAME))
 				&& !StringUtils.isBlank(parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_LASTNAME))) {
@@ -180,13 +204,36 @@ public class EditPatientController {
 			    parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_ADDRESS_SETTLEMENT)));
 		}
 		
+		
+		if (!StringUtils.isBlank(parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_PAID_CATEGORY))) {
+			obs.setValueText(parameters
+					.get(RegistrationConstants.FORM_FIELD_PATIENT_PAID_CATEGORY));	
+		}
+		else{
+			obs.setValueText(parameters
+					.get(RegistrationConstants.FORM_FIELD_PATIENT_PROGRAM_CATEGORY));
+		}
+		
+		if (!StringUtils.isBlank(parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_SUB_CATEGORY_PAID))) {
+			obs.setComment(parameters
+					.get(RegistrationConstants.FORM_FIELD_PATIENT_SUB_CATEGORY_PAID));	
+		}
+		else if (!StringUtils.isBlank(parameters.get(RegistrationConstants.FORM_FIELD_PATIENT__SUB_CATEGORY_PROGRAM))) {
+			obs.setComment(parameters
+					.get(RegistrationConstants.FORM_FIELD_PATIENT__SUB_CATEGORY_PROGRAM));	
+		}
+		
+		hcs.saveOrUpdateObs(obs);
+		
 		PersonAttribute perAttr=new PersonAttribute();
+		List<PersonAttribute> listPersonAttribute=new LinkedList<PersonAttribute>();
 		if (!StringUtils.isBlank(parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_PAID_CATEGORY))) {
 			perAttr.setPerson(patient);	
 			perAttr.setValue(parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_PAID_CATEGORY));
 			perAttr.setAttributeType(Context.getPersonService().getPersonAttributeType(14));
 			perAttr.setCreator(Context.getUserContext().getAuthenticatedUser());
 			perAttr.setDateCreated(new Date());
+			perAttr.setVoided(false);
 		}
 		else if (!StringUtils.isBlank(parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_PROGRAM_CATEGORY))) {
 			perAttr.setPerson(patient);	
@@ -194,9 +241,38 @@ public class EditPatientController {
 			perAttr.setAttributeType(Context.getPersonService().getPersonAttributeType(14));
 			perAttr.setCreator(Context.getUserContext().getAuthenticatedUser());
 			perAttr.setDateCreated(new Date());
+			perAttr.setVoided(false);
 		}
 		
 		patient.addAttribute(perAttr);
+		
+		PersonAttribute perAttri=new PersonAttribute();
+		if (!StringUtils.isBlank(parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_SUB_CATEGORY_PAID))) {
+			perAttri.setPerson(patient);	
+			perAttri.setValue(parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_SUB_CATEGORY_PAID));
+			perAttri.setAttributeType(Context.getPersonService().getPersonAttributeType(31));
+			perAttri.setCreator(Context.getUserContext().getAuthenticatedUser());
+			perAttri.setDateCreated(new Date());
+			perAttri.setVoided(false);
+			patient.addAttribute(perAttri);
+		}
+		else if (!StringUtils.isBlank(parameters.get(RegistrationConstants.FORM_FIELD_PATIENT__SUB_CATEGORY_PROGRAM))) {
+			perAttri.setPerson(patient);	
+			perAttri.setValue(parameters.get(RegistrationConstants.FORM_FIELD_PATIENT__SUB_CATEGORY_PROGRAM));
+			perAttri.setAttributeType(Context.getPersonService().getPersonAttributeType(31));
+			perAttri.setCreator(Context.getUserContext().getAuthenticatedUser());
+			perAttri.setDateCreated(new Date());
+			perAttri.setVoided(false);
+			patient.addAttribute(perAttri);
+		}
+		else{
+			for (PersonAttribute pa : pas) {
+				PersonAttributeType attributeType = pa.getAttributeType();
+				if (attributeType.getPersonAttributeTypeId() == 31) {
+					listPersonAttribute.add(pa);
+				}
+			}
+		}
 		
 		return patient;
 	}
