@@ -24,10 +24,12 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.util.Collection;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -39,6 +41,7 @@ import org.jaxen.JaxenException;
 import org.openmrs.Concept;
 import org.openmrs.ConceptAnswer;
 import org.openmrs.Encounter;
+import org.openmrs.EncounterType;
 import org.openmrs.Obs;
 import org.openmrs.Patient;
 import org.openmrs.PersonAttribute;
@@ -167,8 +170,12 @@ public class EditPatientController {
 		HospitalCoreService hcs = Context.getService(HospitalCoreService.class);
 		List<PersonAttribute> pas = hcs.getPersonAttributes(patient.getPatientId());
 		Encounter encounter = Context.getService(RegistrationService.class).getLastEncounter(patient);
-		Concept concept = Context.getConceptService().getConcept(RegistrationConstants.CONCEPT_NAME_CREDIT);
-		Obs obs= hcs.getObsByEncounterAndConcept(encounter,concept);
+		Concept conceptRegFee = Context.getConceptService().getConcept(RegistrationConstants.CONCEPT_NAME_REGISTRATION_FEE);
+		Concept conceptCredit = Context.getConceptService().getConcept(RegistrationConstants.CONCEPT_NAME_CREDIT);
+		Set<Concept> concepts = new HashSet<Concept>();
+		concepts.add(conceptRegFee);
+		concepts.add(conceptCredit);
+		Obs obs= hcs.getObsByEncounterAndConcept(encounter,concepts);
 		
 		// get person name
 		if (!StringUtils.isBlank(parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_FIRSTNAME))
@@ -176,10 +183,6 @@ public class EditPatientController {
 		RegistrationUtils.getPersonName(patient.getPersonName(),
 			    parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_FIRSTNAME),
 			    parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_LASTNAME));
-			
-			
-			
-			
 		}
 		
 		// get birthdate
@@ -205,6 +208,7 @@ public class EditPatientController {
 		}
 		
 		
+		if(obs!=null){
 		if (!StringUtils.isBlank(parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_PAID_CATEGORY))) {
 			obs.setValueText(parameters
 					.get(RegistrationConstants.FORM_FIELD_PATIENT_PAID_CATEGORY));	
@@ -224,6 +228,7 @@ public class EditPatientController {
 		}
 		
 		hcs.saveOrUpdateObs(obs);
+		}
 		
 		PersonAttribute perAttr=new PersonAttribute();
 		List<PersonAttribute> listPersonAttribute=new LinkedList<PersonAttribute>();
