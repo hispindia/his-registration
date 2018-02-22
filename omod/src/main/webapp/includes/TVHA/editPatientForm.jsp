@@ -240,8 +240,8 @@ input, select, textarea {
 				 jQuery("#programChecked").attr('checked', true);
 				 jQuery("#programField").show();
 				 jQuery("#program").val(MODEL.patientAttributes[14]);
-				 alert(MODEL.patientAttributes[14]);
-				 alert(MODEL.subProgramsCategoryMap[MODEL.patientAttributes[14]]);
+				// alert(MODEL.patientAttributes[14]);
+				// alert(MODEL.subProgramsCategoryMap[MODEL.patientAttributes[14]]);
 				 if(MODEL.subProgramsCategoryMap[MODEL.patientAttributes[14]]!=undefined){
                  jQuery("#subProgramField").show();
                  MODEL.subProgramsCategoryMap[MODEL.patientAttributes[14]] = " , |"
@@ -545,11 +545,11 @@ input, select, textarea {
 				
 			}
 			
-			if (StringUtils.isBlank(jQuery("#lastName").val())) {
+			/*if (StringUtils.isBlank(jQuery("#lastName").val())) {
 				alert("Please enter the lastname of the patient");
 				return false;
-			}
-			else{
+			}*/
+			if ((StringUtils.isBlank(jQuery("#lastName").val()))==false){
 			    value = jQuery("#lastName").val();
 				value = value.substr(0, 1).toUpperCase() + value.substr(1);
 				jQuery("#lastName").val(value);

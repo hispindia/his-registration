@@ -465,11 +465,11 @@ input, select, textarea {
 				
 			}
 			
-			if (StringUtils.isBlank(jQuery("#lastName").val())) {
+		/*	if (StringUtils.isBlank(jQuery("#lastName").val())) {
 				alert("Please enter the lastname of the patient");
-				return false;
-			}
-			else{
+				return false;}*/
+				
+			if ((StringUtils.isBlank(jQuery("#lastName").val()))==false){
 			    value = jQuery("#lastName").val();
 				value = value.substr(0, 1).toUpperCase() + value.substr(1);
 				jQuery("#lastName").val(value);
@@ -858,7 +858,7 @@ input, select, textarea {
 			</tr>
 			<tr>
 				<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
-				<td valign="top">Last name<label style="color:red">*</label>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+				<td valign="top">Last name&nbsp;&nbsp;&nbsp;&nbsp;</td>
 				<td><input type="text" id="lastName" name="patient.lastName" style='width: 152px; 	border-width: 1px;
 	border-right: 1px;
 	border-left: 1px;

@@ -185,11 +185,18 @@ public class FindCreatePatientController {
 		
 		// get person name
 		if (!StringUtils.isBlank(parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_FIRSTNAME))
-				&& !StringUtils.isBlank(parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_LASTNAME))) {
-			PersonName personName = RegistrationUtils.getPersonName(null,
+				&& StringUtils.isBlank(parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_LASTNAME))) 
+			{PersonName personName = RegistrationUtils.getPersonName(null,
 			    parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_FIRSTNAME),parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_LASTNAME));
 			patient.addName(personName);
+			}
+			if(!StringUtils.isBlank(parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_FIRSTNAME))
+				&& !StringUtils.isBlank(parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_LASTNAME)))
+			{PersonName personName = RegistrationUtils.getPersonName(null,
+		 parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_FIRSTNAME),parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_LASTNAME));
+				patient.addName(personName);
 		}
+		
 		
 		// get identifier
 		if (!StringUtils.isBlank(parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_IDENTIFIER))) {

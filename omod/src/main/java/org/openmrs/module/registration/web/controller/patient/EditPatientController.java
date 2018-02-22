@@ -179,12 +179,17 @@ public class EditPatientController {
 		
 		// get person name
 		if (!StringUtils.isBlank(parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_FIRSTNAME))
+				&& StringUtils.isBlank(parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_LASTNAME))) {
+		RegistrationUtils.getPersonName(patient.getPersonName(),
+			    parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_FIRSTNAME),
+			    parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_LASTNAME));
+		}
+		if (!StringUtils.isBlank(parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_FIRSTNAME))
 				&& !StringUtils.isBlank(parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_LASTNAME))) {
 		RegistrationUtils.getPersonName(patient.getPersonName(),
 			    parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_FIRSTNAME),
 			    parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_LASTNAME));
 		}
-		
 		// get birthdate
 		if (!StringUtils.isBlank(parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_BIRTHDATE))) {
 			patient.setBirthdate(RegistrationUtils.parseDate(parameters
