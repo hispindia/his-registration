@@ -72,7 +72,6 @@
 		//patient category and subCategory preselection
 		if(MODEL.paidCategoryMap[MODEL.patientAttributes[14]]==="Non TMS"
 				 || MODEL.paidCategoryMap[MODEL.patientAttributes[14]]==="TMS"
-				 || MODEL.paidCategoryMap[MODEL.patientAttributes[14]]==="School Children"
 				 || MODEL.paidCategoryMap[MODEL.patientAttributes[14]]==="Monasteries"){
 				 jQuery("#paidCategoryChecked").attr('checked', true);
 				 jQuery("#paidCategoryField").show();
@@ -100,12 +99,11 @@
 				 || MODEL.programMap[MODEL.patientAttributes[14]]==="Non MDR TB"
 				 || MODEL.programMap[MODEL.patientAttributes[14]]==="MDR"
 				 || MODEL.programMap[MODEL.patientAttributes[14]]==="Mental Health"
+				 || MODEL.programMap[MODEL.patientAttributes[14]]==="School Children"
 				 || MODEL.programMap[MODEL.patientAttributes[14]]==="Destitute/BPL"){
 				 jQuery("#programChecked").attr('checked', true);
 				 jQuery("#programField").show();
 				 jQuery("#program").val(MODEL.patientAttributes[14]);
-				 alert(MODEL.patientAttributes[14]);
-				 alert(MODEL.subProgramsCategoryMap[MODEL.patientAttributes[14]]);
 				 if(MODEL.subProgramsCategoryMap[MODEL.patientAttributes[14]]!=undefined){
                  jQuery("#subProgramField").show();
                  MODEL.subProgramsCategoryMap[MODEL.patientAttributes[14]] = " , |"

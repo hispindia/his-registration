@@ -208,7 +208,6 @@ input, select, textarea {
 				}
 				if(MODEL.paidCategoryMap[MODEL.patientAttributes[14]]==="Non TMS"
 				 || MODEL.paidCategoryMap[MODEL.patientAttributes[14]]==="TMS"
-				 || MODEL.paidCategoryMap[MODEL.patientAttributes[14]]==="School Children"
 				 || MODEL.paidCategoryMap[MODEL.patientAttributes[14]]==="Monasteries"){
 				 jQuery("#paidCategoryChecked").attr('checked', true);
 				 jQuery("#paidCategoryField").show();
@@ -236,6 +235,7 @@ input, select, textarea {
 				 || MODEL.programMap[MODEL.patientAttributes[14]]==="Non MDR TB"
 				 || MODEL.programMap[MODEL.patientAttributes[14]]==="MDR"
 				 || MODEL.programMap[MODEL.patientAttributes[14]]==="Mental Health"
+				 || MODEL.programMap[MODEL.patientAttributes[14]]==="School Children"
 				 || MODEL.programMap[MODEL.patientAttributes[14]]==="Destitute/BPL"){
 				 jQuery("#programChecked").attr('checked', true);
 				 jQuery("#programField").show();
