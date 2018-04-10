@@ -284,6 +284,12 @@ public class EditPatientController {
 			}
 		}
 		
+        patient = Context.getPatientService().savePatient(patient);
+		
+		for(PersonAttribute personAttribute:listPersonAttribute){
+			hcs.saveOrUpdatePersonAttributee(personAttribute.getPersonAttributeId(),Context.getUserContext().getAuthenticatedUser().getUserId());	
+		}
+		
 		return patient;
 	}
 	
