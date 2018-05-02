@@ -74,7 +74,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RequestMapping("/module/registration/showPatientInfoForRevisitPatient.form")
 public class ShowPatientInfoForRevisitPatientController {
 	
-	private static Log logger = LogFactory.getLog(ShowPatientInfoController.class);
+	private static Log logger = LogFactory.getLog(ShowPatientInfoForRevisitPatientController.class);
 	
 	@RequestMapping(method = RequestMethod.GET)
 	public String showPatientInfo(@RequestParam("patientId") Integer patientId,
@@ -127,7 +127,7 @@ public class ShowPatientInfoForRevisitPatientController {
 			/**
 			 * June 7th 2012 - Supported #250 - Registration 2.2.14 (Mohali): Date on Reprint
 			 */
-			model.addAttribute("currentDateTime", sdf.format(hcs.getLastVisitTime(patientId)));
+			model.addAttribute("currentDateTime", sdf.format(hcs.getLastVisitTime(patient)));
 			
 			Encounter encounter = Context.getService(RegistrationService.class).getLastEncounter(patient);
 			if (encounter != null) {
