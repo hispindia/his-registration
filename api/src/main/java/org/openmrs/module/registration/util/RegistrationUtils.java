@@ -84,7 +84,12 @@ public class RegistrationUtils {
 		if (personName == null)
 			personName = new PersonName();
 		personName.setGivenName(firstName);
-		personName.setFamilyName(lastName);
+		if(lastName.equals("")){
+		personName.setFamilyName(".");
+		}
+		else{
+			personName.setFamilyName(lastName);	
+		}
 		personName.setPreferred(true);
 		return personName;
 	}
