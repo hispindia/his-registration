@@ -151,7 +151,12 @@ input, select, textarea {
                 jQuery("#subProgramField").hide();
 				
 				// Set value for patient information
+				if(MODEL.lastName=="."){
+				formValues = "patient.lastName==" + "" + "||";
+				}
+				else{
 				formValues = "patient.lastName==" + MODEL.lastName + "||";
+				}
 				formValues += "patient.firstName==" + MODEL.firstName + "||";
 				if (!StringUtils.isBlank(MODEL.patientAttributes[23])) {
 					formValues += "person.attribute.23=="
