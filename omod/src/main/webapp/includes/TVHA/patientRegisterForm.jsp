@@ -97,7 +97,7 @@ input, select, textarea {
 					dateFormat : 'dd/mm/yy',
 					changeMonth : true,
 					changeYear : true,
-					maxDate: '+0d'
+					maxDate: new Date()
 				});
 				
 				MODEL.occupations = " , |"
