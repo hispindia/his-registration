@@ -473,11 +473,10 @@ input, select, textarea {
 			    value = jQuery("#lastName").val();
 				value = value.substr(0, 1).toUpperCase() + value.substr(1);
 				jQuery("#lastName").val(value);
-				//if(/^[a-zA-Z0-9- ]*$/.test(value) == false) {
-				if(/^[a-zA-Z- ]*$/.test(value) == false) {
+			/* if(/^[a-zA-Z- ]*$/.test(value) == false) {
 					alert('Please enter lastname in correct format');
 					return false;
-				}
+				} */
 				
 			}
 
@@ -846,7 +845,7 @@ input, select, textarea {
 		<table>
 			<tr>
 				<td valign="top"><b>Patient Name</b><label style="color:red">*</label>&nbsp;&nbsp;&nbsp;&nbsp;</td>
-				<td>First Name<label style="color:red">*</label>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+				<td>Name<label style="color:red">*</label>&nbsp;&nbsp;&nbsp;&nbsp;</td>
 				<td><input type="text" id="firstName" name="patient.firstName" style='width: 152px; 	border-width: 1px;
 	border-right: 1px;
 	border-left: 1px;
@@ -858,7 +857,7 @@ input, select, textarea {
 			</tr>
 			<tr>
 				<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
-				<td valign="top">Last name&nbsp;&nbsp;&nbsp;&nbsp;</td>
+				<td valign="top">ID If Any&nbsp;&nbsp;&nbsp;&nbsp;</td>
 				<td><input type="text" id="lastName" name="patient.lastName" style='width: 152px; 	border-width: 1px;
 	border-right: 1px;
 	border-left: 1px;

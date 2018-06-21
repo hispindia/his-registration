@@ -94,7 +94,8 @@
 		programMap : _programMap,
 		subProgramsCategoryMap : _subProgramsCategoryMap,
 		relativeName : "${patSearch.relativeName}",
-		relativeId : "${patSearch.relativeId.patientId}"
+		relativeId : "${patSearch.relativeId.patientId}",
+		hospitalcoretype : "${hospitalcoretype}"
 	};
 </script>
 

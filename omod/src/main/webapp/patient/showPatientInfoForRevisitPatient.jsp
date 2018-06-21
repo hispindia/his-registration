@@ -97,7 +97,8 @@
 		paidCategoryMap : _paidCategoryMap,
 		subPaidCategoryMap: _subPaidCategoryMap,
 		programMap : _programMap,
-		subProgramsCategoryMap: _subProgramsCategoryMap
+		subProgramsCategoryMap: _subProgramsCategoryMap,
+		hospitalcoretype : "${hospitalcoretype}"
 	};
 </script>
 

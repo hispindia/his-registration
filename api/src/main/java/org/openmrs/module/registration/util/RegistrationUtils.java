@@ -88,7 +88,7 @@ public class RegistrationUtils {
 		personName.setFamilyName(".");
 		}
 		else{
-			personName.setFamilyName(lastName);	
+			personName.setFamilyName("."+lastName);	
 		}
 		personName.setPreferred(true);
 		return personName;

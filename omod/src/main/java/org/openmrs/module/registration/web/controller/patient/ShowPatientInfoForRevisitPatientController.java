@@ -83,6 +83,7 @@ public class ShowPatientInfoForRevisitPatientController {
 	                                                                                                              throws IOException,
 	                                                                                                              ParseException {
 		
+		String hospitalcoretype=Context.getAdministrationService().getGlobalProperty("hospitalcore.hospitalType");
 		HospitalCoreService hcs = Context.getService(HospitalCoreService.class);
 		Patient patient = Context.getPatientService().getPatient(patientId);
 		PatientModel patientModel = new PatientModel(patient);
@@ -212,6 +213,7 @@ public class ShowPatientInfoForRevisitPatientController {
 			attributess.put(attributes.get(key).getAttributeType().getId(), attributes.get(key).getValue());
 		}
 		model.addAttribute("attributes", attributess);
+		model.addAttribute("hospitalcoretype", hospitalcoretype);
 		return "/module/registration/patient/showPatientInfoForRevisitPatient";
 	}
 	

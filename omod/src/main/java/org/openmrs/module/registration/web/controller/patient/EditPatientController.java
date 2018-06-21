@@ -71,6 +71,7 @@ public class EditPatientController {
 	@RequestMapping(method = RequestMethod.GET)
 	public String showForm(@RequestParam("patientId") Integer patientId, Model model) throws JaxenException,
 	    DocumentException, IOException, ParseException {
+		String hospitalcoretype=Context.getAdministrationService().getGlobalProperty("hospitalcore.hospitalType");
 		HospitalCoreService hcs = Context.getService(HospitalCoreService.class);
 		model.addAttribute("occupations", RegistrationWebUtils.getSubConcepts(RegistrationConstants.CONCEPT_NAME_OCCUPATION));
 		model.addAttribute("bloodGroups", RegistrationWebUtils.getSubConcepts(RegistrationConstants.CONCEPT_NAME_BLOOD_GROUP));
@@ -117,6 +118,7 @@ public class EditPatientController {
 		    }
 		model.addAttribute("programMap", programMap);
 		model.addAttribute("subProgramsCategoryMap",subProgramsCategoryMap);
+		model.addAttribute("hospitalcoretype", hospitalcoretype);
 		return "/module/registration/patient/editPatient";
 	}
 	
