@@ -87,6 +87,9 @@ public class RegistrationUtils {
 		if(lastName.equals("")){
 		personName.setFamilyName(".");
 		}
+		else if(lastName.contains(".")){
+		personName.setFamilyName(lastName);
+		}
 		else{
 			personName.setFamilyName("."+lastName);	
 		}
