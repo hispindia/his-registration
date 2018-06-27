@@ -211,10 +211,8 @@ input, select, textarea {
 					formValues += "person.attribute.28=="
 							+ MODEL.patientAttributes[28] + "||";
 				}
-				if(MODEL.hospitalcoretype=="TVHA"){
-				if(MODEL.paidCategoryMap[MODEL.patientAttributes[14]]==="Non TMS"
-				 || MODEL.paidCategoryMap[MODEL.patientAttributes[14]]==="TMS"
-				 || MODEL.paidCategoryMap[MODEL.patientAttributes[14]]==="Monasteries"){
+		
+			if(MODEL.paidCategoryMap[MODEL.patientAttributes[14]]==="Paid Category"){
 				 jQuery("#paidCategoryChecked").attr('checked', true);
 				 jQuery("#paidCategoryField").show();
 				 jQuery("#paidCategory").val(MODEL.patientAttributes[14]);
@@ -235,14 +233,7 @@ input, select, textarea {
 	           jQuery("#subCategoryPaidField").hide();
 	           }
 				 
-				}else if(MODEL.programMap[MODEL.patientAttributes[14]]==="Antenatal"
-				 || MODEL.programMap[MODEL.patientAttributes[14]]==="Immunization"
-				 || MODEL.programMap[MODEL.patientAttributes[14]]==="HIV"
-				 || MODEL.programMap[MODEL.patientAttributes[14]]==="Non MDR TB"
-				 || MODEL.programMap[MODEL.patientAttributes[14]]==="MDR"
-				 || MODEL.programMap[MODEL.patientAttributes[14]]==="Mental Health"
-				 || MODEL.programMap[MODEL.patientAttributes[14]]==="School Children"
-				 || MODEL.programMap[MODEL.patientAttributes[14]]==="Destitute/BPL"){
+				}else if(MODEL.programMap[MODEL.patientAttributes[14]]==="Programs"){
 				 jQuery("#programChecked").attr('checked', true);
 				 jQuery("#programField").show();
 				 jQuery("#program").val(MODEL.patientAttributes[14]);
@@ -263,67 +254,6 @@ input, select, textarea {
 	           jQuery("#subCategoryProgram").val('');
 	           jQuery("#subProgramField").hide();
 	           }
-				  
-				}
-			}
-			else if(MODEL.hospitalcoretype=="BYLA"){
-			if(MODEL.paidCategoryMap[MODEL.patientAttributes[14]]==="Other Category"
-				 || MODEL.paidCategoryMap[MODEL.patientAttributes[14]]==="General"
-				 || MODEL.paidCategoryMap[MODEL.patientAttributes[14]]==="TMS"){
-				 jQuery("#paidCategoryChecked").attr('checked', true);
-				 jQuery("#paidCategoryField").show();
-				 jQuery("#paidCategory").val(MODEL.patientAttributes[14]);
-				 
-				 if(MODEL.subPaidCategoryMap[MODEL.patientAttributes[14]]!=undefined){
-                 jQuery("#subCategoryPaidField").show();
-                 MODEL.subPaidCategoryMap[MODEL.patientAttributes[14]] = " , |"
-						+ MODEL.subPaidCategoryMap[MODEL.patientAttributes[14]];
-				 PAGE.fillOptions("#subCategoryPaid", {
-					data : MODEL.subPaidCategoryMap[MODEL.patientAttributes[14]],
-					delimiter : ",",
-					optionDelimiter : "|"
-				});
-				jQuery("#subCategoryPaid").val(MODEL.patientAttributes[31]);
-	           }
-	           else{
-	           jQuery("#subCategoryPaid").val('');
-	           jQuery("#subCategoryPaidField").hide();
-	           }
-				 
-				}else if(MODEL.programMap[MODEL.patientAttributes[14]]==="RH/Antenatal"
-				 || MODEL.programMap[MODEL.patientAttributes[14]]==="Under Five/Immunization"
-				 || MODEL.programMap[MODEL.patientAttributes[14]]==="HIV"
-				 || MODEL.programMap[MODEL.patientAttributes[14]]==="Non MDR TB"
-				 || MODEL.programMap[MODEL.patientAttributes[14]]==="MDR TB"
-				 || MODEL.programMap[MODEL.patientAttributes[14]]==="Mental Health"
-				 || MODEL.programMap[MODEL.patientAttributes[14]]==="OPH"
-				 || MODEL.programMap[MODEL.patientAttributes[14]]==="Essential Drug - Staff"
-				 || MODEL.programMap[MODEL.patientAttributes[14]]==="Essntial Drug- Destitute"
-				 || MODEL.programMap[MODEL.patientAttributes[14]]==="TB Project"
-				 || MODEL.programMap[MODEL.patientAttributes[14]]==="Hepatitis B Project"
-				 || MODEL.programMap[MODEL.patientAttributes[14]]==="School Children"){
-				 jQuery("#programChecked").attr('checked', true);
-				 jQuery("#programField").show();
-				 jQuery("#program").val(MODEL.patientAttributes[14]);
-				// alert(MODEL.patientAttributes[14]);
-				// alert(MODEL.subProgramsCategoryMap[MODEL.patientAttributes[14]]);
-				 if(MODEL.subProgramsCategoryMap[MODEL.patientAttributes[14]]!=undefined){
-                 jQuery("#subProgramField").show();
-                 MODEL.subProgramsCategoryMap[MODEL.patientAttributes[14]] = " , |"
-						+ MODEL.subProgramsCategoryMap[MODEL.patientAttributes[14]];
-				 PAGE.fillOptions("#subCategoryProgram", {
-					data : MODEL.subProgramsCategoryMap[MODEL.patientAttributes[14]],
-					delimiter : ",",
-					optionDelimiter : "|"
-				});
-				jQuery("#subCategoryProgram").val(MODEL.patientAttributes[31]);
-	           }
-	           else{
-	           jQuery("#subCategoryProgram").val('');
-	           jQuery("#subProgramField").hide();
-	           }
-				  
-				}
 			}
 				
 				if (MODEL.patientGender == "Male") {

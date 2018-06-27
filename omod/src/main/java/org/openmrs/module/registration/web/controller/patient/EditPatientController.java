@@ -95,7 +95,7 @@ public class EditPatientController {
 		Map<String, String> paidCategoryMap = new LinkedHashMap<String, String>();
 		Concept conceptPaidCategory = Context.getConceptService().getConcept(RegistrationConstants.CONCEPT_NAME_PAID_CATEGORY);
 		for (ConceptAnswer ca : conceptPaidCategory.getAnswers()) {
-			paidCategoryMap.put(ca.getAnswerConcept().getConceptId().toString(), ca.getAnswerConcept().getName().getName());
+			paidCategoryMap.put(ca.getAnswerConcept().getConceptId().toString(),"Paid Category");
 		}
 		Map<String,String> subPaidCategoryMap=new LinkedHashMap<String,String>();
 		Collection<ConceptAnswer> conAns=conceptPaidCategory.getAnswers();
@@ -108,7 +108,7 @@ public class EditPatientController {
 		Map<String, String> programMap = new LinkedHashMap<String, String>();
 		Concept conceptPrograms = Context.getConceptService().getConcept(RegistrationConstants.CONCEPT_NAME_PROGRAMS);
 		for (ConceptAnswer ca : conceptPrograms.getAnswers()) {
-			programMap.put(ca.getAnswerConcept().getConceptId().toString(), ca.getAnswerConcept().getName().getName());
+			programMap.put(ca.getAnswerConcept().getConceptId().toString(),"Programs");
 		}
 		Map<String,String> subProgramsCategoryMap=new LinkedHashMap<String,String>();
 		Collection<ConceptAnswer> conAnsForPrograms=conceptPrograms.getAnswers();
