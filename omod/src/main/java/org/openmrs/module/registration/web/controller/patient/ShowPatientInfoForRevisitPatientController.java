@@ -241,6 +241,7 @@ public class ShowPatientInfoForRevisitPatientController {
 		Person person = Context.getPersonService().getPerson(patient);
 		HospitalCoreService hcs = Context.getService(HospitalCoreService.class);
 		List<PersonAttribute> pas = hcs.getPersonAttributes(patientId);
+		Concept selectedOPDConcept =new Concept();
 		
 		/*
 		 * SAVE ENCOUNTER
@@ -253,7 +254,7 @@ public class ShowPatientInfoForRevisitPatientController {
 			
 			// create OPD obs
 			Concept opdWardConcept = Context.getConceptService().getConcept(RegistrationConstants.CONCEPT_NAME_OPD_WARD);
-			Concept selectedOPDConcept = Context.getConceptService().getConcept(
+			selectedOPDConcept = Context.getConceptService().getConcept(
 			    Integer.parseInt(parameters.get(RegistrationConstants.FORM_FIELD_PATIENT_OPD_WARD)));
 			Obs opd = new Obs();
 			opd.setConcept(opdWardConcept);
@@ -326,10 +327,10 @@ public class ShowPatientInfoForRevisitPatientController {
 				encounter.addObs(obs);	
 			}
 			
+			/*
 			String bloodBankWardName = GlobalPropertyUtil.getString(RegistrationConstants.PROPERTY_BLOODBANK_OPDWARD_NAME,
 			    "Blood Bank Room");
-			
-			 //ghanshyam 03-sept-2013 Bug #394 [Blood bank]queue
+	
 			 String socn=new String(selectedOPDConcept.getName().toString());
 			 String substringofsocn=socn.substring(0,15);
 			
@@ -351,7 +352,7 @@ public class ShowPatientInfoForRevisitPatientController {
 				order.setOrderType(orderType);
 				order.setEncounter(encounter);
 				encounter.addOrder(order);
-			}
+			}*/
 		}
 		
 		PersonAttribute perAttr=new PersonAttribute();
@@ -475,6 +476,7 @@ public class ShowPatientInfoForRevisitPatientController {
 		
 		// save encounter
 		Context.getEncounterService().saveEncounter(encounter);
+		RegistrationWebUtils.sendPatientToOPDQueue(patient, selectedOPDConcept, true);
 		logger.info(String.format("Save encounter for the visit of patient [encounterId=%s, patientId=%s]",
 		    encounter.getId(), patient.getId()));
 		
