@@ -403,7 +403,8 @@ public class FindCreatePatientController {
 			encounter.addObs(temporaryCategoryObs);	
 		}
 		
-		 String bloodBankWardName = GlobalPropertyUtil.getString(RegistrationConstants.PROPERTY_BLOODBANK_OPDWARD_NAME,
+		/* 
+		String bloodBankWardName = GlobalPropertyUtil.getString(RegistrationConstants.PROPERTY_BLOODBANK_OPDWARD_NAME,
 		    "Blood Bank Room");
 
 		 String socn=new String(selectedOPDConcept.getName().toString());
@@ -427,7 +428,8 @@ public class FindCreatePatientController {
 			order.setOrderType(orderType);
 			order.setEncounter(encounter);
 			encounter.addOrder(order);
-		}
+		}*/
+		
 		 //Patient history
 			PatientQueueService queueService = (PatientQueueService) Context.getService(PatientQueueService.class);
 
@@ -475,6 +477,8 @@ public class FindCreatePatientController {
 		} else {
 			referralObs.setValueCoded(Context.getConceptService().getConcept("NO"));
 		}
+		
+		RegistrationWebUtils.sendPatientToOPDQueue(patient, selectedOPDConcept, false);
 		return encounter;
 	}
 	
