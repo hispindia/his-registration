@@ -760,6 +760,7 @@
 			</table>
 		</form>
 	</center>
+	
 </div>
 
 <div id="patientInfoPrintAreaa">
@@ -799,6 +800,16 @@
 					<td colspan="1"><b>Aadhar No:</b></td>
 					<td colspan="2"><span id="aadharCardNoo"></span></td>
 				</tr>
+				
 </table>
 </center>
+<br/>
+<br/>
+	<tr>
+				<center>
+					
+					<img type="image"  src="../../moduleResources/registration/image2.JPG"> 
+				</center>
+				
+			</tr>
 </div>

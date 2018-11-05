@@ -282,7 +282,17 @@
 					<td colspan="1"><b>Aadhar No:</b></td>
 					<td colspan="2"><span id="aadharCardNo"></span></td>
 				</tr>
+			
 			</table>
 		</form>
 	</center>
+	<br/>
+	<br/>
+	<tr>
+				<center>
+					
+					<img type="image"  src="../../moduleResources/registration/image2.JPG"> 
+				</center>
+				
+			</tr>
 </div>
