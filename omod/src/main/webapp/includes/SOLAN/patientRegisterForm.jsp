@@ -424,6 +424,11 @@ td.border {
 					alert("Please enter phone number in correct format");
 					return false;
 				}
+				
+				if ((jQuery("#patientPhoneNumber").val().length)!=10) {
+				    alert("Please enter the patient's contact number with in 10 digits");
+					return false;
+				  }
 			}
 			
 			//ghanshyam 12-sept-2013 New Requirement #2684 Introducing a field at the time of registration to put Aadhar Card Number

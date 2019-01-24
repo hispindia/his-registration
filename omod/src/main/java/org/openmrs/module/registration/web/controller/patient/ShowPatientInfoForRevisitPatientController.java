@@ -119,7 +119,7 @@ public class ShowPatientInfoForRevisitPatientController {
 			/**
 			 * June 7th 2012 - Supported #250 - Registration 2.2.14 (Mohali): Date on Reprint
 			 */
-			model.addAttribute("currentDateTime", sdf.format(hcs.getLastVisitTime(patientId)));
+			model.addAttribute("currentDateTime", sdf.format(hcs.getLastVisitTime(patient)));
 			
 			Encounter encounter = Context.getService(RegistrationService.class).getLastEncounter(patient);
 			if (encounter != null) {
