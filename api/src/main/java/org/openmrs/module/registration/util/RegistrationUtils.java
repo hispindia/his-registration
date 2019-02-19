@@ -91,11 +91,15 @@ public class RegistrationUtils {
 		@SuppressWarnings("deprecation")
 		String fullname = StringUtils.capitaliseAllWords(name).trim();
 		String[] parts = fullname.split(" ");
+		
 		if (parts.length == 1) {
 			personName.setGivenName(parts[0]);
+			personName.setFamilyName(".");
 		} else if (parts.length == 2) {
 			personName.setGivenName(parts[0]);
 			personName.setFamilyName(parts[1]);
+			
+			
 		} else if (parts.length > 2) {
 			personName.setGivenName(parts[0]);
 			personName.setMiddleName(parts[1]);
