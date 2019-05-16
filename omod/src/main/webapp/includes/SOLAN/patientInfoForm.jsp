@@ -286,7 +286,7 @@
 			</table>
 		</form>
 	</center>
-
+<!-- 
 
 	<tr>
 				<center>
@@ -294,6 +294,6 @@
 					<img type="image"  src="../../moduleResources/registration/image2.JPG" style="position: fixed;left:0;bottom: 0;text-align: center;"> 
 				</center>
 				
-			</tr>
+			</tr> - -->
 			
 </div>
