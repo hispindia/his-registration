@@ -100,7 +100,7 @@
 			<td align="center"><b>Name</b></td>
 			<td align="center"><b>Age</b></td>
 			<td align="center"><b>Gender</b></td>			
-			<td align="center"><b>Relative Name</b></td>
+			<td align="center"><b>Address</b></td>
 			<td align="center"><b>Last day of visit</b></td>
 			<td align="center" colspan="8"><b>Action</b></td>
 			
@@ -128,7 +128,8 @@
 				</td>                
                 
 				<td align="center"> 
-                	${patientSearchMap[patient.patientId]}
+                	<!--${patientSearchMap[patient.patientId]}-->
+					 ${patientaddress[patient.patientId]}
                 </td>
 					  <td align="center" >
 	                <openmrs:formatDate date="${lastVisitTime[patient.patientId]}"/>              	
