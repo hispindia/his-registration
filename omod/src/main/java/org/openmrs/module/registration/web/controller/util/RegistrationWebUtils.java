@@ -53,7 +53,7 @@ import org.openmrs.util.OpenmrsUtil;
 import org.springframework.ui.Model;
 
 public class RegistrationWebUtils {
-	
+
 	/**
 	 * Optimize the request's parameters
 	 * 
@@ -71,7 +71,7 @@ public class RegistrationWebUtils {
 		}
 		return parameters;
 	}
-	
+
 	/**
 	 * Get the list of concepts which are answered for a concept
 	 * 
@@ -86,7 +86,7 @@ public class RegistrationWebUtils {
 		}
 		return sb.toString();
 	}
-	
+
 	/**
 	 * Send patient for OPD Queue
 	 * 
@@ -101,9 +101,9 @@ public class RegistrationWebUtils {
 		} else {
 			referralConcept = Context.getConceptService().getConcept("Revisit");
 		}
-		
-		OpdPatientQueue queue = Context.getService(PatientQueueService.class).getOpdPatientQueue(
-		    patient.getPatientIdentifier().getIdentifier(), selectedOPDConcept.getConceptId());
+
+		OpdPatientQueue queue = Context.getService(PatientQueueService.class)
+				.getOpdPatientQueue(patient.getPatientIdentifier().getIdentifier(), selectedOPDConcept.getConceptId());
 		if (queue == null) {
 			queue = new OpdPatientQueue();
 			queue.setPatient(patient);
@@ -112,17 +112,18 @@ public class RegistrationWebUtils {
 			queue.setPatientIdentifier(patient.getPatientIdentifier().getIdentifier());
 			queue.setOpdConcept(selectedOPDConcept);
 			queue.setOpdConceptName(selectedOPDConcept.getName().getName());
-			queue.setPatientName(patient.getGivenName() + " " + patient.getMiddleName() + " " + patient.getFamilyName());
+			queue.setPatientName(
+					patient.getGivenName() + " " + patient.getMiddleName() + " " + patient.getFamilyName());
 			queue.setReferralConcept(referralConcept);
 			queue.setReferralConceptName(referralConcept.getName().getName());
 			queue.setSex(patient.getGender());
 			PatientQueueService queueService = Context.getService(PatientQueueService.class);
 			queueService.saveOpdPatientQueue(queue);
-			
+
 		}
-		
+
 	}
-	
+
 	/**
 	 * Get the list of address
 	 * 
@@ -157,7 +158,7 @@ public class RegistrationWebUtils {
 			model.addAttribute("tehsils", tehsilArr);
 		}
 	}
-	
+
 	/**
 	 * Create a new encounter
 	 * 
@@ -168,18 +169,18 @@ public class RegistrationWebUtils {
 	public static Encounter createEncounter(Patient patient, boolean revisit) {
 		EncounterType encounterType = null;
 		if (!revisit) {
-			String encounterTypeName = GlobalPropertyUtil.getString(RegistrationConstants.PROPERTY_ENCOUNTER_TYPE_REGINIT,
-			    "REGINITIAL");
+			String encounterTypeName = GlobalPropertyUtil
+					.getString(RegistrationConstants.PROPERTY_ENCOUNTER_TYPE_REGINIT, "REGINITIAL");
 			encounterType = Context.getEncounterService().getEncounterType(encounterTypeName);
 		} else {
-			String encounterTypeName = GlobalPropertyUtil.getString(RegistrationConstants.PROPERTY_ENCOUNTER_TYPE_REVISIT,
-			    "REGREVISIT");
+			String encounterTypeName = GlobalPropertyUtil
+					.getString(RegistrationConstants.PROPERTY_ENCOUNTER_TYPE_REVISIT, "REGREVISIT");
 			encounterType = Context.getEncounterService().getEncounterType(encounterTypeName);
 		}
-		
+
 		// get location
 		Location location = new Location(GlobalPropertyUtil.getInteger(RegistrationConstants.PROPERTY_LOCATION, 1));
-		
+
 		// create encounter
 		Encounter encounter = new Encounter();
 		encounter.setEncounterType(encounterType);

@@ -39,6 +39,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openmrs.Concept;
 import org.openmrs.Encounter;
+import org.openmrs.GlobalProperty;
 import org.openmrs.Obs;
 import org.openmrs.Order;
 import org.openmrs.OrderType;
@@ -80,7 +81,8 @@ public class ShowPatientInfoController {
 		PatientModel patientModel = new PatientModel(patient);
 		model.addAttribute("patient", patientModel);
 		model.addAttribute("OPDs", RegistrationWebUtils.getSubConcepts(RegistrationConstants.CONCEPT_NAME_OPD_WARD));
-		
+		GlobalProperty slipMessage = Context.getAdministrationService().getGlobalPropertyObject("hospitalcore.slipMessage");
+		model.addAttribute("slipMessage", slipMessage.getPropertyValue());
 		// Get current date
 		SimpleDateFormat sdf = new SimpleDateFormat("EEE dd/MM/yyyy kk:mm");
 		model.addAttribute("currentDateTime", sdf.format(new Date()));
