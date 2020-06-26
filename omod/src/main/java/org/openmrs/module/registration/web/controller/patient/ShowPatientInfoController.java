@@ -39,6 +39,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openmrs.Concept;
 import org.openmrs.Encounter;
+import org.openmrs.GlobalProperty;
 import org.openmrs.Obs;
 import org.openmrs.Order;
 import org.openmrs.OrderType;
@@ -147,6 +148,9 @@ public class ShowPatientInfoController {
 				model.addAttribute("selectedOtherFree", con.getName().getName());
 			}
 		}
+
+		GlobalProperty slipMessage = Context.getAdministrationService().getGlobalPropertyObject("hospitalcore.slipMessage");
+		model.addAttribute("slipMessage", slipMessage.getPropertyValue());
 		
 		return "/module/registration/patient/showPatientInfo";
 	}

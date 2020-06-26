@@ -58,7 +58,8 @@
 		tempCategoryConceptName: "${tempCategoryConceptName}",
 		opdWardId: "${opdWardId}",
 		OTHERFREE: "${OTHERFREE}",
-		selectedOtherFree: "${selectedOtherFree}"
+		selectedOtherFree: "${selectedOtherFree}",
+		slipMessage: "${slipMessage}"
 	};
 </script>
 

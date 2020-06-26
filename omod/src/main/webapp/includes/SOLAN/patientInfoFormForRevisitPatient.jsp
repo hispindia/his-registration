@@ -8,6 +8,7 @@
 		jQuery("#agee").html(MODEL.patientAge);
 		jQuery("#name").html(MODEL.patientName);
 		jQuery("#namee").html(MODEL.patientName);
+		jQuery("#slipMessage").html(MODEL.slipMessage);
 		jQuery("#patientInfoPrintAreaa").hide();
 		
 		jQuery("#rsbyNumber").hide();
@@ -803,13 +804,13 @@
 				
 </table>
 </center>
-<!--
-	<tr>
-				<center>
-					
-					<img type="image"  src="../../moduleResources/registration/image2.JPG" style=" position: fixed;left: 0;bottom: 0;width: 100%;text-align: center;"> 
-				</center>
-				
-			</tr>--->
+<tr>
+	<center>
+		<div style="position: fixed;left:0;bottom: 0;text-align: center;">
+			<p id="slipMessage" style="font-weight: bold;"></p>
+		</div>
+	</center>
+
+</tr>
 			
 </div>

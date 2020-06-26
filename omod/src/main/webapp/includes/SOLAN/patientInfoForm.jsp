@@ -8,6 +8,7 @@
 		jQuery("#phoneNumber").html(MODEL.patientAttributes[16]);
 		jQuery("#gender").html(MODEL.patientGender);
 		jQuery("#datetime").html(MODEL.currentDateTime);
+		jQuery("#slipMessage").html(MODEL.slipMessage);
 		//ghanshyam 12-sept-2013 New Requirement #2684 Introducing a field at the time of registration to put Aadhar Card Number
 		if (!StringUtils.isBlank(MODEL.patientAttributes[20])){
 		jQuery("#aadharCardNo").html(MODEL.patientAttributes[20]);
@@ -286,14 +287,13 @@
 			</table>
 		</form>
 	</center>
-<!-- 
-
 	<tr>
-				<center>
-					
-					<img type="image"  src="../../moduleResources/registration/image2.JPG" style="position: fixed;left:0;bottom: 0;text-align: center;"> 
-				</center>
-				
-			</tr> - -->
+		<center>
+			<div style="position: fixed;left:0;bottom: 0;text-align: center;">
+				<p id="slipMessage" style="font-weight: bold;"></p>
+			</div>
+		</center>
+
+	</tr>
 			
 </div>
